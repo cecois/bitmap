@@ -1,0 +1,205 @@
+@menutext: #444444;
+@primarycolor: rgba(26, 255, 245, 1.00000);
+@primarycolor-trans: rgba(26, 255, 245, .60000);
+
+@secondarycolor: rgba(211, 255, 3, 1.0000);
+@secondarycolor-trans: rgba(211, 255, 3, .6);
+
+.text-shadow-general {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, .4);
+}
+a {
+    text-decoration: none;
+    color: red;
+}
+/* --------------------------------------- MAP -------------- */
+
+#map {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+}
+#maphider {
+    // display:none;
+}
+/* --------------------------------------- CONSOLE -------------- */
+
+#consoleContainer {
+    bottom: 0px;
+    padding:5px 10px;
+    background-color:white;
+    opacity: .5;
+    margin-left: 0px;
+    font-size: .8em;
+    right: 0;
+    position: fixed;
+    text-align: left;
+    border-radius:3px;
+
+          border-bottom-width: 0;
+    border-left-width: 0;
+    margin-bottom: 0;
+
+
+}
+
+/* --------------------------------------- MAP MENU -------------- */
+
+/* ----------
+BASEMAP MENU
+------------ */
+
+#BaseMapConsole {
+    color: #000;
+    font-weight: 800;
+    padding-top: 22px;
+    padding-right: 20px;
+}
+#BaseMapConsole.temp {
+    color: @primarycolor;
+}
+#mnuBaseMap {
+    padding-top: 10px;
+    background-color: transparent;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+    li {
+        background-color: transparent;
+        .mnuThumbnail {
+            /* margin-right:18px; */
+
+            height: 55px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            img {
+                &:hover {
+                    -webkit-box-shadow: 0px 1px 5px 2px @primarycolor-trans;
+                    box-shadow: 0px 1px 5px 2px @primarycolor-trans;
+               }
+               width: 50px;
+               height: 50px;
+               -webkit-border-radius: 50%;
+               -moz-border-radius: 50%;
+               border-radius: 50%;
+          }
+     }
+     //.mnuThumbnail
+     .mnuThumbnail.true {
+         img {
+             border: solid white 1px;
+             -webkit-box-shadow: 0px 1px 5px 2px @secondarycolor-trans;
+                    box-shadow: 0px 1px 5px 2px @secondarycolor-trans;
+        }
+   }
+   //true
+}
+}
+
+.leaflet-control {
+    // background-color: transparent;
+    // color:white;
+}
+.leaflet-control-container {
+    left: 150px;
+    position: fixed;
+    top: 10px;
+    transform: rotate(90deg);
+    a {
+        background-color: transparent;
+        margin-top: 6px;
+        padding-left: 2.5px;
+        padding-top: 2px;
+        text-decoration: none;
+        color: black;
+        &:hover {
+            text-decoration: none;
+       }
+       // background-image: url(images/zoom-out.png);
+  }
+}
+#fakemap {
+    background-color: brown;
+    width: 100%;
+    // height:999px;
+    height: 1000em;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+/* --------------------------------------- NAV & STRUCTURE -------------- */
+
+// .menu{
+//   height:50px;
+//   background-color: brown;
+// }
+// .contents{
+//   background-color: #g5g5h5;
+//   top:0px;
+//   position: relative;
+// }  
+// 
+// 
+// 
+#main{
+  width:100%;
+  top:200px;
+  padding:50px 25px;
+  position:relative;
+    background-color:white;
+    opacity:.8;
+  .mainpanel{
+
+  }
+}
+.site-header {
+    background: none repeat scroll 0 0 transparent;
+    .off-canvas-contents {
+        // this is the wrapper for the menu links, so we nudge it over next to the leaf control
+        padding-left: 0px;
+        left: -30px;
+   }
+}
+.site-nav {
+    padding-top: 17px;
+    padding-bottom: 0px;
+    li {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 2px;
+        display: inline-block;
+        padding: 0 0.8em;
+        text-align: center;
+        a.link {
+          color:gray;
+            &:hover {
+                text-decoration: none;
+                .text-shadow-general
+           }
+           // padding squeezes it down to the same level as the rotated leaflet control
+           padding-top: 8px;
+           padding-bottom: 8px;
+      }
+      a.active {
+          color: black;
+     }
+}
+}
+
+.js-non-menu-container {
+    opacity: .8;
+}
+#wrapper {
+    // display:none;
+    opacity: .7;
+}
+//
+// ------------------------------------- SEARCH

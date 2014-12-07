@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://libweb/lllgeo/lllgeo.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<!-- ================================= Annotation ================================ -->
+	<annotation>
+		<xs:documentation>This is a private namespace that exists solely to inject resource-specific system path and reference elements into metadata for internal control.</xs:documentation>
+	</annotation> 
+	<import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd"/> 
+		<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.loc.gov/standards/mets/version14/xlink.xsd"/> 
+		<element name="lllgeo"> 
+			<complexType> 
+				<sequence> 
+					<any namespace="##targetNamespace" minOccurs="0" maxOccurs="unbounded"/> 
+				</sequence> 
+				<attribute ref="xml:lang" use="optional"/> 
+				<attribute ref="xml:base" use="optional"/> 
+			</complexType> 
+		</element>
+		<element name="coverage" type="lllgeo:simpleElement" />
+			<element name="series" type="lllgeo:simpleElement" />
+			<element name="resid" type="lllgeo:simpleElement" />
+			<element name="classification" type="lllgeo:simpleElement" />
+			<element name="resolution" type="lllgeo:simpleElement" />
+</xs:schema>
