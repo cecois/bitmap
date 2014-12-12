@@ -5,7 +5,7 @@ var Route = Backbone.Router.extend({
         // "home": "home",
         // "about": "about",
         // "search/lll:hash": "searchWithHashed",
-        "search/p:page/:querystring": "search"
+        // "search/p:page/:querystring": "search"
     },
     default: function(h) {
         console.log("running default route and hash:" + h);
@@ -17,9 +17,6 @@ var Route = Backbone.Router.extend({
 
 
 _.each($("#main > .mainpanel"),function(p){
-
-console.log(p.id);
-console.log(h);
 
 if(p.id == h){
     $(p).removeClass("hidden")

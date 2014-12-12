@@ -24,6 +24,7 @@ window.appConsoleView = new ConsoleView({
 });
 
 
+
 /* -------------------------------------------------- BASEMAPS -----------------------  */
 var baselayers = {
     "layers": [{
@@ -142,7 +143,47 @@ appBaseLayersMenuView = new BaseLayersMenuView({
     collection: appBaseLayers
 });
 
+window.appCartoQuery = new CartoQuery();
 
+    var mods = (function() {
+        var json = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': 'offline/cbb_point-og.json',
+            'dataType': "json",
+            'success': function(data) {
+                json = data.rows;
+            },
+            'error':function(){
+                json = "[]";
+            }
+        });
+        return json;
+    })();
+
+    // return json;
+window.appCarto = new FakeCartoCollection(mods);
+
+        // var sql = new cartodb.SQL({
+        //     user: 'pugo'
+        // });
+        // console.log("sql");
+        // console.log(sql);
+        // // sql.execute("SELECT * FROM cbb_point", {
+        // sql.execute("SELECT * FROM cbb_point", {
+        //     id: 10
+        // }).done(function(data) {
+        //     console.log(data.rows);
+        //     // var mods = data.rows;
+
+        // }).error(function(errors) {
+        //     // errors contains a list of errors
+        //     console.log("errors:" + errors);
+        // })
+
+
+var appCartoPlainView = new CartoPlainView({collection:appCarto})
 
 /* -------------------------------------------------- READY -----------------------  */
 $(document).ready(function() {
@@ -151,4 +192,14 @@ $(document).ready(function() {
     });
     $(".leaflet-control-container").appendTo("#wrapper").css("z-index", 88)
     $("a.leaflet-control-zoom-in")
+
+
 }); //ready
+
+$(document).keydown(function(e) {
+        if (e.keyCode == 18) {
+            $("#main").fadeToggle('fast');
+            appConsole.set({"message":"press the 'alt' key to toggle better visibility of the map"})
+
+        }
+    });

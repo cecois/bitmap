@@ -74,11 +74,46 @@ var RecentsView = Backbone.View.extend({
         return this
     }
 });
+
+/* -------------------------------------------------- CartoDBs
+-------------------------------*/
+var CartoPlainView = Backbone.View.extend({
+    // tagName: "li",
+    el: "#query-list",
+    template: Handlebars.templates['cartoPlainView'],
+    initialize: function() {
+        // this.collection.bind('change active', this.render, this);
+        return this.render()
+    },
+    rewire: function(){
+
+$('#query-list').liveFilter("#query-livefilter",'li',{filterChildSelector:'span'});
+
+return this
+
+    },
+    render: function() {
+        if (verbose == true) {
+            console.log("rendering cartoplain")
+            console.log(this.collection)
+        }
+        
+// as good a place as any -- if we're firing here then the arto material changed
+appConsole.set({message:"queried <a href='http://cartodb.com'>CartoDB</a> with: <code>"+appCartoQuery.get("sqlstring")+"</code>"});
+        
+        // notice we are wrapping the collection in rows: cuz cartodb does it
+        $(this.el).html(this.template({rows:this.collection.toJSON()}));
+        
+        return this
+        .rewire()
+    }
+});
 /* -------------------------------------------------- AbtV
 -------------------------------*/
 var HuhView = Backbone.View.extend({
     // tagName: "li",
     el: "#huh",
+    template: Handlebars.templates['home'],
     initialize: function() {
         if (verbose == true) {
             // console.log("initting huhview")
@@ -98,7 +133,7 @@ var HuhView = Backbone.View.extend({
         //     var thisMenuItemView = new MenuItemView({
         //         model: menuitem
         //     });
-        //     $(this.el).append(thisMenuItemView.render().el);
+            $(this.el).html(this.template(this.model.toJSON()))
         // }, this);
         return this
     }
