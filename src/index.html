@@ -45,8 +45,9 @@
 </nav>
 </div>
 <div class="content-wrap pull-right">
- <ul id="mnuBaseMap" class="span6 list-inline pull-right"></ul>
-<div id="BaseMapConsole" class="span6 pull-right"></div>
+ <ul id="mnuBaseMap" class="span6 list-inline pull-right" ></ul>
+ <!-- <div id="BaseMapConsoleWrapper" class="content-wrap pull-right"><span>BaseMap:</span><div id="BaseMapConsole" class=""></div></div> -->
+<!-- <div id="BaseMapConsole" class=""></div> -->
  </div> 
 </header>
 
@@ -68,7 +69,8 @@
 
 <div id="query" class="mainpanel hidden">
 <div class="panel-wrap">
- <input class="offset2 " id="query-livefilter" size="25" type="text" data-provide="typeahead" data-items="4" placeholder="live-filter by typing" value=''>
+<input class="offset2 " id="query-cartodb" size="55" type="text" data-provide="typeahead" data-items="4" placeholder="search the source for new results" value=''>
+ <input class="offset2 " id="query-livefilter" size="25" type="text" data-provide="typeahead" data-items="4" placeholder="live-filter the current results by typing" value=''>
     <ul id="query-list" class="span3"></ul>
 </div>
 </div> <!-- ./query -->
@@ -86,6 +88,7 @@
 <script src="lib/bootstrap.min.js"></script>
 <script type = "text/javascript" language = "Javascript" src = "lib/underscore-min.js"></script>
 <script type = "text/javascript" language = "Javascript" src = "lib/backbone-min.js"></script>
+<script type = "text/javascript" language = "Javascript" src = "lib/backbone.cartodb.js"></script>
 <!--         <script type="text/javascript" language="Javascript" src="models.js"></script>
 <script type="text/javascript" language="Javascript" src="views.js"></script> -->
 <script type="text/javascript" language="Javascript" src="js/models.js"></script>

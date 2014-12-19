@@ -74,38 +74,104 @@ var RecentsView = Backbone.View.extend({
         return this
     }
 });
-
 /* -------------------------------------------------- CartoDBs
 -------------------------------*/
+var CartoCollxView = Backbone.View.extend({
+    // markerTemplate:Handlebars.templates['hitMarkerViewTpl'],
+    initialize: function() {
+        // this.collection.bind('change', this.render, this);
+        // this.listenTo(this.collection, "change", this.render);
+        return this
+        // .render()
+    },
+    render: function() {
+        cbbItems.clearLayers();
+        this.collection.each(function(hit, i) {
+            // var gjraw = hit.get("the_geom_gj");
+            
+            var markerTemplate = Handlebars.templates['hitMarkerViewTpl']
+            var pu = markerTemplate(hit.toJSON());
+            
+            // var pu = this.markerTemplate(hit.toJSON());
+            var gj = $.parseJSON(hit.get("the_geom_gj"))
+            var markerseen = {
+                radius: 5,
+                fillColor: "#ffffff",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.2
+            };
+            var markernew = {
+                radius: 7,
+                fillColor: "#000",
+                color: "#ffffff",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.6
+            };
+            var geojson = L.geoJson(gj, {
+                pointToLayer: function(feature, latlng) {
+                    return L.circleMarker(latlng, markernew);
+                }
+                
+            }).addTo(cbbItems).on("click",function(m){
+
+console.log("this");
+console.log(this);
+console.log("m");
+console.log(m);
+                hit.set({active:true});
+                this.setStyle(markerseen)
+            }).bindPopup(pu);
+        });
+        return this
+    }
+});
 var CartoPlainView = Backbone.View.extend({
     // tagName: "li",
     el: "#query-list",
+    // events:{
+    //     "change":'render'
+    // },
     template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
-        // this.collection.bind('change active', this.render, this);
-        return this.render()
+        // this.collection.bind('change', this.render, this);
+        // this.listenTo(this.collection, "change", this.render);
+        // this.listenTo(this.model, "change", this.render);
+        // this.collection.bind('change', this.render, this);
+        return this
+        // .render()
     },
-    rewire: function(){
-
-$('#query-list').liveFilter("#query-livefilter",'li',{filterChildSelector:'span'});
-
-return this
-
+    debug: function() {
+        console.log("debug cpv signifies change event!");
+    },
+    rewire: function() {
+        $('#query-list').liveFilter("#query-livefilter", 'li', {
+            filterChildSelector: 'div'
+        });
+        $('.bt-cartoobj').tooltip({
+            container: 'body',
+            placement: 'right',
+            trigger: 'hover'
+        })
+        return this
     },
     render: function() {
         if (verbose == true) {
             console.log("rendering cartoplain")
             console.log(this.collection)
         }
-        
-// as good a place as any -- if we're firing here then the arto material changed
-appConsole.set({message:"queried <a href='http://cartodb.com'>CartoDB</a> with: <code>"+appCartoQuery.get("sqlstring")+"</code>"});
-        
+        // as good a place as any -- if we're firing here then the arto material changed
+        appConsole.set({
+            // message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.get("sqlstring") + "</code>"
+            message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.get("wherestring") + "</code>"
+        });
         // notice we are wrapping the collection in rows: cuz cartodb does it
-        $(this.el).html(this.template({rows:this.collection.toJSON()}));
-        
-        return this
-        .rewire()
+        $(this.el).html(this.template({
+            rows: this.collection.toJSON()
+        }));
+        return this.rewire()
     }
 });
 /* -------------------------------------------------- AbtV
@@ -123,7 +189,6 @@ var HuhView = Backbone.View.extend({
     },
     render: function() {
         // $(this.el).empty();
-        
         // $(this.el).html(
         //     "<div class='content-wrap'><h1>Guh.</h1></div>");
         // this.collection.each(function(menuitem) {
@@ -133,7 +198,7 @@ var HuhView = Backbone.View.extend({
         //     var thisMenuItemView = new MenuItemView({
         //         model: menuitem
         //     });
-            $(this.el).html(this.template(this.model.toJSON()))
+        $(this.el).html(this.template(this.model.toJSON()))
         // }, this);
         return this
     }
@@ -147,7 +212,6 @@ var BaseLayerMenuItemView = Backbone.View.extend({
         "click .mnuThumbnail": "setActive",
         // "click a":"killtt",
         // "click a":"rewire"
-        // "click":"debug"
     },
     initialize: function() {
         // this.model.bind("change", this.render, this);
@@ -160,21 +224,30 @@ var BaseLayerMenuItemView = Backbone.View.extend({
         // we need to be sure we kill any active tooltips
         // $(this.el).find("a").tooltip('destroy');
     },
-    setActive: function(){
+    setActive: function() {
         // first a little sugar
         // $("#BaseMapConsole").css("color","white").animate(1500)
-if(this.model.get("active") == true){
-    // it's already active, do nothing
-    return this
-} else {
-    // voodoo? let's verify this works
-    _.invoke(appBaseLayers.models, function(){this.set({active:false},{silent:true})});
-this.model.set({active:true})
-  appConsole.set({message:"basemap switched to "+this.model.get("nom")})
-return this
-}
-// return this
-
+        if (this.model.get("active") == true) {
+            // it's already active, do nothing
+            return this
+        } else {
+            // voodoo? let's verify this works
+            _.invoke(appBaseLayers.models, function() {
+                this.set({
+                    active: false
+                }, {
+                    silent: true
+                })
+            });
+            this.model.set({
+                active: true
+            })
+            appConsole.set({
+                message: "basemap switched to " + this.model.get("nom")
+            })
+            return this
+        }
+        // return this
     },
     setBaseMap: function() {
         // the clicked one becomes active 
@@ -184,7 +257,6 @@ return this
         });
         var newBLayer = this.model;
         appBaseMap.set(newBLayer);
-
     },
     render: function() {
         this.killtt();
@@ -192,7 +264,11 @@ return this
         return this.rewire()
     },
     rewire: function() {
-        // this.$("a").tooltip({placement:'top',trigger:'hover',delay: { show: 1200, hide: 500 }});
+        this.$("a").tooltip({
+            container: "#mnuBaseMap",
+            placement: 'top',
+            trigger: 'hover'
+        });
         // this.$(".tooltip").css("top","-140px");
         // this.$(" > .tooltip").css("top","-140px")
         return this
@@ -215,24 +291,29 @@ var BaseLayersMenuView = Backbone.View.extend({
     render: function() {
         // console.log("in render of BLsMV");
         $(this.el).empty();
-        var baselayerTrue = _.find(this.collection.models, function(lay) {
-            // lay.get("active")==true ? function(){return lay} : function(){return null};
-            if(lay.get("active")==true)
-                {return lay}
-        });
+        // var baselayerTrue = _.find(this.collection.models, function(lay) {
+        //     // lay.get("active")==true ? function(){return lay} : function(){return null};
+        //     if (lay.get("active") == true) {
+        //         return lay
+        //     }
+        // });
+        // if (typeof appBaseMap == 'undefined') {
+        //     // we gonna need one of these...
+        //     appBaseMap = new BaseMap(baselayerTrue)
+        //     if (typeof appBaseMapView == 'undefined') {
+        //         appBaseMapView = new BaseMapView({
+        //             model: appBaseMap
+        //         })
+        //     }
+        // } else {
+        // }
+        // appBaseMap.set(baselayerTrue)
         // var bltDef = baselayerTrue.get("definition")
-
         this.collection.each(function(baselayer) {
             var baseLayerMenuItemView = new BaseLayerMenuItemView({
                 model: baselayer
             });
             $(this.el).append(baseLayerMenuItemView.render().el);
-            if (typeof appBaseMap == 'undefined') {
-                appBaseMap = new BaseMap(baselayerTrue)
-                    if (typeof appBaseMapView == 'undefined') {appBaseMapView = new BaseMapView({model:appBaseMap})}
-            } else {
-                appBaseMap.set(baselayerTrue)
-            }
         }, this);
         return this.rewire()
     },
@@ -240,6 +321,8 @@ var BaseLayersMenuView = Backbone.View.extend({
         console.log("render of BLMV");
         // $("#BaseMapConsole").html(this.model.get("nom"))
         // #returnto -- use underscore to pull this from the collx
+        // $("#mnuBaseMap").attr("title",this.title)
+        $("#mnuBaseMap").tooltip()
         $("#BaseMapConsole").html($(".mnuThumbnail.true").attr("title"))
         // 
         this.$(".mnuThumbnail").hover(function() {
@@ -270,20 +353,98 @@ var BaseLayersMenuView = Backbone.View.extend({
         }
     } //process
 });
+var BaseLayersView = Backbone.View.extend({
+    // tagName: "ul",
+    id: 'map',
+    // el: "#mnuBaseMap",
+    events: {
+        // "click .mnuThumbnail":"process",
+        // "click a":"killtt",
+        // "click a":"rewire"
+        // "change": "render"
+    },
+    // className : "mnuThumbnails",
+    initialize: function() {
+        window.map = new L.Map(this.id, {
+            zoomControl: false,
+            center: [42.22852, -99.05273],
+            zoom: 4,
+            attributionControl: false
+        });
+        this.collection.bind('change:active', this.render, this);
+        this.render()
+    },
+    render: function() {
+        if (typeof baseLayer == 'undefined') {
+            baseLayer = null;
+        } else {
+            map.removeLayer(baseLayer);
+        }
+        // get the active layer's def
+        var aldef = this.collection.findWhere({
+            'active': true
+        }).get("definition")
+        if (aldef.subdomains != undefined) {
+            baseLayer = new L.TileLayer(aldef.url, {
+                subdomains: aldef.subdomains,
+                maxZoom: 18
+            });
+        } else {
+            baseLayer = new L.TileLayer(aldef.url, {
+                maxZoom: 18
+            });
+        }
+        map.addLayer(baseLayer);
+        baseLayer.bringToBack();
+        // $(this.el).empty();
+        // var baselayerTrue = _.find(this.collection.models, function(lay) {
+        //     // lay.get("active")==true ? function(){return lay} : function(){return null};
+        //     if (lay.get("active") == true) {
+        //         return lay
+        //     }
+        // });
+        // if (typeof appBaseMap == 'undefined') {
+        //     // we gonna need one of these...
+        //     appBaseMap = new BaseMap(baselayerTrue)
+        //     if (typeof appBaseMapView == 'undefined') {
+        //         appBaseMapView = new BaseMapView({
+        //             model: appBaseMap
+        //         })
+        //     }
+        // } else {
+        // }
+        // appBaseMap.set(baselayerTrue)
+        // var bltDef = baselayerTrue.get("definition")
+        // this.collection.each(function(baselayer) {
+        //     var baseLayerMenuItemView = new BaseLayerMenuItemView({
+        //         model: baselayer
+        //     });
+        //     $(this.el).append(baseLayerMenuItemView.render().el);
+        // }, this);
+        return this
+        // .rewire()
+    }
+});
 /* -------------------------------------------------- BASEMAPVIEW -----------------------  */
 var BaseMapView = Backbone.View.extend({
     id: "map",
     initialize: function() {
         // this.updateBaseMap();
-        this.model.bind("change", this.updateBaseMap, this);
+        // this.model.bind("change", this.updateBaseMap, this);
+        // this.listenTo(this.model, "change", this.debug);
         // this.model.bind("change:bbox_west change:bbox_south change:bbox_east change:bbox_north", this.render, this);
-        this.render();
+        // this.render();
+        return this
+        // .updateBaseMap()
+    },
+    debug: function() {
+        console.log("debug bmv 338:");
+        console.log(this.model);
+        return this
     },
     render: function() {
         var mapBounds = this.model.getBounds();
-        
         // map.fitBounds(mapBounds);
-        console.log("then et out and do a zoomcheck")
         return this
         // .zoomCheck()
     },
@@ -294,7 +455,6 @@ var BaseMapView = Backbone.View.extend({
         }
     },
     updateBaseMap: function() {
-
         var def = this.model.get("definition");
         // remove global layer here first so we don't keep stacking baselayers
         // (we only need one baselayer at a time, of course)
@@ -327,21 +487,20 @@ var BaseMapView = Backbone.View.extend({
 });
 /* -------------------------------------------------- CONSOLEVIEW -----------------------  */
 var ConsoleView = Backbone.View.extend({
-  el: $("#consoleContainer"),
-  template: Handlebars.templates['consoleViewTpl'],
-  initialize: function() {
-    this.render();
-    this.model.bind("change", this.render, this);
-  },
-  render: function() {
-    $(this.el).html(this.template(this.model.toJSON()))
-    return this;
-  },
-  reset: function() {
-    this.model.set({
-      message: "Hi, I'm Console."
-    })
-    return this
-    .render()
-  }
+    el: $("#consoleContainer"),
+    template: Handlebars.templates['consoleViewTpl'],
+    initialize: function() {
+        this.render();
+        this.model.bind("change", this.render, this);
+    },
+    render: function() {
+        $(this.el).html(this.template(this.model.toJSON()))
+        return this;
+    },
+    reset: function() {
+        this.model.set({
+            message: "Hi, I'm Console."
+        })
+        return this.render()
+    }
 });

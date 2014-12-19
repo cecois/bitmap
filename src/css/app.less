@@ -12,6 +12,12 @@ a {
     text-decoration: none;
     color: red;
 }
+/* --------------------------------------- BOOTSTRAP OVERRIDES -------------- */
+
+.featurette-image{
+  box-shadow: 6px 6px 6px rgba(0,0,0,.4);
+}
+
 /* --------------------------------------- MAP -------------- */
 
 #map {
@@ -64,6 +70,10 @@ a {
 BASEMAP MENU
 ------------ */
 
+#BaseMapConsoleWrapper{
+background-color: black;
+opacity:.5;
+width:auto;
 #BaseMapConsole {
     color: #000;
     font-weight: 800;
@@ -73,6 +83,8 @@ BASEMAP MENU
 #BaseMapConsole.temp {
     color: @primarycolor;
 }
+} //basemapconsolewrapper
+
 #mnuBaseMap {
     padding-top: 10px;
     background-color: transparent;
@@ -160,17 +172,21 @@ BASEMAP MENU
 // 
 // 
 // 
+.block{
+  margin-top:33px;
+  margin-bottom:33px;
+}
 #main{
   width:100%;
   height:70%;
   top:200px;
   position:fixed;
     background-color:white;
-    opacity:.8;
+    opacity:.9;
   overflow:auto;
 // position:absolute;
   .mainpanel{
-  padding:50px 25px;
+  padding:50px 100px;
 position: relative;
 width:100%;
   // overflow:auto;
@@ -187,6 +203,7 @@ width:100%;
 .site-nav {
     padding-top: 17px;
     padding-bottom: 0px;
+    margin-left:-100px;
     li {
         background-color: rgba(0, 0, 0, 0.2);
         border-radius: 2px;

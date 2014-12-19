@@ -24,12 +24,15 @@ window.appConsoleView = new ConsoleView({
 });
 
 
+// window.cbbItems = L.featureGroup()
+//     // .on('click', function() { alert('Clicked on a group!'); })
+//     .addTo(map);
 
 /* -------------------------------------------------- BASEMAPS -----------------------  */
 var baselayers = {
     "layers": [{
         "name": "mapquest",
-        "active": true,
+        "active": false,
         "source": "mapquest",
         "nom": "MapQuest OSM",
         // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/osm/3/4/2.png",
@@ -53,6 +56,21 @@ var baselayers = {
             "subdomains": ["otile1", "otile2", "otile3", "otile4"],
             "maxZoom": 18,
             "url": "http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png",
+            "noWrap": true
+        }
+    }, {
+        "name": "super_mario",
+        "active": true,
+        "source": "mapbox",
+        "nom": "Duncan Graham's Super Mario",
+        "thumb": "offline/mapbox-mario.png",
+        // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/sat/3/4/2.png",
+        "mapis":"light",
+        "definition": {
+            "subdomains": ["a", "b", "c"],
+            "maxZoom": 18,
+            // "url": "http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png",
+            "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
             "noWrap": true
         }
     }
@@ -137,53 +155,140 @@ var baselayers = {
         }
     }]
 }
+
+
 appBaseLayers = new BaseLayersCollection(baselayers.layers);
 // ...for which we need a menu
 appBaseLayersMenuView = new BaseLayersMenuView({
     collection: appBaseLayers
 });
+// ...and an actual map
+appBaseLayersView = new BaseLayersView({
+    collection: appBaseLayers
+});
+
+        // var baselayerTrue = _.find(appBaseLayers.models, function(lay) {
+        //     // lay.get("active")==true ? function(){return lay} : function(){return null};
+        //     if (lay.get("active") == true) {
+        //         return lay
+        //     }
+        // });
+
+// console.log("173 bltrue:");console.log(baselayerTrue);
+// appBaseMap = new BaseMap(baselayerTrue)
+// console.log("175 basemap:");console.log(appBaseMap);
+// appBaseMapView = new BaseMapView()
 
 window.appCartoQuery = new CartoQuery();
 
-    var mods = (function() {
-        var json = null;
-        $.ajax({
-            'async': false,
-            'global': false,
-            'url': 'offline/cbb_point-og.json',
-            'dataType': "json",
-            'success': function(data) {
-                json = data.rows;
-            },
-            'error':function(){
-                json = "[]";
-            }
-        });
-        return json;
-    })();
+    // var mods = (function() {
+    //     var json = null;
+    //     $.ajax({
+    //         'async': false,
+    //         'global': false,
+    //         'url': 'offline/cbb_point-og.json',
+    //         'dataType': "json",
+    //         'success': function(data) {
+    //             json = data.rows;
+    //         },
+    //         'error':function(){
+    //             json = "[]";
+    //         }
+    //     });
+    //     return json;
+    // })();
 
     // return json;
-window.appCarto = new FakeCartoCollection(mods);
+// window.appCarto = new FakeCartoCollection(mods);
+// window.appCarto = new CartoCollection(mods);
+// window.appCarto = new CartoCollection();
+var CartoDB = Backbone.CartoDB({
+        user: 'pugo' // you should put your account name here
+                       // YOURUSER.cartobd.com
+    });
 
-        // var sql = new cartodb.SQL({
-        //     user: 'pugo'
-        // });
-        // console.log("sql");
-        // console.log(sql);
-        // // sql.execute("SELECT * FROM cbb_point", {
-        // sql.execute("SELECT * FROM cbb_point", {
-        //     id: 10
-        // }).done(function(data) {
-        //     console.log(data.rows);
-        //     // var mods = data.rows;
+var CBBCollx= CartoDB.CartoDBCollection.extend({
+        table: 'cbb_point', //public table
+        // format: 'geoJSON',
+        columns: {
+            'name': 'name',
+            'the_geom':'the_geom',
+            // 'lat':'st_y(the_geom)',
+            // 'lng': 'st_x(the_geom)'
+            'anno':'anno'
+        }
+        ,
+        sql: function() {
+        return "select name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj from cbb_point "
+        // +appCartoQuery.get("wherestring");
+    }
+    });
 
-        // }).error(function(errors) {
-        //     // errors contains a list of errors
-        //     console.log("errors:" + errors);
-        // })
+
+/* -------------------------------------------------- INITS -----------------------  */
+// window.appCBBCarto = new CBBCollx();
+window.appCBBCarto = new FakeCartoCollection();
+
+// appCBBCarto.fetch();
+appCBBCarto.bind('reset', function() {
+
+    
+    //  appCBBCarto.each(function(p) {
+    //     console.log(p.get('name'));
+    //     console.log(p);
+    // });
+});
+
+window.appCartoPlainView = new CartoPlainView({collection:appCBBCarto})
+window.appCartoView = new CartoCollxView({collection:appCBBCarto})
+
+appCBBCarto.fetch({
+    success:function(){
+        appCartoPlainView.render();
+        appCartoView.render();
+    }})
+
+// appCBBCarto.fetch(
+// {success:function(){
+// console.log("in success of appCBBCarto fetch");
+// var appCartoPlainView = new CartoPlainView({collection:appCBBCarto})
+// var appCartoView = new CartoCollxView({collection:appCBBCarto})
+    
+    
+// }
+// });
 
 
-var appCartoPlainView = new CartoPlainView({collection:appCarto})
+// window.appCarto = Carto.CartoDBCollection.extend({
+//         table: 'cbb_point', //public table
+//         columns: {
+//             'name': 'name',
+//             'location': 'the_geom'
+//         },
+//         sql: function() {
+//         return "select * from "+table+" "+appCartoQuery.get("wherestring");
+//     }
+//     });
+
+        
+
+/* -------------------------------------------------- Free Funcs -----------------------  */
+
+
+
+
+/* -------------------------------------------------- RUN! -----------------------  */
+
+cbbItems = L.geoJson().addTo(map);
+// honestly not sure why i gotta chain the render here, but there it is :-/
+// if(typeof appCBBFake !== 'undefined')
+// appCBBFake.fetch({
+//     success:function(){
+//         appCartoPlainView.render();
+//         appCartoView.render();
+//     }})
+
+
 
 /* -------------------------------------------------- READY -----------------------  */
 $(document).ready(function() {
@@ -192,6 +297,7 @@ $(document).ready(function() {
     });
     $(".leaflet-control-container").appendTo("#wrapper").css("z-index", 88)
     $("a.leaflet-control-zoom-in")
+
 
 
 }); //ready

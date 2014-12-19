@@ -18,9 +18,12 @@ var RecentsCollection = Backbone.Collection.extend({
         return items;
     }
 }); //recentscollx
+
+var BaseLayer = Backbone.Model.extend({});
 var BaseLayersCollection = Backbone.Collection.extend({
-    model: RecentItem,
+    model: BaseLayer,
     url: function() {
+        return null
         return "js/models/layers.json"
     },
     initialize: function(options) {
@@ -43,13 +46,15 @@ var CartoItem = Backbone.Model.extend({});
 var FakeCartoCollection = Backbone.Collection.extend({
     model: CartoItem,
     url: function() {
-        return "offline/cbb_point.json"
+        // return "offline/cbb_point.json"
+        return "offline/fake_cartodb_resp.json"
     },
     initialize: function(options) {
         options || (options = {});
         return this
     },
     parse: function(data) {
+        
         // console.log("in response of FakeCarto, data and data.rows are...");
         // console.log( data)
         // console.log( data.rows)
@@ -60,15 +65,37 @@ var FakeCartoCollection = Backbone.Collection.extend({
 
 var CartoQuery = Backbone.Model.extend({
     defaults: {
-        sqlstring: "SELECT * FROM cbb_point"
+        wherestring: "WHERE anno LIKE 'Huell%'"
     }
 });
-var CartoCollection = Backbone.Collection.extend({
-    initialize: function() {
+// var CartoCollection = Backbone.Collection.extend({
+//     model:CartoItem,
+//     initialize: function() {
         
-        return this
-    }
-});
+//         // init a cartodb obj
+//         // var sql = new cartodb.SQL({ user: 'pugo' });
+//         return this
+//     },
+//     sql: function(){
+// return new cartodb.SQL({ user: 'pugo' });
+//     },
+//     fetch:function(){
+// var sql = this.sql();
+// sql.execute("SELECT cartodb_id,name,anno,st_y(the_geom) as lat, st_x(the_geom) as lon FROM cbb_point "+appCartoQuery.get("wherestring"))
+//   .done(function(data) {
+//     console.log(data.rows);
+//     // _.each(data.rows,function(r){
+//     //     console.log(r);
+//     // })
+//     this.collection = data.rows
+//   })
+//   .error(function(errors) {
+//     // errors contains a list of errors
+//     console.log("errors:" + errors);
+//   })
+//   return this
+//     }
+// });
 /* -------------------------------------------------- BASEMAP -----------------------  */
 var BaseMap = Backbone.Model.extend({
     defaults: {
