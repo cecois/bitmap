@@ -1,4 +1,5 @@
 var Huh = Backbone.Model.extend({});
+var Method = Backbone.Model.extend({});
 var RecentItem = Backbone.Model.extend({});
 var RecentsCollection = Backbone.Collection.extend({
     model: RecentItem,
@@ -55,6 +56,12 @@ var FakeCartoCollection = Backbone.Collection.extend({
     },
     parse: function(data) {
         
+        _.each(data.rows,function(row,i){
+console.log("i:");console.log(i);
+console.log("row:");console.log(row);
+row.id=i;
+        })
+
         // console.log("in response of FakeCarto, data and data.rows are...");
         // console.log( data)
         // console.log( data.rows)

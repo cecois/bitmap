@@ -38,6 +38,7 @@
                             <li><a href="#huh" class="link">Huh?</a></li>
                             <li><a href="#recent" class="link">Recent</a></li>
                             <li><a href="#query" class="link">Query</a></li>
+                            <li><a href="#method" class="link">Full Story</a></li>
                             <!-- <li><a href="#map" class="link">Map</a></li> -->
 
 
@@ -65,13 +66,30 @@
 <ul class="recents"></ul>
 </div>
 </div> <!-- ./recent -->
+<div id="method" class="mainpanel hidden">
+<div class="panel-wrap">
+    
+</div>
+</div> <!-- ./method-->
 
 
 <div id="query" class="mainpanel hidden">
 <div class="panel-wrap">
-<input class="offset2 " id="query-cartodb" size="55" type="text" data-provide="typeahead" data-items="4" placeholder="search the source for new results" value=''>
- <input class="offset2 " id="query-livefilter" size="25" type="text" data-provide="typeahead" data-items="4" placeholder="live-filter the current results by typing" value=''>
-    <ul id="query-list" class="span3"></ul>
+<div id="query-form" class="col-lg-4">
+    <div class="input-group">
+      <input type="text" class="form-control">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" placeholder="search the source for new results">Search</button>
+      </span>
+    </div><!-- /input-group -->
+
+    <!-- <div><small><input class="offset2" id="query-livefilter" size="40" type="text" placeholder="...or type here to live-filter the current results" value=''></small></div> -->
+    <!-- /query-livefilter -->
+
+  </div><!-- /.col-lg-6 -->
+<!-- <input class="offset2 " id="query-cartodb" size="55" type="text" data-provide="typeahead" data-items="4" placeholder="search the source for new results" value=''> -->
+ 
+    <ul id="query-list" class="pull-left"></ul>
 </div>
 </div> <!-- ./query -->
 

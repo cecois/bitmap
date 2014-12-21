@@ -14,6 +14,11 @@ var huhV = new HuhView({
     model: huh
 })
 
+var method = new Method();
+var methodV = new MethodView({
+    model: method
+})
+
 // new console model and view
 window.appConsole = new Console().set({
     // message: "HINT! Press the 'z' key at any time to reveal the full map."
@@ -219,15 +224,16 @@ var CBBCollx= CartoDB.CartoDBCollection.extend({
         }
         ,
         sql: function() {
-        return "select name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj from cbb_point "
-        // +appCartoQuery.get("wherestring");
+/* -------------------------------------------------- ADD DATE FIELDS HERE TO SORT BY LIST LATER AND TO DO THE RECENTS VIEW -----------------------  */
+        return "select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point "
+        +appCartoQuery.get("wherestring");
     }
     });
 
 
 /* -------------------------------------------------- INITS -----------------------  */
-// window.appCBBCarto = new CBBCollx();
-window.appCBBCarto = new FakeCartoCollection();
+window.appCBBCarto = new CBBCollx();
+// window.appCBBCarto = new FakeCartoCollection();
 
 // appCBBCarto.fetch();
 appCBBCarto.bind('reset', function() {
@@ -242,11 +248,22 @@ appCBBCarto.bind('reset', function() {
 window.appCartoPlainView = new CartoPlainView({collection:appCBBCarto})
 window.appCartoView = new CartoCollxView({collection:appCBBCarto})
 
-appCBBCarto.fetch({
-    success:function(){
-        appCartoPlainView.render();
-        appCartoView.render();
-    }})
+// honestly not sure why i gotta chain the render here, but there it is :-/
+// appCBBCarto.fetch({
+//     success:function(collx,resp,opt){
+
+//         console.log("success, resp:");console.log(resp);
+//         console.log("success, opt:");console.log(opt);
+//         appCartoPlainView.render();
+//         appCartoView.render();
+//     },
+// error:function(c,r,o){
+
+// console.log("in error, r:");console.log(r);
+// console.log("in error, o:");console.log(o);
+
+// }})
+
 
 // appCBBCarto.fetch(
 // {success:function(){
@@ -259,19 +276,6 @@ appCBBCarto.fetch({
 // });
 
 
-// window.appCarto = Carto.CartoDBCollection.extend({
-//         table: 'cbb_point', //public table
-//         columns: {
-//             'name': 'name',
-//             'location': 'the_geom'
-//         },
-//         sql: function() {
-//         return "select * from "+table+" "+appCartoQuery.get("wherestring");
-//     }
-//     });
-
-        
-
 /* -------------------------------------------------- Free Funcs -----------------------  */
 
 
@@ -280,13 +284,7 @@ appCBBCarto.fetch({
 /* -------------------------------------------------- RUN! -----------------------  */
 
 cbbItems = L.geoJson().addTo(map);
-// honestly not sure why i gotta chain the render here, but there it is :-/
-// if(typeof appCBBFake !== 'undefined')
-// appCBBFake.fetch({
-//     success:function(){
-//         appCartoPlainView.render();
-//         appCartoView.render();
-//     }})
+
 
 
 
@@ -297,7 +295,6 @@ $(document).ready(function() {
     });
     $(".leaflet-control-container").appendTo("#wrapper").css("z-index", 88)
     $("a.leaflet-control-zoom-in")
-
 
 
 }); //ready

@@ -25,20 +25,8 @@ var RecentItemView = Backbone.View.extend({
         if (verbose == true) {
             // console.log("rendering recentitemview")
         }
-        // SWAP THIS OUT WHEN HANDLEBARS GETS RUNNING
         $(this.el).html(this.template(this.model.toJSON()));
-        // console.log(this.model.get("name") + " model");
-        // $(this.el).html("<a>"+this.model.get("name")+"</a>");
-        // $(this.el).html("heyo");
-        // $(this.el).addClass(this.model.get("active"))
-        // $(this.el).addClass(this.model.get("icon"))
-        // $(this.el).attr("href", this.model.get("url"))
-        // $(this.el).css("font-size", this.model.get("nudge"))
-        // now go show the associated el
-        // the url doubles as a jq selector
-        // $(this.model.get("url")).toggle()
         return this
-        // .trailerel()
     }
 });
 /* -------------------------------------------------- MIsV
@@ -115,6 +103,8 @@ var CartoCollxView = Backbone.View.extend({
                     return L.circleMarker(latlng, markernew);
                 }
                 
+                ,
+                options:{id :hit.get("id")}
             }).addTo(cbbItems).on("click",function(m){
 
 console.log("this");
@@ -180,6 +170,35 @@ var HuhView = Backbone.View.extend({
     // tagName: "li",
     el: "#huh",
     template: Handlebars.templates['home'],
+    initialize: function() {
+        if (verbose == true) {
+            // console.log("initting huhview")
+        }
+        this.model.bind('change active', this.render, this);
+        this.render()
+    },
+    render: function() {
+        // $(this.el).empty();
+        // $(this.el).html(
+        //     "<div class='content-wrap'><h1>Guh.</h1></div>");
+        // this.collection.each(function(menuitem) {
+        //     if (verbose == true) {
+        // console.log("gonna render the menuitemview")
+        //     }
+        //     var thisMenuItemView = new MenuItemView({
+        //         model: menuitem
+        //     });
+        $(this.el).html(this.template(this.model.toJSON()))
+        // }, this);
+        return this
+    }
+});
+/* -------------------------------------------------- Method
+-------------------------------*/
+var MethodView = Backbone.View.extend({
+    // tagName: "li",
+    el: "#method",
+    template: Handlebars.templates['method'],
     initialize: function() {
         if (verbose == true) {
             // console.log("initting huhview")
