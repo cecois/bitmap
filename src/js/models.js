@@ -19,7 +19,6 @@ var RecentsCollection = Backbone.Collection.extend({
         return items;
     }
 }); //recentscollx
-
 var BaseLayer = Backbone.Model.extend({});
 var BaseLayersCollection = Backbone.Collection.extend({
     model: BaseLayer,
@@ -43,7 +42,94 @@ var BaseLayersCollection = Backbone.Collection.extend({
 }); //recentscollx
 /* -------------------------------------------------- CARTODB -----------------------  */
 var CartoItem = Backbone.Model.extend({});
+// var CBBCollx = Backbone.Collection.extend({
+// model: CartoItem,
+//     url: function() {
+//         // return "offline/cbb_point.json"
+//         return "https://pugo.cartodb.com/api/v1/sql?q=select%20cartodb_id%2Cname%2Canno%2CST_AsGeoJSON(the_geom)%20as%20the_geom_gj%2Ccreated_at%2Cupdated_at%20from%20cbb_point%20WHERE%20anno%20LIKE%20%27Huell%25%27&callback=jQuery211022427363438226922_1419124391932&_=1419124391933"
+//     },
+//     initialize: function(options) {
+//         options || (options = {});
+//         return this
+//     },
+//     parse: function(data){
+// console.log("in parse of 59");
+// console.log(data);alk
+// return data.rows
+//     }
+// }) //CBBCollx
+var CartoQuery = Backbone.Model.extend({
+    defaults: {
+        rawstring: "WHERE anno LIKE 'Huell%'"
+        // rawstring: 'california "huell howser" grove "paul f."'
+    },
+    wherestring: function() {
+        // HERE WE PUT SOME RUDIMENTARY PARSING OF KEYWORDS/QUOTED STRINGS/PLUSES/MINUSES
+        // ALL OTHER WORDS WILL BE SPACE-SLICED AND ANDED TOGETHER
+        // IF WE NEED MORE THAN THAT WE'LL MOVE TO SOLR
+        var raw = this.get("rawstring")
+        // first check for the WHERE flag:
+        if (raw.indexOf('WHERE') == 0) {
+            return raw
+        } else {
+            var quosYes = this.pullQuosYes(raw)
+            var quosNo = this.pullQuosNo(raw)
 
+            console.log("quosYes:");
+            console.log(quosYes);
+            console.log("quosNo:");
+            console.log(quosNo);
+            
+            return quos.join(" AND ")
+        }
+    },
+    pullQuosYes: function(str) {
+        var quosYes = []
+        XRegExp.forEach(str, /"[^\"]*"/, function(match, i) {
+            quosYes.push(match[0])
+            //quos.push(+match[0]);
+        }, []);
+        return quosYes
+    },
+    pullQuosNo: function(str) {
+        var quosNo = []
+        XRegExp.forEach(str, /-"[^\"]*"/, function(match, i) {
+            quosNo.push(match[0])
+            //quos.push(+match[0]);
+        }, []);
+        return quosNo
+    },
+    ready: function() {
+        return encodeURIComponent(this.wherestring())
+    }
+});
+var LiveCartoCollection = Backbone.Collection.extend({
+    model: CartoItem,
+    url: function() {
+        return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
+    },
+    initialize: function(options) {
+        options || (options = {});
+        return this
+    },
+    sync: function(method, collection, options) {
+        // By setting the dataType to "jsonp", jQuery creates a function
+        // and adds it as a callback parameter to the request, e.g.:
+        // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
+        // If you want another name for the callback, also specify the
+        // jsonpCallback option.
+        // After this function is called (by the JSONP response), the script tag
+        // is removed and the parse method is called, just as it would be
+        // when AJAX was used.
+        options.dataType = "jsonp";
+        return Backbone.sync(method, collection, options);
+    },
+    parse: function(data) {
+        console.log("in parse of live..., data:");
+        console.log(data);
+        return data.rows
+    }
+}); //livecarto
 var FakeCartoCollection = Backbone.Collection.extend({
     model: CartoItem,
     url: function() {
@@ -55,30 +141,20 @@ var FakeCartoCollection = Backbone.Collection.extend({
         return this
     },
     parse: function(data) {
-        
-        _.each(data.rows,function(row,i){
-console.log("i:");console.log(i);
-console.log("row:");console.log(row);
-row.id=i;
-        })
-
+        //         _.each(data.rows,function(row,i){
+        // console.log("i:");console.log(i);
+        // console.log("row:");console.log(row);
+        // row.id=i;
+        //         })
         // console.log("in response of FakeCarto, data and data.rows are...");
         // console.log( data)
         // console.log( data.rows)
-        
         return data.rows
     }
 }); //fakecarto
-
-var CartoQuery = Backbone.Model.extend({
-    defaults: {
-        wherestring: "WHERE anno LIKE 'Huell%'"
-    }
-});
 // var CartoCollection = Backbone.Collection.extend({
 //     model:CartoItem,
 //     initialize: function() {
-        
 //         // init a cartodb obj
 //         // var sql = new cartodb.SQL({ user: 'pugo' });
 //         return this

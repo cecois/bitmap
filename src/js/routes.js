@@ -16,6 +16,9 @@ var Route = Backbone.Router.extend({
         var hmod = "#" + h;
 
 
+// this in case the pane had been hidden by the alt key
+$("#main").removeClass("hidden")
+
 _.each($("#main > .mainpanel"),function(p){
 
 if(p.id == h){

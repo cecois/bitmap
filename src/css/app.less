@@ -5,6 +5,17 @@
 @secondarycolor: rgba(211, 255, 3, 1.0000);
 @secondarycolor-trans: rgba(211, 255, 3, .6);
 
+/* --------------------------------------- GENERAL -------------- */
+
+.trigger-loc{
+  font-weight: 800;
+  cursor:pointer;
+  color: @secondarycolor;
+  &:hover{
+    color:#d4d4d4;
+  }
+}
+
 .text-shadow-general {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, .4);
 }
@@ -12,8 +23,18 @@ a {
     text-decoration: none;
     color: red;
 }
+.anno{
+  font-style: italic;
+  color:gray;
+  font-size: .9em;
+}
 /* --------------------------------------- BOOTSTRAP OVERRIDES -------------- */
 
+#method{
+  li{
+    margin-bottom:25px;
+  }
+}
 .featurette-image{
   box-shadow: 6px 6px 6px rgba(0,0,0,.4);
 }
@@ -33,6 +54,13 @@ a {
 #maphider {
     // display:none;
 }
+/* --------------------------------------- HIT MARKER -------------- */
+
+div.leaflet-popup-content .marker.bt{
+  color:red;
+  cursor:pointer;
+}
+
 /* --------------------------------------- HIT BUTTONS -------------- */
 
 .bt-cartoobj{
@@ -248,7 +276,13 @@ margin-bottom:33px;
   // position:fixed;
   font-size: .8em;
   list-style:none;
-  color:red;
+  overflow:auto;
+  // overflow:hidden;
+}
+#episode-list{
+  // position:fixed;
+  font-size: .8em;
+  list-style:none;
   overflow:auto;
   // overflow:hidden;
 }

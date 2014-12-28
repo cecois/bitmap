@@ -1,8 +1,21 @@
 <div class="block"><h4>What's Really Going On?</h4>
-<p>No, for real. Straight up. Professionaly I am a GIS Librarian, which is a job that, in my case anyway, has become almost explicitly a spatial web developer position. There are other systems involved but mostly my profession is to sit alone in a basement and type type type. But listen listen listen also, and that's how I'm able to comb over each and every CBB episode (multiple times). For fun, obviously, but also to pull out various references. You already know that this map is part of a much much larger "BitTracker" project, in which I'm logging individual tropes and recurring bits ("Please call me Garry," "My Wife!" "Titular," etc.) But that's taking longer and will require a much different web app to deliver. This thing I could kinda just knock off once everything was geocoded.</p></div>
-
+<p>No, for real. I literally sat and logged all the spatial references in (soon to be) all Comedy Bang! Bang! episodes, geocoded them, and wrote this web app around them. Professionaly I am a GIS Librarian, which is a job that, in my case anyway, has become almost explicitly a spatial web developer position. There are other systems involved but mostly my profession is to sit alone in a basement and type type type. But listen listen listen also, and that's how I'm able to comb over each and every CBB episode (multiple times). You already know that this map is part of a much much larger "BitTracker" project, in which I'm logging individual tropes and recurring bits ("Please call me Garry," "My Wife!" "Titular," etc.) But that's taking longer and will require a much different web app to deliver. This thing I could kinda just knock off once everything was geocoded.</p></div>
 <div class="block"><h4>*Is* Everything Geocoded?</h4>
 <p>No, actually. Once I realized I wanted to do this, I started re-listening from episode 1, logging locations instead of bits (which I'll pick back up later). I'm only through #143, so there will be plenty more added here in due time. I <em>may</em> add the ability for users to submit locations, but that requires the addition of a whole other layer of app logic. The crowd-sourcing model will better-suit the BitTracker anyway.</p></div>
-
 <div class="block"><h4>How was it Built?</h4>
-<p>No, actually. Once I realized I wanted to do this, I started re-listening from episode 1, logging locations instead of bits (which I'll pick back up later). I'm only through #143, so there will be plenty more added here in due time. I <em>may</em> add the ability for users to submit locations, but that requires the addition of a whole other layer of app logic. The crowd-sourcing model will better-suit the BitTracker anyway.</p></div>
+    <p>I doubt you care, but you're sweet to ask. Imma list pretty much the entire workflow just cuzzi like it when people get kinda specific about this kind of thing:</p>
+    <p>
+    <ul class="">
+        <li>listened to CBB eps in the default podcast app in iOS 6-7-8
+            <div class='anno'>this is actually significant because the timestamps can differ between iOS playback and, say, SoundCloud copies</div>
+        </li>
+        <li>started logging bits/locations directly into a MongoHub account, but eventually went offline into Notes.app on iOS <em>then</em> into MongoHub
+            <div class="anno">Hey, you're right - that does sound like a ridiculous amount of pointless labor. And yet? Here we are.</div>
+        </li>
+        <li>for each master location, I manually placed a marker in a <a href="http://cartodb.com">CartoDB</a> account
+        <div class="anno">...Where "master" location means I'm not going to store a <em>seperate</em> geometry for every mention of <span class="trigger-loc" cartodb_id="">The Pantages <i class="glyphicon glyphicon-map-marker"></i></span> or <span class="trigger-loc" cartodb_id="45">Huell Howser's favorite Taco Bell (the one on Rosemead) <i class="glyphicon glyphicon-map-marker"></i></span>. The Grove gets one marker and the BitTracker will log any individual references to it. Standard database stuff. This is especially important in the case of, say, The Arclight cinema, which is frequented by an almost surprising number of Andy Daly characters.</div>
+    </li>
+
+    </ul>
+    </p>
+</div>

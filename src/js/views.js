@@ -155,8 +155,13 @@ var CartoPlainView = Backbone.View.extend({
         // as good a place as any -- if we're firing here then the arto material changed
         appConsole.set({
             // message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.get("sqlstring") + "</code>"
-            message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.get("wherestring") + "</code>"
+            message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.wherestring() + "</code>"
         });
+
+// var esc = appCartoQuery.ready()
+// var esc = decodeURIComponent(appCartoQuery.get("wherestring"))
+var esc = appCartoQuery.wherestring()
+        $("#query-form-input").val(esc)
         // notice we are wrapping the collection in rows: cuz cartodb does it
         $(this.el).html(this.template({
             rows: this.collection.toJSON()
@@ -197,6 +202,11 @@ var HuhView = Backbone.View.extend({
 -------------------------------*/
 var MethodView = Backbone.View.extend({
     // tagName: "li",
+    events: {
+        "click .trigger-loc": "singular",
+        // "click a":"killtt",
+        // "click a":"rewire"
+    },
     el: "#method",
     template: Handlebars.templates['method'],
     initialize: function() {
@@ -205,6 +215,10 @@ var MethodView = Backbone.View.extend({
         }
         this.model.bind('change active', this.render, this);
         this.render()
+    },
+    singular: function(){
+// zoom to a given map obj
+
     },
     render: function() {
         // $(this.el).empty();
