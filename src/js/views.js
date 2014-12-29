@@ -12,123 +12,79 @@ var CartoCollxView = Backbone.View.extend({
         cbbItems.clearLayers();
         this.collection.each(function(hit, i) {
             // var gjraw = hit.get("the_geom_gj");
-            
             var markerTemplate = Handlebars.templates['hitMarkerViewTpl']
             var pu = markerTemplate(hit.toJSON());
-
-            var markernew = {
-                radius: 6,
-                fillColor: "#000",
-                color: "#ffffff",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.6,
-                cartodb_id: hit.get("cartodb_id").toString()
-            };
-
-                        var markeractive = {
-                radius: 18,
-                fillColor: "#d4ca10",
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.6,
-                cartodb_id: hit.get("cartodb_id").toString()
-            };
-                        var markerseen = {
-                radius: 6,
-                fillColor: "#ffffff",
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.6,
-                cartodb_id: hit.get("cartodb_id").toString()
-            };
-
-// if(hit.get("active")==true){
-    // var mstyle=markerseen
-// } else {
-    var mstyle=markernew
-// }
-
-var hitloc = hit.get("loc")
-var hitloca = hitloc.split(",")
-var hitll = L.latLng(hitloca[0],hitloca[1]);
-var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click",function(m){
-
-// var id = m.options.cartodb_id
-// activateSuperficials(id)
-
-// _.each(cbbItems._layers,function(mar){
-//     console.log("ma in each cbbitems:");console.log(mar.options.seen);
-// })
-// 
-// var stale = _.find(cbbItems._layers,function(i){
-//     return i.options.seen == true
-// });
-_.each(cbbItems._layers,function(i){
-    if(i.options.seen == true){
-
-i.setStyle(markerseen)
-    }
-}) //each
-
-// if(typeof stale !== 'undefined'){
-// stale.setStyle(markerseen)}
-
-                this.setStyle(markeractive)
-
-
-                // hit.set({active:true});
-this.options.seen = true;
-                hit.set({queued:true});
+            // if(hit.get("active")==true){
+            // var mstyle=markerseen
+            // } else {
+            var mstyle = markernew
+            // }
+            var hitloc = hit.get("loc")
+            var hitloca = hitloc.split(",")
+            var hitll = L.latLng(hitloca[0], hitloca[1]);
+            var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
+                // var id = m.options.cartodb_id
+                // activateSuperficials(id)
+                // _.each(cbbItems._layers,function(mar){
+                //     console.log("ma in each cbbitems:");console.log(mar.options.seen);
+                // })
+                // 
+                var stale = _.find(cbbItems._layers,function(i){
+                    return i.options.seen == true
+                });
+processLeaf(hit.get("cartodb_id").toString());
+                // _.each(cbbItems._layers, function(i) {
+                //     if (i.options.seen == true) {
+                //         i.setStyle(markerseen)
+                //     }
+                // }) //each
                 
-                  
-}).bindPopup(pu);
-// var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).bindPopup(pu);
-
-// this.collection.activate(chid)
-
-if(hit.get("active")==true){
-    
-    // if(!$("#main").hasClass('hidden')){
-    if(map.getBounds().contains(hitm.getLatLng()) == false)
-        {map.setView(hitm.getLatLng(),9);}
-    // }
-    hitm.openPopup()
-
-    // hitm.zoomTo()
-} 
-           
-
+                // if(typeof stale !== 'undefined'){
+                // stale.setStyle(markerseen)}
+                this.setStyle(markeractive)
+                // hit.set({active:true});
+                this.options.seen = true;
+                hit.set({
+                    queued: true
+                });
+            }).bindPopup(pu);
+            // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).bindPopup(pu);
+            // this.collection.activate(chid)
+            hitm.options.cartodb_id = hit.get("cartodb_id").toString()
+            if (hit.get("active") == true) {
+                // if(!$("#main").hasClass('hidden')){
+                if (map.getBounds().contains(hitm.getLatLng()) == false) {
+                    map.setView(hitm.getLatLng(), 9);
+                }
+                // }
+                hitm.openPopup()
+                // hitm.zoomTo()
+            }
             // var pu = this.markerTemplate(hit.toJSON());
             // var gj = $.parseJSON(hit.get("the_geom_gj"))
-
-//             var geojson = L.geoJson(gj, {
-//                 pointToLayer: function(feature, latlng) {
-//                     return L.circleMarker(latlng, markernew);
-//                 }
-                
-//                 ,
-//                 options:{id :hit.get("id")}
-//             }).addTo(cbbItems).on("click",function(m){
-
-// console.log("this");
-// console.log(this);
-// console.log("m");
-// console.log(m);
-//                 hit.set({active:true});
-//                 this.setStyle(markerseen)
-//             }).bindPopup(pu);
-        },this);
+            //             var geojson = L.geoJson(gj, {
+            //                 pointToLayer: function(feature, latlng) {
+            //                     return L.circleMarker(latlng, markernew);
+            //                 }
+            //                 ,
+            //                 options:{id :hit.get("id")}
+            //             }).addTo(cbbItems).on("click",function(m){
+            // console.log("this");
+            // console.log(this);
+            // console.log("m");
+            // console.log(m);
+            //                 hit.set({active:true});
+            //                 this.setStyle(markerseen)
+            //             }).bindPopup(pu);
+        }, this);
         return this
     }
 });
 var CartoPlainView = Backbone.View.extend({
     // tagName: "li",
     el: "#query-list",
-    events:{
-        "click .bt-cartoobj-zoomto":'activate'
+    events: {
+        "click .bt-cartoobj-zoomto": 'activate'
     },
     template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
@@ -139,11 +95,9 @@ var CartoPlainView = Backbone.View.extend({
         return this
         // .render()
     },
-    unwire: function(){
-
-$('.bt-cartoobj').tooltip('destroy')
+    unwire: function() {
+        $('.bt-cartoobj').tooltip('destroy')
         return this
-
     },
     rewire: function() {
         $('#query-list').liveFilter("#query-livefilter", 'li', {
@@ -156,20 +110,45 @@ $('.bt-cartoobj').tooltip('destroy')
         })
         return this
     },
-    activate:function(e){
-e.preventDefault()
- var id = $(e.currentTarget).parents('li').data("id").toString();
- console.log("id:");console.log(id);
-mo.set({queued:false})
-        
-// actually first silently deactivate the others
-//  _.each(_.reject(this.collection.models, function(mod){ return mod.get("cartodb_id") == "41";}), function(mo){
-// mo.set({active:false},{silent:true})
-//  }, this)
+    activate: function(e) {
+        if(verbose == true){console.log("in activate of CPV")}
+        e.preventDefault()
+        var id = $(e.currentTarget).parents('li').data("id").toString();
+        console.log("id from parent li");
+        console.log(id);
+        // mo.set({queued:false})
+        // actually first silently deactivate the others
+        _.each(_.reject(this.collection.models, function(mod) {
+            return mod.get("cartodb_id") == id;
+        }), function(mo) {
+            mo.set({
+                active: false,
+                queued: false
+            }, {
+                silent: true
+            })
+        }, this)
         // 
-        // var item = this.collection.findWhere({"cartodb_id":id});
+        var item = this.collection.findWhere({
+            "cartodb_id": id
+        });
+        console.log("item out of collection findwhere:");console.log(item);
+        item.set({
+            queued: true
+        })
 
-        // item.set({active:true})
+// send id and popup flag
+processLeaf(id,true)
+        // _.each(cbbItems._layers, function(i) {
+        //             if (i.options.cartodb_id == id) {
+        //             i.setStyle(markeractive)
+        //                 // i.setStyle(markerseen)
+        //                 if (map.getBounds().contains(i.getLatLng()) == false) {
+        //             map.setView(i.getLatLng(), 9);
+        //         } 
+
+        //         }
+        //         }) //each
 
     },
     render: function() {
@@ -182,10 +161,9 @@ mo.set({queued:false})
             // message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.get("sqlstring") + "</code>"
             message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.solrstring() + "</code>"
         });
-
-// var esc = appCartoQuery.ready()
-// var esc = decodeURIComponent(appCartoQuery.get("wherestring"))
-var esc = appCartoQuery.solrstring()
+        // var esc = appCartoQuery.ready()
+        // var esc = decodeURIComponent(appCartoQuery.get("wherestring"))
+        var esc = appCartoQuery.solrstring()
         $("#query-form-input").val(esc)
         // notice we are wrapping the collection in rows: cuz cartodb does it
         $(this.el).html(this.template({
@@ -241,9 +219,8 @@ var MethodView = Backbone.View.extend({
         this.model.bind('change active', this.render, this);
         this.render()
     },
-    singular: function(){
-// zoom to a given map obj
-
+    singular: function() {
+        // zoom to a given map obj
     },
     render: function() {
         // $(this.el).empty();

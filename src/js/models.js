@@ -63,10 +63,8 @@ var CartoQuery = Backbone.Model.extend({
         rawstring: "anno:huell*"
         // rawstring: 'california "huell howser" grove "paul f."'
     },
-    solrstring: function(){
-
-return this.get("rawstring");
-
+    solrstring: function() {
+        return this.get("rawstring");
     },
     wherestring: function() {
         // HERE WE PUT SOME RUDIMENTARY PARSING OF KEYWORDS/QUOTED STRINGS/PLUSES/MINUSES
@@ -79,12 +77,10 @@ return this.get("rawstring");
         } else {
             var quosYes = this.pullQuosYes(raw)
             var quosNo = this.pullQuosNo(raw)
-
             console.log("quosYes:");
             console.log(quosYes);
             console.log("quosNo:");
             console.log(quosNo);
-            
             return quos.join(" AND ")
         }
     },
@@ -118,9 +114,29 @@ var LiveCartoCollection = Backbone.Collection.extend({
         options || (options = {});
         return this
     },
+    queue: function(qmod) {
+        var inid = qmod.get("cartodb_id").toString()
+        // actually first silently deactivate the others
+        _.each(_.reject(this.models, function(mod) {
+            return mod.get("cartodb_id") == inid;
+        }), function(mo) {
+            mo.set({
+                active: false
+            }, {
+                silent: true
+            })
+        }, this)
+        var item = this.findWhere({
+            "cartodb_id": inid
+        });
+        // this should fire any change active listeners
+        item.set({
+            active: true,
+            queued: false
+        })
+        return this
+    },
     sync: function(method, collection, options) {
-        console.log("collection:");console.log(collection);
-        console.log("options:");console.log(options);
         // By setting the dataType to "jsonp", jQuery creates a function
         // and adds it as a callback parameter to the request, e.g.:
         // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
@@ -150,26 +166,29 @@ var FakeCartoCollection = Backbone.Collection.extend({
         this.bind('change queued', this.queue, this);
         return this
     },
-    queue: function(qmod){
-
-var inid = qmod.get("cartodb_id").toString()
-
-// actually first silently deactivate the others
- _.each(_.reject(this.models, function(mod){ return mod.get("cartodb_id") == inid;}), function(mo){
-mo.set({active:false},{silent:true})
- }, this)
-        
-        var item = this.findWhere({"cartodb_id":inid});
-
-// this should fire any change active listeners
-        item.set({active:true,queued:false})
-
-return this
-
+    queue: function(qmod) {
+        var inid = qmod.get("cartodb_id").toString()
+        // actually first silently deactivate the others
+        _.each(_.reject(this.models, function(mod) {
+            return mod.get("cartodb_id") == inid;
+        }), function(mo) {
+            mo.set({
+                active: false
+            }, {
+                silent: true
+            })
+        }, this)
+        var item = this.findWhere({
+            "cartodb_id": inid
+        });
+        // this should fire any change active listeners
+        item.set({
+            active: true,
+            queued: false
+        })
+        return this
     },
     sync: function(method, collection, options) {
-        console.log("collection:");console.log(collection);
-        console.log("options:");console.log(options);
         // By setting the dataType to "jsonp", jQuery creates a function
         // and adds it as a callback parameter to the request, e.g.:
         // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama

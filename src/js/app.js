@@ -1,6 +1,35 @@
 /* -------------------------------------------------- GLOBALS -----------------------  */
 verbose = true;
 
+            markernew = {
+                radius: 6,
+                fillColor: "#000",
+                color: "#ffffff",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.6,
+                // cartodb_id: hit.get("cartodb_id").toString()
+            };
+
+                        markeractive = {
+                radius: 18,
+                fillColor: "#d4ca10",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.6,
+                // cartodb_id: hit.get("cartodb_id").toString()
+            };
+                        markerseen = {
+                radius: 6,
+                fillColor: "#ffffff",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.6,
+                // cartodb_id: hit.get("cartodb_id").toString()
+            };
+
 $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomprevious glyphicon glyphicon-step-backward" href="#" title="Zoom to Previous"></a>');
 $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomfull glyphicon glyphicon-fullscreen" href="#" title="Zoom Way dafuk out"></a>');
 var recentsCollx = new RecentsCollection([{
@@ -288,9 +317,32 @@ window.appCBBMapView = new CartoCollxView({
 
 // activateSuperficials(id){
 
+function processLeaf(m,pop){
+    console.log("in processleaf, m:");console.log(m);
 
+                _.each(cbbItems._layers, function(i) {
+                    if (i.options.seen == true) {
+                        i.setStyle(markerseen)
+                    }
 
-// }
+                    if(i.options.cartodb_id.toString() == m){
+                i.setStyle(markeractive)
+                i.options.seen = true;
+                if(pop==true){
+                    i.openPopup()
+                }
+
+                    }
+                }) //each
+
+                // if(typeof stale !== 'undefined'){
+                // stale.setStyle(markerseen)}
+                // hit.set({active:true});
+                // hit.set({
+                //     queued: true
+                // });}
+
+}
 
 /* -------------------------------------------------- RUN! -----------------------  */
 cbbItems = L.geoJson().addTo(map);
