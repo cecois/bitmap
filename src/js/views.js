@@ -1,73 +1,9 @@
-/* -------------------------------------------------- MIV
--------------------------------*/
-var RecentItemView = Backbone.View.extend({
-    tagName: "li",
-    template: Handlebars.templates['recentItemViewTpl'],
-    // className: "fi-social-instagram",
-    // className: function(){return this.model.get("icon")},
-    events: {
-        "change": "render",
-        // "click": function() {
-        //     appRoute.navigate(this.model.get("url"), {
-        //         trigger: true,
-        //         replace: true
-        //     })
-        // }
-    } //events
-    ,
-    initialize: function() {
-        // console.log("rim:");
-        // console.log(this.model);
-        return this.render()
-    },
-    // ,className:"general foundicon-plus"
-    render: function() {
-        if (verbose == true) {
-            // console.log("rendering recentitemview")
-        }
-        $(this.el).html(this.template(this.model.toJSON()));
-        return this
-    }
-});
-/* -------------------------------------------------- MIsV
--------------------------------*/
-var RecentsView = Backbone.View.extend({
-    // tagName: "li",
-    el: ".recents",
-    initialize: function() {
-        if (verbose == true) {
-            // console.log("initting recentsview")
-        }
-        this.collection.bind('change active', this.render, this);
-        return this.render()
-    },
-    render: function() {
-        if (verbose == true) {
-            // console.log("rendering recentsview")
-            // console.log(this.collection)
-        }
-        this.collection.each(function(recentitem) {
-            if (verbose == true) {
-                // console.log("gonna render the recentitemview")
-            }
-            var thisRecentItemView = new RecentItemView({
-                model: recentitem
-            });
-            // console.log((thisRecentItemView));
-            // console.log("$(this.el):");console.log($(this.el));
-            $(this.el).append(thisRecentItemView.render().el
-                // "recent item will go here"
-            );
-        }, this);
-        return this
-    }
-});
 /* -------------------------------------------------- CartoDBs
 -------------------------------*/
 var CartoCollxView = Backbone.View.extend({
     // markerTemplate:Handlebars.templates['hitMarkerViewTpl'],
     initialize: function() {
-        // this.collection.bind('change', this.render, this);
+        // this.collection.bind('change', this.debug, this);
         // this.listenTo(this.collection, "change", this.render);
         return this
         // .render()
@@ -79,62 +15,135 @@ var CartoCollxView = Backbone.View.extend({
             
             var markerTemplate = Handlebars.templates['hitMarkerViewTpl']
             var pu = markerTemplate(hit.toJSON());
-            
-            // var pu = this.markerTemplate(hit.toJSON());
-            var gj = $.parseJSON(hit.get("the_geom_gj"))
-            var markerseen = {
-                radius: 5,
-                fillColor: "#ffffff",
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.2
-            };
+
             var markernew = {
-                radius: 7,
+                radius: 6,
                 fillColor: "#000",
                 color: "#ffffff",
                 weight: 1,
                 opacity: 1,
-                fillOpacity: 0.6
+                fillOpacity: 0.6,
+                cartodb_id: hit.get("cartodb_id").toString()
             };
-            var geojson = L.geoJson(gj, {
-                pointToLayer: function(feature, latlng) {
-                    return L.circleMarker(latlng, markernew);
-                }
-                
-                ,
-                options:{id :hit.get("id")}
-            }).addTo(cbbItems).on("click",function(m){
 
-console.log("this");
-console.log(this);
-console.log("m");
-console.log(m);
-                hit.set({active:true});
-                this.setStyle(markerseen)
-            }).bindPopup(pu);
-        });
+                        var markeractive = {
+                radius: 18,
+                fillColor: "#d4ca10",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.6,
+                cartodb_id: hit.get("cartodb_id").toString()
+            };
+                        var markerseen = {
+                radius: 6,
+                fillColor: "#ffffff",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.6,
+                cartodb_id: hit.get("cartodb_id").toString()
+            };
+
+// if(hit.get("active")==true){
+    // var mstyle=markerseen
+// } else {
+    var mstyle=markernew
+// }
+
+var hitloc = hit.get("loc")
+var hitloca = hitloc.split(",")
+var hitll = L.latLng(hitloca[0],hitloca[1]);
+var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click",function(m){
+
+// var id = m.options.cartodb_id
+// activateSuperficials(id)
+
+// _.each(cbbItems._layers,function(mar){
+//     console.log("ma in each cbbitems:");console.log(mar.options.seen);
+// })
+// 
+// var stale = _.find(cbbItems._layers,function(i){
+//     return i.options.seen == true
+// });
+_.each(cbbItems._layers,function(i){
+    if(i.options.seen == true){
+
+i.setStyle(markerseen)
+    }
+}) //each
+
+// if(typeof stale !== 'undefined'){
+// stale.setStyle(markerseen)}
+
+                this.setStyle(markeractive)
+
+
+                // hit.set({active:true});
+this.options.seen = true;
+                hit.set({queued:true});
+                
+                  
+}).bindPopup(pu);
+// var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).bindPopup(pu);
+
+// this.collection.activate(chid)
+
+if(hit.get("active")==true){
+    
+    // if(!$("#main").hasClass('hidden')){
+    if(map.getBounds().contains(hitm.getLatLng()) == false)
+        {map.setView(hitm.getLatLng(),9);}
+    // }
+    hitm.openPopup()
+
+    // hitm.zoomTo()
+} 
+           
+
+            // var pu = this.markerTemplate(hit.toJSON());
+            // var gj = $.parseJSON(hit.get("the_geom_gj"))
+
+//             var geojson = L.geoJson(gj, {
+//                 pointToLayer: function(feature, latlng) {
+//                     return L.circleMarker(latlng, markernew);
+//                 }
+                
+//                 ,
+//                 options:{id :hit.get("id")}
+//             }).addTo(cbbItems).on("click",function(m){
+
+// console.log("this");
+// console.log(this);
+// console.log("m");
+// console.log(m);
+//                 hit.set({active:true});
+//                 this.setStyle(markerseen)
+//             }).bindPopup(pu);
+        },this);
         return this
     }
 });
 var CartoPlainView = Backbone.View.extend({
     // tagName: "li",
     el: "#query-list",
-    // events:{
-    //     "change":'render'
-    // },
+    events:{
+        "click .bt-cartoobj-zoomto":'activate'
+    },
     template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
         // this.collection.bind('change', this.render, this);
-        // this.listenTo(this.collection, "change", this.render);
+        this.listenTo(this.collection, "change", this.render);
         // this.listenTo(this.model, "change", this.render);
         // this.collection.bind('change', this.render, this);
         return this
         // .render()
     },
-    debug: function() {
-        console.log("debug cpv signifies change event!");
+    unwire: function(){
+
+$('.bt-cartoobj').tooltip('destroy')
+        return this
+
     },
     rewire: function() {
         $('#query-list').liveFilter("#query-livefilter", 'li', {
@@ -147,20 +156,36 @@ var CartoPlainView = Backbone.View.extend({
         })
         return this
     },
+    activate:function(e){
+e.preventDefault()
+ var id = $(e.currentTarget).parents('li').data("id").toString();
+ console.log("id:");console.log(id);
+mo.set({queued:false})
+        
+// actually first silently deactivate the others
+//  _.each(_.reject(this.collection.models, function(mod){ return mod.get("cartodb_id") == "41";}), function(mo){
+// mo.set({active:false},{silent:true})
+//  }, this)
+        // 
+        // var item = this.collection.findWhere({"cartodb_id":id});
+
+        // item.set({active:true})
+
+    },
     render: function() {
+        this.unwire()
         if (verbose == true) {
             console.log("rendering cartoplain")
-            console.log(this.collection)
         }
         // as good a place as any -- if we're firing here then the arto material changed
         appConsole.set({
             // message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.get("sqlstring") + "</code>"
-            message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.wherestring() + "</code>"
+            message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.solrstring() + "</code>"
         });
 
 // var esc = appCartoQuery.ready()
 // var esc = decodeURIComponent(appCartoQuery.get("wherestring"))
-var esc = appCartoQuery.wherestring()
+var esc = appCartoQuery.solrstring()
         $("#query-form-input").val(esc)
         // notice we are wrapping the collection in rows: cuz cartodb does it
         $(this.el).html(this.template({
@@ -257,7 +282,8 @@ var BaseLayerMenuItemView = Backbone.View.extend({
         // we need to be sure we kill any active tooltips
         // $(this.el).find("a").tooltip('destroy');
     },
-    setActive: function() {
+    setActive: function(e) {
+        e.preventDefault()
         // first a little sugar
         // $("#BaseMapConsole").css("color","white").animate(1500)
         if (this.model.get("active") == true) {
@@ -535,5 +561,69 @@ var ConsoleView = Backbone.View.extend({
             message: "Hi, I'm Console."
         })
         return this.render()
+    }
+});
+/* -------------------------------------------------- RecentV
+-------------------------------*/
+var RecentItemView = Backbone.View.extend({
+    tagName: "li",
+    template: Handlebars.templates['recentItemViewTpl'],
+    // className: "fi-social-instagram",
+    // className: function(){return this.model.get("icon")},
+    events: {
+        "change": "render",
+        // "click": function() {
+        //     appRoute.navigate(this.model.get("url"), {
+        //         trigger: true,
+        //         replace: true
+        //     })
+        // }
+    } //events
+    ,
+    initialize: function() {
+        // console.log("rim:");
+        // console.log(this.model);
+        return this.render()
+    },
+    // ,className:"general foundicon-plus"
+    render: function() {
+        if (verbose == true) {
+            // console.log("rendering recentitemview")
+        }
+        $(this.el).html(this.template(this.model.toJSON()));
+        return this
+    }
+});
+/* -------------------------------------------------- RecentsV
+-------------------------------*/
+var RecentsView = Backbone.View.extend({
+    // tagName: "li",
+    el: ".recents",
+    initialize: function() {
+        if (verbose == true) {
+            // console.log("initting recentsview")
+        }
+        this.collection.bind('change active', this.render, this);
+        return this.render()
+    },
+    render: function() {
+        if (verbose == true) {
+            // console.log("rendering recentsview")
+            // console.log(this.collection)
+        }
+        this.collection.each(function(recentitem) {
+            if (verbose == true) {
+                // console.log("gonna render the recentitemview")
+            }
+            var thisRecentItemView = new RecentItemView({
+                model: recentitem
+            });
+            // console.log((thisRecentItemView));
+            // console.log("$(this.el):");console.log($(this.el));
+            $(this.el).append(thisRecentItemView.render().el
+                // "recent item will go here"
+            );
+        }, this);
+        return this
     }
 });

@@ -1,6 +1,6 @@
        {{#each rows}}
-       <li>
-       <div class="text-muted">{{this.name}} ({{this.anno}})
+       <li data-id="{{this.cartodb_id}}" class="{{this.active}}">
+       <div class="">{{this.name}} ({{this.anno}})
 
        <span class="glyphicon glyphicon-magnet bt-cartoobj bt-cartoobj-episodes text-muted" title="pull a list of associated episodes"></span>
        <span class="glyphicon glyphicon-share-alt bt-cartoobj bt-cartoobj-zoomto text-muted" title="zoom to this"></span>

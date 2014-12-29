@@ -60,8 +60,13 @@ var CartoItem = Backbone.Model.extend({});
 // }) //CBBCollx
 var CartoQuery = Backbone.Model.extend({
     defaults: {
-        rawstring: "WHERE anno LIKE 'Huell%'"
+        rawstring: "anno:huell*"
         // rawstring: 'california "huell howser" grove "paul f."'
+    },
+    solrstring: function(){
+
+return this.get("rawstring");
+
     },
     wherestring: function() {
         // HERE WE PUT SOME RUDIMENTARY PARSING OF KEYWORDS/QUOTED STRINGS/PLUSES/MINUSES
@@ -106,13 +111,16 @@ var CartoQuery = Backbone.Model.extend({
 var LiveCartoCollection = Backbone.Collection.extend({
     model: CartoItem,
     url: function() {
-        return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
+        // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
+        return "http://solr-lbones.rhcloud.com/cbb/select?json.wrf=cwmccallback&wt=json&q=" + appCartoQuery.solrstring()
     },
     initialize: function(options) {
         options || (options = {});
         return this
     },
     sync: function(method, collection, options) {
+        console.log("collection:");console.log(collection);
+        console.log("options:");console.log(options);
         // By setting the dataType to "jsonp", jQuery creates a function
         // and adds it as a callback parameter to the request, e.g.:
         // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
@@ -122,34 +130,62 @@ var LiveCartoCollection = Backbone.Collection.extend({
         // is removed and the parse method is called, just as it would be
         // when AJAX was used.
         options.dataType = "jsonp";
+        options.jsonpCallback = 'cwmccallback';
         return Backbone.sync(method, collection, options);
     },
-    parse: function(data) {
+    parse: function(response) {
         console.log("in parse of live..., data:");
-        console.log(data);
-        return data.rows
+        console.log(response);
+        return response.response.docs
     }
 }); //livecarto
 var FakeCartoCollection = Backbone.Collection.extend({
     model: CartoItem,
     url: function() {
-        // return "offline/cbb_point.json"
-        return "offline/fake_cartodb_resp.json"
+        // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
+        return "http://localhost:8983/solr/cbb/select?json.wrf=cwmccallback&wt=json&q=" + appCartoQuery.solrstring()
     },
     initialize: function(options) {
         options || (options = {});
+        this.bind('change queued', this.queue, this);
         return this
     },
-    parse: function(data) {
-        //         _.each(data.rows,function(row,i){
-        // console.log("i:");console.log(i);
-        // console.log("row:");console.log(row);
-        // row.id=i;
-        //         })
-        // console.log("in response of FakeCarto, data and data.rows are...");
-        // console.log( data)
-        // console.log( data.rows)
-        return data.rows
+    queue: function(qmod){
+
+var inid = qmod.get("cartodb_id").toString()
+
+// actually first silently deactivate the others
+ _.each(_.reject(this.models, function(mod){ return mod.get("cartodb_id") == inid;}), function(mo){
+mo.set({active:false},{silent:true})
+ }, this)
+        
+        var item = this.findWhere({"cartodb_id":inid});
+
+// this should fire any change active listeners
+        item.set({active:true,queued:false})
+
+return this
+
+    },
+    sync: function(method, collection, options) {
+        console.log("collection:");console.log(collection);
+        console.log("options:");console.log(options);
+        // By setting the dataType to "jsonp", jQuery creates a function
+        // and adds it as a callback parameter to the request, e.g.:
+        // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
+        // If you want another name for the callback, also specify the
+        // jsonpCallback option.
+        // After this function is called (by the JSONP response), the script tag
+        // is removed and the parse method is called, just as it would be
+        // when AJAX was used.
+        options.dataType = "jsonp";
+        options.jsonpCallback = 'cwmccallback';
+        return Backbone.sync(method, collection, options);
+    },
+    parse: function(response) {
+        console.log("in parse of live..., data:");
+        console.log(response);
+        return response.response.docs
     }
 }); //fakecarto
 // var CartoCollection = Backbone.Collection.extend({

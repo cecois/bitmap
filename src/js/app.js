@@ -1,4 +1,6 @@
+/* -------------------------------------------------- GLOBALS -----------------------  */
 verbose = true;
+
 $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomprevious glyphicon glyphicon-step-backward" href="#" title="Zoom to Previous"></a>');
 $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomfull glyphicon glyphicon-fullscreen" href="#" title="Zoom Way dafuk out"></a>');
 var recentsCollx = new RecentsCollection([{
@@ -283,6 +285,13 @@ window.appCBBMapView = new CartoCollxView({
 // }
 // });
 /* -------------------------------------------------- Free Funcs -----------------------  */
+
+// activateSuperficials(id){
+
+
+
+// }
+
 /* -------------------------------------------------- RUN! -----------------------  */
 cbbItems = L.geoJson().addTo(map);
 /* -------------------------------------------------- READY -----------------------  */
@@ -297,20 +306,22 @@ $('#query-form-bt').click(function(e){
 
 
     appCBB.fetch({
+        // dataType: "jsonp",
         success: function() {
-            console.log("successful fetch");
+            // console.log("successful fetch");
 
                 appCBBListView.render()
                 appCBBMapView.render()
 
         },
         error: function() {
-            console.log("failed fetch");
+            // console.log("failed fetch");
         }
     })
 
 
 }) //ready
+
 
     $(".leaflet-control a").each(function() {
         $(this).css("transform", "rotate(-90deg)")
@@ -318,15 +329,18 @@ $('#query-form-bt').click(function(e){
     $(".leaflet-control-container").appendTo("#wrapper").css("z-index", 88)
     $("a.leaflet-control-zoom-in")
     appCBB.fetch({
+
+ // dataType: "jsonp"
+
         success: function() {
-            console.log("successful fetch");
+            // console.log("successful fetch");
 
 appCBBListView.render()
 appCBBMapView.render()
 
         },
         error: function() {
-            console.log("failed fetch");
+            // console.log("failed fetch");
         }
     })
 }); //ready

@@ -2,7 +2,7 @@
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['baseLayerMnuItem'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-  return "<a href=\"#\" class=\"mnuThumbnail "
+  return "<div class=\"mnuThumbnail "
     + escapeExpression(((helper = (helper = helpers.active || (depth0 != null ? depth0.active : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"active","hash":{},"data":data}) : helper)))
     + "\" id=\""
     + escapeExpression(((helper = (helper = helpers.nom || (depth0 != null ? depth0.nom : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"nom","hash":{},"data":data}) : helper)))
@@ -10,11 +10,15 @@ templates['baseLayerMnuItem'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main
     + escapeExpression(((helper = (helper = helpers.nom || (depth0 != null ? depth0.nom : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"nom","hash":{},"data":data}) : helper)))
     + "\">\n      <img src=\""
     + escapeExpression(((helper = (helper = helpers.thumb || (depth0 != null ? depth0.thumb : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"thumb","hash":{},"data":data}) : helper)))
-    + "\" alt=\"\" width=\"55px\" height=\"55px\" />\n    </a>";
+    + "\" alt=\"\" width=\"55px\" height=\"55px\" />\n    </div>";
 },"useData":true});
 templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,data) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "       <li>\n       <div class=\"text-muted\">"
+  return "       <li data-id=\""
+    + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
+    + "\" class=\""
+    + escapeExpression(lambda((depth0 != null ? depth0.active : depth0), depth0))
+    + "\">\n       <div class=\"\">"
     + escapeExpression(lambda((depth0 != null ? depth0.name : depth0), depth0))
     + " ("
     + escapeExpression(lambda((depth0 != null ? depth0.anno : depth0), depth0))
