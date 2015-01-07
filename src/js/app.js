@@ -1,5 +1,9 @@
 /* -------------------------------------------------- GLOBALS -----------------------  */
 verbose = true;
+NProgress.configure({ parent: '#main' });
+window.apphost = "localhost";
+window.solrhost = "http://localhost:8983/solr/";
+
 
             markernew = {
                 radius: 6,
@@ -32,6 +36,9 @@ verbose = true;
 
 $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomprevious glyphicon glyphicon-step-backward" href="#" title="Zoom to Previous"></a>');
 $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomfull glyphicon glyphicon-fullscreen" href="#" title="Zoom Way dafuk out"></a>');
+
+window.appURL = new URL();
+
 var recentsCollx = new RecentsCollection([{
     name: "one"
 }, {
@@ -48,14 +55,11 @@ var method = new Method();
 var methodV = new MethodView({
     model: method
 })
-// new console model and view
-window.appConsole = new Console().set({
-    // message: "HINT! Press the 'z' key at any time to reveal the full map."
-    message: "This is your console. Quasi-important messages will appear here."
-});
-window.appConsoleView = new ConsoleView({
-    model: appConsole
-});
+
+window.appEpisodes = new Episodes();
+// window.appEpisodes = new Episodes();
+window.appEpisodesView = new EpisodesView({collection:appEpisodes});
+
 // window.cbbItems = L.featureGroup()
 //     // .on('click', function() { alert('Clicked on a group!'); })
 //     .addTo(map);
@@ -120,7 +124,7 @@ var baselayers = {
                 "noWrap": true
             }
         }, {
-            "name": "pencil_map",
+            "name": "pencil",
             "active": true,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
@@ -238,6 +242,7 @@ appBaseLayersView = new BaseLayersView({
 // console.log("175 basemap:");console.log(appBaseMap);
 // appBaseMapView = new BaseMapView()
 window.appCartoQuery = new CartoQuery();
+window.appCartoQueryView = new QueryView({model:appCartoQuery});
 // var mods = (function() {
 //     var json = null;
 //     $.ajax({
@@ -255,7 +260,7 @@ window.appCartoQuery = new CartoQuery();
 //     return json;
 // })();
 // return json;
-// window.appCarto = new FakeCartoCollection(mods);
+// window.appCarto = new CartoCollectionDev(mods);
 // window.appCarto = new CartoCollection(mods);
 // window.appCarto = new CartoCollection();
 // var CartoDB = Backbone.CartoDB({
@@ -279,8 +284,15 @@ window.appCartoQuery = new CartoQuery();
 //     }
 //     });
 /* -------------------------------------------------- INITS -----------------------  */
-// window.appCBB = new LiveCartoCollection();
-window.appCBB = new FakeCartoCollection();
+
+switch(apphost) {
+    case "localhost":
+window.appCBB = new CartoCollectionDev();
+        break;
+    default:
+window.appCBB = new CartoCollection();
+}
+
 // appCBBCarto.fetch();
 // appCBBCarto.bind('reset', function() {
 //  appCBBCarto.each(function(p) {
@@ -313,9 +325,49 @@ window.appCBBMapView = new CartoCollxView({
 // var appCartoView = new CartoCollxView({collection:appCBBCarto})
 // }
 // });
+
+// new console model and view
+window.appConsole = new Console().set({
+    // message: "HINT! Press the 'z' key at any time to reveal the full map."
+    message: "This is your console. Quasi-important messages will appear here."
+});
+window.appConsoleView = new ConsoleView({
+    model: appConsole
+});
+
+// new activity model and view
+window.appActivity = new Activity();
+window.appActivityView = new ActivityView({
+    model: appActivity
+});
+
 /* -------------------------------------------------- Free Funcs -----------------------  */
 
-// activateSuperficials(id){
+function pullURL(goto){
+
+if(typeof goto == 'undefined'){
+    // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
+    var hel = $(".mainpanel:not('.hidden')")
+    var h = '#'+$(hel).attr("id")
+
+    // e.g. nothing's been lit up before
+    if(h=="#undefined"){
+        h="#huh"
+    }
+    console.log("hel in pullurl:");console.log(hel);
+    console.log("h in pullurl:");console.log(h);
+} else {
+    var h = goto;
+}
+
+    var bbx = map.getBounds().toBBoxString();
+    var qs = appCartoQuery.get("solrstring")
+    var bl = appBaseLayers.findWhere({active:true}).get("name")
+
+    var url = h+"/"+qs+"/"+bbx+"/"+bl
+    
+    return url
+}
 
 function processLeaf(m,pop){
     console.log("in processleaf, m:");console.log(m);
@@ -346,6 +398,10 @@ function processLeaf(m,pop){
 
 /* -------------------------------------------------- RUN! -----------------------  */
 cbbItems = L.geoJson().addTo(map);
+
+window.appWikiaz = new Wikiaz()
+appWikiaz.fetch();
+
 /* -------------------------------------------------- READY -----------------------  */
 $(document).ready(function() {
 
@@ -353,26 +409,30 @@ $('#query-form-bt').click(function(e){
     e.preventDefault()
 
     var rawstring = $("#query-form-input").val()
+    console.log("rawstring in app 412:");console.log(rawstring);
     
     appCartoQuery.set({rawstring:rawstring})
 
+        appActivity.set({
+            message: "querying...",
+            show: true
+        })
 
     appCBB.fetch({
-        // dataType: "jsonp",
-        success: function() {
-            // console.log("successful fetch");
-
+        success: function(c) {
                 appCBBListView.render()
                 appCBBMapView.render()
-
+                appActivity.set({message: "",show: false,altel:false})
         },
         error: function() {
-            // console.log("failed fetch");
+          appActivity.set({message: "",show: false,altel:false})
+            appConsole.set({message:"query failed",error:true})
         }
     })
 
 
-}) //ready
+
+}) //query-form-bt.click
 
 
     $(".leaflet-control a").each(function() {
@@ -380,21 +440,22 @@ $('#query-form-bt').click(function(e){
     });
     $(".leaflet-control-container").appendTo("#wrapper").css("z-index", 88)
     $("a.leaflet-control-zoom-in")
-    appCBB.fetch({
 
- // dataType: "jsonp"
+  
 
-        success: function() {
-            // console.log("successful fetch");
+    // oh one more thing - let's intercept the query tab button so it doesn't wipe out appcarto each time
+// $("html body header.site-header.off-canvas-container.js-off-canvas-container div.content-wrap.off-canvas-contents nav.site-nav.pull-left ul li a.link.active").click(function(e){
+// $("a[href='#query']").click(function(e){
+//     e.preventDefault();
 
-appCBBListView.render()
-appCBBMapView.render()
+// appCartoQuery
+    // var url = pullURL('#query');
+    
+    // appRoute.navigate(url, {trigger: true, replace: true})
 
-        },
-        error: function() {
-            // console.log("failed fetch");
-        }
-    })
+// })
+
+
 }); //ready
 $(document).keydown(function(e) {
     if (e.keyCode == 18) {

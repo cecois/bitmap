@@ -6,6 +6,7 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="lib/nprogress.css" />
     <script type="text/javascript" language="Javascript" src="lib/components/handlebars/handlebars.runtime.min.js"></script>
     
     <link href="lib/components/off-canvas-menu/vendor/normalize.css" rel="stylesheet" type="text/css">
@@ -52,7 +53,11 @@
  </div> 
 </header>
 
-<div id="main" class="span12">
+<div id="main" class="">
+
+<div id="activityContainer" class="pull-right col-sm-2">
+  <!-- <span id="activity-spin" class="hidden">|</span> -->
+</div>
 
 <div id="huh" class="mainpanel hidden">
 <div class="panel-wrap">
@@ -75,23 +80,38 @@
 
 <div id="query" class="mainpanel hidden">
 <div class="panel-wrap">
-
 <div class="row"><div id="query-form" class="col-lg-4">
-    <div class="input-group">
-      <input type="text" class="form-control" id="query-form-input">
+    
+<div class="input-group">
+      <input type="text" class="form-control" id="query-form-input" value="">
       <span class="input-group-btn">
         <button id="query-form-bt" class="btn btn-default" type="button" placeholder="search the source for new results">Search</button>
       </span>
     </div><!-- /input-group -->
-  </div><!-- /.#query-form -->
+
+</div><!-- /.#query-form -->
+       
+  </div<div class="stats text-muted row">
+         <small><div id="stats-hits" class="col-lg-4 text-muted"></div></small>
+       </div> <!-- ./stats -->
 </div>
+
+
     <!-- <div><small><input class="offset2" id="query-livefilter" size="40" type="text" placeholder="...or type here to live-filter the current results" value=''></small></div> -->
     <!-- /query-livefilter -->
 
 <!-- <input class="offset2 " id="query-cartodb" size="55" type="text" data-provide="typeahead" data-items="4" placeholder="search the source for new results" value=''> -->
  
-    <ul id="query-list" class="pull-left"></ul>
-    <ul id="episode-list" class="pull-right col-lg-6">
+    <ul id="query-list" class="pull-left col-lg-5">
+    </ul>
+    
+    <div class="col-lg-2 episodes hidden">
+      
+      <!-- currenly unused -->
+
+    </div>
+
+    <ul id="episodes-list" class="episodes hidden pull-right col-lg-5 list-unstyled">
       <li>Lorem ipsum dolor  consectetur ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>  
       <li>Lorem ipsum dolor  et dolore magna aliqua. Ut enim ad minim veniam,
@@ -115,6 +135,7 @@
 </div>  <!-- ./main  -->
 
 
+
  <div id="consoleContainer" class="pull-right"></div>
 
 <script src="lib/leaflet/leaflet.js"></script>
@@ -122,6 +143,7 @@
 <script src="js/h-templates-compiled.js"></script>
 <script src="lib/components/jquery/jquery.min.js"></script>
 <script type="text/javascript" language="Javascript" src="lib/jquery.liveFilter.js"></script>
+<script type="text/javascript" language="Javascript" src="lib/nprogress.js"></script>
 <script src="lib/bootstrap.min.js"></script>
 <script src="lib/xregexp-all.js"></script>
 <script type = "text/javascript" language = "Javascript" src = "lib/underscore-min.js"></script>

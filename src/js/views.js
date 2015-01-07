@@ -23,24 +23,10 @@ var CartoCollxView = Backbone.View.extend({
             var hitloca = hitloc.split(",")
             var hitll = L.latLng(hitloca[0], hitloca[1]);
             var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
-                // var id = m.options.cartodb_id
-                // activateSuperficials(id)
-                // _.each(cbbItems._layers,function(mar){
-                //     console.log("ma in each cbbitems:");console.log(mar.options.seen);
-                // })
-                // 
-                var stale = _.find(cbbItems._layers,function(i){
+                var stale = _.find(cbbItems._layers, function(i) {
                     return i.options.seen == true
                 });
-processLeaf(hit.get("cartodb_id").toString());
-                // _.each(cbbItems._layers, function(i) {
-                //     if (i.options.seen == true) {
-                //         i.setStyle(markerseen)
-                //     }
-                // }) //each
-                
-                // if(typeof stale !== 'undefined'){
-                // stale.setStyle(markerseen)}
+                processLeaf(hit.get("cartodb_id").toString());
                 this.setStyle(markeractive)
                 // hit.set({active:true});
                 this.options.seen = true;
@@ -60,22 +46,6 @@ processLeaf(hit.get("cartodb_id").toString());
                 hitm.openPopup()
                 // hitm.zoomTo()
             }
-            // var pu = this.markerTemplate(hit.toJSON());
-            // var gj = $.parseJSON(hit.get("the_geom_gj"))
-            //             var geojson = L.geoJson(gj, {
-            //                 pointToLayer: function(feature, latlng) {
-            //                     return L.circleMarker(latlng, markernew);
-            //                 }
-            //                 ,
-            //                 options:{id :hit.get("id")}
-            //             }).addTo(cbbItems).on("click",function(m){
-            // console.log("this");
-            // console.log(this);
-            // console.log("m");
-            // console.log(m);
-            //                 hit.set({active:true});
-            //                 this.setStyle(markerseen)
-            //             }).bindPopup(pu);
         }, this);
         return this
     }
@@ -84,7 +54,8 @@ var CartoPlainView = Backbone.View.extend({
     // tagName: "li",
     el: "#query-list",
     events: {
-        "click .bt-cartoobj-zoomto": 'activate'
+        "click .bt-cartoobj-zoomto": 'activate',
+        "click .bt-cartoobj-episodes": 'pulleps'
     },
     template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
@@ -99,7 +70,30 @@ var CartoPlainView = Backbone.View.extend({
         $('.bt-cartoobj').tooltip('destroy')
         return this
     },
+    pulleps: function(e) {
+        appActivity.set({
+            message: "fetching episodes...",
+            show: true,
+            altel: "#episodes-list"
+        })
+        var locid = $(e.target).attr("data-id")
+        appEpisodes.activeloc = Number(locid);
+        appEpisodes.fetch({
+            reset: true,
+            success: function(c, r, o) {
+                // appActivity.set({message:"fetching episodes...",spin:true})
+                // appActivityView.stfu()
+                // again i'm not sure why this isn't firing from its event trigger
+                // appEpisodesView.render()
+                appActivity.set({message: "",show: false,altel:false})
+            }
+        });
+        return this.activate(e)
+    },
     rewire: function() {
+        // reactivating some pieces that get wiped in the render
+        // actually -- first, since we're here for the same reason -- let's wipe the episodes list, too
+        appEpisodesView.wipe();
         $('#query-list').liveFilter("#query-livefilter", 'li', {
             filterChildSelector: 'div'
         });
@@ -108,15 +102,17 @@ var CartoPlainView = Backbone.View.extend({
             placement: 'right',
             trigger: 'hover'
         })
+        // a little non-backbone stuff
+        $("#stats-hits").html("total hits: " + this.collection.length)
         return this
     },
     activate: function(e) {
-        if(verbose == true){console.log("in activate of CPV")}
+        if (verbose == true) {
+            console.log("in activate of CPV")
+        }
         e.preventDefault()
         var id = $(e.currentTarget).parents('li').data("id").toString();
-        console.log("id from parent li");
-        console.log(id);
-        // mo.set({queued:false})
+
         // actually first silently deactivate the others
         _.each(_.reject(this.collection.models, function(mod) {
             return mod.get("cartodb_id") == id;
@@ -132,13 +128,11 @@ var CartoPlainView = Backbone.View.extend({
         var item = this.collection.findWhere({
             "cartodb_id": id
         });
-        console.log("item out of collection findwhere:");console.log(item);
         item.set({
             queued: true
         })
-
-// send id and popup flag
-processLeaf(id,true)
+        // send id and popup flag
+        processLeaf(id, true)
         // _.each(cbbItems._layers, function(i) {
         //             if (i.options.cartodb_id == id) {
         //             i.setStyle(markeractive)
@@ -146,25 +140,16 @@ processLeaf(id,true)
         //                 if (map.getBounds().contains(i.getLatLng()) == false) {
         //             map.setView(i.getLatLng(), 9);
         //         } 
-
         //         }
         //         }) //each
-
     },
     render: function() {
         this.unwire()
         if (verbose == true) {
             console.log("rendering cartoplain")
         }
-        // as good a place as any -- if we're firing here then the arto material changed
-        appConsole.set({
-            // message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.get("sqlstring") + "</code>"
-            message: "queried <a href='http://cartodb.com'>CartoDB</a> with: <code>" + appCartoQuery.solrstring() + "</code>"
-        });
-        // var esc = appCartoQuery.ready()
-        // var esc = decodeURIComponent(appCartoQuery.get("wherestring"))
-        var esc = appCartoQuery.solrstring()
-        $("#query-form-input").val(esc)
+        // var esc = appCartoQuery.solrstring()
+        // $("#query-form-input").val(esc)
         // notice we are wrapping the collection in rows: cuz cartodb does it
         $(this.el).html(this.template({
             rows: this.collection.toJSON()
@@ -186,16 +171,6 @@ var HuhView = Backbone.View.extend({
         this.render()
     },
     render: function() {
-        // $(this.el).empty();
-        // $(this.el).html(
-        //     "<div class='content-wrap'><h1>Guh.</h1></div>");
-        // this.collection.each(function(menuitem) {
-        //     if (verbose == true) {
-        // console.log("gonna render the menuitemview")
-        //     }
-        //     var thisMenuItemView = new MenuItemView({
-        //         model: menuitem
-        //     });
         $(this.el).html(this.template(this.model.toJSON()))
         // }, this);
         return this
@@ -223,16 +198,6 @@ var MethodView = Backbone.View.extend({
         // zoom to a given map obj
     },
     render: function() {
-        // $(this.el).empty();
-        // $(this.el).html(
-        //     "<div class='content-wrap'><h1>Guh.</h1></div>");
-        // this.collection.each(function(menuitem) {
-        //     if (verbose == true) {
-        // console.log("gonna render the menuitemview")
-        //     }
-        //     var thisMenuItemView = new MenuItemView({
-        //         model: menuitem
-        //     });
         $(this.el).html(this.template(this.model.toJSON()))
         // }, this);
         return this
@@ -327,24 +292,6 @@ var BaseLayersMenuView = Backbone.View.extend({
     render: function() {
         // console.log("in render of BLsMV");
         $(this.el).empty();
-        // var baselayerTrue = _.find(this.collection.models, function(lay) {
-        //     // lay.get("active")==true ? function(){return lay} : function(){return null};
-        //     if (lay.get("active") == true) {
-        //         return lay
-        //     }
-        // });
-        // if (typeof appBaseMap == 'undefined') {
-        //     // we gonna need one of these...
-        //     appBaseMap = new BaseMap(baselayerTrue)
-        //     if (typeof appBaseMapView == 'undefined') {
-        //         appBaseMapView = new BaseMapView({
-        //             model: appBaseMap
-        //         })
-        //     }
-        // } else {
-        // }
-        // appBaseMap.set(baselayerTrue)
-        // var bltDef = baselayerTrue.get("definition")
         this.collection.each(function(baselayer) {
             var baseLayerMenuItemView = new BaseLayerMenuItemView({
                 model: baselayer
@@ -432,31 +379,6 @@ var BaseLayersView = Backbone.View.extend({
         }
         map.addLayer(baseLayer);
         baseLayer.bringToBack();
-        // $(this.el).empty();
-        // var baselayerTrue = _.find(this.collection.models, function(lay) {
-        //     // lay.get("active")==true ? function(){return lay} : function(){return null};
-        //     if (lay.get("active") == true) {
-        //         return lay
-        //     }
-        // });
-        // if (typeof appBaseMap == 'undefined') {
-        //     // we gonna need one of these...
-        //     appBaseMap = new BaseMap(baselayerTrue)
-        //     if (typeof appBaseMapView == 'undefined') {
-        //         appBaseMapView = new BaseMapView({
-        //             model: appBaseMap
-        //         })
-        //     }
-        // } else {
-        // }
-        // appBaseMap.set(baselayerTrue)
-        // var bltDef = baselayerTrue.get("definition")
-        // this.collection.each(function(baselayer) {
-        //     var baseLayerMenuItemView = new BaseLayerMenuItemView({
-        //         model: baselayer
-        //     });
-        //     $(this.el).append(baseLayerMenuItemView.render().el);
-        // }, this);
         return this
         // .rewire()
     }
@@ -521,15 +443,51 @@ var BaseMapView = Backbone.View.extend({
         // .zoomCheck()
     }
 });
+/* -------------------------------------------------- QUERYVIEW -----------------------  */
+var QueryView = Backbone.View.extend({
+    el: $("#query-form-input"),
+    events: {
+        "click #query-form-bt": "setstage",
+        // "click a":"killtt",
+        // "click a":"rewire"
+        // "change": "render"
+    },
+    template: Handlebars.templates['queryViewTpl'],
+    initialize: function() {
+        this.render();
+        this.listenTo(this.model, "change", this.render)
+        // this.model.bind("change", this.render, this);
+    },
+    setstage: function() {
+        $("#query-list").html("")
+    },
+    render: function() {
+        console.log("in rnder of QV");
+        console.log("rawstring");
+        console.log(this.model.get("rawstring"));
+        console.log("solrstring");
+        console.log(this.model.get("solrstring"));
+        if (this.model.get("error") == true) {
+            $(this.el).addClass("error")
+        }
+        // $(this.el).html(this.template(this.model.toJSON()))
+        $(this.el).val(this.model.get("solrstring"))
+        return this
+    }
+});
 /* -------------------------------------------------- CONSOLEVIEW -----------------------  */
 var ConsoleView = Backbone.View.extend({
     el: $("#consoleContainer"),
     template: Handlebars.templates['consoleViewTpl'],
     initialize: function() {
         this.render();
+        this.listenTo(appCartoQuery, "change", this.render)
         this.model.bind("change", this.render, this);
     },
     render: function() {
+        if (this.model.get("error") == true) {
+            $(this.el).addClass("error")
+        }
         $(this.el).html(this.template(this.model.toJSON()))
         return this;
     },
@@ -538,6 +496,38 @@ var ConsoleView = Backbone.View.extend({
             message: "Hi, I'm Console."
         })
         return this.render()
+    }
+});
+/* -------------------------------------------------- ACTIVITYVIEW -----------------------  */
+var ActivityView = Backbone.View.extend({
+    el: $("#activityContainer"),
+    template: Handlebars.templates['activityViewTpl'],
+    initialize: function() {
+        this.render();
+        this.model.bind("change", this.render, this);
+    },
+    render: function() {
+        var show = this.model.get("show")
+        var msg = this.model.get("message")
+        var altel = this.model.get("altel")
+        if (show == true) {
+            if (typeof altel !== 'undefined' && altel !== false && altel !== null) {
+                NProgress.configure({
+                    parent: altel
+                });
+                NProgress.start();
+            } else {
+                // if(spin==true)  {
+                NProgress.start();
+            }
+        } else {
+            // NProgress.done();
+            NProgress.done().configure({
+                    parent: "#main"
+                });
+        }
+        $(this.el).html(this.template(this.model.toJSON()))
+        return this
     }
 });
 /* -------------------------------------------------- RecentV
@@ -598,6 +588,105 @@ var RecentsView = Backbone.View.extend({
             // console.log((thisRecentItemView));
             // console.log("$(this.el):");console.log($(this.el));
             $(this.el).append(thisRecentItemView.render().el
+                // "recent item will go here"
+            );
+        }, this);
+        return this
+    }
+});
+/* -------------------------------------------------- EpiV
+-------------------------------*/
+var EpisodeView = Backbone.View.extend({
+    tagName: "li",
+    template: Handlebars.templates['episodeViewTpl'],
+    // className: "fi-social-instagram",
+    // className: function(){return this.model.get("icon")},
+    events: {
+        "change": "render",
+        // "click": function() {
+        //     appRoute.navigate(this.model.get("url"), {
+        //         trigger: true,
+        //         replace: true
+        //     })
+        // }
+    } //events
+    ,
+    initialize: function() {
+        // console.log("rim:");
+        // console.log(this.model);
+        return this.render()
+    },
+    // ,className:"general foundicon-plus"
+    render: function() {
+        if (verbose == true) {
+            // console.log("rendering recentitemview")
+        }
+        $(this.el).html(this.template(this.model.toJSON()));
+        return this
+    }
+});
+/* -------------------------------------------------- EpsV
+-------------------------------*/
+var EpisodesView = Backbone.View.extend({
+    // tagName: "li",
+    el: "#episodes-list",
+    initialize: function() {
+        if (verbose == true) {
+            // console.log("initting recentsview")
+        }
+        this.collection.bind('reset', this.render, this);
+        // this.collection.bind("reset", _.bind(this.debug, this));
+        // this.listenTo(this.collection, "change", this.render);
+        // return this.render()
+    },
+    debug: function() {
+        console.log("RESET trigger");
+    },
+    wipe: function(){
+
+$(this.el).empty();
+return this
+
+    },
+    render: function() {
+        $(this.el).empty()
+        $(this.el).html("<h5>Episodes</h5>")
+        // we use .episodes cuz we have some stuff outside of the el we wanna unhide, too
+        if (this.collection.models.length > 0) {
+            $(".episodes").removeClass('hidden')
+        } else {
+            $(this.el).html("None found (or <em>maybe</em> an error occurred. Who's to know?)")
+        }
+        if (verbose == true) {
+            // console.log("rendering recentsview")
+            // console.log(this.collection)
+        }
+        this.collection.each(function(episode) {
+            if (verbose == true) {
+                // console.log("gonna render the recentitemview")
+            }
+            console.log("episode:");
+            console.log(episode);
+            console.log(episode.get("id_wikia"));
+            var wikiaid = Number(episode.get("id_wikia"))
+            var wikia = appWikiaz.findWhere({
+                "id": wikiaid
+            })
+            if (typeof wikia !== 'undefined') {
+                episode.set({
+                    title: wikia.get("title")
+                })
+            } else {
+                episode.set({
+                    title: "[title not found at comedybangbang.wikia.com]"
+                })
+            }
+            var thisEpView = new EpisodeView({
+                model: episode
+            });
+            // console.log((thisRecentItemView));
+            // console.log("$(this.el):");console.log($(this.el));
+            $(this.el).append(thisEpView.render().el
                 // "recent item will go here"
             );
         }, this);

@@ -89,7 +89,39 @@ div.leaflet-popup-content .marker.bt{
     border-left-width: 0;
     margin-bottom: 0;
 
+}
 
+/* --------------------------------------- ACTIVITY -------------- */
+
+#activityContainer {
+  #activity-spin{margin-right:6px;}
+
+  
+  #activity-spin.true{
+content: "88888";
+color:"#b4a5b1";
+  }
+  #activity-spin.false{
+    display:none;
+content: "000";
+color:"#a9d9d1";
+  }
+    // bottom:25px;
+    top:5px;
+    padding:5px 10px;
+    background-color:white;
+    opacity: .5;
+    margin-left: 0px;
+    font-size: .8em;
+    right: 0;
+    position: relative;
+    // position: fixed;
+    text-align: left;
+    border-radius:3px;
+
+          border-bottom-width: 0;
+    border-left-width: 0;
+    margin-bottom: 0;
 }
 
 /* --------------------------------------- MAP MENU -------------- */
@@ -272,17 +304,30 @@ margin-bottom:33px;
   margin-left:44px;
   margin-bottom:33px;
 }
+.stats{
+
+  font-size:.8em;
+    margin-bottom:22px;
+    margin-left:22px;
+    color:gray;
+#stats-hits{
+}
+  }
 #query-list{
+  
   // position:fixed;
   font-size: .8em;
   list-style:none;
   overflow:auto;
   // overflow:hidden;
+  li{
+    margin-bottom:8px;
+  }
   li.true{
     color: @secondarycolor;
   }
 }
-#episode-list{
+#episodes-list{
   // position:fixed;
   font-size: .8em;
   list-style:none;
