@@ -445,9 +445,9 @@ var BaseMapView = Backbone.View.extend({
 });
 /* -------------------------------------------------- QUERYVIEW -----------------------  */
 var QueryView = Backbone.View.extend({
-    el: $("#query-form-input"),
+    el: $("#query-form"),
     events: {
-        "click #query-form-bt": "setstage",
+        "click #query-form-bt": "fire",
         // "click a":"killtt",
         // "click a":"rewire"
         // "change": "render"
@@ -458,6 +458,17 @@ var QueryView = Backbone.View.extend({
         this.listenTo(this.model, "change", this.render)
         // this.model.bind("change", this.render, this);
     },
+    fire: function(){
+console.log("fire!!!!!!");
+    
+    var rawstring = $("#query-form-input").val()
+    console.log("rawstring");
+    console.log(rawstring);
+    appCartoQuery.set({rawstring:rawstring})
+
+    appRoute.navigate(pullURL("#query"), {trigger: true,replace: true})
+
+    },
     setstage: function() {
         $("#query-list").html("")
     },
@@ -467,11 +478,12 @@ var QueryView = Backbone.View.extend({
         console.log(this.model.get("rawstring"));
         console.log("solrstring");
         console.log(this.model.get("solrstring"));
+        // appRoute.update()
         if (this.model.get("error") == true) {
             $(this.el).addClass("error")
         }
-        // $(this.el).html(this.template(this.model.toJSON()))
-        $(this.el).val(this.model.get("solrstring"))
+        $(this.el).html(this.template(this.model.toJSON()))
+        // $(this.el).val(this.model.get("solrstring"))
         return this
     }
 });

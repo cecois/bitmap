@@ -105,7 +105,8 @@ var CartoItem = Backbone.Model.extend({});
 // }) //CBBCollx
 var CartoQuery = Backbone.Model.extend({
     defaults: {
-        rawstring: "*:*"
+        rawstring: "*:*",
+        solrstring: "*:*"
         // rawstring: 'california "huell howser" grove "paul f."'
     },
         initialize: function(options) {

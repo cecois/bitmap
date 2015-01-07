@@ -354,8 +354,6 @@ if(typeof goto == 'undefined'){
     if(h=="#undefined"){
         h="#huh"
     }
-    console.log("hel in pullurl:");console.log(hel);
-    console.log("h in pullurl:");console.log(h);
 } else {
     var h = goto;
 }
@@ -405,34 +403,33 @@ appWikiaz.fetch();
 /* -------------------------------------------------- READY -----------------------  */
 $(document).ready(function() {
 
-$('#query-form-bt').click(function(e){
-    e.preventDefault()
+// $('#query-form-bt').click(function(e){
+//     e.preventDefault()
 
-    var rawstring = $("#query-form-input").val()
-    console.log("rawstring in app 412:");console.log(rawstring);
+//     var rawstring = $("#query-form-input").val()
     
-    appCartoQuery.set({rawstring:rawstring})
+//     appCartoQuery.set({rawstring:rawstring})
 
-        appActivity.set({
-            message: "querying...",
-            show: true
-        })
+//         appActivity.set({
+//             message: "querying...",
+//             show: true
+//         })
 
-    appCBB.fetch({
-        success: function(c) {
-                appCBBListView.render()
-                appCBBMapView.render()
-                appActivity.set({message: "",show: false,altel:false})
-        },
-        error: function() {
-          appActivity.set({message: "",show: false,altel:false})
-            appConsole.set({message:"query failed",error:true})
-        }
-    })
+//     appCBB.fetch({
+//         success: function(c) {
+//                 appCBBListView.render()
+//                 appCBBMapView.render()
+//                 appActivity.set({message: "",show: false,altel:false})
+//         },
+//         error: function() {
+//           appActivity.set({message: "",show: false,altel:false})
+//             appConsole.set({message:"query failed",error:true})
+//         }
+//     })
 
 
 
-}) //query-form-bt.click
+// }) //query-form-bt.click
 
 
     $(".leaflet-control a").each(function() {

@@ -13,18 +13,20 @@ var Route = Backbone.Router.extend({
     },
     initialize: function(){
 
-this.listenTo(appCartoQuery, "change", this.update)
+// this.listenTo(appCartoQuery, "change", this.update)
 
 
     },
-    update: function(){
+    update: function(el){
 
 console.log("update of route cuzza appcartoquery change trigger ");
-var url = pullURL()
+console.log("el is:");
+console.log(el);
+var url = pullURL(el)
 
-console.log("new url would be:");console.log(url);
+console.log("appcartoquery at 25 here:");console.log(appCartoQuery.get("rawstring"));
 
-// this.navigate(url, {trigger: false, replace: false})
+this.navigate(url, {trigger: false, replace: false})
 
     },
     default: function(h, q, bbox, basemap) {
@@ -37,14 +39,17 @@ console.log("new url would be:");console.log(url);
             })
         }
         if (typeof q !== 'undefined' && q !== null) {
+            console.log("incoming q is:"+q);
             appCartoQuery.set({
                 rawstring: q
             })
-        } else {
-            appCartoQuery.set({
-                rawstring: '*:*'
-            })
         }
+
+// now if *that* didn't set up our query, something needs to
+console.log("rawstring at 47 of route");
+console.log(appCartoQuery.get("rawstring"));
+
+        // }
         if (typeof bbox !== 'undefined' && bbox !== null && bbox !== "null") {
             // #returnto to clean this up
             var asarr = bbox.split(",");
@@ -68,6 +73,7 @@ console.log("new url would be:");console.log(url);
         } else if (h == 'query') {
             // a live one, this, let's fire off the query
             console.log("a live query hash!");
+this.update("#query")
             appActivity.set({
                 message: "querying...",
                 show: true,
