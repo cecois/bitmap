@@ -66,7 +66,7 @@ var CartoPlainView = Backbone.View.extend({
         // this.listenTo(this.collection, "change active", this.sort);
         // this.listenTo(this.collection, "change", this.sort);
         // this.listenTo(this.collection, "change", this.sort);
-        // this.listenTo(this.collection, "change queued", this.activate);
+        this.listenTo(this.collection, "change queued", this.fromzoom);
         // this.listenTo(this.collection, "change active", this.render);
         // this.listenTo(this.model, "change", this.render);
         // this.collection.bind('change', this.render, this);
@@ -75,7 +75,22 @@ var CartoPlainView = Backbone.View.extend({
     },
     debug: function(){
 
-console.log("here cuzza change active");
+console.log("here cuzza change queued");
+
+    },
+    fromzoom: function(cm){
+
+var czid = cm.get("cartodb_id")
+console.log("czid in fromzoom:");console.log(czid);
+
+// var a = $(e.currentTarget).parents('li')
+
+var a = $(this.el).find("li[data-id='"+czid+"']")
+
+console.log("a at 90:");console.log(a);
+
+
+return this.activate(a)
 
     },
     unwire: function() {
