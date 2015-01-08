@@ -20,19 +20,19 @@ templates['baseLayerMnuItem'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main
 },"useData":true});
 templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,data) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "       <li data-id=\""
+  return "<li data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
-    + "\" class=\""
-    + escapeExpression(lambda((depth0 != null ? depth0.active : depth0), depth0))
-    + "\">\n       <div class=\"\">"
+    + "\" class=\"\">\n<div class=\"\">"
     + escapeExpression(lambda((depth0 != null ? depth0.name : depth0), depth0))
     + " ("
     + escapeExpression(lambda((depth0 != null ? depth0.anno : depth0), depth0))
-    + ")\n       <span class=\"glyphicon glyphicon-share-alt bt-cartoobj bt-cartoobj-zoomto text-muted\" title=\"zoom to this\"></span>\n\n       <span data-id=\""
+    + ")\n<span class=\"glyphicon glyphicon-share-alt bt-cartoobj bt-cartoobj-zoomto text-muted\" title=\"zoom to this\"></span>\n\n<span data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
-    + "\" class=\"glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes text-muted\" title=\"pull a list of associated episodes\"></span>\n       </div>\n       </li>\n";
+    + "\" class=\"glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes text-muted\" title=\"pull a list of associated episodes\"></span>\n</div>\n</li>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, buffer = "       <h5>Locations</h5>\n";
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h4>Locations <small>("
+    + escapeExpression(((helper = (helper = helpers.count || (depth0 != null ? depth0.count : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"count","hash":{},"data":data}) : helper)))
+    + ")</small></h4>\n\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.rows : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer;

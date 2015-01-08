@@ -131,7 +131,7 @@ var CartoCollection = Backbone.Collection.extend({
     host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return "http://solr-lbones.rhcloud.com/cbb_carto/select?json.wrf=cwmccallback&wt=json&rows=100&q=" + appCartoQuery.get("solrstring")
+        return "http://solr-lbones.rhcloud.com/cbb_carto/select?json.wrf=cwmccallback&wt=json&rows=900&q=" + appCartoQuery.get("solrstring")
     },
     initialize: function(options) {
         options || (options = {});
@@ -181,8 +181,11 @@ var CartoCollectionDev = Backbone.Collection.extend({
         host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return "http://localhost:8983/solr/cbb_carto/select?json.wrf=cwmccallback&rows=100&wt=json&q=" + appCartoQuery.solrstring()
+        return "http://localhost:8983/solr/cbb_carto/select?json.wrf=cwmccallback&rows=900&wt=json&q=" + appCartoQuery.solrstring()
     },
+    comparator: function(m) {
+    return -m.get('active');
+},
     initialize: function(options) {
         options || (options = {});
         this.bind('change queued', this.queue, this);
@@ -227,33 +230,7 @@ var CartoCollectionDev = Backbone.Collection.extend({
         return response.response.docs
     }
 }); //fakecarto
-// var CartoCollection = Backbone.Collection.extend({
-//     model:CartoItem,
-//     initialize: function() {
-//         // init a cartodb obj
-//         // var sql = new cartodb.SQL({ user: 'pugo' });
-//         return this
-//     },
-//     sql: function(){
-// return new cartodb.SQL({ user: 'pugo' });
-//     },
-//     fetch:function(){
-// var sql = this.sql();
-// sql.execute("SELECT cartodb_id,name,anno,st_y(the_geom) as lat, st_x(the_geom) as lon FROM cbb_point "+appCartoQuery.get("wherestring"))
-//   .done(function(data) {
-//     console.log(data.rows);
-//     // _.each(data.rows,function(r){
-//     //     console.log(r);
-//     // })
-//     this.collection = data.rows
-//   })
-//   .error(function(errors) {
-//     // errors contains a list of errors
-//     console.log("errors:" + errors);
-//   })
-//   return this
-//     }
-// });
+
 /* -------------------------------------------------- BASEMAP -----------------------  */
 var BaseMap = Backbone.Model.extend({
     defaults: {

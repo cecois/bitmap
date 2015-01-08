@@ -1,7 +1,10 @@
 /* -------------------------------------------------- CartoDBs
 -------------------------------*/
 var CartoCollxView = Backbone.View.extend({
-    // markerTemplate:Handlebars.templates['hitMarkerViewTpl'],
+    events: {
+        // "click .bt.marker": 'stageeps',
+        // "click .bt-cartoobj-episodes": 'stageeps'
+    },
     initialize: function() {
         // this.collection.bind('change', this.debug, this);
         // this.listenTo(this.collection, "change", this.render);
@@ -54,23 +57,44 @@ var CartoPlainView = Backbone.View.extend({
     // tagName: "li",
     el: "#query-list",
     events: {
-        "click .bt-cartoobj-zoomto": 'activate',
+        "click .bt-cartoobj-zoomto": 'zoomto',
         "click .bt-cartoobj-episodes": 'pulleps'
     },
     template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
         // this.collection.bind('change', this.render, this);
-        this.listenTo(this.collection, "change", this.render);
+        // this.listenTo(this.collection, "change active", this.sort);
+        // this.listenTo(this.collection, "change", this.sort);
+        // this.listenTo(this.collection, "change", this.sort);
+        // this.listenTo(this.collection, "change queued", this.activate);
+        // this.listenTo(this.collection, "change active", this.render);
         // this.listenTo(this.model, "change", this.render);
         // this.collection.bind('change', this.render, this);
         return this
         // .render()
     },
+    debug: function(){
+
+console.log("here cuzza change active");
+
+    },
     unwire: function() {
+        console.log("in unwire at 81");
         $('.bt-cartoobj').tooltip('destroy')
         return this
     },
+    stageeps: function(e) {
+        console.log("in stageps at 85");
+        return this.pulleps(e)
+    },
+    sort: function() {
+        
+        this.collection.sort()
+        return this
+    },
     pulleps: function(e) {
+
+        console.log("in pulleps at 95");
         appActivity.set({
             message: "fetching episodes...",
             show: true,
@@ -85,12 +109,30 @@ var CartoPlainView = Backbone.View.extend({
                 // appActivityView.stfu()
                 // again i'm not sure why this isn't firing from its event trigger
                 // appEpisodesView.render()
-                appActivity.set({message: "",show: false,altel:false})
+                appActivity.set({
+                    message: "",
+                    show: false,
+                    altel: false
+                })
             }
         });
-        return this.activate(e)
+
+        e.preventDefault()
+        // var am = $(e.currentTarget).parents('li').data("id").toString();
+        var a = $(e.currentTarget).parents('li')
+
+        return this.activate(a)
+    },
+    zoomto: function(e){
+
+e.preventDefault()
+        var a = $(e.currentTarget).parents('li')
+
+        return this.activate(a)
+
     },
     rewire: function() {
+        console.log("in rewire at 117");
         // reactivating some pieces that get wiped in the render
         // actually -- first, since we're here for the same reason -- let's wipe the episodes list, too
         appEpisodesView.wipe();
@@ -106,16 +148,21 @@ var CartoPlainView = Backbone.View.extend({
         $("#stats-hits").html("total hits: " + this.collection.length)
         return this
     },
-    activate: function(e) {
-        if (verbose == true) {
-            console.log("in activate of CPV")
-        }
-        e.preventDefault()
-        var id = $(e.currentTarget).parents('li').data("id").toString();
+    activate: function(a) {
+        console.log("incoming a is :");console.log(a);
 
+// first wipe the list of any true classes (see ~184 for explanation)
+        $(this.el).find("li").removeClass("true")
+
+        // var amid = am.get("cartodb_id")
+        var amid = $(a).data("id").toString();
+        console.log("incoming amid is :");console.log(amid);
+        if (verbose == true) {
+        console.log("in activate at 133");
+        }
         // actually first silently deactivate the others
         _.each(_.reject(this.collection.models, function(mod) {
-            return mod.get("cartodb_id") == id;
+            return mod.get("cartodb_id") == amid;
         }), function(mo) {
             mo.set({
                 active: false,
@@ -125,14 +172,14 @@ var CartoPlainView = Backbone.View.extend({
             })
         }, this)
         // 
+        processLeaf(amid, true)
         var item = this.collection.findWhere({
-            "cartodb_id": id
+            "cartodb_id": amid
         });
         item.set({
-            queued: true
+            active: true
         })
         // send id and popup flag
-        processLeaf(id, true)
         // _.each(cbbItems._layers, function(i) {
         //             if (i.options.cartodb_id == id) {
         //             i.setStyle(markeractive)
@@ -142,16 +189,26 @@ var CartoPlainView = Backbone.View.extend({
         //         } 
         //         }
         //         }) //each
+        // GUH? WHAT'S THIS? It's a straight-up jquery hack to waaaaay more quickly light up the active model's list item
+        // cuz doing it with a proper backbone re-render took forever (.8 seconds)
+        $(a).addClass("true")
+        return this
+        // .render()
     },
     render: function() {
+        console.log("in render at 170");
         this.unwire()
         if (verbose == true) {
             console.log("rendering cartoplain")
         }
+        _.sortBy(this.collection.models, function(mod) {
+            return mod.get("active") == 'true';
+        });
         // var esc = appCartoQuery.solrstring()
         // $("#query-form-input").val(esc)
         // notice we are wrapping the collection in rows: cuz cartodb does it
         $(this.el).html(this.template({
+            count: this.collection.models.length,
             rows: this.collection.toJSON()
         }));
         return this.rewire()
@@ -458,16 +515,17 @@ var QueryView = Backbone.View.extend({
         this.listenTo(this.model, "change", this.render)
         // this.model.bind("change", this.render, this);
     },
-    fire: function(){
-console.log("fire!!!!!!");
-    
-    var rawstring = $("#query-form-input").val()
-    console.log("rawstring");
-    console.log(rawstring);
-    appCartoQuery.set({rawstring:rawstring})
-
-    appRoute.navigate(pullURL("#query"), {trigger: true,replace: true})
-
+    fire: function() {
+        var rawstring = $("#query-form-input").val()
+        console.log("rawstring");
+        console.log(rawstring);
+        appCartoQuery.set({
+            rawstring: rawstring
+        })
+        appRoute.navigate(pullURL("#query"), {
+            trigger: true,
+            replace: true
+        })
     },
     setstage: function() {
         $("#query-list").html("")
@@ -535,8 +593,8 @@ var ActivityView = Backbone.View.extend({
         } else {
             // NProgress.done();
             NProgress.done().configure({
-                    parent: "#main"
-                });
+                parent: "#main"
+            });
         }
         $(this.el).html(this.template(this.model.toJSON()))
         return this
@@ -654,11 +712,9 @@ var EpisodesView = Backbone.View.extend({
     debug: function() {
         console.log("RESET trigger");
     },
-    wipe: function(){
-
-$(this.el).empty();
-return this
-
+    wipe: function() {
+        $(this.el).empty();
+        return this
     },
     render: function() {
         $(this.el).empty()
