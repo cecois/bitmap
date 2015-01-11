@@ -1,16 +1,83 @@
-@menutext: #444444;
-@primarycolor: rgba(26, 255, 245, 1.00000);
-@primarycolor-trans: rgba(26, 255, 245, .60000);
+@primarycolor: rgba(18, 136, 185, 1.0000);
+@menutext: @primarycolor;
+@primarycolor-trans: rgba(18, 136, 185, .4000);
 
-@secondarycolor: rgba(211, 255, 3, 1.0000);
-@secondarycolor-trans: rgba(211, 255, 3, .6);
+@secondarycolor: rgba(254, 205, 11, 1.0000);
+@secondarycolor-trans: rgba(254, 205, 11, .4000);
+
+@tertiarycolor: rgba(250, 250, 250, 1.0000);
+@tertiarycolor-trans: rgba(250, 250, 250, .4000);
+
+.stroke {text-shadow:
+    -1px -1px 0 @secondarycolor,
+    1px -1px 0 @secondarycolor,
+    -1px 1px 0 @secondarycolor,
+    1px 1px 0 @secondarycolor; }
+
+.stroke-h1 {text-shadow:
+    -1px -1px 0 white,
+    1px -1px 0 white,
+    -1px 1px 0 white,
+    1px 1px 0 white; }
+
+.stroke-active {
+color:@secondarycolor;
+  text-shadow:
+    -1px -1px 0 @primarycolor-trans,
+    1px -1px 0 @primarycolor-trans,
+    -1px 1px 0 @primarycolor-trans,
+    1px 1px 0 @primarycolor-trans,
+    -10px -10px 0px @secondarycolor-trans,
+    10px -10px 0px @secondarycolor-trans,
+    -10px 10px 0px @secondarycolor-trans,
+    10px 10px 0px @secondarycolor-trans,
+    -12px -12px 0px @primarycolor-trans,
+12px -12px 0px @primarycolor-trans,
+-12px 12px 0px @primarycolor-trans,
+12px 12px 0px @primarycolor-trans;
+  }
+
+/* --------------------------------------- NPROGRESS OVERRIDES -------------- */
+
+#nprogress .spinner{
+  top:50%;
+  right:50%;
+}
+#nprogress .spinner-icon {
+    height:20px;
+    width:20px;
+    border-width:1px;
+    border-color: @secondarycolor transparent transparent @secondarycolor-trans;
+}
+
+#nprogress .bar {
+  background: @secondarycolor;
+
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+}
 
 /* --------------------------------------- GENERAL -------------- */
-
-.trigger-loc{
-  font-weight: 800;
+body{
+  color:@secondarycolor;
+  // font-family: 'Roboto', sans-serif;
+  font-family: 'Mandali', sans-serif;
+  small{
+    color:inherit;
+  }
+}
+h1{
+  .stroke-h1;
+}
+.loc-trigger{
+  font-weight: 400;
   cursor:pointer;
-  color: @secondarycolor;
+  color: @tertiarycolor;
   &:hover{
     color:#d4d4d4;
   }
@@ -21,11 +88,16 @@
 }
 a {
     text-decoration: none;
-    color: red;
+    // color: @primarycolor;
+    color: @tertiarycolor;
+    font-weight:400;
+    &:hover{
+      text-decoration: none;
+    }
 }
 .anno{
   font-style: italic;
-  color:gray;
+  // color:gray;
   font-size: .9em;
 }
 /* --------------------------------------- BOOTSTRAP OVERRIDES -------------- */
@@ -56,8 +128,14 @@ a {
 }
 /* --------------------------------------- HIT MARKER -------------- */
 
+.leaflet-popup-content{
+  h5{
+    color:@primarycolor;
+  }
+}
+
 div.leaflet-popup-content .marker.bt{
-  color:red;
+  color:@secondarycolor;
   cursor:pointer;
 }
 
@@ -67,7 +145,7 @@ div.leaflet-popup-content .marker.bt{
   cursor: pointer;
   margin-left: 5px;
   &:hover{
-  color:@primarycolor;
+  color:@secondarycolor;
   }
 }
 
@@ -76,7 +154,7 @@ div.leaflet-popup-content .marker.bt{
 #consoleContainer {
     bottom: 0px;
     padding:5px 10px;
-    background-color:white;
+    background-color:@tertiarycolor-trans;
     opacity: .5;
     margin-left: 0px;
     font-size: .8em;
@@ -94,6 +172,7 @@ div.leaflet-popup-content .marker.bt{
 /* --------------------------------------- ACTIVITY -------------- */
 
 #activityContainer {
+  color:@secondarycolor;
   #activity-spin{margin-right:6px;}
 
   
@@ -109,7 +188,7 @@ color:"#a9d9d1";
     // bottom:25px;
     top:5px;
     padding:5px 10px;
-    background-color:white;
+    background-color:@tertiarycolor-trans;
     opacity: .5;
     margin-left: 0px;
     font-size: .8em;
@@ -237,11 +316,15 @@ width:auto;
   margin-bottom:33px;
 }
 #main{
+  
+  background-color: @primarycolor;
+  border-top:solid 3px @secondarycolor;
+  border-bottom:solid 5px @secondarycolor;
   width:100%;
   height:70%;
   top:200px;
   position:fixed;
-    background-color:white;
+    // background-color:white;
     opacity:.9;
   overflow:auto;
 // position:absolute;
@@ -252,6 +335,10 @@ width:100%;
   // overflow:auto;
   }
 }
+
+#main.hiddenish{
+    top:95%;
+  }
 .site-header {
     background: none repeat scroll 0 0 transparent;
     .off-canvas-contents {
@@ -261,17 +348,31 @@ width:100%;
    }
 }
 .site-nav {
-    padding-top: 17px;
+    padding-top: 12px;
     padding-bottom: 0px;
-    margin-left:-100px;
+    // margin-left:-100px;
+    margin-left:-200px;
     li {
-        background-color: rgba(0, 0, 0, 0.2);
-        border-radius: 2px;
+        // background-color: rgba(0, 0, 0, 0.2);
+        // border-radius: 2px;
+   
+font-weight:800;
+        font-size:1.5em;
         display: inline-block;
-        padding: 0 0.8em;
+        padding: 0 0.4em;
+        margin-right:10px;
         text-align: center;
+
         a.link {
-          color:gray;
+          color:@primarycolor;
+   
+     .stroke;
+
+   /* Will override color (regardless of order) */
+   //      -webkit-text-fill-color: @primarycolor-trans; 
+   // -webkit-text-stroke-width: 1px;
+   // -webkit-text-stroke-color: @secondarycolor;
+
             &:hover {
                 text-decoration: none;
                 .text-shadow-general
@@ -281,7 +382,9 @@ width:100%;
            padding-bottom: 8px;
       }
       a.active {
-          color: black;
+          color: @primarycolor;
+          .stroke-active;
+          
      }
 }
 }
@@ -296,8 +399,15 @@ width:100%;
 //
 // ------------------------------------- QUERY
 // 
+
 #query-form{
 margin-bottom:33px;
+#query-form-input{
+  border:solid 1px @secondarycolor;
+}
+#query-form-bt{
+  background-color:@secondarycolor;
+}
 }
 #query-livefilter{
   position:relative;
@@ -316,9 +426,9 @@ margin-bottom:33px;
 #query-list{
   
   // position:fixed;
-  font-size: .8em;
+  // font-size: .8em;
   list-style:none;
-  overflow:auto;
+  overflow:hidden;
   // overflow:hidden;
   li{
     margin-bottom:8px;
@@ -333,4 +443,18 @@ margin-bottom:33px;
   list-style:none;
   overflow:auto;
   // overflow:hidden;
+}
+
+//
+// ------------------------------------- OTHER
+// 
+#bt-showmain{
+  cursor:pointer;
+  z-index:77;
+  &:active{
+    color:@tertiarycolor;
+  }
+  &:hover{
+    color:gray;
+  }
 }

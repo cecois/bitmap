@@ -11,6 +11,10 @@ var CartoCollxView = Backbone.View.extend({
         return this
         // .render()
     },
+    fit: function() {
+        map.fitBounds(cbbItems.getBounds())
+        return this
+    },
     render: function() {
         cbbItems.clearLayers();
         this.collection.each(function(hit, i) {
@@ -50,15 +54,16 @@ var CartoCollxView = Backbone.View.extend({
                 // hitm.zoomTo()
             }
         }, this);
-        return this
+        return this.fit()
     }
 });
 var CartoPlainView = Backbone.View.extend({
     // tagName: "li",
     el: "#query-list",
     events: {
-        "click .bt-cartoobj-zoomto": 'zoomto',
-        "click .bt-cartoobj-episodes": 'pulleps'
+        "click .bt-cartoobj-zoomto": 'zoomtointernal',
+        "click .bt-cartoobj-episodes": 'pulleps',
+        "click .bt-getid": 'echoid'
     },
     template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
@@ -73,25 +78,27 @@ var CartoPlainView = Backbone.View.extend({
         return this
         // .render()
     },
-    debug: function(){
-
-console.log("here cuzza change queued");
-
+    debug: function() {
+        console.log("here cuzza change queued");
     },
-    fromzoom: function(cm){
+    echoid: function(e) {
+var locid = $(e.target).attr("data-id")
+var str = '<span class="loc-trigger" data-string="cartodb_id:'+locid+'"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
+console.log("locid:"+locid);
+console.log("usable span:");
+console.log(str);
 
-var czid = cm.get("cartodb_id")
-console.log("czid in fromzoom:");console.log(czid);
-
-// var a = $(e.currentTarget).parents('li')
-
-var a = $(this.el).find("li[data-id='"+czid+"']")
-
-console.log("a at 90:");console.log(a);
-
-
-return this.activate(a)
-
+        return this
+    },
+    fromzoom: function(cm) {
+        var czid = cm.get("cartodb_id")
+        console.log("czid in fromzoom:");
+        console.log(czid);
+        // var a = $(e.currentTarget).parents('li')
+        var a = $(this.el).find("li[data-id='" + czid + "']")
+        console.log("a at 90:");
+        console.log(a);
+        return this.activate(a)
     },
     unwire: function() {
         console.log("in unwire at 81");
@@ -103,12 +110,10 @@ return this.activate(a)
         return this.pulleps(e)
     },
     sort: function() {
-        
         this.collection.sort()
         return this
     },
     pulleps: function(e) {
-
         console.log("in pulleps at 95");
         appActivity.set({
             message: "fetching episodes...",
@@ -131,20 +136,20 @@ return this.activate(a)
                 })
             }
         });
-
         e.preventDefault()
         // var am = $(e.currentTarget).parents('li').data("id").toString();
         var a = $(e.currentTarget).parents('li')
-
         return this.activate(a)
     },
-    zoomto: function(e){
-
-e.preventDefault()
+    zoomtointernal: function(e) {
+        e.preventDefault()
         var a = $(e.currentTarget).parents('li')
-
         return this.activate(a)
-
+    },
+    zoomfromexternal: function(czid) {
+        console.log("czid in zoomfromexternal is :");console.log(czid);
+        var a = $(this.el).find("li[data-id='" + czid + "']")
+        return this.activate(a)
     },
     rewire: function() {
         console.log("in rewire at 117");
@@ -164,16 +169,16 @@ e.preventDefault()
         return this
     },
     activate: function(a) {
-        console.log("incoming a is :");console.log(a);
-
-// first wipe the list of any true classes (see ~184 for explanation)
+        console.log("incoming a is :");
+        console.log(a);
+        // first wipe the list of any true classes (see ~184 for explanation)
         $(this.el).find("li").removeClass("true")
-
         // var amid = am.get("cartodb_id")
         var amid = $(a).data("id").toString();
-        console.log("incoming amid is :");console.log(amid);
+        console.log("incoming amid is :");
+        console.log(amid);
         if (verbose == true) {
-        console.log("in activate at 133");
+            console.log("in activate at 133");
         }
         // actually first silently deactivate the others
         _.each(_.reject(this.collection.models, function(mod) {
@@ -234,6 +239,9 @@ e.preventDefault()
 var HuhView = Backbone.View.extend({
     // tagName: "li",
     el: "#huh",
+    events:{
+// "click #bt-showmain":"reset"
+    },
     template: Handlebars.templates['home'],
     initialize: function() {
         if (verbose == true) {
@@ -246,35 +254,16 @@ var HuhView = Backbone.View.extend({
         $(this.el).html(this.template(this.model.toJSON()))
         // }, this);
         return this
+    },
+    reset: function(){
+console.log("showmain clicked");
+console.log(e);
+$("#bt-showmain").addClass('hidden')
+$("#main").addClass('hiddenish')
+return this
     }
 });
-/* -------------------------------------------------- Method
--------------------------------*/
-var MethodView = Backbone.View.extend({
-    // tagName: "li",
-    events: {
-        "click .trigger-loc": "singular",
-        // "click a":"killtt",
-        // "click a":"rewire"
-    },
-    el: "#method",
-    template: Handlebars.templates['method'],
-    initialize: function() {
-        if (verbose == true) {
-            // console.log("initting huhview")
-        }
-        this.model.bind('change active', this.render, this);
-        this.render()
-    },
-    singular: function() {
-        // zoom to a given map obj
-    },
-    render: function() {
-        $(this.el).html(this.template(this.model.toJSON()))
-        // }, this);
-        return this
-    }
-});
+
 /* -------------------------------------------------- BMV -----------------------  */
 var BaseLayerMenuItemView = Backbone.View.extend({
     tagName: "li",
@@ -733,7 +722,7 @@ var EpisodesView = Backbone.View.extend({
     },
     render: function() {
         $(this.el).empty()
-        $(this.el).html("<h5>Episodes</h5>")
+        $(this.el).html("<h5>Episodes (referencing location: '"+appCBB.findWhere({active:true}).get("name")+"')</h5>")
         // we use .episodes cuz we have some stuff outside of the el we wanna unhide, too
         if (this.collection.models.length > 0) {
             $(".episodes").removeClass('hidden')
@@ -773,6 +762,52 @@ var EpisodesView = Backbone.View.extend({
                 // "recent item will go here"
             );
         }, this);
+        return this
+    }
+});
+
+/* -------------------------------------------------- Method
+-------------------------------*/
+var MethodView = Backbone.View.extend({
+    // tagName: "li",
+    events: {
+        "click .loc-trigger": "singular",
+        // "click a":"killtt",
+        // "click a":"rewire"
+    },
+    el: "#method",
+    template: Handlebars.templates['method'],
+    initialize: function() {
+        if (verbose == true) {
+            // console.log("initting huhview")
+        }
+        this.model.bind('change active', this.render, this);
+        this.render()
+    },
+    singular: function(e) {
+        e.preventDefault()
+        var solrstring = $(e.currentTarget).attr("data-string")
+        var markerid = solrstring.split(",")[1]
+        appCartoQuery.set({
+            rawstring: solrstring
+        })
+        appCBB.fetch({
+            success: function(clx) {
+
+                appCBBMapView.render()
+                // cuz there's only gonna be one
+                var markerid = clx.last().get("cartodb_id")
+                console.log("markerid in 777:");console.log(markerid);
+                appCBBListView.render().zoomfromexternal(markerid)
+                // there will only be one cuz we searched by id
+                // var li = appCBB.first()
+            }
+        })
+        return this
+    },
+    render: function() {
+        $(this.el).html(this.template(this.model.toJSON()))
+        // }, this);
         return this
     }
 });

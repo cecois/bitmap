@@ -1,14 +1,21 @@
 /* -------------------------------------------------- GLOBALS -----------------------  */
 verbose = true;
+
 NProgress.configure({ parent: '#main' });
 window.apphost = "localhost";
 window.solrhost = "http://localhost:8983/solr/";
 
 
+// jeez i hate to bootstrap this w/ an extra ajax call but i don't wanna have to remember to update this when i change the solr schema
+// $.getJSON(solrhost+'/cbb_bits/admin/luke?numTerms=0', {wt: 'json'}, function(json, textStatus) {
+//   console.log("fields call:");console.log(json);
+// });
+
+
             markernew = {
                 radius: 6,
-                fillColor: "#000",
-                color: "#ffffff",
+                fillColor: "#1288b9",
+                color: "#000",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.6,
@@ -17,7 +24,7 @@ window.solrhost = "http://localhost:8983/solr/";
 
                         markeractive = {
                 radius: 18,
-                fillColor: "#d4ca10",
+                fillColor: "#fecd0b",
                 color: "#000",
                 weight: 1,
                 opacity: 1,
@@ -27,7 +34,7 @@ window.solrhost = "http://localhost:8983/solr/";
                         markerseen = {
                 radius: 6,
                 fillColor: "#ffffff",
-                color: "#000",
+                color: "#1288b9",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.6,
@@ -39,24 +46,10 @@ $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomfull glyphicon 
 
 window.appURL = new URL();
 
-var recentsCollx = new RecentsCollection([{
-    name: "one"
-}, {
-    name: "two"
-}]);
-var recentsCollxView = new RecentsView({
-    collection: recentsCollx
-})
-var huh = new Huh();
-var huhV = new HuhView({
-    model: huh
-})
-var method = new Method();
-var methodV = new MethodView({
-    model: method
-})
+
 
 window.appEpisodes = new Episodes();
+
 // window.appEpisodes = new Episodes();
 window.appEpisodesView = new EpisodesView({collection:appEpisodes});
 
@@ -329,7 +322,7 @@ window.appCBBMapView = new CartoCollxView({
 // new console model and view
 window.appConsole = new Console().set({
     // message: "HINT! Press the 'z' key at any time to reveal the full map."
-    message: "This is your console. Quasi-important messages will appear here."
+    message: "Console console. Quasi-important messages will appear here."
 });
 window.appConsoleView = new ConsoleView({
     model: appConsole
@@ -340,6 +333,24 @@ window.appActivity = new Activity();
 window.appActivityView = new ActivityView({
     model: appActivity
 });
+
+
+var recentsCollx = new RecentsCollection([{
+    name: "one"
+}, {
+    name: "two"
+}]);
+var recentsCollxView = new RecentsView({
+    collection: recentsCollx
+})
+var huh = new Huh();
+var huhV = new HuhView({
+    model: huh
+})
+var method = new Method();
+var methodV = new MethodView({
+    model: method
+})
 
 /* -------------------------------------------------- Free Funcs -----------------------  */
 
@@ -400,6 +411,15 @@ cbbItems = L.geoJson().addTo(map);
 window.appWikiaz = new Wikiaz()
 appWikiaz.fetch();
 
+window.appSolrFields = new SolrFields();
+appActivity.set({message: "fetching Luke/Solr fields...",show: true,altel:false})
+appSolrFields.fetch({
+    success:function(){
+        appActivity.set({message: "",show: false,altel:false})
+    }
+})
+
+
 /* -------------------------------------------------- READY -----------------------  */
 $(document).ready(function() {
 
@@ -455,12 +475,12 @@ $(document).ready(function() {
 
 }); //ready
 $(document).keydown(function(e) {
-    if (e.keyCode == 18) {
-        $("#main").toggleClass('hidden');
-        
+    if (e.keyCode == 17) {
+        $("#main").toggleClass('hiddenish');
+        $("#bt-showmain").toggleClass("hidden")
         // $("#main").fadeToggle('fast');
         appConsole.set({
-            "message": "press the 'alt' key to toggle better visibility of the map"
+            "message": "press the 'control' key to toggle better visibility of the map"
         })
     }
 });

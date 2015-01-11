@@ -63,6 +63,37 @@ var Episodes = Backbone.Collection.extend({
     }
 }); //episodesdev
 
+/* -------------------------------------------------- LUKE/SOLR FIELDS -----------------------  */
+var SolrField = Backbone.Model.extend({});
+var SolrFields = Backbone.Collection.extend({
+    model: SolrField,
+    url: function() {
+        return solrhost+"cbb_bits/admin/luke?json.wrf=cwmccallback2&numTerms=0&wt=json"
+        // return solrhost+"cbb_bits/select?json.wrf=cwmccallback&q=location_id:"+this.activeloc+"&wt=json"
+    },
+    initialize: function(options) {
+        options || (options = {});
+        return this.episodes
+    },
+    sync: function(method, collection, options) {
+        // By setting the dataType to "jsonp", jQuery creates a function
+        // and adds it as a callback parameter to the request, e.g.:
+        // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
+        // If you want another name for the callback, also specify the
+        // jsonpCallback option.
+        // After this function is called (by the JSONP response), the script tag
+        // is removed and the parse method is called, just as it would be
+        // when AJAX was used.
+        options.dataType = "jsonp";
+        options.jsonpCallback = 'cwmccallback2';
+        return Backbone.sync(method, collection, options);
+    },
+    parse: function(lukefields) {
+        console.log("in solrfields parse, lukefields:");console.log(lukefields);
+        return lukefields.fields
+    }
+}); //solrfields
+
 /* -------------------------------------------------- BASELAYERS -----------------------  */
 var BaseLayer = Backbone.Model.extend({});
 var BaseLayersCollection = Backbone.Collection.extend({
@@ -227,6 +258,7 @@ var CartoCollectionDev = Backbone.Collection.extend({
         return Backbone.sync(method, collection, options);
     },
     parse: function(response) {
+        console.log("rsponse at 261:");console.log(response);
         return response.response.docs
     }
 }); //fakecarto

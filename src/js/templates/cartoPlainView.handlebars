@@ -2,10 +2,17 @@
 
 {{#each rows}}
 <li data-id="{{this.cartodb_id}}" class="">
-<div class="">{{this.name}} ({{this.anno}})
-<span class="glyphicon glyphicon-share-alt bt-cartoobj bt-cartoobj-zoomto text-muted" title="zoom to this"></span>
 
-<span data-id="{{this.cartodb_id}}" class="glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes text-muted" title="pull a list of associated episodes"></span>
+<div class="">
+<span data-id="{{this.cartodb_id}}" class="glyphicon glyphicon-asterisk bt-getid" title="echo model id (dev only)"></span>
+{{this.name}} ({{this.anno}})
+<span class="glyphicon glyphicon-share-alt bt-cartoobj bt-cartoobj-zoomto" title="zoom to this"></span>
+
+<span data-id="{{this.cartodb_id}}" class="glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes" title="pull a list of associated episodes"></span>
+
+
+
+
 </div>
 </li>
 {{/each}}
