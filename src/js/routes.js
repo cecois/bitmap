@@ -11,23 +11,19 @@ var Route = Backbone.Router.extend({
         // "search/lll:hash": "searchWithHashed",
         // "search/p:page/:querystring": "search"
     },
-    initialize: function(){
-
-// this.listenTo(appCartoQuery, "change", this.update)
-
-
+    initialize: function() {
+        // this.listenTo(appCartoQuery, "change", this.update)
     },
-    update: function(el){
-
-console.log("update of route cuzza appcartoquery change trigger ");
-console.log("el is:");
-console.log(el);
-var url = pullURL(el)
-
-console.log("appcartoquery at 25 here:");console.log(appCartoQuery.get("rawstring"));
-
-this.navigate(url, {trigger: false, replace: false})
-
+    update: function(el) {
+        // console.log("update of route cuzza appcartoquery change trigger ");
+        // console.log("el is:");
+        // console.log(el);
+        var url = pullURL(el)
+        // console.log("appcartoquery at 25 here:");console.log(appCartoQuery.get("rawstring"));
+        this.navigate(url, {
+            trigger: false,
+            replace: false
+        })
     },
     default: function(h, q, bbox, basemap) {
         if (typeof basemap !== 'undefined' && basemap !== null) {
@@ -39,16 +35,34 @@ this.navigate(url, {trigger: false, replace: false})
             })
         }
         if (typeof q !== 'undefined' && q !== null) {
-            console.log("incoming q is:"+q);
+            // console.log("incoming q is:"+q);
             appCartoQuery.set({
                 rawstring: q
             })
         }
-
-// now if *that* didn't set up our query, something needs to
-console.log("rawstring at 47 of route");
-console.log(appCartoQuery.get("rawstring"));
-
+        if (typeof h == 'undefined' && h !== null) {
+            h = "huh";
+        }
+        var hmod = "#" + h;
+        // this in case the pane had been hidden by the alt key
+        $("#main").removeClass("hidden")
+        _.each($("#main > .mainpanel"), function(p) {
+            if (p.id == h) {
+                $(p).removeClass("hidden")
+            } else {
+                $(p).addClass("hidden")
+            }
+        });
+        _.each($("nav.site-nav > ul > li > a"), function(m) {
+            if ($(m).attr("href") == hmod) {
+                $(m).addClass("active")
+            } else {
+                $(m).removeClass("active")
+            }
+        }, this)
+        // now if *that* didn't set up our query, something needs to
+        // console.log("rawstring at 47 of route");
+        // console.log(appCartoQuery.get("rawstring"));
         // }
         if (typeof bbox !== 'undefined' && bbox !== null && bbox !== "null") {
             // #returnto to clean this up
@@ -68,12 +82,10 @@ console.log(appCartoQuery.get("rawstring"));
             bboxarr.push(northeast)
             map.fitBounds(bboxarr);
         }
-        if (typeof h == 'undefined' && h !== null) {
-            h = "huh";
-        } else if (h == 'query') {
+        if (h == 'query') {
             // a live one, this, let's fire off the query
             console.log("a live query hash!");
-this.update("#query")
+            this.update("#query")
             appActivity.set({
                 message: "querying...",
                 show: true,
@@ -82,37 +94,47 @@ this.update("#query")
             appCBB.fetch({
                 // dataType: "jsonp"
                 success: function() {
-                    console.log("successful fetch of appcbb at 76");
+                    // console.log("successful fetch of appcbb at 76");
                     appCBBListView.render()
                     appCBBMapView.render()
-                    appActivity.set({message: "",show: false,altel:false})
+                    appActivity.set({
+                        message: "",
+                        show: false,
+                        altel: false
+                    })
                 },
                 error: function() {
                     appConsole.set({
                         message: "query errored out"
                     })
-                    appActivity.set({message: "",show: false,altel:false})
+                    appActivity.set({
+                        message: "",
+                        show: false,
+                        altel: false
+                    })
                     // console.log("failed fetch");
                 }
-            },{reset:true})
-        }
-        var hmod = "#" + h;
-        // this in case the pane had been hidden by the alt key
-        $("#main").removeClass("hidden")
-        _.each($("#main > .mainpanel"), function(p) {
-            if (p.id == h) {
-                $(p).removeClass("hidden")
-            } else {
-                $(p).addClass("hidden")
-            }
-        });
-        _.each($("nav.site-nav > ul > li > a"), function(m) {
-            if ($(m).attr("href") == hmod) {
-                $(m).addClass("active")
-            } else {
-                $(m).removeClass("active")
-            }
-        }, this)
+            }, {
+                reset: true
+            })
+        } //h is query for fetch
+        // var hmod = "#" + h;
+        // // this in case the pane had been hidden by the alt key
+        // $("#main").removeClass("hidden")
+        // _.each($("#main > .mainpanel"), function(p) {
+        //     if (p.id == h) {
+        //         $(p).removeClass("hidden")
+        //     } else {
+        //         $(p).addClass("hidden")
+        //     }
+        // });
+        // _.each($("nav.site-nav > ul > li > a"), function(m) {
+        //     if ($(m).attr("href") == hmod) {
+        //         $(m).addClass("active")
+        //     } else {
+        //         $(m).removeClass("active")
+        //     }
+        // }, this)
         return this
     } // end home
 });

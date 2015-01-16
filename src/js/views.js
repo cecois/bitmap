@@ -44,7 +44,8 @@ var CartoCollxView = Backbone.View.extend({
             // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).bindPopup(pu);
             // this.collection.activate(chid)
             hitm.options.cartodb_id = hit.get("cartodb_id").toString()
-            if (hit.get("active") == true) {
+            var count = this.collection.length;
+            if (hit.get("active") == true || count==1) {
                 // if(!$("#main").hasClass('hidden')){
                 if (map.getBounds().contains(hitm.getLatLng()) == false) {
                     map.setView(hitm.getLatLng(), 9);
@@ -232,6 +233,44 @@ console.log(str);
             rows: this.collection.toJSON()
         }));
         return this.rewire()
+    }
+});
+
+var SolrFieldzView = Backbone.View.extend({
+    // tagName: "li",
+    el: "#solrfields-list",
+    events: {
+"click .loc-trigger": "singular"
+      
+    },
+    template: Handlebars.templates['solrfieldsView'],
+    initialize: function() {
+        // this.listenTo(this.collection, "reset", this.render);
+        this.collection.bind('reset', this.render, this);
+        this.collection.bind('change', this.render, this);
+        return this
+        .render()
+    },
+        singular: function(e) {
+            $(this.el).addClass('hidden')
+            console.log("singuler in qv");
+        e.preventDefault()
+        locTrigger(e)
+        
+        return this
+    },
+    render: function() {
+        this.collection.sortBy('order')
+        if (verbose == true) {
+            console.log("rendering solrfieldsview")
+            console.log(this.collection.models);
+        }
+// $(this.el).html(this.template(this.collection.toJSON()))       
+        $(this.el).html(this.template({
+            count: this.collection.models.length,
+            fields: this.collection.toJSON()
+        }));
+        return this
     }
 });
 /* -------------------------------------------------- AbtV
@@ -509,8 +548,8 @@ var QueryView = Backbone.View.extend({
     el: $("#query-form"),
     events: {
         "click #query-form-bt": "fire",
-        // "click a":"killtt",
-        // "click a":"rewire"
+        
+        "click #solrfields .glyphicon":"togglehelp"
         // "change": "render"
     },
     template: Handlebars.templates['queryViewTpl'],
@@ -519,10 +558,9 @@ var QueryView = Backbone.View.extend({
         this.listenTo(this.model, "change", this.render)
         // this.model.bind("change", this.render, this);
     },
+
     fire: function() {
         var rawstring = $("#query-form-input").val()
-        console.log("rawstring");
-        console.log(rawstring);
         appCartoQuery.set({
             rawstring: rawstring
         })
@@ -535,11 +573,6 @@ var QueryView = Backbone.View.extend({
         $("#query-list").html("")
     },
     render: function() {
-        console.log("in rnder of QV");
-        console.log("rawstring");
-        console.log(this.model.get("rawstring"));
-        console.log("solrstring");
-        console.log(this.model.get("solrstring"));
         // appRoute.update()
         if (this.model.get("error") == true) {
             $(this.el).addClass("error")
@@ -631,6 +664,7 @@ var RecentItemView = Backbone.View.extend({
         if (verbose == true) {
             // console.log("rendering recentitemview")
         }
+        
         $(this.el).html(this.template(this.model.toJSON()));
         return this
     }
@@ -640,12 +674,22 @@ var RecentItemView = Backbone.View.extend({
 var RecentsView = Backbone.View.extend({
     // tagName: "li",
     el: ".recents",
+    events:{
+"click .loc-trigger": "singular"
+    },
+    template: Handlebars.templates['recentsViewTpl'],
     initialize: function() {
         if (verbose == true) {
             // console.log("initting recentsview")
         }
         this.collection.bind('change active', this.render, this);
         return this.render()
+    },
+    singular: function(e) {
+        e.preventDefault()
+        locTrigger(e)
+        
+        return this
     },
     render: function() {
         if (verbose == true) {
@@ -661,9 +705,10 @@ var RecentsView = Backbone.View.extend({
             });
             // console.log((thisRecentItemView));
             // console.log("$(this.el):");console.log($(this.el));
-            $(this.el).append(thisRecentItemView.render().el
+            // $(this.el).append(thisRecentItemView.render().el
                 // "recent item will go here"
-            );
+            // );
+        $(this.el).html(this.template(this.collection.toJSON()));
         }, this);
         return this
     }
@@ -722,7 +767,7 @@ var EpisodesView = Backbone.View.extend({
     },
     render: function() {
         $(this.el).empty()
-        $(this.el).html("<h5>Episodes (referencing location: '"+appCBB.findWhere({active:true}).get("name")+"')</h5>")
+        $(this.el).html("<h3>Episodes</h3> <span class='cbbepsanno'>(referencing location: '"+appCBB.findWhere({active:true}).get("name")+"')</span>")
         // we use .episodes cuz we have some stuff outside of the el we wanna unhide, too
         if (this.collection.models.length > 0) {
             $(".episodes").removeClass('hidden')
@@ -786,23 +831,8 @@ var MethodView = Backbone.View.extend({
     },
     singular: function(e) {
         e.preventDefault()
-        var solrstring = $(e.currentTarget).attr("data-string")
-        var markerid = solrstring.split(",")[1]
-        appCartoQuery.set({
-            rawstring: solrstring
-        })
-        appCBB.fetch({
-            success: function(clx) {
-
-                appCBBMapView.render()
-                // cuz there's only gonna be one
-                var markerid = clx.last().get("cartodb_id")
-                console.log("markerid in 777:");console.log(markerid);
-                appCBBListView.render().zoomfromexternal(markerid)
-                // there will only be one cuz we searched by id
-                // var li = appCBB.first()
-            }
-        })
+        locTrigger(e)
+        
         return this
     },
     render: function() {

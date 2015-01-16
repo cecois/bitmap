@@ -5,6 +5,13 @@ NProgress.configure({ parent: '#main' });
 window.apphost = "localhost";
 window.solrhost = "http://localhost:8983/solr/";
 
+/* -------------------------------------------------- HANDLEBARS START -----------------------  */
+Handlebars.registerHelper('timeize', function(options) {
+  return new Handlebars.SafeString(
+    moment(options.fn(this)).format('D.MMM.YYYY')
+      );
+});
+/* -------------------------------------------------- HANDLEBARS END -----------------------  */
 
 // jeez i hate to bootstrap this w/ an extra ajax call but i don't wanna have to remember to update this when i change the solr schema
 // $.getJSON(solrhost+'/cbb_bits/admin/luke?numTerms=0', {wt: 'json'}, function(json, textStatus) {
@@ -335,14 +342,18 @@ window.appActivityView = new ActivityView({
 });
 
 
-var recentsCollx = new RecentsCollection([{
-    name: "one"
-}, {
-    name: "two"
-}]);
+var recentsCollx = new RecentsCollection();
 var recentsCollxView = new RecentsView({
     collection: recentsCollx
 })
+
+recentsCollx.fetch({success:function(){
+
+recentsCollxView.render()
+    
+}})
+
+
 var huh = new Huh();
 var huhV = new HuhView({
     model: huh
@@ -354,7 +365,49 @@ var methodV = new MethodView({
 
 /* -------------------------------------------------- Free Funcs -----------------------  */
 
+function locTrigger(e){
+e.preventDefault()
+if(verbose==true){
+console.log("in locTrigger");}
+    var solrstring = $(e.currentTarget).attr("data-string")
+        var markerid = solrstring.split(",")[1]
+
+
+
+        appCartoQuery.set({
+            rawstring: solrstring
+        })
+
+appCartoQuery.set({
+            rawstring: solrstring
+        })
+
+appCartoQueryView.fire()
+
+        // appRoute.navigate(pullURL("#query"), {
+        //     trigger: true,
+        //     replace: true
+        // })
+
+        // appCBB.fetch({
+        //     success: function(clx) {
+
+        //         appCBBMapView.render()
+        //         // cuz there's only gonna be one
+        //         var markerid = clx.last().get("cartodb_id")
+        //         appCBBListView.render().zoomfromexternal(markerid)
+
+        //         pullURL("#query")
+        //         // there will only be one cuz we searched by id
+        //     }
+        // })
+
+}
+
 function pullURL(goto){
+console.log("in pullurl, goto is:");
+console.log(goto);
+console.log("url is:");
 
 if(typeof goto == 'undefined'){
     // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
@@ -375,6 +428,7 @@ if(typeof goto == 'undefined'){
 
     var url = h+"/"+qs+"/"+bbx+"/"+bl
     
+    console.log(url);
     return url
 }
 
@@ -411,13 +465,63 @@ cbbItems = L.geoJson().addTo(map);
 window.appWikiaz = new Wikiaz()
 appWikiaz.fetch();
 
-window.appSolrFields = new SolrFields();
-appActivity.set({message: "fetching Luke/Solr fields...",show: true,altel:false})
-appSolrFields.fetch({
-    success:function(){
-        appActivity.set({message: "",show: false,altel:false})
+// var solrfz = $.getJSON(solrhost+"cbb_carto/admin/luke?numTerms=0&wt=json&callback=?", {}, function(json, textStatus) {
+//         console.log("json:");console.log(json);
+//         
+var fields = {
+  "fields": [
+    {
+      "order":1,
+      "name": "anno",
+      "nom": "short annotation of the site (which is represented by the name field) -- e.g. 'one of Huell Howser's homes'",
+      "scope_and_use": "use it freely, e.g. <span class='loc-trigger' data-string='anno:huell'><span class='loc-string'>anno:huell</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span> or <span class='loc-trigger' data-string='anno:cake+boss'><span class='loc-string'>anno:cake+boss</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span>"
+    },
+   {
+      "order":5,
+      "name": "cartodb_id",
+      "nom": "unique id per site",
+      "scope_and_use": "use it to link to a specific instance, e.g. <span class='loc-trigger' data-string='cartodb_id:108'><span class='loc-string'>cartodb_id:108</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span> - ~site of Bob Ducca's booth at the Silver Lake Farmers Market"
+    },
+    {
+      "order":3,
+      "name": "created_at",
+      "nom": "date the location was logged (has nothing to do with its appearance on the show)",
+      "scope_and_use": "I'm not sure anybody could possibly care. But I guess you could do Solr range queries with it."
+    },
+    {
+      "order":0,
+      "name": "name",
+      "nom": "name of the site (e.g. 'Six Flags Valencia' or 'Boston, MA'",
+      "scope_and_use": "this and anno are the primary fields and this is the one with the placename"
+    },
+    {
+      "order":2,
+      "name": "text",
+      "nom": "catch-all field",
+      "scope_and_use": "searching this field queries both anno and name fields (and eventually any other text we wanna throw in). If you don't type a specific field (e.g. you just type 'Dimello') this is the field that gets called."
+    },
+    {
+      "order":4,
+      "name": "updated_at",
+      "nom": "date of the last update to this record",
+      "scope_and_use": "Eh. You can <a href='#recent'>query for updates</a> with it I suppose."
     }
-})
+  ]
+}
+window.appSoFoz = new SolrFieldz(fields.fields);
+// appSoFoz.comparator = 'order';
+window.appSoFozView = new SolrFieldzView({collection: appSoFoz});
+//         return json.fields
+// });
+
+// appSolrFieldz.fetch({
+//     success:function(){
+//         appSolrzView.render()
+//     }
+// },{reset:true});
+
+
+// appActivity.set({message: "fetching Luke/Solr fields...",show: true,altel:false})
 
 
 /* -------------------------------------------------- READY -----------------------  */
@@ -459,6 +563,13 @@ $(document).ready(function() {
     $("a.leaflet-control-zoom-in")
 
   
+  $("#bt-solrfields").click(function(e){
+
+    e.preventDefault()
+
+$("#solrfields-list").toggleClass('hidden')
+
+  }) //solrfields.click
 
     // oh one more thing - let's intercept the query tab button so it doesn't wipe out appcarto each time
 // $("html body header.site-header.off-canvas-container.js-off-canvas-container div.content-wrap.off-canvas-contents nav.site-nav.pull-left ul li a.link.active").click(function(e){

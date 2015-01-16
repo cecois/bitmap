@@ -17,7 +17,7 @@ var RecentItem = Backbone.Model.extend({});
 var RecentsCollection = Backbone.Collection.extend({
     model: RecentItem,
     url: function() {
-        return "../api/recentitems.json"
+        return solrhost+"cbb_carto/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json"
     },
     initialize: function(options) {
         options || (options = {});
@@ -25,11 +25,30 @@ var RecentsCollection = Backbone.Collection.extend({
         // this.query = options.query;
         return this.recents
     },
-    parse: function(data) {
-        // if(verbose==true){console.log("parsing data in parse of RecentsCollection")}
-        var items = data.recents;
-        // if(verbose==true){console.log("items in menuitemscollection");console.log(items);}
-        return items;
+    comparator: function(m) {
+    return -m.get('updated_at');
+},
+    // parse: function(data) {
+    //     // if(verbose==true){console.log("parsing data in parse of RecentsCollection")}
+    //     var items = data.recents;
+    //     // if(verbose==true){console.log("items in menuitemscollection");console.log(items);}
+    //     return items;
+    // },
+    sync: function(method, collection, options) {
+        // By setting the dataType to "jsonp", jQuery creates a function
+        // and adds it as a callback parameter to the request, e.g.:
+        // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
+        // If you want another name for the callback, also specify the
+        // jsonpCallback option.
+        // After this function is called (by the JSONP response), the script tag
+        // is removed and the parse method is called, just as it would be
+        // when AJAX was used.
+        options.dataType = "jsonp";
+        options.jsonpCallback = 'cwmccallbackrecent';
+        return Backbone.sync(method, collection, options);
+    },
+    parse: function(response) {
+        return response.response.docs
     }
 }); //recentscollx
 
@@ -63,36 +82,6 @@ var Episodes = Backbone.Collection.extend({
     }
 }); //episodesdev
 
-/* -------------------------------------------------- LUKE/SOLR FIELDS -----------------------  */
-var SolrField = Backbone.Model.extend({});
-var SolrFields = Backbone.Collection.extend({
-    model: SolrField,
-    url: function() {
-        return solrhost+"cbb_bits/admin/luke?json.wrf=cwmccallback2&numTerms=0&wt=json"
-        // return solrhost+"cbb_bits/select?json.wrf=cwmccallback&q=location_id:"+this.activeloc+"&wt=json"
-    },
-    initialize: function(options) {
-        options || (options = {});
-        return this.episodes
-    },
-    sync: function(method, collection, options) {
-        // By setting the dataType to "jsonp", jQuery creates a function
-        // and adds it as a callback parameter to the request, e.g.:
-        // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
-        // If you want another name for the callback, also specify the
-        // jsonpCallback option.
-        // After this function is called (by the JSONP response), the script tag
-        // is removed and the parse method is called, just as it would be
-        // when AJAX was used.
-        options.dataType = "jsonp";
-        options.jsonpCallback = 'cwmccallback2';
-        return Backbone.sync(method, collection, options);
-    },
-    parse: function(lukefields) {
-        console.log("in solrfields parse, lukefields:");console.log(lukefields);
-        return lukefields.fields
-    }
-}); //solrfields
 
 /* -------------------------------------------------- BASELAYERS -----------------------  */
 var BaseLayer = Backbone.Model.extend({});
@@ -258,7 +247,7 @@ var CartoCollectionDev = Backbone.Collection.extend({
         return Backbone.sync(method, collection, options);
     },
     parse: function(response) {
-        console.log("rsponse at 261:");console.log(response);
+        // console.log("rsponse at 261:");console.log(response);
         return response.response.docs
     }
 }); //fakecarto
@@ -317,20 +306,50 @@ var Wikiaz = Backbone.Collection.extend({
         options || (options = {});
         return this.items
     },
-    // sync: function(method, collection, options) {
-    //     // By setting the dataType to "jsonp", jQuery creates a function
-    //     // and adds it as a callback parameter to the request, e.g.:
-    //     // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
-    //     // If you want another name for the callback, also specify the
-    //     // jsonpCallback option.
-    //     // After this function is called (by the JSONP response), the script tag
-    //     // is removed and the parse method is called, just as it would be
-    //     // when AJAX was used.
-    //     options.dataType = "json";
-    //     // options.jsonpCallback = 'cwmccallbackwikiaz';
-    //     return Backbone.sync(method, collection, options);
-    // },
+
     parse: function(response) {
         return response.items
     }
 }); //wikiaz
+
+
+/* -------------------------------------------------- LUKE/SOLR FIELDS -----------------------  */
+var SolrField = Backbone.Model.extend({
+    defaults: {
+    }
+});
+var SolrFieldz = Backbone.Collection.extend({
+    model: SolrField,
+    url: function() {
+        // return "offline/solrz.json"
+        return null
+    },
+    comparator: function(m) {
+    return m.get('order');
+},
+    initialize: function(options) {
+        options || (options = {});
+
+
+this.models = fields;
+        return this
+    },
+// sync: function(method, collection, options) {
+//         // By setting the dataType to "jsonp", jQuery creates a function
+//         // and adds it as a callback parameter to the request, e.g.:
+//         // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
+//         // If you want another name for the callback, also specify the
+//         // jsonpCallback option.
+//         // After this function is called (by the JSONP response), the script tag
+//         // is removed and the parse method is called, just as it would be
+//         // when AJAX was used.
+//         options.dataType = "jsonp";
+//         options.jsonpCallback = 'solrfieldzcallback';
+//         return Backbone.sync(method, collection, options);
+//     },
+//     parse: function(response) {
+//         console.log("response in parse");
+//         console.log(response);
+//         return response.fields
+//     }
+}); //solrfields
