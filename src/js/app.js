@@ -365,8 +365,11 @@ var methodV = new MethodView({
 
 /* -------------------------------------------------- Free Funcs -----------------------  */
 
-function locTrigger(e){
+function locTrigger(e,goto){
 e.preventDefault()
+if(typeof goto == 'undefined'){
+            var goto=true
+        }
 if(verbose==true){
 console.log("in locTrigger");}
     var solrstring = $(e.currentTarget).attr("data-string")
@@ -382,7 +385,7 @@ appCartoQuery.set({
             rawstring: solrstring
         })
 
-appCartoQueryView.fire()
+appCartoQueryView.fire(goto)
 
         // appRoute.navigate(pullURL("#query"), {
         //     trigger: true,

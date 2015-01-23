@@ -1,5 +1,5 @@
 <div class="block"><h4>What's Really Going On?</h4>
-    <p>Ok, so I literally sat and logged all the spatial references in (soon to be) all Comedy Bang! Bang! episodes, geocoded them, and wrote this web app around them. Professionaly I am a GIS Librarian, so it's not as lunatic as it sounds. Mostly my profession is to sit alone in a basement and type type type, make maps and whatnot. But listen listen listen also, and that's how I'm able to comb over each and every CBB episode (multiple times). This map is actually part of a much larger project in which I'm logging individual tropes and recurring bits ("Please call me Garry," "My Wife!" "Titular," etc. - see BitTracker, below) but that's taking longer and will require a much different web app to deliver. This thing I could kinda just knock off once everything was geocoded.<sup>*</sup></p><p>
+    <p>Ok, so I literally sat and logged all the spatial references in (soon to be) all <em>Comedy Bang! Bang!</em> episodes, geocoded them, and wrote this web app around them. Professionaly I am a GIS Librarian, so it's not as lunatic as it sounds. Mostly my profession is to sit alone in a basement and type type type, make maps and whatnot. But listen listen listen also, and that's how I'm able to comb over each and every CBB episode (multiple times). This map is actually part of a much larger project in which I'm logging individual tropes and recurring bits ("Please call me Garry," "My Wife!" "Titular," etc. - see BitTracker, below) but that's taking longer and will require a much different web app to deliver. This thing I could kinda just knock off once everything was geocoded.<sup>*</sup></p><p>
     <!-- And for real the reason to do it is that the universe of CBB's characters - when canon - is so rich and sprawling that I wanted it all in one place, where I could wade into it from multiple angles, aspects, and facets. e.g. I wanted be able to visualize... -->
     So for now it's just a map of places that comprise the world of the CBB canon (and perhaps its diaspora). e.g...
     </p><ul>
@@ -9,12 +9,12 @@
         <li>basically <span class="loc-trigger" data-string="huell"><span class="loc-string">anything related to Huell Howser</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span></li>
     </ul>
 </div>
-<div class="block"><h4>BitTracker?1</h4>
+<div class="block"><h4>BitTracker?!</h4>
     <p><a href="images/btracker_preview.png"><img class="featurette-image img-responsive pull-right" alt="bittracker peek" src="images/btracker_preview.png" style="margin:11px;" height="200" width="500"></a>
 Yeah, get this: this map app is actually the pilot application of a much larger project -- a bittracker. <strong>Yeah, a <em>BitTracker</em></strong>. A tracker of bits. How many times (and when!) <em>My wife!</em>; how many times (and when!) <em>Hee-hee. Shamone. Where's Lisa Marie? Dah! Where 'dem elephant bones? Where's Macaulay? Dah! Shamone. Hoo. Where my glove? Hoo.</em>; how many times (and when!) a classic <em>Would You Rather</em> blunder? That sort of thing. But it's taking a while.</p></div>
-<div class="block"><h4>* So a Note on Scope</h4>
+<div class="block"><h4>A Note on Scope</h4>
 <p>Included here are ~all locations that were <em>generated</em> during the show. Meaning I only wanted locations that were somehow parts of a bit or part of something intentionally funny <em>and</em> part of a contribution to the show. Meaning that if Toddy Barry plugs his gig at the Chuckle Hut or Kyle Kinane mentions that he lives in Los Feliz I'm not gonna bother. But I <em>do</em> wanna know where that coffee place was where Jason Mantzoukas witnessed a homeless person guzzle a discard, yes. And I would like to know all the lat/longs for where Tig Notaro ran into Taylor Dayne. None of these I could pin, btw. But I did bother to scrub episode 39 for all the places <span class="loc-trigger" data-string="anno%3Ahuell+%2Banno%3Ahomes"><span class="loc-string">Huell Howser has homes</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span>. And I did bother to find as many of <span class="loc-trigger" data-string="anno%3Ahuell+%2Banno%3Ahomes"><span class="loc-string">Shooter's L.A. references</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span> as I could. And <span class="loc-trigger" data-string="cartodb_id:13"><span class="loc-string">The Grove</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span> and <span class="loc-trigger" data-string="cartodb_id:96"><span class="loc-string">the Pantages</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span> and <span class="loc-trigger" data-string="cartodb_id:100"><span class="loc-string">Bob Ducca's beloved Castaic</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span> and <span class="loc-trigger" data-string="cartodb_id:7"><span class="loc-string">Six Flags Magic Mountain</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span> (site of at least one Womptacular and the benefactor of a commercial spot by Sloppy Timmy Slotzman) are all here, of course.</p></div>
-<div class="block"><h4>Is <em>Everything</em> Geocoded?</h4>
+<div class="block"><h4><sup>*</sup>Is <em>Everything</em> Geocoded?</h4>
 <p>But no, not everything is in here. Yet. Once I realized I wanted to do this, I started re-listening from episode 1, logging locations instead of bits (which I'll pick back up later). I'm only through #143, so there will be plenty more added here in due time. I <em>may</em> add the ability for users to submit/edit locations, but that requires the addition of a whole other layer of app logic. The crowd-sourcing model will better suit the BitTracker anyway.</p></div>
 <div class="block"><h4>How was it Built?</h4>
     <p>I doubt you care, but you're sweet to ask. Imma list pretty much the entire workflow just cuzzi like it when people get specific about this kind of thing:</p>
@@ -27,7 +27,7 @@ Yeah, get this: this map app is actually the pilot application of a much larger 
             <div class="anno">Hey, you're right - that does sound like a ridiculous amount of pointless labor. And yet here we are.</div>
         </li>
         <li>for each master location, I manually researched it and placed a marker in a <a href="http://cartodb.com">CartoDB</a> account
-            <div class="anno">..."Master" location because I'm not going to store a <em>seperate</em> geometry for every mention of The <span class="loc-trigger" data-string="cartodb_id:96"><span class="loc-string">Pantages Theatre</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span> or Huell Howser's favorite Taco Bell<span class="loc-trigger" data-string="cartodb_id:45"><span class="loc-string" > (the one on Rosemead) </span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span>. The Grove gets one marker and the BitTracker will log any individual references to it. Standard database stuff. This is especially important in the case of, say, <span class="loc-trigger" data-string="cartodb_id:26"><span class="loc-string">The Arclight cinema</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span>, which is frequented by an almost surprising number of Hollywood's least palatable characters.</div>
+            <div class="anno">..."Master" location because I'm not going to store a <em>seperate</em> geometry for every mention of The <span class="loc-trigger" data-string="cartodb_id:96"><span class="loc-string">Pantages Theatre</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span> or Huell Howser's favorite Taco Bell<span class="loc-trigger" data-string="cartodb_id:45"><span class="loc-string" > (the one on Rosemead) </span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span>. <span class="loc-trigger" data-string="cartodb_id:13"><span class="loc-string">The Grove</span><i class="glyphicon glyphicon-map-marker"></i></span> gets one marker and the BitTracker will log any individual references to it. Standard database stuff. This is especially important in the case of, say, <span class="loc-trigger" data-string="cartodb_id:26"><span class="loc-string">The Arclight cinema</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></span>, which is frequented by an almost surprising number of Hollywood's least palatable characters.</div>
         </li>
         <li>
             Built up this web app, whose chief components are BackboneJS (+jQuery, +UnderscoreJS, +HandlebarsJS), Bootstrap, LessJS, etc. The usual. And for the mapping framework, the great Leaflet. Technically there's an API behind it (built w/ Kohana) but it's largely unused because...
@@ -38,22 +38,21 @@ Yeah, get this: this map app is actually the pilot application of a much larger 
             Sidebar? Pulling stuff into Solr from CartoDB (and MongoLab, for that matter) is pretty simple, really. Here are the three lines (that you could prolly pipe together if you were so inclined):
 
 
-            <code>
+            <pre>
             # pull (select) cartodb fields down as json
             curl "https://<YOUR CARTODB USERNAME>.cartodb.com/api/v1/sql?q=select%20cartodb_id,name,anno,created_at,updated_at,concat%28ST_Y%28the_geom%29||%27,%27||ST_X%28the_geom%29%29%20as%20loc%20from%20cbb_point" -o /tmp/pcdbraw.json;
+            
+
             # query out just the rows array for a clean send to Solr
-
             # prolly there are things you can do at the Solr schema end to preclude this step, but it's easy enough
-
-
             jq .rows /tmp/pcdbraw.json > /tmp/pcdb.json
-            # send up to yr solr instance - don't forget the commit=true param
 
+            # send up to yr solr instance - don't forget the commit=true param
             curl 'http://localhost/solr/cbb_carto/update/json?commit=true' --data-binary @/tmp/pcdb.json -H 'Content-type:application/json'
-            </code>
+            </pre>
         </li>
         <li>
-            Once the data are indexed in Solr, the rest is just all this dumb app logic/navigation/styling. Which isn't trivial - it represents the bulk of the work, but it's even more boring to write about than piping CartoDB into Solr.
+            Once the data are indexed in Solr, the rest is just all this dumb app logic/navigation/styling. Which isn't trivial -- it represents the bulk of the work -- but it's even more boring to write about than piping CartoDB into Solr.
         </li>
     </ul>
     </p>

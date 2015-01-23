@@ -559,15 +559,51 @@ var QueryView = Backbone.View.extend({
         // this.model.bind("change", this.render, this);
     },
 
-    fire: function() {
+    fire: function(goto) {
+        if(typeof goto == 'undefined'){
+            goto = true
+        }
         var rawstring = $("#query-form-input").val()
         appCartoQuery.set({
             rawstring: rawstring
         })
-        appRoute.navigate(pullURL("#query"), {
-            trigger: true,
-            replace: true
-        })
+        if(goto==true){
+                appRoute.navigate(pullURL("#query"), {
+                    trigger: true,
+                    replace: true
+                })} else {
+                    // ok we didn't wanna disrupt pane state but we still wanna fire off a query
+                    // gotta do this here rather than rely on a route to do it
+                    // 
+                    appCBB.fetch({
+                // dataType: "jsonp"
+                success: function() {
+                    // console.log("successful fetch of appcbb at 76");
+                    appCBBListView.render()
+                    appCBBMapView.render()
+                    appActivity.set({
+                        message: "",
+                        show: false,
+                        altel: false
+                    })
+                },
+                error: function() {
+                    appConsole.set({
+                        message: "query errored out"
+                    })
+                    appActivity.set({
+                        message: "",
+                        show: false,
+                        altel: false
+                    })
+                    // console.log("failed fetch");
+                }
+            }, {
+                reset: true
+            })
+                    // 
+                    // 
+                }
     },
     setstage: function() {
         $("#query-list").html("")
@@ -767,7 +803,7 @@ var EpisodesView = Backbone.View.extend({
     },
     render: function() {
         $(this.el).empty()
-        $(this.el).html("<h3>Episodes</h3> <span class='cbbepsanno'>(referencing location: '"+appCBB.findWhere({active:true}).get("name")+"')</span>")
+        $(this.el).html(" <h3><span class='episodes' style='margin-right:12px;'>--------></span>Episodes</h3> <span class='cbbepsanno'>(referencing location: '"+appCBB.findWhere({active:true}).get("name")+"')</span>")
         // we use .episodes cuz we have some stuff outside of the el we wanna unhide, too
         if (this.collection.models.length > 0) {
             $(".episodes").removeClass('hidden')
@@ -831,7 +867,7 @@ var MethodView = Backbone.View.extend({
     },
     singular: function(e) {
         e.preventDefault()
-        locTrigger(e)
+        locTrigger(e,false)
         
         return this
     },
