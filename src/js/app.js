@@ -1,65 +1,78 @@
 /* -------------------------------------------------- GLOBALS -----------------------  */
 verbose = true;
-
-NProgress.configure({ parent: '#main' });
+NProgress.configure({
+    parent: '#main'
+});
 window.apphost = "localhost";
 window.solrhost = "http://localhost:8983/solr/";
-
 /* -------------------------------------------------- HANDLEBARS START -----------------------  */
 Handlebars.registerHelper('timeize', function(options) {
-  return new Handlebars.SafeString(
-    moment(options.fn(this)).format('D.MMM.YYYY')
-      );
+    return new Handlebars.SafeString(moment(options.fn(this)).format('D.MMM.YYYY'));
 });
 /* -------------------------------------------------- HANDLEBARS END -----------------------  */
-
 // jeez i hate to bootstrap this w/ an extra ajax call but i don't wanna have to remember to update this when i change the solr schema
 // $.getJSON(solrhost+'/cbb_bits/admin/luke?numTerms=0', {wt: 'json'}, function(json, textStatus) {
 //   console.log("fields call:");console.log(json);
 // });
-
-
-            markernew = {
-                radius: 6,
-                fillColor: "#1288b9",
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.6,
-                // cartodb_id: hit.get("cartodb_id").toString()
-            };
-
-                        markeractive = {
-                radius: 18,
-                fillColor: "#fecd0b",
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.6,
-                // cartodb_id: hit.get("cartodb_id").toString()
-            };
-                        markerseen = {
-                radius: 6,
-                fillColor: "#ffffff",
-                color: "#1288b9",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.6,
-                // cartodb_id: hit.get("cartodb_id").toString()
-            };
-
+markernew = {
+    radius: 6,
+    fillColor: "#1288b9",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.6,
+    // cartodb_id: hit.get("cartodb_id").toString()
+};
+markeractive = {
+    radius: 18,
+    fillColor: "#fecd0b",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.6,
+    // cartodb_id: hit.get("cartodb_id").toString()
+};
+markerseen = {
+    radius: 6,
+    fillColor: "#ffffff",
+    color: "#1288b9",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.6,
+    // cartodb_id: hit.get("cartodb_id").toString()
+};
+linenew = {
+    fillColor: "#1288b9",
+    color: "#1288b9",
+    weight: 6,
+    opacity: .8,
+    // fillOpacity: 0.6,
+    // cartodb_id: hit.get("cartodb_id").toString()
+};
+lineactive = {
+    fillColor: "#fecd0b",
+    color: "#fecd0b",
+    weight: 8,
+    opacity: 1,
+    // fillOpacity: 0.6,
+    // cartodb_id: hit.get("cartodb_id").toString()
+};
+lineseen = {
+    fillColor: "#ffffff",
+    color: "#ffffff",
+    weight: 6,
+    opacity: .8,
+    // fillOpacity: 0.6,
+    // cartodb_id: hit.get("cartodb_id").toString()
+};
 $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomprevious glyphicon glyphicon-step-backward" href="#" title="Zoom to Previous"></a>');
 $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomfull glyphicon glyphicon-fullscreen" href="#" title="Zoom Way dafuk out"></a>');
-
 window.appURL = new URL();
-
-
-
 window.appEpisodes = new Episodes();
-
 // window.appEpisodes = new Episodes();
-window.appEpisodesView = new EpisodesView({collection:appEpisodes});
-
+window.appEpisodesView = new EpisodesView({
+    collection: appEpisodes
+});
 // window.cbbItems = L.featureGroup()
 //     // .on('click', function() { alert('Clicked on a group!'); })
 //     .addTo(map);
@@ -206,8 +219,7 @@ var baselayers = {
                 "id": "toner",
                 "url": null
             }
-        }
-        , {
+        }, {
             "name": "stamen_watercolor",
             "active": false,
             "nom": "Stamen Watercolor",
@@ -242,7 +254,9 @@ appBaseLayersView = new BaseLayersView({
 // console.log("175 basemap:");console.log(appBaseMap);
 // appBaseMapView = new BaseMapView()
 window.appCartoQuery = new CartoQuery();
-window.appCartoQueryView = new QueryView({model:appCartoQuery});
+window.appCartoQueryView = new QueryView({
+    model: appCartoQuery
+});
 // var mods = (function() {
 //     var json = null;
 //     $.ajax({
@@ -284,15 +298,13 @@ window.appCartoQueryView = new QueryView({model:appCartoQuery});
 //     }
 //     });
 /* -------------------------------------------------- INITS -----------------------  */
-
-switch(apphost) {
-    case "localhost":
-window.appCBB = new CartoCollectionDev();
-        break;
-    default:
-window.appCBB = new CartoCollection();
+switch (apphost) {   
+    case "localhost":
+        window.appCBB = new CartoCollectionDev();       
+        break;   
+    default:
+        window.appCBB = new CartoCollection();
 }
-
 // appCBBCarto.fetch();
 // appCBBCarto.bind('reset', function() {
 //  appCBBCarto.each(function(p) {
@@ -325,7 +337,6 @@ window.appCBBMapView = new CartoCollxView({
 // var appCartoView = new CartoCollxView({collection:appCBBCarto})
 // }
 // });
-
 // new console model and view
 window.appConsole = new Console().set({
     // message: "HINT! Press the 'z' key at any time to reveal the full map."
@@ -334,26 +345,20 @@ window.appConsole = new Console().set({
 window.appConsoleView = new ConsoleView({
     model: appConsole
 });
-
 // new activity model and view
 window.appActivity = new Activity();
 window.appActivityView = new ActivityView({
     model: appActivity
 });
-
-
 var recentsCollx = new RecentsCollection();
 var recentsCollxView = new RecentsView({
     collection: recentsCollx
 })
-
-recentsCollx.fetch({success:function(){
-
-recentsCollxView.render()
-    
-}})
-
-
+recentsCollx.fetch({
+    success: function() {
+        recentsCollxView.render()
+    }
+})
 var huh = new Huh();
 var huhV = new HuhView({
     model: huh
@@ -362,231 +367,195 @@ var method = new Method();
 var methodV = new MethodView({
     model: method
 })
-
 /* -------------------------------------------------- Free Funcs -----------------------  */
-
-function locTrigger(e,goto){
-e.preventDefault()
-if(typeof goto == 'undefined'){
-            var goto=true
+    function locTrigger(e, goto) {
+        e.preventDefault()
+        if (typeof goto == 'undefined') {
+            var goto = true
         }
-if(verbose==true){
-console.log("in locTrigger");}
-    var solrstring = $(e.currentTarget).attr("data-string")
+        if (verbose == true) {
+            console.log("in locTrigger");
+        }
+        var solrstring = $(e.currentTarget).attr("data-string")
         var markerid = solrstring.split(",")[1]
-
-
-
         appCartoQuery.set({
             rawstring: solrstring
         })
-
-appCartoQuery.set({
+        appCartoQuery.set({
             rawstring: solrstring
         })
-
-appCartoQueryView.fire(goto)
-
+        appCartoQueryView.fire(goto)
         // appRoute.navigate(pullURL("#query"), {
         //     trigger: true,
         //     replace: true
         // })
-
         // appCBB.fetch({
         //     success: function(clx) {
-
         //         appCBBMapView.render()
         //         // cuz there's only gonna be one
         //         var markerid = clx.last().get("cartodb_id")
         //         appCBBListView.render().zoomfromexternal(markerid)
-
         //         pullURL("#query")
         //         // there will only be one cuz we searched by id
         //     }
         // })
-
-}
-
-function pullURL(goto){
-console.log("in pullurl, goto is:");
-console.log(goto);
-console.log("url is:");
-
-if(typeof goto == 'undefined'){
-    // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
-    var hel = $(".mainpanel:not('.hidden')")
-    var h = '#'+$(hel).attr("id")
-
-    // e.g. nothing's been lit up before
-    if(h=="#undefined"){
-        h="#huh"
     }
-} else {
-    var h = goto;
-}
 
-    var bbx = map.getBounds().toBBoxString();
-    var qs = appCartoQuery.get("solrstring")
-    var bl = appBaseLayers.findWhere({active:true}).get("name")
+    function pullURL(goto) {
+        console.log("in pullurl, goto is:");
+        console.log(goto);
+        console.log("url is:");
+        if (typeof goto == 'undefined') {
+            // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
+            var hel = $(".mainpanel:not('.hidden')")
+            var h = '#' + $(hel).attr("id")
+            // e.g. nothing's been lit up before
+            if (h == "#undefined") {
+                h = "#huh"
+            }
+        } else {
+            var h = goto;
+        }
+        var bbx = map.getBounds().toBBoxString();
+        var qs = appCartoQuery.get("solrstring")
+        var bl = appBaseLayers.findWhere({
+            active: true
+        }).get("name")
+        var url = h + "/" + qs + "/" + bbx + "/" + bl
+        console.log(url);
+        return url
+    }
 
-    var url = h+"/"+qs+"/"+bbx+"/"+bl
-    
-    console.log(url);
-    return url
-}
+    function processLeaf(m, pop, geom) {
+        if(typeof pop == 'undefined'){
+            var pop = true
+        }
+        if (geom == "point") {
+            // points get their own style
+            var activeStyle = markeractive
+        } else {
+            var activeStyle = lineactive
+        }
+        _.each(cbbItems._layers, function(i) {
 
-function processLeaf(m,pop){
-    console.log("in processleaf, m:");console.log(m);
-
-                _.each(cbbItems._layers, function(i) {
-                    if (i.options.seen == true) {
-                        i.setStyle(markerseen)
-                    }
-
-                    if(i.options.cartodb_id.toString() == m){
-                i.setStyle(markeractive)
+            if (i.options.seen == true) {
+                // feature clicks set them as seen - if they're set here, they're stale and we restyle them
+                if (typeof i._point == 'undefined') {
+                    // not a point, so 
+                    i.setStyle(lineseen)
+                } else {
+                    i.setStyle(markerseen)
+                }
+            }
+            if (i.options.cartodb_id.toString() == m) {
+                i.setStyle(activeStyle)
                 i.options.seen = true;
-                if(pop==true){
+                if (pop == true) {
+                    console.log("pop is "+pop+" and i is:");
+                    console.log(i);
                     i.openPopup()
                 }
-
-                    }
-                }) //each
-
-                // if(typeof stale !== 'undefined'){
-                // stale.setStyle(markerseen)}
-                // hit.set({active:true});
-                // hit.set({
-                //     queued: true
-                // });}
-
-}
-
-/* -------------------------------------------------- RUN! -----------------------  */
+            }
+        }) //each
+        // if(typeof stale !== 'undefined'){
+        // stale.setStyle(markerseen)}
+        // hit.set({active:true});
+        // hit.set({
+        //     queued: true
+        // });}
+    }
+    /* -------------------------------------------------- RUN! -----------------------  */
 cbbItems = L.geoJson().addTo(map);
-
 window.appWikiaz = new Wikiaz()
 appWikiaz.fetch();
-
 // var solrfz = $.getJSON(solrhost+"cbb_carto/admin/luke?numTerms=0&wt=json&callback=?", {}, function(json, textStatus) {
 //         console.log("json:");console.log(json);
 //         
 var fields = {
-  "fields": [
-    {
-      "order":1,
-      "name": "anno",
-      "nom": "short annotation of the site (which is represented by the name field) -- e.g. 'one of Huell Howser's homes'",
-      "scope_and_use": "use it freely, e.g. <span class='loc-trigger' data-string='anno:huell'><span class='loc-string'>anno:huell</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span> or <span class='loc-trigger' data-string='anno:cake+boss'><span class='loc-string'>anno:cake+boss</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span>"
-    },
-   {
-      "order":5,
-      "name": "cartodb_id",
-      "nom": "unique id per site",
-      "scope_and_use": "use it to link to a specific instance, e.g. <span class='loc-trigger' data-string='cartodb_id:108'><span class='loc-string'>cartodb_id:108</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span> - ~site of Bob Ducca's booth at the Silver Lake Farmers Market"
-    },
-    {
-      "order":3,
-      "name": "created_at",
-      "nom": "date the location was logged (has nothing to do with its appearance on the show)",
-      "scope_and_use": "I'm not sure anybody could possibly care. But I guess you could do Solr range queries with it."
-    },
-    {
-      "order":0,
-      "name": "name",
-      "nom": "name of the site (e.g. 'Six Flags Valencia' or 'Boston, MA'",
-      "scope_and_use": "this and anno are the primary fields and this is the one with the placename"
-    },
-    {
-      "order":2,
-      "name": "text",
-      "nom": "catch-all field",
-      "scope_and_use": "searching this field queries both anno and name fields (and eventually any other text we wanna throw in). If you don't type a specific field (e.g. you just type 'Dimello') this is the field that gets called."
-    },
-    {
-      "order":4,
-      "name": "updated_at",
-      "nom": "date of the last update to this record",
-      "scope_and_use": "Eh. You can <a href='#recent'>query for updates</a> with it I suppose."
-    }
-  ]
+    "fields": [{
+        "order": 1,
+        "name": "anno",
+        "nom": "short annotation of the site (which is represented by the name field) -- e.g. 'one of Huell Howser's homes'",
+        "scope_and_use": "use it freely, e.g. <span class='loc-trigger' data-string='anno:huell'><span class='loc-string'>anno:huell</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span> or <span class='loc-trigger' data-string='anno:cake+boss'><span class='loc-string'>anno:cake+boss</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span>"
+    }, {
+        "order": 5,
+        "name": "cartodb_id",
+        "nom": "unique id per site",
+        "scope_and_use": "use it to link to a specific instance, e.g. <span class='loc-trigger' data-string='cartodb_id:108'><span class='loc-string'>cartodb_id:108</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span> - ~site of Bob Ducca's booth at the Silver Lake Farmers Market"
+    }, {
+        "order": 3,
+        "name": "created_at",
+        "nom": "date the location was logged (has nothing to do with its appearance on the show)",
+        "scope_and_use": "I'm not sure anybody could possibly care. But I guess you could do Solr range queries with it."
+    }, {
+        "order": 0,
+        "name": "name",
+        "nom": "name of the site (e.g. 'Six Flags Valencia' or 'Boston, MA'",
+        "scope_and_use": "this and anno are the primary fields and this is the one with the placename"
+    }, {
+        "order": 2,
+        "name": "text",
+        "nom": "catch-all field",
+        "scope_and_use": "searching this field queries both anno and name fields (and eventually any other text we wanna throw in). If you don't type a specific field (e.g. you just type 'Dimello') this is the field that gets called."
+    }, {
+        "order": 4,
+        "name": "updated_at",
+        "nom": "date of the last update to this record",
+        "scope_and_use": "Eh. You can <a href='#recent'>query for updates</a> with it I suppose."
+    }]
 }
 window.appSoFoz = new SolrFieldz(fields.fields);
 // appSoFoz.comparator = 'order';
-window.appSoFozView = new SolrFieldzView({collection: appSoFoz});
+window.appSoFozView = new SolrFieldzView({
+    collection: appSoFoz
+});
 //         return json.fields
 // });
-
 // appSolrFieldz.fetch({
 //     success:function(){
 //         appSolrzView.render()
 //     }
 // },{reset:true});
-
-
 // appActivity.set({message: "fetching Luke/Solr fields...",show: true,altel:false})
-
-
 /* -------------------------------------------------- READY -----------------------  */
 $(document).ready(function() {
-
-// $('#query-form-bt').click(function(e){
-//     e.preventDefault()
-
-//     var rawstring = $("#query-form-input").val()
-    
-//     appCartoQuery.set({rawstring:rawstring})
-
-//         appActivity.set({
-//             message: "querying...",
-//             show: true
-//         })
-
-//     appCBB.fetch({
-//         success: function(c) {
-//                 appCBBListView.render()
-//                 appCBBMapView.render()
-//                 appActivity.set({message: "",show: false,altel:false})
-//         },
-//         error: function() {
-//           appActivity.set({message: "",show: false,altel:false})
-//             appConsole.set({message:"query failed",error:true})
-//         }
-//     })
-
-
-
-// }) //query-form-bt.click
-
-
+    // $('#query-form-bt').click(function(e){
+    //     e.preventDefault()
+    //     var rawstring = $("#query-form-input").val()
+    //     appCartoQuery.set({rawstring:rawstring})
+    //         appActivity.set({
+    //             message: "querying...",
+    //             show: true
+    //         })
+    //     appCBB.fetch({
+    //         success: function(c) {
+    //                 appCBBListView.render()
+    //                 appCBBMapView.render()
+    //                 appActivity.set({message: "",show: false,altel:false})
+    //         },
+    //         error: function() {
+    //           appActivity.set({message: "",show: false,altel:false})
+    //             appConsole.set({message:"query failed",error:true})
+    //         }
+    //     })
+    // }) //query-form-bt.click
     $(".leaflet-control a").each(function() {
         $(this).css("transform", "rotate(-90deg)")
     });
     $(".leaflet-control-container").appendTo("#wrapper").css("z-index", 88)
     $("a.leaflet-control-zoom-in")
-
-  
-  $("#bt-solrfields").click(function(e){
-
-    e.preventDefault()
-
-$("#solrfields-list").toggleClass('hidden')
-
-  }) //solrfields.click
-
+    $("#bt-solrfields").click(function(e) {
+        e.preventDefault()
+        $("#solrfields-list").toggleClass('hidden')
+    }) //solrfields.click
     // oh one more thing - let's intercept the query tab button so it doesn't wipe out appcarto each time
-// $("html body header.site-header.off-canvas-container.js-off-canvas-container div.content-wrap.off-canvas-contents nav.site-nav.pull-left ul li a.link.active").click(function(e){
-// $("a[href='#query']").click(function(e){
-//     e.preventDefault();
-
-// appCartoQuery
+    // $("html body header.site-header.off-canvas-container.js-off-canvas-container div.content-wrap.off-canvas-contents nav.site-nav.pull-left ul li a.link.active").click(function(e){
+    // $("a[href='#query']").click(function(e){
+    //     e.preventDefault();
+    // appCartoQuery
     // var url = pullURL('#query');
-    
     // appRoute.navigate(url, {trigger: true, replace: true})
-
-// })
-
-
+    // })
 }); //ready
 $(document).keydown(function(e) {
     if (e.keyCode == 17) {

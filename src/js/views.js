@@ -19,39 +19,82 @@ var CartoCollxView = Backbone.View.extend({
         cbbItems.clearLayers();
         this.collection.each(function(hit, i) {
             // var gjraw = hit.get("the_geom_gj");
-            var markerTemplate = Handlebars.templates['hitMarkerViewTpl']
-            var pu = markerTemplate(hit.toJSON());
+            var hitTemplate = Handlebars.templates['hitMarkerViewTpl']
+            var pu = hitTemplate(hit.toJSON());
             // if(hit.get("active")==true){
             // var mstyle=markerseen
             // } else {
-            var mstyle = markernew
+            // var mstyle = markernew
             // }
-            var hitloc = hit.get("loc")
-            var hitloca = hitloc.split(",")
-            var hitll = L.latLng(hitloca[0], hitloca[1]);
-            var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
+            // var hitloc = hit.get("loc")
+            // Create a new Wicket instance
+            var wkt = new Wkt.Wkt();
+            // Read in any kind of WKT string
+            wkt.read(hit.get("the_geom"));
+            var geomtype = wkt.type
+            if (geomtype == "point") {
+                var hitll = wkt.toObject().getLatLng()
+                var hitm = L.circleMarker(hitll, markernew)
+                var activeStyle = markeractive
+                // var seenStyle = markerseen
+            } else {
+                var hitm = wkt.toObject().setStyle(linenew)
+                var activeStyle = lineactive
+                // var zoomer = hitm.coordinates
+                // var seenStyle = lineseen
+                // console.log("hitll:");console.log(hitll);
+                // var hitm = L.multiPolyline(hitll, linenew);
+            }
+            // var hitm = wkt.toObject().addTo(cbbItems).on("click", function(m) {
+            // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
+            // console.log("hitm just after bindpopu:");console.log(hitm);
+            hitm.bindPopup(pu).addTo(cbbItems).on("click", function(m) {
                 var stale = _.find(cbbItems._layers, function(i) {
                     return i.options.seen == true
                 });
-                processLeaf(hit.get("cartodb_id").toString());
-                this.setStyle(markeractive)
-                // hit.set({active:true});
-                this.options.seen = true;
-                hit.set({
-                    queued: true
-                });
-            }).bindPopup(pu);
+                processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
+            });
+            // .on("click", function(m,geomtype) {
+            //     var stale = _.find(cbbItems._layers, function(i) {
+            //         return i.options.seen == true
+            //     });
+            //     console.log("this 58:");console.log(this);
+            //     processLeaf(hit.get("cartodb_id").toString(),false,geomtype);
+            //     this.setStyle(activeStyle)
+            //     // hit.set({active:true});
+            //     this.options.seen = true;
+            //     hit.set({
+            //         queued: true
+            //     });
+            // })
+            // var hitloca = hitloc.split(",")
+            // var hitll = L.latLng(hitloca[0], hitloca[1]);
+            // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
+            //     var stale = _.find(cbbItems._layers, function(i) {
+            //         return i.options.seen == true
+            //     });
+            //     processLeaf(hit.get("cartodb_id").toString());
+            //     this.setStyle(markeractive)
+            //     // hit.set({active:true});
+            //     this.options.seen = true;
+            //     hit.set({
+            //         queued: true
+            //     });
+            // }).bindPopup(pu);
             // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).bindPopup(pu);
             // this.collection.activate(chid)
+            if (typeof hitm.options == 'undefined') {
+                hitm.options = {
+                    cartodb_id: null
+                }
+            }
             hitm.options.cartodb_id = hit.get("cartodb_id").toString()
             var count = this.collection.length;
-            if (hit.get("active") == true || count==1) {
-                // if(!$("#main").hasClass('hidden')){
-                if (map.getBounds().contains(hitm.getLatLng()) == false) {
-                    map.setView(hitm.getLatLng(), 9);
-                }
+            if (hit.get("active") == true || count == 1) {
+                // if (map.getBounds().contains(hitm.getLatLng()) == false) {
+                //     map.setView(hitm.getLatLng(), 9);
                 // }
-                hitm.openPopup()
+                // hitm.openPopup()
                 // hitm.zoomTo()
             }
         }, this);
@@ -83,12 +126,8 @@ var CartoPlainView = Backbone.View.extend({
         console.log("here cuzza change queued");
     },
     echoid: function(e) {
-var locid = $(e.target).attr("data-id")
-var str = '<span class="loc-trigger" data-string="cartodb_id:'+locid+'"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
-console.log("locid:"+locid);
-console.log("usable span:");
-console.log(str);
-
+        var locid = $(e.target).attr("data-id")
+        var str = '<span class="loc-trigger" data-string="cartodb_id:' + locid + '"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
         return this
     },
     fromzoom: function(cm) {
@@ -148,7 +187,8 @@ console.log(str);
         return this.activate(a)
     },
     zoomfromexternal: function(czid) {
-        console.log("czid in zoomfromexternal is :");console.log(czid);
+        console.log("czid in zoomfromexternal is :");
+        console.log(czid);
         var a = $(this.el).find("li[data-id='" + czid + "']")
         return this.activate(a)
     },
@@ -170,16 +210,12 @@ console.log(str);
         return this
     },
     activate: function(a) {
-        console.log("incoming a is :");
-        console.log(a);
         // first wipe the list of any true classes (see ~184 for explanation)
         $(this.el).find("li").removeClass("true")
         // var amid = am.get("cartodb_id")
         var amid = $(a).data("id").toString();
-        console.log("incoming amid is :");
-        console.log(amid);
         if (verbose == true) {
-            console.log("in activate at 133");
+            console.log("in activate for " + a);
         }
         // actually first silently deactivate the others
         _.each(_.reject(this.collection.models, function(mod) {
@@ -193,7 +229,6 @@ console.log(str);
             })
         }, this)
         // 
-        processLeaf(amid, true)
         var item = this.collection.findWhere({
             "cartodb_id": amid
         });
@@ -201,15 +236,26 @@ console.log(str);
             active: true
         })
         // send id and popup flag
-        // _.each(cbbItems._layers, function(i) {
-        //             if (i.options.cartodb_id == id) {
-        //             i.setStyle(markeractive)
-        //                 // i.setStyle(markerseen)
-        //                 if (map.getBounds().contains(i.getLatLng()) == false) {
-        //             map.setView(i.getLatLng(), 9);
-        //         } 
-        //         }
-        //         }) //each
+        _.each(cbbItems._layers, function(i) {
+            console.log("i in cbbitems zoomloop:");
+            console.log(i);
+            console.log(item.get("geom_type"))
+            if (i.options.cartodb_id == amid) {
+                // if(item.get("geom_type")=="line"){
+                //     if (map.getBounds().contains(i.getLatLng()) == false) {
+                //     map.setView(i.getLatLng(), 9);
+                // }
+                // }
+                if (map.getBounds().contains(i.getBounds()) == false) {
+                    // map.setView(i.getLatLng(), 9);
+                    map.fitBounds(i.getBounds());
+                }
+                // if (map.getBounds().contains(i.getLatLng()) == false) {
+                //     map.setView(i.getLatLng(), 9);
+                // }
+            }
+        }) //each
+        processLeaf(amid, true, item.get("geom_type"))
         // GUH? WHAT'S THIS? It's a straight-up jquery hack to waaaaay more quickly light up the active model's list item
         // cuz doing it with a proper backbone re-render took forever (.8 seconds)
         $(a).addClass("true")
@@ -235,28 +281,24 @@ console.log(str);
         return this.rewire()
     }
 });
-
 var SolrFieldzView = Backbone.View.extend({
     // tagName: "li",
     el: "#solrfields-list",
     events: {
-"click .loc-trigger": "singular"
-      
+        "click .loc-trigger": "singular"
     },
     template: Handlebars.templates['solrfieldsView'],
     initialize: function() {
         // this.listenTo(this.collection, "reset", this.render);
         this.collection.bind('reset', this.render, this);
         this.collection.bind('change', this.render, this);
-        return this
-        .render()
+        return this.render()
     },
-        singular: function(e) {
-            $(this.el).addClass('hidden')
-            console.log("singuler in qv");
+    singular: function(e) {
+        $(this.el).addClass('hidden')
+        console.log("singuler in qv");
         e.preventDefault()
         locTrigger(e)
-        
         return this
     },
     render: function() {
@@ -265,7 +307,7 @@ var SolrFieldzView = Backbone.View.extend({
             console.log("rendering solrfieldsview")
             console.log(this.collection.models);
         }
-// $(this.el).html(this.template(this.collection.toJSON()))       
+        // $(this.el).html(this.template(this.collection.toJSON()))       
         $(this.el).html(this.template({
             count: this.collection.models.length,
             fields: this.collection.toJSON()
@@ -278,8 +320,8 @@ var SolrFieldzView = Backbone.View.extend({
 var HuhView = Backbone.View.extend({
     // tagName: "li",
     el: "#huh",
-    events:{
-// "click #bt-showmain":"reset"
+    events: {
+        // "click #bt-showmain":"reset"
     },
     template: Handlebars.templates['home'],
     initialize: function() {
@@ -294,15 +336,14 @@ var HuhView = Backbone.View.extend({
         // }, this);
         return this
     },
-    reset: function(){
-console.log("showmain clicked");
-console.log(e);
-$("#bt-showmain").addClass('hidden')
-$("#main").addClass('hiddenish')
-return this
+    reset: function() {
+        console.log("showmain clicked");
+        console.log(e);
+        $("#bt-showmain").addClass('hidden')
+        $("#main").addClass('hiddenish')
+        return this
     }
 });
-
 /* -------------------------------------------------- BMV -----------------------  */
 var BaseLayerMenuItemView = Backbone.View.extend({
     tagName: "li",
@@ -548,8 +589,7 @@ var QueryView = Backbone.View.extend({
     el: $("#query-form"),
     events: {
         "click #query-form-bt": "fire",
-        
-        "click #solrfields .glyphicon":"togglehelp"
+        "click #solrfields .glyphicon": "togglehelp"
         // "change": "render"
     },
     template: Handlebars.templates['queryViewTpl'],
@@ -558,24 +598,24 @@ var QueryView = Backbone.View.extend({
         this.listenTo(this.model, "change", this.render)
         // this.model.bind("change", this.render, this);
     },
-
     fire: function(goto) {
-        if(typeof goto == 'undefined'){
+        if (typeof goto == 'undefined') {
             goto = true
         }
         var rawstring = $("#query-form-input").val()
         appCartoQuery.set({
             rawstring: rawstring
         })
-        if(goto==true){
-                appRoute.navigate(pullURL("#query"), {
-                    trigger: true,
-                    replace: true
-                })} else {
-                    // ok we didn't wanna disrupt pane state but we still wanna fire off a query
-                    // gotta do this here rather than rely on a route to do it
-                    // 
-                    appCBB.fetch({
+        if (goto == true) {
+            appRoute.navigate(pullURL("#query"), {
+                trigger: true,
+                replace: true
+            })
+        } else {
+            // ok we didn't wanna disrupt pane state but we still wanna fire off a query
+            // gotta do this here rather than rely on a route to do it
+            // 
+            appCBB.fetch({
                 // dataType: "jsonp"
                 success: function() {
                     // console.log("successful fetch of appcbb at 76");
@@ -601,9 +641,9 @@ var QueryView = Backbone.View.extend({
             }, {
                 reset: true
             })
-                    // 
-                    // 
-                }
+            // 
+            // 
+        }
     },
     setstage: function() {
         $("#query-list").html("")
@@ -700,7 +740,6 @@ var RecentItemView = Backbone.View.extend({
         if (verbose == true) {
             // console.log("rendering recentitemview")
         }
-        
         $(this.el).html(this.template(this.model.toJSON()));
         return this
     }
@@ -710,8 +749,8 @@ var RecentItemView = Backbone.View.extend({
 var RecentsView = Backbone.View.extend({
     // tagName: "li",
     el: ".recents",
-    events:{
-"click .loc-trigger": "singular"
+    events: {
+        "click .loc-trigger": "singular"
     },
     template: Handlebars.templates['recentsViewTpl'],
     initialize: function() {
@@ -724,7 +763,6 @@ var RecentsView = Backbone.View.extend({
     singular: function(e) {
         e.preventDefault()
         locTrigger(e)
-        
         return this
     },
     render: function() {
@@ -742,9 +780,9 @@ var RecentsView = Backbone.View.extend({
             // console.log((thisRecentItemView));
             // console.log("$(this.el):");console.log($(this.el));
             // $(this.el).append(thisRecentItemView.render().el
-                // "recent item will go here"
+            // "recent item will go here"
             // );
-        $(this.el).html(this.template(this.collection.toJSON()));
+            $(this.el).html(this.template(this.collection.toJSON()));
         }, this);
         return this
     }
@@ -803,7 +841,9 @@ var EpisodesView = Backbone.View.extend({
     },
     render: function() {
         $(this.el).empty()
-        $(this.el).html(" <h3><span class='episodes' style='margin-right:12px;'>--------></span>Episodes</h3> <span class='cbbepsanno'>(referencing location: '"+appCBB.findWhere({active:true}).get("name")+"')</span>")
+        $(this.el).html(" <h3><span class='episodes' style='margin-right:12px;'>--------></span>Episodes</h3> <span class='cbbepsanno'>(referencing location: '" + appCBB.findWhere({
+            active: true
+        }).get("name") + "')</span>")
         // we use .episodes cuz we have some stuff outside of the el we wanna unhide, too
         if (this.collection.models.length > 0) {
             $(".episodes").removeClass('hidden')
@@ -846,7 +886,6 @@ var EpisodesView = Backbone.View.extend({
         return this
     }
 });
-
 /* -------------------------------------------------- Method
 -------------------------------*/
 var MethodView = Backbone.View.extend({
@@ -867,8 +906,7 @@ var MethodView = Backbone.View.extend({
     },
     singular: function(e) {
         e.preventDefault()
-        locTrigger(e,false)
-        
+        locTrigger(e, false)
         return this
     },
     render: function() {
