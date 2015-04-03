@@ -161,7 +161,24 @@ var CartoPlainView = Backbone.View.extend({
             altel: "#episodes-list"
         })
         var locid = $(e.target).attr("data-id")
+
+        var loctype = $(e.target).attr("data-type");
+
+        switch(loctype) {
+    case 'line':
+        locid = locid/999
+        break;
+    case 'poly':
+        locid = locid/9999
+        break;
+    default:
+        locid = locid;
+}
+
+console.log("locid at 178:");console.log(locid);
+
         appEpisodes.activeloc = Number(locid);
+        appEpisodes.loctype = loctype;
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
@@ -184,6 +201,7 @@ var CartoPlainView = Backbone.View.extend({
     zoomtointernal: function(e) {
         e.preventDefault()
         var a = $(e.currentTarget).parents('li')
+        console.log("a at 186:");console.log(a);
         return this.activate(a)
     },
     zoomfromexternal: function(czid) {
@@ -214,6 +232,8 @@ var CartoPlainView = Backbone.View.extend({
         $(this.el).find("li").removeClass("true")
         // var amid = am.get("cartodb_id")
         var amid = $(a).data("id").toString();
+console.log("this.model at 218");
+console.log(this.collection);
         if (verbose == true) {
             console.log("in activate for " + a);
         }
@@ -236,10 +256,14 @@ var CartoPlainView = Backbone.View.extend({
             active: true
         })
         // send id and popup flag
+        // 
+
+// SHOULD NOT BE AN EACH #returnto
+// 
         _.each(cbbItems._layers, function(i) {
-            console.log("i in cbbitems zoomloop:");
-            console.log(i);
-            console.log(item.get("geom_type"))
+            // console.log("i in cbbitems zoomloop:");
+            // console.log(i);
+            // console.log(item.get("geom_type"))
             if (i.options.cartodb_id == amid) {
                 // if(item.get("geom_type")=="line"){
                 //     if (map.getBounds().contains(i.getLatLng()) == false) {
@@ -255,10 +279,10 @@ var CartoPlainView = Backbone.View.extend({
                 // }
             }
         }) //each
+        $(a).addClass("true")
         processLeaf(amid, true, item.get("geom_type"))
         // GUH? WHAT'S THIS? It's a straight-up jquery hack to waaaaay more quickly light up the active model's list item
         // cuz doing it with a proper backbone re-render took forever (.8 seconds)
-        $(a).addClass("true")
         return this
         // .render()
     },
@@ -631,6 +655,10 @@ var QueryView = Backbone.View.extend({
                     appConsole.set({
                         message: "query errored out"
                     })
+
+                    // actually, if it's a true error we wanna be more forthcoming:
+                    $("#query-list").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+
                     appActivity.set({
                         message: "",
                         show: false,
@@ -770,6 +798,14 @@ var RecentsView = Backbone.View.extend({
             // console.log("rendering recentsview")
             // console.log(this.collection)
         }
+
+this.collection.sortBy('location_id')
+
+// this.collection.sortBy(function(m) { 
+// console.log("803 sortby:");console.log(m);
+//     return -m.get('updated_at') });
+
+        // sorted.each(function(recentitem) {
         this.collection.each(function(recentitem) {
             if (verbose == true) {
                 // console.log("gonna render the recentitemview")

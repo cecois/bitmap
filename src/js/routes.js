@@ -107,6 +107,8 @@ var Route = Backbone.Router.extend({
                     appConsole.set({
                         message: "query errored out"
                     })
+                    // actually, if it's a true error we wanna be more forthcoming:
+                    $("#query-list").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                     appActivity.set({
                         message: "",
                         show: false,

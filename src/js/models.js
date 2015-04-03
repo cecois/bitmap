@@ -17,7 +17,7 @@ var RecentItem = Backbone.Model.extend({});
 var RecentsCollection = Backbone.Collection.extend({
     model: RecentItem,
     url: function() {
-        return solrhost+"cbb_carto/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json"
+        return solrhost+"cbb_carto/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json&sort=updated_at+desc"
     },
     initialize: function(options) {
         options || (options = {});
@@ -25,8 +25,9 @@ var RecentsCollection = Backbone.Collection.extend({
         // this.query = options.query;
         return this.recents
     },
-    comparator: function(m) {
-    return -m.get('updated_at');
+    comparator: function(c) {
+        // console.log("m at models 29:");console.log(m);
+    return -c.get('updated_at');
 },
     // parse: function(data) {
     //     // if(verbose==true){console.log("parsing data in parse of RecentsCollection")}
@@ -57,8 +58,13 @@ var Episode = Backbone.Model.extend({});
 var Episodes = Backbone.Collection.extend({
     model: Episode,
     activeloc: null,
+    loctype: null,
     url: function() {
-        return solrhost+"cbb_bits/select?json.wrf=cwmccallback&q=location_id:"+this.activeloc+"&wt=json"
+        // var aloc = Number(this.activeloc);
+        // var locadj = aloc/999;
+        // console.log("locadj:");console.log(locadj);
+        // return solrhost+"cbb_bits/select?json.wrf=cwmccallback&q=location_id:"+this.activeloc+"+location_type:"+this.loctype+"&wt=json"
+        return solrhost+"cbb_bits/select?json.wrf=cwmccallback&q=%2Blocation_id%3A\""+this.activeloc+"\"+%2Blocation_type%3A\""+this.loctype+"\"&wt=json"
     },
     initialize: function(options) {
         options || (options = {});
