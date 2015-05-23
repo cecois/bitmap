@@ -1,2 +1,14 @@
-<a href="http://www.earwolf.com/episode/{{slug_earwolf}}" class="{{active}}" id="{{_id}}" title="{{slug_earwolf}}">
-{{#if title}}{{title}}{{else}}{{slug_earwolf}}{{/if}}</a>, at ~{{tstart}} (#{{episode}}: <a href="http://earwolf.com/{{slug_earwolf}}"> <img src="images/bt-earwolf.png" alt="" width="15" height="15" border="0" /> </a>, <a href="http://soundcloud.com/{{slug_soundcloud}}"><img src="images/bt-soundcloud.png" alt="" width="30" height="20" border="0" /></a>)
+<a href="http://www.earwolf.com/episode/{{slug_earwolf}}" class="{{active}}" id="{{_id}}" title="link to the episode at Earwolf">{{#if title}}{{title}}{{else}}{{slug_earwolf}}{{/if}}</a>
+(#{{episode}})
+<!-- <a href="http://earwolf.com/episode/{{slug_earwolf}}">
+	<img src="images/bt-earwolf.png" alt="" width="15" height="15" border="0" />
+</a> -->
+<!-- , -->
+<a href="http://soundcloud.com/comedybangbang/{{url_soundcloud}}#t={{tstart}}" title="link to {{tstart}} at SoundCloud">
+	<img src="images/bt-soundcloud.png" alt="" width="30" height="20" border="0" />
+</a>
+
+<!-- ), at ~{{tstart}} -->
+<!-- 
+https://soundcloud.com/stack-exchange/stack-exchange-podcast-51#t=9:36
+https://soundcloud.com/comedybangbang/341-stars-claudia-odoherty-neil-campbell -->

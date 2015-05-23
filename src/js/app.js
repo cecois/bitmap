@@ -37,8 +37,8 @@ markerseen = {
     fillColor: "#ffffff",
     color: "#1288b9",
     weight: 1,
-    opacity: 1,
-    fillOpacity: 0.6,
+    opacity: .6,
+    fillOpacity: 0.3,
     // cartodb_id: hit.get("cartodb_id").toString()
 };
 linenew = {
@@ -61,7 +61,7 @@ lineseen = {
     fillColor: "#ffffff",
     color: "#ffffff",
     weight: 6,
-    opacity: .8,
+    opacity: .6,
     // fillOpacity: 0.6,
     // cartodb_id: hit.get("cartodb_id").toString()
 };
@@ -122,8 +122,24 @@ var baselayers = {
                 "noWrap": true
             }
         }, {
-            "name": "space_station_earth",
+            "name": "lichtenstein",
             "active": false,
+            "source": "mapbox",
+            "nom": "Katie Kowalsky's Pop Art (Inspored by Roy lichtenstein)",
+            "thumb": "offline/mapbox-popart.png",
+            // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/sat/3/4/2.png",
+            "mapis": "dark",
+            "definition": {
+                "subdomains": ["a", "b", "c"],
+                "maxZoom": 18,
+                // "url": "http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png",
+            // https://b.tiles.mapbox.com/v4/katiekowalsky.236692c1/10/292/391@2x.png?access_token=pk.eyJ1Ijoia2F0aWVrb3dhbHNreSIsImEiOiJHR2hfdlBNIn0.GUMLsSnT-SYx4ew7b77kqw
+                "url": "https://{s}.tiles.mapbox.com/v4/katiekowalsky.236692c1/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1Ijoia2F0aWVrb3dhbHNreSIsImEiOiJHR2hfdlBNIn0.GUMLsSnT-SYx4ew7b77kqw",
+                "noWrap": true
+            }
+        }, {
+            "name": "space_station_earth",
+            "active": true,
             "source": "mapbox",
             "nom": "Eleanor Lutz' Space Station Earth",
             // "thumb": "offline/mapbox-mario.png",
@@ -138,7 +154,7 @@ var baselayers = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             // "thumb": "offline/mapbox-mario.png",
@@ -363,6 +379,10 @@ var huh = new Huh();
 var huhV = new HuhView({
     model: huh
 })
+var minutiae = new Minutiae();
+var minutiaeV = new MinutiaeView({
+    model:minutiae
+})
 var method = new Method();
 var methodV = new MethodView({
     model: method
@@ -402,9 +422,7 @@ var methodV = new MethodView({
     }
 
     function pullURL(goto) {
-        console.log("in pullurl, goto is:");
-        console.log(goto);
-        console.log("url is:");
+
         if (typeof goto == 'undefined') {
             // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
             var hel = $(".mainpanel:not('.hidden')")
@@ -451,8 +469,6 @@ var methodV = new MethodView({
                 i.setStyle(activeStyle)
                 i.options.seen = true;
                 if (pop == true) {
-                    console.log("pop is "+pop+" and i is:");
-                    console.log(i);
                     i.openPopup()
                 }
             }
@@ -475,7 +491,7 @@ var fields = {
     "fields": [{
         "order": 1,
         "name": "anno",
-        "nom": "short annotation of the site (which is represented by the name field) -- e.g. 'one of Huell Howser's homes'",
+        "nom": "short annotation of the location -- e.g. 'one of Huell Howser's homes'",
         "scope_and_use": "use it freely, e.g. <span class='loc-trigger' data-string='anno:huell'><span class='loc-string'>anno:huell</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span> or <span class='loc-trigger' data-string='anno:cake+boss'><span class='loc-string'>anno:cake+boss</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span>"
     }, {
         "order": 5,

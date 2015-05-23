@@ -28,61 +28,73 @@ var CartoCollxView = Backbone.View.extend({
             // }
             // var hitloc = hit.get("loc")
             // Create a new Wicket instance
-            var wkt = new Wkt.Wkt();
+            // var wkt = new Wkt.Wkt();
             // Read in any kind of WKT string
-            wkt.read(hit.get("the_geom"));
-            var geomtype = wkt.type
+            // wkt.read(hit.get("the_geom"));
+            // var geomtype = wkt.type
+            var geomtype = hit.get("geom_type")
+ 
+
+ var hitm = {
+    "type": "Feature",
+    "properties": {
+        "name": hit.get("name"),
+        // "active":hit.get("active"),
+        "cartodb_id":hit.get("cartodb_id"),
+        "anno":hit.get("anno"),
+        "created_at":hit.get("created_at"),
+        "updated_at":hit.get("updated_at")
+    },
+    "geometry": $.parseJSON(hit.get("the_geom"))
+    // hit.get("the_geom")
+};
+
+ // .get("the_geom");
+ // console.log("hitm:");console.log(hitm);
+
             if (geomtype == "point") {
-                var hitll = wkt.toObject().getLatLng()
-                var hitm = L.circleMarker(hitll, markernew)
-                var activeStyle = markeractive
-                // var seenStyle = markerseen
-            } else {
-                var hitm = wkt.toObject().setStyle(linenew)
-                var activeStyle = lineactive
-                // var zoomer = hitm.coordinates
-                // var seenStyle = lineseen
-                // console.log("hitll:");console.log(hitll);
-                // var hitm = L.multiPolyline(hitll, linenew);
-            }
-            // var hitm = wkt.toObject().addTo(cbbItems).on("click", function(m) {
-            // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
-            // console.log("hitm just after bindpopu:");console.log(hitm);
-            hitm.bindPopup(pu).addTo(cbbItems).on("click", function(m) {
+                // var hitll = wkt.toObject().getLatLng()
+                // var hitm = L.circleMarker(hitll, markernew)
+                var activeStyle = markernew
+
+                 L.geoJson(hitm,{seen:false,cartodb_id:hit.get("cartodb_id"),pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, activeStyle);
+    }}).bindPopup(pu).addTo(cbbItems).on("click", function(m) {
                 var stale = _.find(cbbItems._layers, function(i) {
                     return i.options.seen == true
                 });
                 processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
             });
-            // .on("click", function(m,geomtype) {
-            //     var stale = _.find(cbbItems._layers, function(i) {
-            //         return i.options.seen == true
-            //     });
-            //     console.log("this 58:");console.log(this);
-            //     processLeaf(hit.get("cartodb_id").toString(),false,geomtype);
-            //     this.setStyle(activeStyle)
-            //     // hit.set({active:true});
-            //     this.options.seen = true;
-            //     hit.set({
-            //         queued: true
-            //     });
-            // })
-            // var hitloca = hitloc.split(",")
-            // var hitll = L.latLng(hitloca[0], hitloca[1]);
+
+                // var seenStyle = markerseen
+            } else {
+                // var hitm = wkt.toObject().setStyle(linenew)
+                var activeStyle = linenew
+                // var zoomer = hitm.coordinates
+                // var seenStyle = lineseen
+                // console.log("hitll:");console.log(hitll);
+            L.geoJson(hitm,{seen:false,cartodb_id:hit.get("cartodb_id"),style:activeStyle}).bindPopup(pu).addTo(cbbItems).on("click", function(m) {
+                var stale = _.find(cbbItems._layers, function(i) {
+                    return i.options.seen == true
+                });
+                processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
+            });
+                // var hitm = L.multiPolyline(hitll, linenew);
+            }
+            // var hitm = wkt.toObject().addTo(cbbItems).on("click", function(m) {
             // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
+            // console.log("hitm just after bindpopu:");console.log(hitm);
+            
+
+
+            // hitm.bindPopup(pu).addTo(cbbItems).on("click", function(m) {
             //     var stale = _.find(cbbItems._layers, function(i) {
             //         return i.options.seen == true
             //     });
-            //     processLeaf(hit.get("cartodb_id").toString());
-            //     this.setStyle(markeractive)
-            //     // hit.set({active:true});
-            //     this.options.seen = true;
-            //     hit.set({
-            //         queued: true
-            //     });
-            // }).bindPopup(pu);
-            // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).bindPopup(pu);
-            // this.collection.activate(chid)
+            //     processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
+            // });
+
+
             if (typeof hitm.options == 'undefined') {
                 hitm.options = {
                     cartodb_id: null
@@ -90,13 +102,13 @@ var CartoCollxView = Backbone.View.extend({
             }
             hitm.options.cartodb_id = hit.get("cartodb_id").toString()
             var count = this.collection.length;
-            if (hit.get("active") == true || count == 1) {
+            // if (hit.get("active") == true || count == 1) {
                 // if (map.getBounds().contains(hitm.getLatLng()) == false) {
                 //     map.setView(hitm.getLatLng(), 9);
                 // }
                 // hitm.openPopup()
                 // hitm.zoomTo()
-            }
+            // }
         }, this);
         return this.fit()
     }
@@ -128,6 +140,7 @@ var CartoPlainView = Backbone.View.extend({
     echoid: function(e) {
         var locid = $(e.target).attr("data-id")
         var str = '<span class="loc-trigger" data-string="cartodb_id:' + locid + '"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
+       console.log(str);
         return this
     },
     fromzoom: function(cm) {
@@ -141,12 +154,10 @@ var CartoPlainView = Backbone.View.extend({
         return this.activate(a)
     },
     unwire: function() {
-        console.log("in unwire at 81");
         $('.bt-cartoobj').tooltip('destroy')
         return this
     },
     stageeps: function(e) {
-        console.log("in stageps at 85");
         return this.pulleps(e)
     },
     sort: function() {
@@ -154,7 +165,6 @@ var CartoPlainView = Backbone.View.extend({
         return this
     },
     pulleps: function(e) {
-        console.log("in pulleps at 95");
         appActivity.set({
             message: "fetching episodes...",
             show: true,
@@ -174,8 +184,6 @@ var CartoPlainView = Backbone.View.extend({
     default:
         locid = locid;
 }
-
-console.log("locid at 178:");console.log(locid);
 
         appEpisodes.activeloc = Number(locid);
         appEpisodes.loctype = loctype;
@@ -211,7 +219,6 @@ console.log("locid at 178:");console.log(locid);
         return this.activate(a)
     },
     rewire: function() {
-        console.log("in rewire at 117");
         // reactivating some pieces that get wiped in the render
         // actually -- first, since we're here for the same reason -- let's wipe the episodes list, too
         appEpisodesView.wipe();
@@ -232,8 +239,6 @@ console.log("locid at 178:");console.log(locid);
         $(this.el).find("li").removeClass("true")
         // var amid = am.get("cartodb_id")
         var amid = $(a).data("id").toString();
-console.log("this.model at 218");
-console.log(this.collection);
         if (verbose == true) {
             console.log("in activate for " + a);
         }
@@ -287,7 +292,6 @@ console.log(this.collection);
         // .render()
     },
     render: function() {
-        console.log("in render at 170");
         this.unwire()
         if (verbose == true) {
             console.log("rendering cartoplain")
@@ -328,8 +332,8 @@ var SolrFieldzView = Backbone.View.extend({
     render: function() {
         this.collection.sortBy('order')
         if (verbose == true) {
-            console.log("rendering solrfieldsview")
-            console.log(this.collection.models);
+            // console.log("rendering solrfieldsview")
+            // console.log(this.collection.models);
         }
         // $(this.el).html(this.template(this.collection.toJSON()))       
         $(this.el).html(this.template({
@@ -613,6 +617,7 @@ var QueryView = Backbone.View.extend({
     el: $("#query-form"),
     events: {
         "click #query-form-bt": "fire",
+        "click #query-form-randomize": "randomize",
         "click #solrfields .glyphicon": "togglehelp"
         // "change": "render"
     },
@@ -650,6 +655,12 @@ var QueryView = Backbone.View.extend({
                         show: false,
                         altel: false
                     })
+
+                     appRoute.navigate(pullURL("#query"), {
+                trigger: false,
+                replace: true
+            })
+
                 },
                 error: function() {
                     appConsole.set({
@@ -845,6 +856,16 @@ var EpisodeView = Backbone.View.extend({
         // console.log(this.model);
         return this.render()
     },
+    rewire: function(){
+
+this.$("a").tooltip({
+            container: "body",
+            placement: 'right',
+            trigger: 'hover'
+        });
+
+return this
+    },
     // ,className:"general foundicon-plus"
     render: function() {
         if (verbose == true) {
@@ -852,6 +873,7 @@ var EpisodeView = Backbone.View.extend({
         }
         $(this.el).html(this.template(this.model.toJSON()));
         return this
+        .rewire()
     }
 });
 /* -------------------------------------------------- EpsV
@@ -933,6 +955,36 @@ var MethodView = Backbone.View.extend({
     },
     el: "#method",
     template: Handlebars.templates['method'],
+    initialize: function() {
+        if (verbose == true) {
+            // console.log("initting huhview")
+        }
+        this.model.bind('change active', this.render, this);
+        this.render()
+    },
+    singular: function(e) {
+        e.preventDefault()
+        locTrigger(e, false)
+        return this
+    },
+    render: function() {
+        $(this.el).html(this.template(this.model.toJSON()))
+        // }, this);
+        return this
+    }
+});
+
+/* -------------------------------------------------- Minutiae
+-------------------------------*/
+var MinutiaeView = Backbone.View.extend({
+    // tagName: "li",
+    events: {
+        // "click .loc-trigger": "singular",
+        // "click a":"killtt",
+        // "click a":"rewire"
+    },
+    el: "#minutiae",
+    template: Handlebars.templates['minutiae'],
     initialize: function() {
         if (verbose == true) {
             // console.log("initting huhview")

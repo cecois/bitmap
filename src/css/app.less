@@ -8,6 +8,8 @@
 @tertiarycolor: rgba(250, 250, 250, 1.0000);
 @tertiarycolor-trans: rgba(250, 250, 250, .4000);
 
+@quaternarycolor: #2CAFF5;
+
 .stroke {text-shadow:
     -1px -1px 0 @secondarycolor,
     1px -1px 0 @secondarycolor,
@@ -36,9 +38,9 @@ color:@secondarycolor;
     -10px 10px 0px @secondarycolor-trans,
     10px 10px 0px @secondarycolor-trans,
     -12px -12px 0px @primarycolor-trans,
-12px -12px 0px @primarycolor-trans,
--12px 12px 0px @primarycolor-trans,
-12px 12px 0px @primarycolor-trans;
+12px -12px 0px @quaternarycolor,
+-12px 12px 0px @quaternarycolor,
+12px 12px 0px @quaternarycolor;
   }
   .stroke-active-mock {
 color:@secondarycolor;
@@ -98,13 +100,21 @@ body{
   font-weight:100;
     text-shadow: none;
     color:@tertiarycolor-trans;
-    font-size:.6em;
-    margin-left:20px;
+    font-size:.8em;
+    // margin-left:20px;
   
 }
 
 h1{
-  .stroke-h;
+  // .stroke-h;
+  // 
+  // font-family: League-Gothic, Courier;
+font-size: 2.2em;
+font-weight: bold;
+color:white;
+  // text-shadow: @secondarycolor 2px 2px 0px, @quaternarycolor 5px 5px 0px, @secondarycolor-trans 8px 8px 0px;
+  text-shadow: 2px 2px 0 @secondarycolor, 5px 5px 0 @quaternarycolor, 7px 7px 0 @quaternarycolor, 9px 9px 0 @quaternarycolor, 11px 11px 0 @quaternarycolor, 13px 13px 0 @secondarycolor-trans;
+text-transform: uppercase;
 }
 h2{
   .stroke-h;
@@ -148,6 +158,13 @@ a {
   font-size: .9em;
 }
 /* --------------------------------------- BOOTSTRAP OVERRIDES -------------- */
+
+.caption{
+color:@quaternarycolor;
+text-align:right;
+font-style: italic;
+font-size: .8em;
+}
 
 #method{
   li{
@@ -205,7 +222,7 @@ div.leaflet-popup-content .marker.bt{
     bottom: 0px;
     padding:5px 10px;
     background-color:@tertiarycolor-trans;
-    opacity: .5;
+    opacity: .9;
     margin-left: 0px;
     font-size: .8em;
     right: 0;
@@ -239,7 +256,7 @@ color:"#a9d9d1";
     top:5px;
     padding:5px 10px;
     background-color:@tertiarycolor-trans;
-    opacity: .5;
+    opacity: .9;
     margin-left: 0px;
     font-size: .8em;
     right: 0;
@@ -261,7 +278,7 @@ BASEMAP MENU
 
 #BaseMapConsoleWrapper{
 background-color: black;
-opacity:.5;
+opacity:.75;
 width:auto;
 #BaseMapConsole {
     color: #000;
@@ -366,7 +383,7 @@ width:auto;
   margin-bottom:33px;
 }
 #main{
-  #huh{font-size:1.3em;}
+  #huh{font-size:1.3em;font-weight:800;}
   background-color: @primarycolor;
   border-top:solid 3px @secondarycolor;
   border-bottom:solid 5px @secondarycolor;
@@ -379,6 +396,10 @@ width:auto;
   overflow:auto;
 // position:absolute;
   .mainpanel{
+    .block{
+      h1{margin-bottom:30px;
+        margin-left: -20px;
+       }}
   padding:50px 100px;
 position: relative;
 width:100%;
@@ -394,7 +415,7 @@ width:100%;
     .off-canvas-contents {
         // this is the wrapper for the menu links, so we nudge it over next to the leaf control
         padding-left: 0px;
-        left: -30px;
+        left: -160px;
    }
 }
 .site-nav {
@@ -518,6 +539,7 @@ font-weight:800;
   // overflow:hidden;
   li{
     margin-bottom:8px;
+    // text-shadow: 2px 0px black;
   }
   li.true{
     color: @tertiarycolor;
@@ -527,6 +549,9 @@ font-weight:800;
   h3{
     .stroke-active-mock;
     color:@tertiarycolor;
+  }
+  li{
+    // text-shadow: 2px 0px black;
   }
   // position:fixed;
   // font-size: .8em;
@@ -565,4 +590,8 @@ font-weight:800;
   li{
     margin-bottom:20px;
   }
+}
+
+.bt-getid{
+  cursor:pointer;
 }

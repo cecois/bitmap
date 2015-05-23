@@ -4,7 +4,7 @@ var Route = Backbone.Router.extend({
         // ":hash": "default",
         // docs/:section(/:subsection)
         // ":hash(/:q)(/:bbox)": "default",
-        ":hash(/:q)(/:bbox)(/:basemap)(/)": "default"
+        "(:hash)(/:q)(/:bbox)(/:basemap)(/)": "default"
         // ":hash": "routepractice"
         // "home": "home",
         // "about": "about",
@@ -40,10 +40,11 @@ var Route = Backbone.Router.extend({
                 rawstring: q
             })
         }
-        if (typeof h == 'undefined' && h !== null) {
+        if (typeof h == 'undefined' || h == null) {
             h = "huh";
         }
         var hmod = "#" + h;
+        console.log("hmod:");console.log(hmod);
         // this in case the pane had been hidden by the alt key
         $("#main").removeClass("hidden")
         _.each($("#main > .mainpanel"), function(p) {
