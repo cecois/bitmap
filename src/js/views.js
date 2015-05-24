@@ -165,6 +165,10 @@ var CartoPlainView = Backbone.View.extend({
         return this
     },
     pulleps: function(e) {
+        console.log(e);
+        
+        var voff = e.currentTarget.offsetTop;
+
         appActivity.set({
             message: "fetching episodes...",
             show: true,
@@ -187,6 +191,7 @@ var CartoPlainView = Backbone.View.extend({
 
         appEpisodes.activeloc = Number(locid);
         appEpisodes.loctype = loctype;
+        appEpisodes.verticaloffset = voff;
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
@@ -209,7 +214,7 @@ var CartoPlainView = Backbone.View.extend({
     zoomtointernal: function(e) {
         e.preventDefault()
         var a = $(e.currentTarget).parents('li')
-        console.log("a at 186:");console.log(a);
+        // console.log("a at 186:");console.log(a);
         return this.activate(a)
     },
     zoomfromexternal: function(czid) {
@@ -899,6 +904,12 @@ var EpisodesView = Backbone.View.extend({
     },
     render: function() {
         $(this.el).empty()
+        
+        // console.log("voff in epiview:");
+        // console.log(this.collection.verticaloffset);
+
+        $(this.el).css("top",this.collection.verticaloffset-20)
+
         $(this.el).html(" <h3><span class='episodes' style='margin-right:12px;'>--------></span>Episodes</h3> <span class='cbbepsanno'>(referencing location: '" + appCBB.findWhere({
             active: true
         }).get("name") + "')</span>")

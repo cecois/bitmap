@@ -59,6 +59,8 @@ var Episode = Backbone.Model.extend({});
 var Episodes = Backbone.Collection.extend({
     model: Episode,
     activeloc: null,
+    // shouldn't do this, but...here we are
+    verticaloffset:null,
     loctype: null,
     url: function() {
         // var aloc = Number(this.activeloc);
