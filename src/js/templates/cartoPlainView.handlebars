@@ -1,4 +1,6 @@
-<h1 class="stroke stroke-active" style="margin-bottom:43px;">Locations <span class="cbbanno">({{count}})</span><span class="episodes hidden" style="margin-left:12px;">--------></span> </h1>
+<h1 class="stroke stroke-active" style="margin-bottom:43px;">Locations <span class="cbbanno">({{count}})</span>
+<!-- <span class="episodes hidden" style="margin-left:12px;">\-\-\-\-\-\-\-\-></span>  -->
+</h1>
 
 {{#each rows}}
 <li data-id="{{this.cartodb_id}}" class="">
@@ -9,8 +11,9 @@
 
 <span data-id="{{this.cartodb_id}}" class="glyphicon glyphicon-asterisk bt-getid" title="echo model id (dev only)"></span>
 
+{{#if this.anno}}
 <p class="cbbanno">({{this.anno}})</p>
-
+{{/if}}
 
 
 

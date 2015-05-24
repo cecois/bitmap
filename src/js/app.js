@@ -139,7 +139,7 @@ var baselayers = {
             }
         }, {
             "name": "space_station_earth",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Eleanor Lutz' Space Station Earth",
             // "thumb": "offline/mapbox-mario.png",
@@ -154,7 +154,7 @@ var baselayers = {
             }
         }, {
             "name": "pencil",
-            "active": false,
+            "active": true,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             // "thumb": "offline/mapbox-mario.png",
@@ -356,7 +356,7 @@ window.appCBBMapView = new CartoCollxView({
 // new console model and view
 window.appConsole = new Console().set({
     // message: "HINT! Press the 'z' key at any time to reveal the full map."
-    message: "Console console. Quasi-important messages will appear here."
+    message: "Console. Quasi-important messages will appear here."
 });
 window.appConsoleView = new ConsoleView({
     model: appConsole

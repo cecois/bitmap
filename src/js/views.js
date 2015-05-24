@@ -275,15 +275,37 @@ var CartoPlainView = Backbone.View.extend({
             // console.log(i);
             // console.log(item.get("geom_type"))
             if (i.options.cartodb_id == amid) {
+
                 // if(item.get("geom_type")=="line"){
                 //     if (map.getBounds().contains(i.getLatLng()) == false) {
                 //     map.setView(i.getLatLng(), 9);
                 // }
                 // }
-                if (map.getBounds().contains(i.getBounds()) == false) {
+                // if (map.getBounds().contains(i.getBounds()) == false) {
                     // map.setView(i.getLatLng(), 9);
-                    map.fitBounds(i.getBounds());
-                }
+                    // map.fitBounds(i.getBounds());
+                // }
+
+var ib = i.getBounds();
+console.log("ib:");console.log(ib);
+var typ = item.get("geom_type")
+
+
+        switch(typ) {
+    case 'point':
+// map.setView(i.getBounds(),7)
+map.fitBounds(ib)
+        break;
+    case 'poly':
+// map.setView(i.getBounds(),7)
+map.fitBounds(ib)
+        break;
+    default:
+    // i.e. line
+map.fitBounds(ib)
+        // locid = locid;
+}
+
                 // if (map.getBounds().contains(i.getLatLng()) == false) {
                 //     map.setView(i.getLatLng(), 9);
                 // }
@@ -633,6 +655,8 @@ var QueryView = Backbone.View.extend({
         // this.model.bind("change", this.render, this);
     },
     fire: function(goto) {
+        // doubles as a clearer of the episodes arrow
+        $(".episodes-arrow").addClass("hidden")
         if (typeof goto == 'undefined') {
             goto = true
         }
@@ -909,8 +933,10 @@ var EpisodesView = Backbone.View.extend({
         // console.log(this.collection.verticaloffset);
 
         $(this.el).css("top",this.collection.verticaloffset-20)
+        $('.episodes-arrow').removeClass('hidden').css("position","relative").css("top",this.collection.verticaloffset-10)
 
-        $(this.el).html(" <h3><span class='episodes' style='margin-right:12px;'>--------></span>Episodes</h3> <span class='cbbepsanno'>(referencing location: '" + appCBB.findWhere({
+        // $(this.el).html(" <h3><span class='episodes' style='margin-right:12px;'>--------></span>Episodes</h3> <span class='cbbepsanno'>(referencing location: '" + appCBB.findWhere({
+        $(this.el).html(" <h3>Episodes</h3> <span class='cbbepsanno'>(referencing location: '" + appCBB.findWhere({
             active: true
         }).get("name") + "')</span>")
         // we use .episodes cuz we have some stuff outside of the el we wanna unhide, too

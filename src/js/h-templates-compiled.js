@@ -19,8 +19,7 @@ templates['baseLayerMnuItem'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main
     + "\" alt=\"\" width=\"55px\" height=\"55px\" />\n    </div>";
 },"useData":true});
 templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,data) {
-  var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "<li data-id=\""
+  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<li data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
     + "\" class=\"\">\n\n<div class=\"\">\n"
     + escapeExpression(lambda((depth0 != null ? depth0.name : depth0), depth0))
@@ -30,13 +29,19 @@ templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,dat
     + escapeExpression(lambda((depth0 != null ? depth0.geom_type : depth0), depth0))
     + "\" class=\"glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes\" title=\"pull a list of associated episodes\"></span>\n\n<span data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
-    + "\" class=\"glyphicon glyphicon-asterisk bt-getid\" title=\"echo model id (dev only)\"></span>\n\n<p class=\"cbbanno\">("
+    + "\" class=\"glyphicon glyphicon-asterisk bt-getid\" title=\"echo model id (dev only)\"></span>\n\n";
+  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.anno : depth0), {"name":"if","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "\n\n\n\n</div>\n</li>\n";
+},"2":function(depth0,helpers,partials,data) {
+  var lambda=this.lambda, escapeExpression=this.escapeExpression;
+  return "<p class=\"cbbanno\">("
     + escapeExpression(lambda((depth0 != null ? depth0.anno : depth0), depth0))
-    + ")</p>\n\n\n\n\n\n</div>\n</li>\n";
+    + ")</p>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h1 class=\"stroke stroke-active\" style=\"margin-bottom:43px;\">Locations <span class=\"cbbanno\">("
     + escapeExpression(((helper = (helper = helpers.count || (depth0 != null ? depth0.count : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"count","hash":{},"data":data}) : helper)))
-    + ")</span><span class=\"episodes hidden\" style=\"margin-left:12px;\">--------></span> </h1>\n\n";
+    + ")</span>\n<!-- <span class=\"episodes hidden\" style=\"margin-left:12px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span>  -->\n</h1>\n\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.rows : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer;
