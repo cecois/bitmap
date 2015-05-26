@@ -1,14 +1,38 @@
 /* -------------------------------------------------- GLOBALS -----------------------  */
-verbose = true;
+
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+window.agent = "mobile";
+} else {
+window.agent = "desktop";
+}
+
+
 NProgress.configure({
     parent: '#main'
 });
-window.apphost = "localhost";
-window.solrhost = "http://localhost:8983/solr/";
+
 /* -------------------------------------------------- HANDLEBARS START -----------------------  */
 Handlebars.registerHelper('timeize', function(options) {
     return new Handlebars.SafeString(moment(options.fn(this)).format('D.MMM.YYYY'));
 });
+
+Handlebars.registerHelper('indev', function(id,type, options) {
+    if(dev == true){
+
+        switch(type) {
+    case 'line':
+        cid = id/999
+        break;
+    case 'poly':
+        cid = id/9999
+        break;
+    default:
+        cid = id;
+}
+
+        return '<span data-id="'+cid+'" class="glyphicon glyphicon-asterisk bt-getid" title="echo model id (dev only)"></span>'} else{return '';}
+        });
+
 /* -------------------------------------------------- HANDLEBARS END -----------------------  */
 // jeez i hate to bootstrap this w/ an extra ajax call but i don't wanna have to remember to update this when i change the solr schema
 // $.getJSON(solrhost+'/cbb_bits/admin/luke?numTerms=0', {wt: 'json'}, function(json, textStatus) {
@@ -77,7 +101,7 @@ window.appEpisodesView = new EpisodesView({
 //     // .on('click', function() { alert('Clicked on a group!'); })
 //     .addTo(map);
 /* -------------------------------------------------- BASEMAPS -----------------------  */
-var baselayers = {
+var baselayersdesk = {
     "layers": [{
             "name": "mapquest",
             "active": false,
@@ -195,21 +219,22 @@ var baselayers = {
         //         "url": "http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/19996/256/{z}/{x}/{y}.png"
         //     }
         // }
+        // , {
+        //     "name": "opencycle_cycle",
+        //     "active": false,
+        //     "source": "opencycle",
+        //     "nom": "OpenCycle",
+        //     // "thumb": "http://a.tile.opencyclemap.org/cycle/4/8/4.png",
+        //     "thumb": "offline/opencyclemap.png",
+        //     "mapis": "light",
+        //     "definition": {
+        //         "maxZoom": 18,
+        //         "subdomains": ["a", "b", "c"],
+        //         "noWrap": true,
+        //         "url": "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png"
+        //     }
+        // }
         , {
-            "name": "opencycle_cycle",
-            "active": false,
-            "source": "opencycle",
-            "nom": "OpenCycle",
-            // "thumb": "http://a.tile.opencyclemap.org/cycle/4/8/4.png",
-            "thumb": "offline/opencyclemap.png",
-            "mapis": "light",
-            "definition": {
-                "maxZoom": 18,
-                "subdomains": ["a", "b", "c"],
-                "noWrap": true,
-                "url": "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png"
-            }
-        }, {
             "name": "opencycle_landscape",
             "active": false,
             "source": "opencycle",
@@ -235,7 +260,8 @@ var baselayers = {
                 "id": "toner",
                 "url": null
             }
-        }, {
+        }
+        , {
             "name": "stamen_watercolor",
             "active": false,
             "nom": "Stamen Watercolor",
@@ -250,6 +276,46 @@ var baselayers = {
         }
     ]
 }
+
+var baselayersmobile = {
+    "layers": [{
+            "name": "mapquest",
+            "active": false,
+            "source": "mapquest",
+            "nom": "MapQuest OSM",
+            // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/osm/3/4/2.png",
+            "thumb": "offline/mapquest.jpg",
+            "mapis": "light",
+            "definition": {
+                "subdomains": ["otile1", "otile2", "otile3", "otile4"],
+                "maxZoom": 18,
+                "url": "http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png",
+                "noWrap": true
+            }
+        }, {
+            "name": "pencil",
+            "active": true,
+            "source": "mapbox",
+            "nom": "Aj Ashton's Pencil Map",
+            // "thumb": "offline/mapbox-mario.png",
+            "thumb": "https://a.tiles.mapbox.com/v4/examples.a4c252ab/6/18/26@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
+            "mapis": "dark",
+            "definition": {
+                "subdomains": ["a", "b", "c"],
+                "maxZoom": 18,
+                "url": "https://{s}.tiles.mapbox.com/v4/examples.a4c252ab/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
+                // "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
+                "noWrap": true
+            }
+        }
+        
+    ]
+}
+
+if(agent=='mobile'){
+    baselayers=baselayersmobile
+}else{baselayers=baselayersdesk}
+
 appBaseLayers = new BaseLayersCollection(baselayers.layers);
 // ...for which we need a menu
 appBaseLayersMenuView = new BaseLayersMenuView({
@@ -314,8 +380,8 @@ window.appCartoQueryView = new QueryView({
 //     }
 //     });
 /* -------------------------------------------------- INITS -----------------------  */
-switch (apphost) {   
-    case "localhost":
+switch (dev) {   
+    case true:
         window.appCBB = new CartoCollectionDev();       
         break;   
     default:

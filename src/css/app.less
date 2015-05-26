@@ -255,7 +255,8 @@ content: "000";
 color:"#a9d9d1";
   }
     // bottom:25px;
-    top:5px;
+    // top:5px;
+    top:-35px;
     padding:5px 10px;
     background-color:@tertiarycolor-trans;
     opacity: .9;
@@ -389,11 +390,11 @@ width:auto;
     h1{font-weight:800;}
   }
   background-color: @primarycolor;
-  border-top:solid 10px @secondarycolor;
-  border-bottom:solid 10px @secondarycolor;
+  border-top:solid 50px @secondarycolor;
+  border-bottom:solid 50px @secondarycolor;
   width:100%;
   height:70%;
-  top:200px;
+  top:150px;
   position:fixed;
     // background-color:white;
     opacity:.9;
@@ -416,10 +417,11 @@ width:100%;
   }
 .site-header {
     background: none repeat scroll 0 0 transparent;
+    padding-left:25px;
     .off-canvas-contents {
         // this is the wrapper for the menu links, so we nudge it over next to the leaf control
         padding-left: 0px;
-        left: -160px;
+        // left: -160px;
    }
 }
 .site-nav {
@@ -553,6 +555,8 @@ font-weight:800;
     // text-shadow: 2px 0px black;
   }
   li.true{
+    // background-color: @quaternarycolor;
+    .stroke-active-mock;
     color: @tertiarycolor;
   }
 }

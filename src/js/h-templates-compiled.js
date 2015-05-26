@@ -19,7 +19,7 @@ templates['baseLayerMnuItem'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main
     + "\" alt=\"\" width=\"55px\" height=\"55px\" />\n    </div>";
 },"useData":true});
 templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,data) {
-  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<li data-id=\""
+  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, buffer = "<li data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
     + "\" class=\"\">\n\n<div class=\"\">\n"
     + escapeExpression(lambda((depth0 != null ? depth0.name : depth0), depth0))
@@ -27,13 +27,18 @@ templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,dat
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
     + "\" data-type=\""
     + escapeExpression(lambda((depth0 != null ? depth0.geom_type : depth0), depth0))
-    + "\" class=\"glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes\" title=\"pull a list of associated episodes\"></span>\n\n<span data-id=\""
+    + "\" class=\"glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes\" title=\"pull a list of associated episodes\"></span>\n\n<!-- <span data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
-    + "\" class=\"glyphicon glyphicon-asterisk bt-getid\" title=\"echo model id (dev only)\"></span>\n\n";
-  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.anno : depth0), {"name":"if","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
+    + "\" class=\"glyphicon glyphicon-asterisk bt-getid\" title=\"echo model id (dev only)\"></span> -->\n";
+  stack1 = ((helpers.indev || (depth0 && depth0.indev) || helperMissing).call(depth0, (depth0 != null ? depth0.cartodb_id : depth0), (depth0 != null ? depth0.geom_type : depth0), {"name":"indev","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data}));
+  if (stack1 != null) { buffer += stack1; }
+  buffer += "\n\n";
+  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.anno : depth0), {"name":"if","hash":{},"fn":this.program(4, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer + "\n\n\n\n</div>\n</li>\n";
 },"2":function(depth0,helpers,partials,data) {
+  return "";
+},"4":function(depth0,helpers,partials,data) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "<p class=\"cbbanno\">("
     + escapeExpression(lambda((depth0 != null ? depth0.anno : depth0), depth0))

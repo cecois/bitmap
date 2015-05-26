@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)http://blog.themearmada.com/demos/off-canvas-menu/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>BitMap: CBB</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="lib/nprogress.css" />
+
+    <script type="text/javascript" language="Javascript" src="lib/components/handlebars/handlebars.runtime.min.js"></script>
+    <script type="text/javascript" language="Javascript" src="lib/moment.js"></script>
+    
+    <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300,300italic,400italic' rel='stylesheet' type='text/css'> -->
+    <!-- <link href='css/googlefont.mandali.css' rel='stylesheet' type='text/css'> -->
+    <link href='css/fonts/opensans.css' rel='stylesheet' type='text/css'>
+
+    <link href="lib/components/off-canvas-menu/vendor/normalize.css" rel="stylesheet" type="text/css">
+    <link href="lib/components/off-canvas-menu/off-canvas-menu.css" rel="stylesheet" type="text/css">
+    <link href="lib/components/off-canvas-menu/general.css" rel="stylesheet" type="text/css">
+    <link href="lib/components/off-canvas-menu/header.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="lib/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="lib/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/components/fontello/css/menu.css">
+    
+    <link rel="stylesheet" href="lib/icomoon/style.css">
+
+    <!-- <link rel="stylesheet/less" type="text/css" href="css/app.less" > -->
+    <link rel="stylesheet/less" type="text/css" href="css/app.min.css" >
+        <script src="lib/less-1.7.5.min.js" type="text/javascript"></script>
+        <!-- <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css" /> -->
+        <link rel="stylesheet" href="offline/cartodb.css" />
+    </head>
+    <body ontouchstart="">
+        <div id="map"></div>
+        <!-- <script src="http://libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.js"></script> -->
+        <script src="offline/cartodb.js"></script>
+        <!-- <script src="cartodb-example.js"></script> -->
+
+        <!-- <div id="wrapper"> -->
+            <!-- header -->
+            <header class="site-header row" >
+                <div class="content-wrap col-sm-6">
+
+                    <nav class="site-nav" role="navigation">
+                        <ul class="">
+                            <!-- <li><a href="#about" class="link">About</a></li> -->
+                            <li><a href="#huh" class="link">Huh?</a></li>
+                            <li><a href="#query" class="link">Query</a></li>
+                            <li><a href="#recent" class="link">Recent</a></li>
+                            <li><a href="#method" class="link">Full Story</a></li>
+                            <li><a href="#feedback" class="link">Feedback</a></li>
+                            <!-- <li><a href="#minutiae" class="link">Minutiae</a></li> -->
+                            <!-- <li><a href="#map" class="link">Map</a></li> -->
+
+
+    </ul>
+</nav>
+</div>
+<div class="content-wrap pull-right col-sm-6">
+ <ul id="mnuBaseMap" class="col-sm-12 list-inline pull-right" ></ul>
+ <!-- <div id="BaseMapConsoleWrapper" class="content-wrap pull-right"><span>BaseMap:</span><div id="BaseMapConsole" class=""></div></div> -->
+<!-- <div id="BaseMapConsole" class=""></div> -->
+ </div> 
+</header>
+
+<div id="main" class="">
+
+<div id="bt-showmain" class="pull-left col-sm-3 hidden">
+<span class="glyphicon glyphicon-arrow-up"></span>
+press "control" key to show again</div>
+<div id="activityContainer" class="pull-right col-sm-">
+  <!-- <span id="activity-spin" class="hidden">|</span> -->
+</div>
+
+<div id="huh" class="mainpanel hidden">
+<div class="panel-wrap">
+    <h1>What?!</h1>
+</div>
+</div> <!-- ./huh -->
+
+<div id="recent" class="mainpanel hidden">
+<div class="panel-wrap">
+    <h1>Recent Adds</h1>
+<ul class="recents list-unstyled"></ul>
+</div>
+</div> <!-- ./recent -->
+<div id="method" class="mainpanel hidden">
+<div class="panel-wrap">
+    
+</div>
+</div> <!-- ./method-->
+
+<div id="minutiae" class="mainpanel hidden">
+<div class="panel-wrap">
+    
+</div>
+</div> <!-- ./minutiae-->
+
+<div id="feedback" class="mainpanel hidden">
+<div class="panel-wrap">
+    
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'cbbmap';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+</div> <!-- ./feedback-->
+
+
+
+
+<div id="query" class="mainpanel hidden">
+<div class="panel-wrap">
+<div class="row"><div id="query-form" class="col-lg-4">
+</div><!-- /.#query-form -->
+    <!--
+<div id="minutiae" class="mainpanel hidden">
+<div class="panel-wrap">
+    
+</div>
+</div>  ./minutiae-->
+
+       
+       <div id="solrfields" class="col-sm-16 pull-left " >
+         <div id="bt-solrfields" class="pull-left icom-info"></div>
+      <div class="hidden " id="solrfields-list">
+      <div class="col-md-2">.col-md-1</div>
+      
+      </div>
+    </div> <!-- /.solrfields -->
+
+  </div>
+<!-- 
+  <div class="stats text-muted row">
+         <small><div id="stats-hits" class="col-lg-4 text-muted"></div></small>
+       </div> ./stats -->
+</div>
+
+
+    <!-- <div><small><input class="offset2" id="query-livefilter" size="40" type="text" placeholder="...or type here to live-filter the current results" value=''></small></div> -->
+    <!-- /query-livefilter -->
+
+<!-- <input class="offset2 " id="query-cartodb" size="55" type="text" data-provide="typeahead" data-items="4" placeholder="search the source for new results" value=''> -->
+ 
+    <ul id="query-list" class="pull-left col-lg-5">
+    </ul>
+    
+    <div class="col-sm-2">
+      <span class="episodes-arrow hidden" style="">--------></span>
+      <!-- currenly unused -->
+
+    </div>
+
+    <ul id="episodes-list" class="episodes hidden pull-right col-lg-5 list-unstyled">
+      <li>Lorem ipsum dolor  consectetur ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>  
+      <li>Lorem ipsum dolor  et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>  
+      <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt  dolore
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>  
+      <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>  
+      <li>
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>  
+      <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor  dolore
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>  
+    </ul>
+</div>
+</div> <!-- ./query -->
+
+</div>  <!-- ./main  -->
+
+
+
+ <div id="consoleContainer" class="pull-right"></div>
+
+<script src="js/globals.js"></script>
+<script src="lib/leaflet/leaflet.js"></script>
+<script type="text/javascript" src="lib/tile.stamen.js?v1.2.0"></script>
+<script src="js/h-templates-compiled.js"></script>
+<script src="lib/components/jquery/jquery.min.js"></script>
+<script type="text/javascript" language="Javascript" src="lib/jquery.liveFilter.js"></script>
+<script type="text/javascript" language="Javascript" src="lib/Wicket/wicket.js"></script>
+<script type="text/javascript" language="Javascript" src="lib/Wicket/wicket-leaflet.js"></script>
+<script type="text/javascript" language="Javascript" src="lib/nprogress.js"></script>
+<script src="lib/bootstrap.min.js"></script>
+<script src="lib/xregexp-all.js"></script>
+<script type = "text/javascript" language = "Javascript" src = "lib/underscore-min.js"></script>
+<script type = "text/javascript" language = "Javascript" src = "lib/backbone-min.js"></script>
+<script type = "text/javascript" language = "Javascript" src = "lib/backbone.cartodb.js"></script>
+<!--         <script type="text/javascript" language="Javascript" src="models.js"></script>
+<script type="text/javascript" language="Javascript" src="views.js"></script> -->
+<script type="text/javascript" language="Javascript" src="js/models.min.js"></script>
+<script type="text/javascript" language="Javascript" src="js/views.min.js"></script>
+
+<!-- <script src="lib/components/off-canvas-menu/off-canvas-menu.js"></script> -->
+
+<!-- <script type="text/javascript" language="Javascript" src="js/app.js"></script> -->
+<!-- <script type="text/javascript" language="Javascript" src="js/map.js"></script> -->
+<!-- <script type="text/javascript" language="Javascript" src="js/routes.js"></script> -->
+<script type="text/javascript" language="Javascript" src="js/bitmap.min.js"></script>
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+</body>
+</html>

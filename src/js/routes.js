@@ -85,7 +85,9 @@ var Route = Backbone.Router.extend({
         }
         if (h == 'query') {
             // a live one, this, let's fire off the query
-            console.log("a live query hash!");
+            // sloppy #returnto - we just don't want that arrow showing with no episodes present
+            $(".episodes-arrow").addClass('hidden')
+            // console.log("a live query hash!");
             this.update("#query")
             appActivity.set({
                 message: "querying...",

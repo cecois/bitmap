@@ -9,7 +9,8 @@
 {{this.name}} <span class="glyphicon glyphicon-share-alt bt-cartoobj bt-cartoobj-zoomto" title="zoom to this"></span>
 <span data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes" title="pull a list of associated episodes"></span>
 
-<span data-id="{{this.cartodb_id}}" class="glyphicon glyphicon-asterisk bt-getid" title="echo model id (dev only)"></span>
+<!-- <span data-id="{{this.cartodb_id}}" class="glyphicon glyphicon-asterisk bt-getid" title="echo model id (dev only)"></span> -->
+{{#indev this.cartodb_id this.geom_type}}{{/indev}}
 
 {{#if this.anno}}
 <p class="cbbanno">({{this.anno}})</p>

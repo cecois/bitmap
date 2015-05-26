@@ -1,0 +1,28 @@
+{
+  "name": "bitmap",
+  "title": "BITMAP",
+  "description": "comedy bang bang bit tracker map subapp",
+  "version": "0.8",
+  "homepage": "http://bitmap-lbones.rhcloud.com",
+  "author": {
+    "name": "C.C. Miller",
+    "email": "cecmcgee@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@55624cd1e0b8cd76b2000005@bitmap-lbones.rhcloud.com"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://mit-license.org/"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "keywords": []
+}

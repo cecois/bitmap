@@ -37,10 +37,10 @@
 
         <!-- <div id="wrapper"> -->
             <!-- header -->
-            <header class="site-header off-canvas-container js-off-canvas-container" >
-                <div class="content-wrap off-canvas-contents">
+            <header class="site-header row" >
+                <div class="content-wrap col-sm-6">
 
-                    <nav class="site-nav pull-left" role="navigation">
+                    <nav class="site-nav" role="navigation">
                         <ul class="">
                             <!-- <li><a href="#about" class="link">About</a></li> -->
                             <li><a href="#huh" class="link">Huh?</a></li>
@@ -55,8 +55,8 @@
     </ul>
 </nav>
 </div>
-<div class="content-wrap pull-right">
- <ul id="mnuBaseMap" class="span6 list-inline pull-right" ></ul>
+<div class="content-wrap pull-right col-sm-6">
+ <ul id="mnuBaseMap" class="col-sm-12 list-inline pull-right" ></ul>
  <!-- <div id="BaseMapConsoleWrapper" class="content-wrap pull-right"><span>BaseMap:</span><div id="BaseMapConsole" class=""></div></div> -->
 <!-- <div id="BaseMapConsole" class=""></div> -->
  </div> 
@@ -151,10 +151,10 @@ press "control" key to show again</div>
 
 <!-- <input class="offset2 " id="query-cartodb" size="55" type="text" data-provide="typeahead" data-items="4" placeholder="search the source for new results" value=''> -->
  
-    <ul id="query-list" class="pull-left col-lg-6">
+    <ul id="query-list" class="pull-left col-lg-5">
     </ul>
     
-    <div class="col-lg-1">
+    <div class="col-sm-2">
       <span class="episodes-arrow hidden" style="">--------></span>
       <!-- currenly unused -->
 
@@ -187,6 +187,7 @@ press "control" key to show again</div>
 
  <div id="consoleContainer" class="pull-right"></div>
 
+<script src="js/globals.js"></script>
 <script src="lib/leaflet/leaflet.js"></script>
 <script type="text/javascript" src="lib/tile.stamen.js?v1.2.0"></script>
 <script src="js/h-templates-compiled.js"></script>
