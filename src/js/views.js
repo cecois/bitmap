@@ -312,6 +312,7 @@ map.fitBounds(ib)
             }
         }) //each
         $(a).addClass("true")
+        // $(a).addClass("well")
         processLeaf(amid, true, item.get("geom_type"))
         // GUH? WHAT'S THIS? It's a straight-up jquery hack to waaaaay more quickly light up the active model's list item
         // cuz doing it with a proper backbone re-render took forever (.8 seconds)
