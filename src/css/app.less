@@ -110,11 +110,15 @@ h1{
   // .stroke-h;
   // 
   // font-family: League-Gothic, Courier;
-font-size: 2.2em;
+
 font-weight: bold;
 color:white;
-  // text-shadow: @secondarycolor 2px 2px 0px, @quaternarycolor 5px 5px 0px, @secondarycolor-trans 8px 8px 0px;
-  text-shadow: 2px 2px 0 @secondarycolor, 5px 5px 0 @quaternarycolor, 7px 7px 0 @quaternarycolor, 9px 9px 0 @quaternarycolor, 11px 11px 0 @quaternarycolor, 13px 13px 0 @secondarycolor-trans;
+@media(min-width:993px){
+  font-size: 2.2em;
+  text-shadow: 2px 2px 0 @secondarycolor, 5px 5px 0 @quaternarycolor, 7px 7px 0 @quaternarycolor, 9px 9px 0 @quaternarycolor, 11px 11px 0 @quaternarycolor, 13px 13px 0 @secondarycolor-trans;}
+  @media(max-width:992px){
+    font-size: 1.6em;
+  text-shadow: 1px 1px 0 @secondarycolor, 2px 2px 0 @quaternarycolor, 3px 3px 0 @quaternarycolor, 4px 4px 0 @quaternarycolor, 5px 5px 0 @quaternarycolor, 6px 6px 0 @secondarycolor-trans;}
 text-transform: uppercase;
 }
 h2{
@@ -236,6 +240,11 @@ div.leaflet-popup-content .marker.bt{
     border-left-width: 0;
     margin-bottom: 0;
 
+    @media(max-width:992px){
+      padding:0 0;
+      font-size:.5em;
+    }
+
 }
 
 /* --------------------------------------- ACTIVITY -------------- */
@@ -295,7 +304,9 @@ width:auto;
 } //basemapconsolewrapper
 
 #mnuBaseMap {
+
     padding-top: 10px;
+
     background-color: transparent;
     list-style: none;
     text-align: center;
@@ -305,7 +316,11 @@ width:auto;
         .mnuThumbnail {
             /* margin-right:18px; */
 
+
             height: 55px;
+              @media(max-width:992px){
+    height:25px;
+  }
             -webkit-border-radius: 50%;
             -moz-border-radius: 50%;
             border-radius: 50%;
@@ -316,6 +331,10 @@ width:auto;
                }
                width: 50px;
                height: 50px;
+                 @media(max-width:992px){
+    width:20px;
+    height:20px;
+  }
                -webkit-border-radius: 50%;
                -moz-border-radius: 50%;
                border-radius: 50%;
@@ -331,7 +350,14 @@ width:auto;
    }
    //true
 }
-}
+
+  @media(max-width:992px){
+width:100px;
+padding-top:0px;
+float:right;
+  }
+
+} //mnubasemap
 
 .leaflet-control {
     // background-color: transparent;
@@ -387,7 +413,9 @@ width:auto;
 }
 #main{
   #huh{font-size:1.3em;
-    h1{font-weight:800;}
+    h1{font-weight:800;
+
+    }
   }
   background-color: @primarycolor;
   border-top:solid 50px @secondarycolor;
@@ -404,13 +432,32 @@ width:auto;
     .block{
       h1{margin-bottom:30px;
         margin-left: -20px;
-       }}
+       }
+       } //block
   padding:50px 100px;
 position: relative;
 width:100%;
-  // overflow:auto;
-  }
+
+@media(max-width:992px){
+.block{
+      h1{margin-bottom:5px;
+        margin-left: 0px;
+       }
+       } //block
+  padding:5px 10px;
 }
+
+  } //mainpanel
+
+@media(max-width:992px){
+   border-top:solid 2px @secondarycolor;
+  border-bottom:solid 2px @secondarycolor;
+  height:70%;
+  top:65px;
+  font-size:.8em;
+}
+
+} //main
 
 #main.hiddenish{
     top:95%;
@@ -429,6 +476,15 @@ width:100%;
     padding-bottom: 0px;
     // margin-left:-100px;
     margin-left:-50px;
+    @media(max-width:992px){
+      margin-left:0px;
+      padding-top:0px;
+      font-size:.8em;
+      width:100px;
+      .link{
+        padding:0 0;
+      }
+    }
     li {
         // background-color: rgba(0, 0, 0, 0.2);
         // border-radius: 2px;
@@ -440,32 +496,49 @@ font-weight:800;
         margin-right:10px;
         text-align: center;
 
+@media(max-width:992px){
+        // font-size:1.5em;
+        display: table-row;
+        font-size:.8em;
+        padding: 0 0em;
+        margin-right:0px;
+height:10px;
+  text-shadow:
+    1px 1px 0 black;
+}
+
+
         a.link {
           color:@primarycolor;
    
+   @media(min-width:992px){
      .stroke;
-
-   /* Will override color (regardless of order) */
-   //      -webkit-text-fill-color: @primarycolor-trans; 
-   // -webkit-text-stroke-width: 1px;
-   // -webkit-text-stroke-color: @secondarycolor;
+   } //media
 
             &:hover {
                 text-decoration: none;
                 .text-shadow-general
            }
            // padding squeezes it down to the same level as the rotated leaflet control
-           padding-top: 8px;
-           padding-bottom: 8px;
+           @media(min-width:1200px){
+                      padding-top: 8px;
+                      padding-bottom: 8px;}
+
       }
       a.active {
           color: @primarycolor;
+@media(max-width:992px){
+  color:white;
+}
+@media(min-width:992px){
           .stroke-active;
           &:hover {
             .stroke-active;
-           }
-     }
-}
+           } //hover
+} //media
+           
+     } //./active
+} //li
 }
 
 .js-non-menu-container {
@@ -561,6 +634,7 @@ font-weight:800;
   }
 }
 #episodes-list{
+
   h3{
     .stroke-active-mock;
     color:@tertiarycolor;

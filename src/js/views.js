@@ -287,7 +287,8 @@ var CartoPlainView = Backbone.View.extend({
                 // }
 
 var ib = i.getBounds();
-console.log("ib:");console.log(ib);
+if(verbose==true){
+console.log("ib:");console.log(ib);}
 var typ = item.get("geom_type")
 
 
