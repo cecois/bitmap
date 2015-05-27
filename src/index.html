@@ -44,21 +44,31 @@
                         <ul class="">
                             <!-- <li><a href="#about" class="link">About</a></li> -->
                             <li><a href="#huh" class="link">Huh?</a></li>
-                            <li><a href="#query" class="link">Query</a></li>
-                            <li><a href="#recent" class="link">Recent</a></li>
                             <li><a href="#method" class="link">Full Story</a></li>
                             <li><a href="#feedback" class="link">Feedback</a></li>
+                            <li><a href="#recent" class="link">Recent</a></li>
+                            <li><a href="#query" class="link">Query</a></li>
                             <!-- <li><a href="#minutiae" class="link">Minutiae</a></li> -->
                             <!-- <li><a href="#map" class="link">Map</a></li> -->
 
 
     </ul>
 </nav>
-</div>
+</div> <!-- col-sm-6 -->
+
 <div class="content-wrap pull-right col-sm-6">
- <ul id="mnuBaseMap" class="col-sm-12 list-inline pull-right" ></ul>
+ <div id="query-form" class="col-lg-12"></div><!-- /.#query-form -->
+      <!-- <div id="solrfields" class="col-sm-16 pull-left " >
+         <div id="bt-solrfields" class="pull-left icom-info"></div>
+      <div class="hidden " id="solrfields-list">
+      <div class="col-md-2">.col-md-1</div>
+      
+      </div>
+    </div>  /.solrfields -->
+    
  <!-- <div id="BaseMapConsoleWrapper" class="content-wrap pull-right"><span>BaseMap:</span><div id="BaseMapConsole" class=""></div></div> -->
 <!-- <div id="BaseMapConsole" class=""></div> -->
+
  </div> 
 </header>
 
@@ -120,8 +130,9 @@ press "control" key to show again</div>
 
 <div id="query" class="mainpanel hidden">
 <div class="panel-wrap">
-<div class="row"><div id="query-form" class="col-lg-4">
-</div><!-- /.#query-form -->
+<div class="row">
+
+    
     <!--
 <div id="minutiae" class="mainpanel hidden">
 <div class="panel-wrap">
@@ -130,13 +141,7 @@ press "control" key to show again</div>
 </div>  ./minutiae-->
 
        
-       <div id="solrfields" class="col-sm-16 pull-left " >
-         <div id="bt-solrfields" class="pull-left icom-info"></div>
-      <div class="hidden " id="solrfields-list">
-      <div class="col-md-2">.col-md-1</div>
-      
-      </div>
-    </div> <!-- /.solrfields -->
+
 
   </div>
 <!-- 
@@ -183,9 +188,11 @@ press "control" key to show again</div>
 
 </div>  <!-- ./main  -->
 
+<div id="livefooter" class="col-sm-12">
+<ul id="mnuBaseMap" class="col-sm-6 list-inline pull-left" ></ul>
 
-
- <div id="consoleContainer" class="pull-right"></div>
+ <div id="consoleContainer" class="col-sm-4 pull-right"></div>
+</div> <!-- livefooter -->
 
 <script src="js/globals.js"></script>
 <script src="lib/leaflet/leaflet.js"></script>

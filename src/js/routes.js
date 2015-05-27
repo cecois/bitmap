@@ -41,7 +41,7 @@ var Route = Backbone.Router.extend({
             })
         }
         if (typeof h == 'undefined' || h == null) {
-            h = "huh";
+            h = "query";
         }
         var hmod = "#" + h;
         console.log("hmod:");console.log(hmod);

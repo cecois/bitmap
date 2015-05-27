@@ -102,41 +102,15 @@ var BaseLayersCollection = Backbone.Collection.extend({
     },
     initialize: function(options) {
         options || (options = {});
-        // if(verbose==true){console.log("initting RecentsCollection")}
-        // this.query = options.query;
         return this.layers
     }
-    //       ,
-    //     parse: function(data) {
-    //         // if(verbose==true){console.log("parsing data in parse of RecentsCollection")}
-    //     var items = data.recents;
-    //         // if(verbose==true){console.log("items in menuitemscollection");console.log(items);}
-    // return items;
-    // }
 }); //recentscollx
 /* -------------------------------------------------- CARTODB -----------------------  */
 var CartoItem = Backbone.Model.extend({});
-// var CBBCollx = Backbone.Collection.extend({
-// model: CartoItem,
-//     url: function() {
-//         // return "offline/cbb_point.json"
-//         return "https://pugo.cartodb.com/api/v1/sql?q=select%20cartodb_id%2Cname%2Canno%2CST_AsGeoJSON(the_geom)%20as%20the_geom_gj%2Ccreated_at%2Cupdated_at%20from%20cbb_point%20WHERE%20anno%20LIKE%20%27Huell%25%27&callback=jQuery211022427363438226922_1419124391932&_=1419124391933"
-//     },
-//     initialize: function(options) {
-//         options || (options = {});
-//         return this
-//     },
-//     parse: function(data){
-// console.log("in parse of 59");
-// console.log(data);alk
-// return data.rows
-//     }
-// }) //CBBCollx
 var CartoQuery = Backbone.Model.extend({
     defaults: {
-        rawstring: "*:*",
-        solrstring: "*:*"
-        // rawstring: 'california "huell howser" grove "paul f."'
+        rawstring: "huell",
+        solrstring: "huell"
     },
         initialize: function(options) {
         options || (options = {});
@@ -150,7 +124,6 @@ var CartoQuery = Backbone.Model.extend({
         var ss = this.get("rawstring")
 
         this.set({solrstring:ss})
-        // return this.get("rawstring");
         return ss
     }
     
@@ -289,7 +262,7 @@ var BaseMap = Backbone.Model.extend({
 /* -------------------------------------------------- CONSOLE -----------------------  */
 var Console = Backbone.Model.extend({
     defaults: {
-        message: "Console Console. Helpful stuff like -- the 'z' key will toggle the main pane."
+        message: "Console Console. Helpful stuff like -- the 'ctrl' key will toggle the main pane."
     }
 });
 /* -------------------------------------------------- ACTIVITY -----------------------  */
@@ -343,22 +316,5 @@ var SolrFieldz = Backbone.Collection.extend({
 this.models = fields;
         return this
     },
-// sync: function(method, collection, options) {
-//         // By setting the dataType to "jsonp", jQuery creates a function
-//         // and adds it as a callback parameter to the request, e.g.:
-//         // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
-//         // If you want another name for the callback, also specify the
-//         // jsonpCallback option.
-//         // After this function is called (by the JSONP response), the script tag
-//         // is removed and the parse method is called, just as it would be
-//         // when AJAX was used.
-//         options.dataType = "jsonp";
-//         options.jsonpCallback = 'solrfieldzcallback';
-//         return Backbone.sync(method, collection, options);
-//     },
-//     parse: function(response) {
-//         console.log("response in parse");
-//         console.log(response);
-//         return response.fields
-//     }
+
 }); //solrfields

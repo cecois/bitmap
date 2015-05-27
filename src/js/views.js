@@ -662,6 +662,7 @@ var QueryView = Backbone.View.extend({
         if (typeof goto == 'undefined') {
             goto = true
         }
+        verbose==true ? function(){console.log("goto");console.log(goto);} : function(){return null;}
         var rawstring = $("#query-form-input").val()
         appCartoQuery.set({
             rawstring: rawstring
