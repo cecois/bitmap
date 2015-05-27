@@ -1,8 +1,3 @@
-### Unnamed* Spatial Data Access Web App
+### A Comedy Bang! Bang! viz app -- primarily geospatial
 
-
-This is a compiled, distribution-level copy of the code behind Lincoln Laboratory Library & Archives' web-based spatial data portal.
-
-
-
-\* There is always a chance we will have named it and forgotten to update this README, as our primary documentation is elsewhere.
+It's coming. Gotta make sense of all this data.
