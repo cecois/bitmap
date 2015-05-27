@@ -23,7 +23,7 @@
     -1px -1px 0 white,
     1px -1px 0 white,
     -1px 1px 0 white,
-    1px 1px 0 white; 
+    1px 1px 0 white;
   }
 
 .stroke-active {
@@ -103,12 +103,12 @@ body{
     color:@tertiarycolor-trans;
     font-size:.8em;
     margin-left:30px;
-  
+
 }
 
 h1{
   // .stroke-h;
-  // 
+  //
   // font-family: League-Gothic, Courier;
 
 font-weight: bold;
@@ -253,7 +253,7 @@ div.leaflet-popup-content .marker.bt{
   color:@tertiarycolor;
   #activity-spin{margin-right:6px;}
 
-  
+
   #activity-spin.true{
 content: "88888";
 color:"#b4a5b1";
@@ -473,60 +473,65 @@ width:100%;
         padding:0 0;
       }
     }
-    li {
-        // background-color: rgba(0, 0, 0, 0.2);
-        // border-radius: 2px;
-   
-font-weight:800;
-        font-size:1.5em;
-        display: inline-block;
-        padding: 0 0.4em;
-        margin-right:10px;
-        text-align: center;
+    ul
+    {
+      text-align:left;
 
-@media(max-width:992px){
-        // font-size:1.5em;
-        display: table-row;
-        font-size:.8em;
-        padding: 0 0em;
-        margin-right:0px;
-height:10px;
-  text-shadow:
-    1px 1px 0 black;
-}
+      li {
+            // background-color: rgba(0, 0, 0, 0.2);
+            // border-radius: 2px;
+
+    font-weight:800;
+            font-size:1.5em;
+            display: inline-block;
+            padding: 0 0.4em;
+            margin-right:10px;
+            text-align: center;
+
+    @media(max-width:992px){
+            // font-size:1.5em;
+            display: table-row;
+            font-size:.8em;
+            padding: 0 0em;
+            margin-right:0px;
+    height:10px;
+      text-shadow:
+        1px 1px 0 black;
+    }
 
 
-        a.link {
-          color:@primarycolor;
-   
-   @media(min-width:992px){
-     .stroke;
-   } //media
+            a.link {
+              color:@primarycolor;
 
-            &:hover {
-                text-decoration: none;
-                .text-shadow-general
-           }
-           // padding squeezes it down to the same level as the rotated leaflet control
-           @media(min-width:1200px){
-                      padding-top: 8px;
-                      padding-bottom: 8px;}
+       @media(min-width:992px){
+         .stroke;
+       } //media
 
-      }
-      a.active {
-          color: @primarycolor;
-@media(max-width:992px){
-  color:white;
-}
-@media(min-width:992px){
-          .stroke-active;
-          &:hover {
-            .stroke-active;
-           } //hover
-} //media
-           
-     } //./active
-} //li
+                &:hover {
+                    text-decoration: none;
+                    .text-shadow-general
+               }
+               // padding squeezes it down to the same level as the rotated leaflet control
+               @media(min-width:1200px){
+                          padding-top: 8px;
+                          padding-bottom: 8px;}
+
+          }
+          a.active {
+              color: @primarycolor;
+    @media(max-width:992px){
+      color:white;
+    }
+    @media(min-width:992px){
+              .stroke-active;
+              &:hover {
+                .stroke-active;
+               } //hover
+    } //media
+
+         } //./active
+    } //li
+    } //ul
 }
 
 .js-non-menu-container {
@@ -538,7 +543,7 @@ height:10px;
 }
 //
 // ------------------------------------- QUERY
-// 
+//
 #solrfields{
   clear:left;
   // font-size:.8em;
@@ -599,7 +604,7 @@ padding-top:10px;
   .stroke-active-mock;
   color: @tertiarycolor;
   font-size:2em;
-} 
+}
 #query-list{
   h1{
     // color:@tertiarycolor-trans;
@@ -654,7 +659,7 @@ padding-top:10px;
 .cbb-marker-inline{
   margin-left:5px;
 }
-// 
+//
 #bt-showmain{
   cursor:pointer;
   z-index:77;
