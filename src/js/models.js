@@ -126,7 +126,7 @@ var CartoQuery = Backbone.Model.extend({
         this.set({solrstring:ss})
         return ss
     }
-    
+
 });
 var CartoCollection = Backbone.Collection.extend({
     model: CartoItem,
@@ -183,7 +183,7 @@ var CartoCollectionDev = Backbone.Collection.extend({
         host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return "http://localhost:8983/solr/cbb_carto/select?json.wrf=cwmccallback&rows=100&wt=json&q=" + appCartoQuery.solrstring()
+        return solrhost+"cbb_carto/select?json.wrf=cwmccallback&rows=100&wt=json&q=" + appCartoQuery.solrstring()
     },
     comparator: function(m) {
     return -m.get('active');
@@ -272,7 +272,7 @@ var Activity = Backbone.Model.extend({
         show:false
     }
 });
-/* -------------------------------------------------- WIKIAZ 
+/* -------------------------------------------------- WIKIAZ
 kind of an unfornuate offline bootstrapping call to previously-downloaded wikiaz content just so we can have full epi titles on hand
 -----------------------  */
 var Wikia = Backbone.Model.extend({
