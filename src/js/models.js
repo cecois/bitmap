@@ -18,7 +18,8 @@ var RecentItem = Backbone.Model.extend({});
 var RecentsCollection = Backbone.Collection.extend({
     model: RecentItem,
     url: function() {
-        return solrhost+"cbb_carto/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json&sort=updated_at+desc&rows=100"
+        // return solrhost+"cbb_carto/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json&sort=updated_at+desc&rows=10"
+        return solrhost+"cbb_bits/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json&sort=_id+desc&rows=10"
     },
     initialize: function(options) {
         options || (options = {});
@@ -107,10 +108,11 @@ var BaseLayersCollection = Backbone.Collection.extend({
 }); //recentscollx
 /* -------------------------------------------------- CARTODB -----------------------  */
 var CartoItem = Backbone.Model.extend({});
+var BitItem = Backbone.Model.extend({});
 var CartoQuery = Backbone.Model.extend({
     defaults: {
-        rawstring: "huell",
-        solrstring: "huell"
+        rawstring: "",
+        solrstring: ""
     },
         initialize: function(options) {
         options || (options = {});
@@ -124,20 +126,83 @@ var CartoQuery = Backbone.Model.extend({
         var ss = this.get("rawstring")
 
         this.set({solrstring:ss})
-        return ss
+        if(ss == '' || ss == null){
+            return "*:*"
+        } else {
+                return ss}
     }
 
 });
-var CartoCollection = Backbone.Collection.extend({
-    model: CartoItem,
+var BitCollection = Backbone.Collection.extend({
+    model: BitItem,
     host:window.host,
+    
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return "http://solr-lbones.rhcloud.com/cbb_carto/select?json.wrf=cwmccallback&wt=json&rows=100&q=" + appCartoQuery.get("solrstring")
+        return solrhost+"cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=9500&q=" + appCartoQuery.solrstring()
     },
     initialize: function(options) {
         options || (options = {});
         return this
+    },
+    sync: function(method, collection, options) {
+        // By setting the dataType to "jsonp", jQuery creates a function
+        // and adds it as a callback parameter to the request, e.g.:
+        // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
+        // If you want another name for the callback, also specify the
+        // jsonpCallback option.
+        // After this function is called (by the JSONP response), the script tag
+        // is removed and the parse method is called, just as it would be
+        // when AJAX was used.
+        options.dataType = "jsonp";
+        options.jsonpCallback = 'cwmccallback';
+        // this.subfetch()
+        return Backbone.sync(method, collection, options)
+    },
+//     subfetch: function(){
+
+// // pull out location refs here
+// // fake:
+// var arr = [2,5,7]
+
+// // give it to CartoCollection
+// appCBB.seturl(arr)
+
+//     },
+    parse: function(resp) {
+        var locsornot = _.partition(resp.response.docs, function(e){return e.name=="Location";})
+        var locsyes = locsornot[0];
+        var locsno = locsornot[1];
+
+// appCBB.set(locsyes)
+
+        // console.log("locsornot1:");console.log(locsornot[1]);
+        // return resp.response.docs
+        return locsno
+    }
+}); //bitcollx
+
+var CartoCollection = Backbone.Collection.extend({
+    model: CartoItem,
+    // host:window.host,
+    url: function() {
+        // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
+        return solrhost+"cbb_carto/select?json.wrf=cwmccallback&wt=json&rows=100&q="  +"cartodb_id:(2 4 5)"
+        // + this.cartostring
+    },
+    initialize: function(options) {
+        options || (options = {});
+        return this
+    },
+            seturl: function(arr){
+
+
+this.cartostring = "location_id:("+encodeURIComponent(arr.join(" "))+")"
+
+console.log(this.url());
+
+return this
+
     },
     queue: function(qmod) {
         var inid = qmod.get("cartodb_id").toString()
@@ -181,9 +246,19 @@ var CartoCollection = Backbone.Collection.extend({
 var CartoCollectionDev = Backbone.Collection.extend({
     model: CartoItem,
         host:window.host,
+        seturl: function(arr){
+
+
+this.cartostring = "location_id:("+encodeURIComponent(arr.join(" "))+")"
+
+console.log(this.url());
+
+return this
+
+    },
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return solrhost+"cbb_carto/select?json.wrf=cwmccallback&rows=100&wt=json&q=" + appCartoQuery.solrstring()
+        return solrhost+"cbb_carto/select?json.wrf=cwmccallback&rows=100&wt=json&q=" + this.cartostring
     },
     comparator: function(m) {
     return -m.get('active');
@@ -268,7 +343,7 @@ var Console = Backbone.Model.extend({
 /* -------------------------------------------------- ACTIVITY -----------------------  */
 var Activity = Backbone.Model.extend({
     defaults: {
-        message: "Activity Console: wuzzup as it happens.",
+        message: null,
         show:false
     }
 });

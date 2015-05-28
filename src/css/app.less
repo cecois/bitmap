@@ -64,6 +64,7 @@ color:@secondarycolor;
 #nprogress .spinner{
   top:50%;
   right:50%;
+  display:none;
 }
 #nprogress .spinner-icon {
     height:20px;
@@ -72,8 +73,10 @@ color:@secondarycolor;
     border-color: @secondarycolor transparent transparent @secondarycolor-trans;
 }
 
-#nprogress .bar {
-  background: @secondarycolor;
+#nprogress {
+  .bar {
+  background: @primarycolor;
+  // background: black;
 
   position: fixed;
   z-index: 1031;
@@ -82,7 +85,7 @@ color:@secondarycolor;
 
   width: 100%;
   height: 2px;
-}
+}}
 
 /* --------------------------------------- GENERAL -------------- */
 body{
@@ -249,8 +252,15 @@ div.leaflet-popup-content .marker.bt{
 
 /* --------------------------------------- ACTIVITY -------------- */
 
+#activity-default{
+  padding-left:20px;
+}
+
 #activityContainer {
-  color:@tertiarycolor;
+
+
+
+  color:@primarycolor;
   #activity-spin{margin-right:6px;}
 
 
@@ -265,21 +275,24 @@ color:"#a9d9d1";
   }
     // bottom:25px;
     // top:5px;
-    top:-35px;
+    // top:-35px;
+    margin-right:15px;
     padding:5px 10px;
     background-color:@tertiarycolor-trans;
     opacity: .9;
-    margin-left: 0px;
+    // margin-left: 0px;
     font-size: .8em;
-    right: 0;
+    // right: 0;
     position: relative;
     // position: fixed;
-    text-align: left;
+    text-align: right;
     border-radius:3px;
 
           border-bottom-width: 0;
     border-left-width: 0;
     margin-bottom: 0;
+    height:30px;
+    span{padding:7px;}
 }
 
 /* --------------------------------------- MAP MENU -------------- */
@@ -605,7 +618,7 @@ padding-top:15px;
   color: @tertiarycolor;
   font-size:2em;
 }
-#query-list{
+#querylist-carto{
   h1{
     // color:@tertiarycolor-trans;
     color:@tertiarycolor;

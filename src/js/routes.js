@@ -89,17 +89,23 @@ var Route = Backbone.Router.extend({
             $(".episodes-arrow").addClass('hidden')
             // console.log("a live query hash!");
             this.update("#query")
+            // appActivity.set({
+            //     message: "querying...",
+            //     show: true,
+            //     altel: "#querylist-carto"
+            // })
             appActivity.set({
                 message: "querying...",
                 show: true,
-                altel: "#query-list"
+                // altel: "#activity-default"
             })
-            appCBB.fetch({
+
+            appBits.fetch({
                 // dataType: "jsonp"
                 success: function() {
                     // console.log("successful fetch of appcbb at 76");
-                    appCBBListView.render()
-                    appCBBMapView.render()
+                    // appBitsView.render()
+                    // appCBBMapView.render()
                     appActivity.set({
                         message: "",
                         show: false,
@@ -111,7 +117,7 @@ var Route = Backbone.Router.extend({
                         message: "query errored out"
                     })
                     // actually, if it's a true error we wanna be more forthcoming:
-                    $("#query-list").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                    $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                     appActivity.set({
                         message: "",
                         show: false,
@@ -122,6 +128,35 @@ var Route = Backbone.Router.extend({
             }, {
                 reset: true
             })
+
+            //             appCBB.fetch({
+            //     // dataType: "jsonp"
+            //     success: function() {
+            //         // console.log("successful fetch of appcbb at 76");
+            //         appCBBListView.render()
+            //         appCBBMapView.render()
+            //         appActivity.set({
+            //             message: "",
+            //             show: false,
+            //             altel: false
+            //         })
+            //     },
+            //     error: function() {
+            //         appConsole.set({
+            //             message: "query errored out"
+            //         })
+            //         // actually, if it's a true error we wanna be more forthcoming:
+            //         $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+            //         appActivity.set({
+            //             message: "",
+            //             show: false,
+            //             altel: false
+            //         })
+            //         // console.log("failed fetch");
+            //     }
+            // }, {
+            //     reset: true
+            // })
         } //h is query for fetch
         // var hmod = "#" + h;
         // // this in case the pane had been hidden by the alt key

@@ -18,6 +18,32 @@ templates['baseLayerMnuItem'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main
     + escapeExpression(((helper = (helper = helpers.thumb || (depth0 != null ? depth0.thumb : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"thumb","hash":{},"data":data}) : helper)))
     + "\" alt=\"\" width=\"55px\" height=\"55px\" />\n    </div>";
 },"useData":true});
+templates['bitsView'] = template({"1":function(depth0,helpers,partials,data) {
+  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<li data-id=\""
+    + escapeExpression(lambda((depth0 != null ? depth0._id : depth0), depth0))
+    + "\" class=\"\">\n\n<div class=\"\">\n"
+    + escapeExpression(lambda((depth0 != null ? depth0.desc : depth0), depth0))
+    + "\n<span data-id=\""
+    + escapeExpression(lambda((depth0 != null ? depth0._id : depth0), depth0))
+    + "\" data-type=\""
+    + escapeExpression(lambda((depth0 != null ? depth0.geom_type : depth0), depth0))
+    + "\" class=\"glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes\" title=\"pull a list of associated episodes\"></span>\n\n";
+  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.elucidation : depth0), {"name":"if","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "\n\n\n\n</div>\n</li>\n";
+},"2":function(depth0,helpers,partials,data) {
+  var lambda=this.lambda, escapeExpression=this.escapeExpression;
+  return "<p class=\"cbbanno\">("
+    + escapeExpression(lambda((depth0 != null ? depth0.elucidation : depth0), depth0))
+    + ")</p>\n";
+},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h1 class=\"stroke stroke-active\" style=\"margin-bottom:43px;\">Bits - Unmappable <span class=\"cbbanno\">("
+    + escapeExpression(((helper = (helper = helpers.count || (depth0 != null ? depth0.count : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"count","hash":{},"data":data}) : helper)))
+    + ")</span>\n<!-- <span class=\"episodes hidden\" style=\"margin-left:12px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span>  -->\n</h1>\n<div class=\"cbbanno\">(Bits in the Tracker but without Locations)</div>\n\n";
+  stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.rows : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"useData":true});
 templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, buffer = "<li data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))

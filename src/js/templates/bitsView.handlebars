@@ -1,0 +1,22 @@
+<h1 class="stroke stroke-active" style="margin-bottom:43px;">Bits - Unmappable <span class="cbbanno">({{count}})</span>
+<!-- <span class="episodes hidden" style="margin-left:12px;">\-\-\-\-\-\-\-\-></span>  -->
+</h1>
+<div class="cbbanno">(Bits in the Tracker but without Locations)</div>
+
+{{#each rows}}
+<li data-id="{{this._id}}" class="">
+
+<div class="">
+{{this.desc}}
+<span data-id="{{this._id}}" data-type="{{this.geom_type}}" class="glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes" title="pull a list of associated episodes"></span>
+
+{{#if this.elucidation}}
+<p class="cbbanno">({{this.elucidation}})</p>
+{{/if}}
+
+
+
+
+</div>
+</li>
+{{/each}}

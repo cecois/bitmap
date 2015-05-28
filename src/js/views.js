@@ -113,9 +113,166 @@ var CartoCollxView = Backbone.View.extend({
         return this.fit()
     }
 });
+var BitsView = Backbone.View.extend({
+    // tagName: "li",
+    el: "#querylist-bits",
+    events: {
+        // "click .bt-cartoobj-zoomto": 'zoomtointernal',
+        // "click .bt-cartoobj-episodes": 'pulleps',
+        // "click .bt-getid": 'echoid'
+    },
+    template: Handlebars.templates['bitsView'],
+    initialize: function() {
+        // this.collection.bind('change', this.render, this);
+        // this.listenTo(this.collection, "change active", this.sort);
+        // this.listenTo(this.collection, "change", this.sort);
+        // this.listenTo(this.collection, "change", this.sort);
+        // this.listenTo(this.collection, "change queued", this.fromzoom);
+        // this.listenTo(this.collection, "change active", this.render);
+        // this.listenTo(this.model, "change", this.render);
+        this.collection.bind('change', this.render, this);
+        return this
+        .render()
+    },
+    debug: function() {
+        console.log("here cuzza change queued");
+    },
+    echoid: function(e) {
+        var locid = $(e.target).attr("data-id")
+        var str = '<span class="loc-trigger" data-string="cartodb_id:' + locid + '"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
+       console.log(str);
+        return this
+    },
+    unwire: function() {
+        $('.bt-cartoobj').tooltip('destroy')
+        return this
+    },
+    stageeps: function(e) {
+        return this.pulleps(e)
+    },
+    sort: function() {
+        this.collection.sort()
+        return this
+    },
+    pulleps: function(e) {
+        console.log(e);
+        
+        var voff = e.currentTarget.offsetTop;
+
+        appActivity.set({
+            message: "fetching episodes...",
+            show: true,
+            altel: "#episodes-list"
+        })
+        var locid = $(e.target).attr("data-id")
+
+        var loctype = $(e.target).attr("data-type");
+
+        switch(loctype) {
+    case 'line':
+        locid = locid/999
+        break;
+    case 'poly':
+        locid = locid/9999
+        break;
+    default:
+        locid = locid;
+}
+
+        appEpisodes.activeloc = Number(locid);
+        appEpisodes.loctype = loctype;
+        appEpisodes.verticaloffset = voff;
+        appEpisodes.fetch({
+            reset: true,
+            success: function(c, r, o) {
+                // appActivity.set({message:"fetching episodes...",spin:true})
+                // appActivityView.stfu()
+                // again i'm not sure why this isn't firing from its event trigger
+                // appEpisodesView.render()
+                appActivity.set({
+                    message: "",
+                    show: false,
+                    altel: false
+                })
+            }
+        });
+        e.preventDefault()
+        // var am = $(e.currentTarget).parents('li').data("id").toString();
+        var a = $(e.currentTarget).parents('li')
+        return this.activate(a)
+    },
+    rewire: function() {
+        // reactivating some pieces that get wiped in the render
+        // actually -- first, since we're here for the same reason -- let's wipe the episodes list, too
+        appEpisodesView.wipe();
+        $('#querylist-bits').liveFilter("#query-livefilter", 'li', {
+            filterChildSelector: 'div'
+        });
+        // $('.bt-cartoobj').tooltip({
+        //     container: 'body',
+        //     placement: 'right',
+        //     trigger: 'hover'
+        // })
+        // a little non-backbone stuff
+        // $("#stats-hits").html("total hits: " + this.collection.length)
+        return this
+    },
+    activate: function(a) {
+        // first wipe the list of any true classes (see ~184 for explanation)
+        $(this.el).find("li").removeClass("true")
+        // var amid = am.get("cartodb_id")
+        var amid = $(a).data("id").toString();
+        if (verbose == true) {
+            console.log("in activate for " + a);
+        }
+        // actually first silently deactivate the others
+        // _.each(_.reject(this.collection.models, function(mod) {
+        //     return mod.get("cartodb_id") == amid;
+        // }), function(mo) {
+        //     mo.set({
+        //         active: false,
+        //         queued: false
+        //     }, {
+        //         silent: true
+        //     })
+        // }, this)
+        // 
+        // var item = this.collection.findWhere({
+        //     "cartodb_id": amid
+        // });
+        // item.set({
+        //     active: true
+        // })
+        // send id and popup flag
+        // 
+
+// SHOULD NOT BE AN EACH #returnto
+// 
+        
+        $(a).addClass("true")
+        $(a).addClass("well")
+        return this
+        // .render()
+    },
+    render: function() {
+        this.unwire()
+        if (verbose == true) {
+            console.log("rendering bits")
+        }
+        _.sortBy(this.collection.models, function(mod) {
+            return mod.get("active") == 'true';
+        });
+        // notice we are wrapping the collection in rows: cuz cartodb does it
+        $(this.el).html(this.template({
+            count: this.collection.models.length,
+            rows: this.collection.toJSON()
+        }));
+        return this.rewire()
+    }
+});
 var CartoPlainView = Backbone.View.extend({
     // tagName: "li",
-    el: "#query-list",
+    el: "#querylist-carto",
     events: {
         "click .bt-cartoobj-zoomto": 'zoomtointernal',
         "click .bt-cartoobj-episodes": 'pulleps',
@@ -227,7 +384,7 @@ var CartoPlainView = Backbone.View.extend({
         // reactivating some pieces that get wiped in the render
         // actually -- first, since we're here for the same reason -- let's wipe the episodes list, too
         appEpisodesView.wipe();
-        $('#query-list').liveFilter("#query-livefilter", 'li', {
+        $('#querylist-carto').liveFilter("#query-livefilter", 'li', {
             filterChildSelector: 'div'
         });
         $('.bt-cartoobj').tooltip({
@@ -700,7 +857,7 @@ var QueryView = Backbone.View.extend({
                     })
 
                     // actually, if it's a true error we wanna be more forthcoming:
-                    $("#query-list").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                    $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
 
                     appActivity.set({
                         message: "",
@@ -717,7 +874,7 @@ var QueryView = Backbone.View.extend({
         }
     },
     setstage: function() {
-        $("#query-list").html("")
+        $("#querylist-carto").html("")
     },
     render: function() {
         // appRoute.update()
@@ -757,28 +914,31 @@ var ActivityView = Backbone.View.extend({
     el: $("#activityContainer"),
     template: Handlebars.templates['activityViewTpl'],
     initialize: function() {
-        this.render();
         this.model.bind("change", this.render, this);
+        this.render();
     },
     render: function() {
         var show = this.model.get("show")
         var msg = this.model.get("message")
         var altel = this.model.get("altel")
         if (show == true) {
-            if (typeof altel !== 'undefined' && altel !== false && altel !== null) {
-                NProgress.configure({
+            if (typeof altel == 'undefined' || altel == false || altel == null) {
+            var altel = "#activity-default"    
+            } 
+            // else {
+            //     // if(spin==true)  {
+            //     // NProgress.start();
+            // }
+            NProgress.configure({
                     parent: altel
                 });
                 NProgress.start();
-            } else {
-                // if(spin==true)  {
-                NProgress.start();
-            }
         } else {
             // NProgress.done();
-            NProgress.done().configure({
-                parent: "#main"
-            });
+            NProgress.done()
+            // .configure({
+            //     parent: "#main"
+            // });
         }
         $(this.el).html(this.template(this.model.toJSON()))
         return this

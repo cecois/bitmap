@@ -69,7 +69,10 @@
     
  <!-- <div id="BaseMapConsoleWrapper" class="content-wrap pull-right"><span>BaseMap:</span><div id="BaseMapConsole" class=""></div></div> -->
 <!-- <div id="BaseMapConsole" class=""></div> -->
-
+<div id="activityContainer" class="pull-right col-sm-7">
+  <!-- <span id="activity-spin" class="hidden">|</span> -->
+</div> <!-- activitycontainer -->
+<div id="activity-default" class="pull-right col-sm-offset-1 col-sm-7 "></div>
  </div> 
 </header>
 
@@ -78,9 +81,7 @@
 <div id="bt-showmain" class="pull-left col-sm-3 hidden">
 <span class="glyphicon glyphicon-arrow-up"></span>
 press "control" key to show again</div>
-<div id="activityContainer" class="pull-right col-sm-">
-  <!-- <span id="activity-spin" class="hidden">|</span> -->
-</div>
+
 
 <div id="huh" class="mainpanel hidden">
 <div class="panel-wrap">
@@ -120,14 +121,14 @@ press "control" key to show again</div>
     <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = 'cbbmap';
+    // var disqus_shortname = 'cbbmap';
     
     /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
+    // (function() {
+    //     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    //     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    //     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    // })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
@@ -149,9 +150,6 @@ press "control" key to show again</div>
 </div>
 </div>  ./minutiae-->
 
-       
-
-
   </div>
 <!-- 
   <div class="stats text-muted row">
@@ -165,7 +163,9 @@ press "control" key to show again</div>
 
 <!-- <input class="offset2 " id="query-cartodb" size="55" type="text" data-provide="typeahead" data-items="4" placeholder="search the source for new results" value=''> -->
  
-    <ul id="query-list" class="pull-left col-lg-5">
+    <ul id="querylist-bits" class="pull-left col-lg-5">
+    </ul>
+    <ul id="querylist-carto" class="pull-right col-lg-5">
     </ul>
     
     <div class="col-sm-2">

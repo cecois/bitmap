@@ -380,13 +380,15 @@ window.appCartoQueryView = new QueryView({
 //     }
 //     });
 /* -------------------------------------------------- INITS -----------------------  */
-switch (dev) {   
-    case true:
-        window.appCBB = new CartoCollectionDev();       
-        break;   
-    default:
+// switch (dev) {   
+//     case true:
+//         window.appCBB = new CartoCollectionDev();       
+//         break;   
+//     default:
+// }
+        window.appBits = new BitCollection();
         window.appCBB = new CartoCollection();
-}
+        
 // appCBBCarto.fetch();
 // appCBBCarto.bind('reset', function() {
 //  appCBBCarto.each(function(p) {
@@ -396,6 +398,9 @@ switch (dev) {   
 // });
 window.appCBBListView = new CartoPlainView({
     collection: appCBB
+})
+window.appBitsView = new BitsView({
+    collection: appBits
 })
 window.appCBBMapView = new CartoCollxView({
     collection: appCBB
@@ -428,7 +433,7 @@ window.appConsoleView = new ConsoleView({
     model: appConsole
 });
 // new activity model and view
-window.appActivity = new Activity();
+window.appActivity = new Activity({message:"loading..."});
 window.appActivityView = new ActivityView({
     model: appActivity
 });
@@ -638,6 +643,13 @@ $(document).ready(function() {
     // var url = pullURL('#query');
     // appRoute.navigate(url, {trigger: true, replace: true})
     // })
+                    appActivity.set({
+                    message: "",
+                    show: false,
+                    altel: false
+                })
+    // 
+    // 
 }); //ready
 $(document).keydown(function(e) {
     if (e.keyCode == 17) {
