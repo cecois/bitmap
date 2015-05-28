@@ -111,8 +111,8 @@ var CartoItem = Backbone.Model.extend({});
 var BitItem = Backbone.Model.extend({});
 var CartoQuery = Backbone.Model.extend({
     defaults: {
-        rawstring: "",
-        solrstring: ""
+        rawstring: "huell",
+        solrstring: "huell"
     },
         initialize: function(options) {
         options || (options = {});
@@ -126,17 +126,18 @@ var CartoQuery = Backbone.Model.extend({
         var ss = this.get("rawstring")
 
         this.set({solrstring:ss})
-        if(ss == '' || ss == null){
-            return "*:*"
-        } else {
-                return ss}
+        // if(ss == '' || ss == null){
+            // return "*:*"
+        // } else {
+                return ss
+            // }
     }
 
 });
 var BitCollection = Backbone.Collection.extend({
     model: BitItem,
     host:window.host,
-    
+
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
         return solrhost+"cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=9500&q=" + appCartoQuery.solrstring()

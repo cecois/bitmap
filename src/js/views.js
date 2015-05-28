@@ -33,7 +33,7 @@ var CartoCollxView = Backbone.View.extend({
             // wkt.read(hit.get("the_geom"));
             // var geomtype = wkt.type
             var geomtype = hit.get("geom_type")
- 
+
 
  var hitm = {
     "type": "Feature",
@@ -84,7 +84,7 @@ var CartoCollxView = Backbone.View.extend({
             // var hitm = wkt.toObject().addTo(cbbItems).on("click", function(m) {
             // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
             // console.log("hitm just after bindpopu:");console.log(hitm);
-            
+
 
 
             // hitm.bindPopup(pu).addTo(cbbItems).on("click", function(m) {
@@ -129,10 +129,11 @@ var BitsView = Backbone.View.extend({
         // this.listenTo(this.collection, "change", this.sort);
         // this.listenTo(this.collection, "change queued", this.fromzoom);
         // this.listenTo(this.collection, "change active", this.render);
-        // this.listenTo(this.model, "change", this.render);
-        this.collection.bind('change', this.render, this);
+        // this.listenTo(this.collection, "change", this.render);
+        this.listenTo(this.collection, 'change', this.render);
+        // this.collection.bind('change', this.render, this);
         return this
-        .render()
+        // .render()
     },
     debug: function() {
         console.log("here cuzza change queued");
@@ -156,7 +157,7 @@ var BitsView = Backbone.View.extend({
     },
     pulleps: function(e) {
         console.log(e);
-        
+
         var voff = e.currentTarget.offsetTop;
 
         appActivity.set({
@@ -236,7 +237,7 @@ var BitsView = Backbone.View.extend({
         //         silent: true
         //     })
         // }, this)
-        // 
+        //
         // var item = this.collection.findWhere({
         //     "cartodb_id": amid
         // });
@@ -244,11 +245,11 @@ var BitsView = Backbone.View.extend({
         //     active: true
         // })
         // send id and popup flag
-        // 
+        //
 
 // SHOULD NOT BE AN EACH #returnto
-// 
-        
+//
+
         $(a).addClass("true")
         $(a).addClass("well")
         return this
@@ -323,7 +324,7 @@ var CartoPlainView = Backbone.View.extend({
     },
     pulleps: function(e) {
         console.log(e);
-        
+
         var voff = e.currentTarget.offsetTop;
 
         appActivity.set({
@@ -415,7 +416,7 @@ var CartoPlainView = Backbone.View.extend({
                 silent: true
             })
         }, this)
-        // 
+        //
         var item = this.collection.findWhere({
             "cartodb_id": amid
         });
@@ -423,10 +424,10 @@ var CartoPlainView = Backbone.View.extend({
             active: true
         })
         // send id and popup flag
-        // 
+        //
 
 // SHOULD NOT BE AN EACH #returnto
-// 
+//
         _.each(cbbItems._layers, function(i) {
             // console.log("i in cbbitems zoomloop:");
             // console.log(i);
@@ -521,7 +522,7 @@ var SolrFieldzView = Backbone.View.extend({
             // console.log("rendering solrfieldsview")
             // console.log(this.collection.models);
         }
-        // $(this.el).html(this.template(this.collection.toJSON()))       
+        // $(this.el).html(this.template(this.collection.toJSON()))
         $(this.el).html(this.template({
             count: this.collection.models.length,
             fields: this.collection.toJSON()
@@ -606,7 +607,7 @@ var BaseLayerMenuItemView = Backbone.View.extend({
         // return this
     },
     setBaseMap: function() {
-        // the clicked one becomes active 
+        // the clicked one becomes active
         // (noting that the collx will post-process this to deactivate the others)
         this.model.set({
             "active": true
@@ -662,7 +663,7 @@ var BaseLayersMenuView = Backbone.View.extend({
         // $("#mnuBaseMap").attr("title",this.title)
         $("#mnuBaseMap").tooltip()
         $("#BaseMapConsole").html($(".mnuThumbnail.true").attr("title"))
-        // 
+        //
         this.$(".mnuThumbnail").hover(function() {
             $("#BaseMapConsole").addClass("temp")
             $("#BaseMapConsole").html(this.title)
@@ -832,7 +833,7 @@ var QueryView = Backbone.View.extend({
         } else {
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it
-            // 
+            //
             appCBB.fetch({
                 // dataType: "jsonp"
                 success: function() {
@@ -869,8 +870,8 @@ var QueryView = Backbone.View.extend({
             }, {
                 reset: true
             })
-            // 
-            // 
+            //
+            //
         }
     },
     setstage: function() {
@@ -914,7 +915,8 @@ var ActivityView = Backbone.View.extend({
     el: $("#activityContainer"),
     template: Handlebars.templates['activityViewTpl'],
     initialize: function() {
-        this.model.bind("change", this.render, this);
+        // this.model.bind("change", this.render, this);
+        this.listenTo(this.model, 'change', this.render);
         this.render();
     },
     render: function() {
@@ -923,8 +925,8 @@ var ActivityView = Backbone.View.extend({
         var altel = this.model.get("altel")
         if (show == true) {
             if (typeof altel == 'undefined' || altel == false || altel == null) {
-            var altel = "#activity-default"    
-            } 
+            var altel = "#activity-default"
+            }
             // else {
             //     // if(spin==true)  {
             //     // NProgress.start();
@@ -1004,7 +1006,7 @@ var RecentsView = Backbone.View.extend({
 
 this.collection.sortBy('location_id')
 
-// this.collection.sortBy(function(m) { 
+// this.collection.sortBy(function(m) {
 // console.log("803 sortby:");console.log(m);
 //     return -m.get('updated_at') });
 
@@ -1091,7 +1093,7 @@ var EpisodesView = Backbone.View.extend({
     },
     render: function() {
         $(this.el).empty()
-        
+
         // console.log("voff in epiview:");
         // console.log(this.collection.verticaloffset);
 

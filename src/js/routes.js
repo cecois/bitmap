@@ -44,7 +44,7 @@ var Route = Backbone.Router.extend({
             h = "query";
         }
         var hmod = "#" + h;
-        console.log("hmod:");console.log(hmod);
+        if(verbose==true){console.log("hmod:");console.log(hmod);}
         // this in case the pane had been hidden by the alt key
         $("#main").removeClass("hidden")
         _.each($("#main > .mainpanel"), function(p) {
@@ -86,7 +86,7 @@ var Route = Backbone.Router.extend({
         if (h == 'query') {
             // a live one, this, let's fire off the query
             // sloppy #returnto - we just don't want that arrow showing with no episodes present
-            $(".episodes-arrow").addClass('hidden')
+            // $(".episodes-arrow").addClass('hidden')
             // console.log("a live query hash!");
             this.update("#query")
             // appActivity.set({
@@ -99,11 +99,12 @@ var Route = Backbone.Router.extend({
                 show: true,
                 // altel: "#activity-default"
             })
-
+if(verbose==true){console.log("fetching bits...")}
             appBits.fetch({
+
                 // dataType: "jsonp"
                 success: function() {
-                    // console.log("successful fetch of appcbb at 76");
+                    if(verbose==true){console.log("in success of bits fetch")}
                     // appBitsView.render()
                     // appCBBMapView.render()
                     appActivity.set({
@@ -113,18 +114,19 @@ var Route = Backbone.Router.extend({
                     })
                 },
                 error: function() {
+                    if(verbose==true){console.log("in error of bits fetch")}
                     appConsole.set({
                         message: "query errored out"
                     })
                     // actually, if it's a true error we wanna be more forthcoming:
                     $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                    appActivity.set({
-                        message: "",
-                        show: false,
-                        altel: false
-                    })
-                    // console.log("failed fetch");
+
                 }
+                // appActivity.set({
+                //         message: "",
+                //         show: false,
+                //         altel: false
+                //     })
             }, {
                 reset: true
             })
