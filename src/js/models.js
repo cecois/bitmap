@@ -112,7 +112,8 @@ var BitItem = Backbone.Model.extend({});
 var CartoQuery = Backbone.Model.extend({
     defaults: {
         rawstring: "",
-        solrstring: ""
+        solrstring: "",
+        urlstring:'*:*'
     },
         initialize: function(options) {
         options || (options = {});
@@ -127,19 +128,19 @@ var CartoQuery = Backbone.Model.extend({
 
         this.set({solrstring:ss})
         if(ss == '' || ss == null){
-            return "*:*"
-        } else {
-                return ss}
+            this.set({urlstring : "*:*"})
+        } 
+                return ss
     }
 
 });
 var BitCollection = Backbone.Collection.extend({
     model: BitItem,
-    host:window.host,
+    // host:window.host,
     
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return solrhost+"cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=9500&q=" + appCartoQuery.solrstring()
+        return solrhost+"cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=" + appCartoQuery.get("urlstring")
     },
     initialize: function(options) {
         options || (options = {});
@@ -159,23 +160,40 @@ var BitCollection = Backbone.Collection.extend({
         // this.subfetch()
         return Backbone.sync(method, collection, options)
     },
-//     subfetch: function(){
+    parse: function(resp) {
+        if(verbose==true){console.log("in custom parse of BitCollection")}
+        var locsornot = _.partition(resp.response.docs, function(e){return e.name=="Location";})
+        window.locsyes = locsornot[0];
+        var locsno = locsornot[1];
 
-// // pull out location refs here
-// // fake:
+
+// bad design - i'm tightly coupling these two collections pull out location refs here
+// 
 // var arr = [2,5,7]
 
 // // give it to CartoCollection
 // appCBB.seturl(arr)
-
-//     },
-    parse: function(resp) {
-        var locsornot = _.partition(resp.response.docs, function(e){return e.name=="Location";})
-        var locsyes = locsornot[0];
-        var locsno = locsornot[1];
-
 // appCBB.set(locsyes)
 
+var lids = [];
+
+// ok so there's prolly a nifty underscore thing to pull these ids out, but because we need to doctor them we might as well just loop
+_.each(locsyes,function(l, i) {
+    
+    var i=l.location_id
+    var t=l.location_type
+
+var cid = doctorId(t,i,"up")
+lids.push(cid)
+
+
+});
+
+console.log("lids:");console.log(lids);
+// var uids=_.unique(lids)
+appCBB.seturl(_.unique(lids))
+
+        // console.log("locsornot0:");console.log(locsornot[0]);
         // console.log("locsornot1:");console.log(locsornot[1]);
         // return resp.response.docs
         return locsno
@@ -187,7 +205,7 @@ var CartoCollection = Backbone.Collection.extend({
     // host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return solrhost+"cbb_carto/select?json.wrf=cwmccallback&wt=json&rows=100&q="  +"cartodb_id:(2 4 5)"
+        return solrhost+"cbb_carto/select?json.wrf=cwmccallback&wt=json&rows=100&q="  +this.cartostring
         // + this.cartostring
     },
     initialize: function(options) {
@@ -197,7 +215,7 @@ var CartoCollection = Backbone.Collection.extend({
             seturl: function(arr){
 
 
-this.cartostring = "location_id:("+encodeURIComponent(arr.join(" "))+")"
+this.cartostring = "cartodb_id:("+encodeURIComponent(arr.join(" "))+")"
 
 console.log(this.url());
 

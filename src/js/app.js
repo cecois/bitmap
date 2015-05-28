@@ -19,16 +19,7 @@ Handlebars.registerHelper('timeize', function(options) {
 Handlebars.registerHelper('indev', function(id,type, options) {
     if(dev == true){
 
-        switch(type) {
-    case 'line':
-        cid = id/999
-        break;
-    case 'poly':
-        cid = id/9999
-        break;
-    default:
-        cid = id;
-}
+        cid=doctorId(type,id)
 
         return '<span data-id="'+cid+'" class="glyphicon glyphicon-asterisk bt-getid" title="echo model id (dev only)"></span>'} else{return '';}
         });
@@ -506,7 +497,7 @@ var methodV = new MethodView({
             var h = goto;
         }
         var bbx = map.getBounds().toBBoxString();
-        var qs = appCartoQuery.get("solrstring")
+        var qs = appCartoQuery.get("urlstring")
         var bl = appBaseLayers.findWhere({
             active: true
         }).get("name")
@@ -661,3 +652,26 @@ $(document).keydown(function(e) {
         })
     }
 });
+
+/* -------------------------------------------------- STRAIGHT UP FUNCS -----------------------  */
+
+function doctorId(type,id,updown){
+
+    if(typeof updown =='undefined' || updown==null)
+        {var updown="down"}
+
+var cid = null
+        switch(type) {
+    case 'line':
+    updown=="down" ? function(){cid = id/plierline} : function(){cid = id*plierline}
+        // cid = id/plierline
+        break;
+    case 'poly':
+    updown=="down" ? function(){cid = id/plierpoly} : function(){cid = id*plierpoly}
+        // cid = id/plierpoly
+        break;
+    default:
+        cid = id;
+}
+return cid
+}

@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="lib/components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="lib/components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/components/fontello/css/menu.css">
+    <link rel="stylesheet" href="lib/components/github-fork-ribbon-css/gh-fork-ribbon.css">
+
     
     <link rel="stylesheet" href="lib/icomoon/style.css">
 
@@ -38,7 +40,14 @@
         <!-- <div id="wrapper"> -->
             <!-- header -->
             <header class="site-header row" >
-                <div class="content-wrap col-sm-6 pull-left">
+
+    <div class="github-fork-ribbon-wrapper left">
+        <div class="github-fork-ribbon">
+            <a href="#huh">CBB BitTracker</a>
+        </div>
+    </div>
+
+                <div class="content-wrap col-sm-5 col-sm-offset-2">
 
                     <nav class="site-nav" role="navigation">
                         <ul class="">
@@ -57,7 +66,7 @@
 </nav>
 </div> <!-- col-sm-6 -->
 
-<div class="content-wrap pull-right col-sm-6">
+<div class="content-wrap pull-right col-sm-4">
  <div id="query-form" class="col-lg-12"></div><!-- /.#query-form -->
       <!-- <div id="solrfields" class="col-sm-16 pull-left " >
          <div id="bt-solrfields" class="pull-left icom-info"></div>
@@ -89,16 +98,17 @@ press "control" key to show again</div>
 </div>
 </div> <!-- ./huh -->
 
+<!--
 <div id="recent" class="mainpanel hidden">
 <div class="panel-wrap">
     <h1>Recent Adds</h1>
 <ul class="recents list-unstyled"></ul>
 </div>
-</div> <!-- ./recent -->
+</div>  ./recent -->
 
 <div id="browse" class="mainpanel hidden">
 <div class="panel-wrap">
-    <h1>Recent Adds</h1>
+    <h1>Browse</h1>
 <ul class="browse list-unstyled"></ul>
 </div>
 </div> <!-- ./browse -->
@@ -139,8 +149,20 @@ press "control" key to show again</div>
 
 
 <div id="query" class="mainpanel hidden">
+
+
+
 <div class="panel-wrap">
+
+
 <div class="row">
+
+<div id="query-subnav" class="col-sm-3 col-sm-offset-1 hidden">
+<ul class="list-unstyled">
+  <li id="btn-querylist-bits" class="btn-querylist pull-left">Bits</li>
+<li id="btn-querylist-carto" class="btn-querylist pull-right">Locations</li>
+</ul>
+</div>
 
     
     <!--
@@ -162,10 +184,13 @@ press "control" key to show again</div>
     <!-- /query-livefilter -->
 
 <!-- <input class="offset2 " id="query-cartodb" size="55" type="text" data-provide="typeahead" data-items="4" placeholder="search the source for new results" value=''> -->
+
+
+
  
     <ul id="querylist-bits" class="pull-left col-lg-5">
     </ul>
-    <ul id="querylist-carto" class="pull-right col-lg-5">
+    <ul id="querylist-carto" class="pull-right col-lg-5 ">
     </ul>
     
     <div class="col-sm-2">

@@ -23,19 +23,19 @@ templates['bitsView'] = template({"1":function(depth0,helpers,partials,data) {
     + escapeExpression(lambda((depth0 != null ? depth0._id : depth0), depth0))
     + "\" class=\"\">\n\n<div class=\"\">\n"
     + escapeExpression(lambda((depth0 != null ? depth0.desc : depth0), depth0))
-    + "\n<span data-id=\""
+    + " \n";
+  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.elucidation : depth0), {"name":"if","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "<span data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0._id : depth0), depth0))
     + "\" data-type=\""
     + escapeExpression(lambda((depth0 != null ? depth0.geom_type : depth0), depth0))
-    + "\" class=\"glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes\" title=\"pull a list of associated episodes\"></span>\n\n";
-  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.elucidation : depth0), {"name":"if","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
-  if (stack1 != null) { buffer += stack1; }
-  return buffer + "\n\n\n\n</div>\n</li>\n";
+    + "\" class=\"glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes\" title=\"pull a list of associated episodes\"></span>\n\n</div>\n</li>\n";
 },"2":function(depth0,helpers,partials,data) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "<p class=\"cbbanno\">("
+  return "<span class=\"cbbanno\">("
     + escapeExpression(lambda((depth0 != null ? depth0.elucidation : depth0), depth0))
-    + ")</p>\n";
+    + ")</span>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h1 class=\"stroke stroke-active\" style=\"margin-bottom:43px;\">Bits - Unmappable <span class=\"cbbanno\">("
     + escapeExpression(((helper = (helper = helpers.count || (depth0 != null ? depth0.count : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"count","hash":{},"data":data}) : helper)))

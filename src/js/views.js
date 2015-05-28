@@ -130,9 +130,10 @@ var BitsView = Backbone.View.extend({
         // this.listenTo(this.collection, "change queued", this.fromzoom);
         // this.listenTo(this.collection, "change active", this.render);
         // this.listenTo(this.model, "change", this.render);
-        this.collection.bind('change', this.render, this);
+        this.listenTo(this.collection, "reset", this.render);
+        // this.collection.bind('change', this.render, this);
         return this
-        .render()
+        // .render()
     },
     debug: function() {
         console.log("here cuzza change queued");
@@ -170,10 +171,10 @@ var BitsView = Backbone.View.extend({
 
         switch(loctype) {
     case 'line':
-        locid = locid/999
+        locid = locid/plierline
         break;
     case 'poly':
-        locid = locid/9999
+        locid = locid/plierpoly
         break;
     default:
         locid = locid;
@@ -335,16 +336,18 @@ var CartoPlainView = Backbone.View.extend({
 
         var loctype = $(e.target).attr("data-type");
 
-        switch(loctype) {
-    case 'line':
-        locid = locid/999
-        break;
-    case 'poly':
-        locid = locid/9999
-        break;
-    default:
-        locid = locid;
-}
+//         switch(loctype) {
+//     case 'line':
+//         locid = locid/999
+//         break;
+//     case 'poly':
+//         locid = locid/9999
+//         break;
+//     default:
+//         locid = locid;
+// }
+
+locid=doctorId(loctype,locid)
 
         appEpisodes.activeloc = Number(locid);
         appEpisodes.loctype = loctype;

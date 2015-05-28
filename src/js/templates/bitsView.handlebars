@@ -7,15 +7,11 @@
 <li data-id="{{this._id}}" class="">
 
 <div class="">
-{{this.desc}}
-<span data-id="{{this._id}}" data-type="{{this.geom_type}}" class="glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes" title="pull a list of associated episodes"></span>
-
+{{this.desc}} 
 {{#if this.elucidation}}
-<p class="cbbanno">({{this.elucidation}})</p>
+<span class="cbbanno">({{this.elucidation}})</span>
 {{/if}}
-
-
-
+<span data-id="{{this._id}}" data-type="{{this.geom_type}}" class="glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes" title="pull a list of associated episodes"></span>
 
 </div>
 </li>

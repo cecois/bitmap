@@ -420,6 +420,7 @@ bottom:-35px;
   }
   background-color: @primarycolor;
   border-top:solid 50px @secondarycolor;
+  // border-top:none;
   border-bottom:solid 50px @secondarycolor;
   width:100%;
   height:70%;
@@ -435,7 +436,7 @@ bottom:-35px;
         margin-left: -20px;
        }
        } //block
-  padding:50px 100px;
+  padding:0px 100px;
 position: relative;
 width:100%;
 
@@ -666,7 +667,72 @@ padding-top:15px;
 }
 }
 
+#query-subnav{
+  height:40px;
+  position:relative;
+  top:-5px;
+    background-color: @secondarycolor;
+    .btn-querylist{
+      color:black;
+      border-top: 1px solid black;
+    }
+}
 //
+/* -------------------------------------------------- GITHUB RIBBON OVERRIDES -----------------------  */
+
+.github-fork-ribbon-wrapper {
+    height: 150px;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 200px;
+    z-index: 9999;
+    .left .github-fork-ribbon {
+    left: -43px;
+    top: 5px;
+    transform: rotate(-32deg);
+  }
+} //ribbon-wrapper
+
+
+    .github-fork-ribbon {
+    background-color: @primarycolor;
+    background-image: none;
+    box-shadow: none;
+    font: 700 20px 'Open Sans', sans-serif;
+     
+.stroke-active;
+    padding: 2px 0;
+    pointer-events: auto;
+    position: absolute;
+    z-index: 9999;
+}
+
+.github-fork-ribbon-wrapper.left .github-fork-ribbon {
+    left: -33px;
+    top: 12px;
+    transform: rotate(-32deg);
+}
+
+.github-fork-ribbon a, .github-fork-ribbon a:hover {
+    border-color: none;
+    border-style: none;
+    border-width: 1px 0;
+// color: @secondarycolor;
+.stroke-active;
+    color: #fff;
+    display: inline-block;
+    line-height: 40px;
+    padding: 2px 0 0 25px;
+    text-align: left;
+    text-decoration: none;
+    // text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+    width: 230px;
+}
+
+
+
 // ------------------------------------- OTHER
 
 .cbb-marker-inline{
