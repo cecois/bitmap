@@ -419,11 +419,12 @@ bottom:-35px;
   }
   background-color: @primarycolor;
   border-top:solid 50px @secondarycolor;
+  /*border-top:solid 2px @secondarycolor;*/
   // border-top:none;
   border-bottom:solid 50px @secondarycolor;
   width:100%;
   height:70%;
-  top:150px;
+  top:200px;
   position:fixed;
     // background-color:white;
     opacity:.9;
@@ -463,10 +464,10 @@ width:100%;
 #main.hiddenish{
     top:95%;
   }
+
 .site-header {
-    // background: none repeat scroll 0 0 transparent;
-    // background: none repeat scroll 0 0 transparent;
-    background-color:@secondarycolor;
+
+/*background: @secondarycolor repeat scroll 0 0 solid;*/
     padding-left:25px;
     .off-canvas-contents {
         // this is the wrapper for the menu links, so we nudge it over next to the leaf control
@@ -474,9 +475,10 @@ width:100%;
         // left: -160px;
    }
 }
+
 .site-nav {
-// border-radius:3px;  
-  
+// border-radius:3px;
+
 
     padding-top: 12px;
     padding-bottom: 0px;
@@ -555,6 +557,89 @@ width:100%;
 #banner-bang{
   font-size:25em;top:-220px;left:-120px;position:absolute;
 }
+
+#banner-copy {
+    color: white;
+    font-family: "KiloGram";
+    font-size: 40px;
+    left: 87px;
+    letter-spacing: -1px;
+    line-height: 32px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 2px 2px 0 @secondarycolor, 5px 5px 0 @quaternarycolor, 7px 7px 0 @quaternarycolor, 9px 9px 0 @quaternarycolor, 11px 11px 0 @quaternarycolor, 13px 13px 0 @secondarycolor-trans;
+    top: 230px;
+    transform: rotate(-40deg);
+}
+
+/*#banner-copy {
+    color: @primarycolor;
+    font-family: "KiloGram";
+    font-size: 45px;
+    left: 100px;
+    line-height: 32px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 0 8px white;
+    top: 230px;
+    transform: rotate(-34deg);
+}*/
+
+/*#banner-copy {
+    color: @primarycolor;
+    font-family: "Mari";
+    font-size: 35px;
+    left: 90px;
+    line-height: 32px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 0 8px white;
+    text-transform: lowercase;
+    top: 250px;
+    transform: rotate(-34deg);
+}*/
+
+/*#banner-copy {
+    color: @primarycolor;
+    font-family: "Sabo";
+    font-size: 35px;
+    left: 90px;
+    line-height: 32px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 0 8px white;
+    text-transform: lowercase;
+    top: 250px;
+    transform: rotate(-34deg);
+}
+*/
+/*#banner-copy {
+  color: @primarycolor;
+    font-family: "KiloGram";
+    font-size: 35px;
+    left: 110px;
+    line-height: 32px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 0 8px white;
+    top: 240px;
+    transform: rotate(-34deg);
+}
+*/
+
+/*#banner-copy {
+    color: @primarycolor;
+    text-shadow: 0 0 8px white;
+    font-family: "KiloGram";
+    font-size: 73px;
+    left: 120px;
+    letter-spacing: -5px;
+    line-height: 32px;
+    position: absolute;
+    text-align: center;
+    top: 230px;
+    transform: rotate(-32deg);
+}*/
 
 .js-non-menu-container {
     opacity: .8;
