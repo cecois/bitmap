@@ -836,42 +836,40 @@ var QueryView = Backbone.View.extend({
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it
             // 
-            appCBB.fetch({
-                // dataType: "jsonp"
-                success: function() {
-                    // console.log("successful fetch of appcbb at 76");
-                    appCBBListView.render()
-                    appCBBMapView.render()
-                    appActivity.set({
-                        message: "",
-                        show: false,
-                        altel: false
-                    })
+            // appCBB.fetch({
+            //     success: function() {
+            //         appCBBListView.render()
+            //         appCBBMapView.render()
+            //         appActivity.set({
+            //             message: "",
+            //             show: false,
+            //             altel: false
+            //         })
 
-                     appRoute.navigate(pullURL("#query"), {
-                trigger: false,
-                replace: true
-            })
+            //          appRoute.navigate(pullURL("#query"), {
+            //     trigger: false,
+            //     replace: true
+            // })
 
-                },
-                error: function() {
-                    appConsole.set({
-                        message: "query errored out"
-                    })
+            //     }, //success
+            //     error: function() {
+            //         appConsole.set({
+            //             message: "query errored out"
+            //         })
 
-                    // actually, if it's a true error we wanna be more forthcoming:
-                    $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+            //         // actually, if it's a true error we wanna be more forthcoming:
+            //         $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
 
-                    appActivity.set({
-                        message: "",
-                        show: false,
-                        altel: false
-                    })
-                    // console.log("failed fetch");
-                }
-            }, {
-                reset: true
-            })
+            //         appActivity.set({
+            //             message: "",
+            //             show: false,
+            //             altel: false
+            //         })
+            //         // console.log("failed fetch");
+            //     } //error
+            // }, {
+            //     reset: true
+            // })
             // 
             // 
         }

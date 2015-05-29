@@ -2,5 +2,12 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(src/css/fonts/) format('truetype');
+  src: local('Open Sans'), local('OpenSans'), url(./) format('truetype');
+}
+
+@font-face {
+  font-family: 'Offside';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Offside'), local('Offside'), url(./) format('truetype');
 }

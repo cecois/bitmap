@@ -113,7 +113,6 @@ h1{
   // .stroke-h;
   //
   // font-family: League-Gothic, Courier;
-
 font-weight: bold;
 color:white;
 @media(min-width:993px){
@@ -465,7 +464,9 @@ width:100%;
     top:95%;
   }
 .site-header {
-    background: none repeat scroll 0 0 transparent;
+    // background: none repeat scroll 0 0 transparent;
+    // background: none repeat scroll 0 0 transparent;
+    background-color:@secondarycolor;
     padding-left:25px;
     .off-canvas-contents {
         // this is the wrapper for the menu links, so we nudge it over next to the leaf control
@@ -474,6 +475,9 @@ width:100%;
    }
 }
 .site-nav {
+// border-radius:3px;  
+  
+
     padding-top: 12px;
     padding-bottom: 0px;
     // margin-left:-100px;
@@ -546,6 +550,10 @@ width:100%;
          } //./active
     } //li
     } //ul
+}
+
+#banner-bang{
+  font-size:25em;top:-220px;left:-120px;position:absolute;
 }
 
 .js-non-menu-container {
@@ -677,60 +685,6 @@ padding-top:15px;
       border-top: 1px solid black;
     }
 }
-//
-/* -------------------------------------------------- GITHUB RIBBON OVERRIDES -----------------------  */
-
-.github-fork-ribbon-wrapper {
-    height: 150px;
-    overflow: hidden;
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    width: 200px;
-    z-index: 9999;
-    .left .github-fork-ribbon {
-    left: -43px;
-    top: 5px;
-    transform: rotate(-32deg);
-  }
-} //ribbon-wrapper
-
-
-    .github-fork-ribbon {
-    background-color: @primarycolor;
-    background-image: none;
-    box-shadow: none;
-    font: 700 20px 'Open Sans', sans-serif;
-     
-.stroke-active;
-    padding: 2px 0;
-    pointer-events: auto;
-    position: absolute;
-    z-index: 9999;
-}
-
-.github-fork-ribbon-wrapper.left .github-fork-ribbon {
-    left: -33px;
-    top: 12px;
-    transform: rotate(-32deg);
-}
-
-.github-fork-ribbon a, .github-fork-ribbon a:hover {
-    border-color: none;
-    border-style: none;
-    border-width: 1px 0;
-// color: @secondarycolor;
-.stroke-active;
-    color: #fff;
-    display: inline-block;
-    line-height: 40px;
-    padding: 2px 0 0 25px;
-    text-align: left;
-    text-decoration: none;
-    // text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
-    width: 230px;
-}
-
 
 
 // ------------------------------------- OTHER
