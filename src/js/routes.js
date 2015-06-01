@@ -95,7 +95,7 @@ var Route = Backbone.Router.extend({
             //     altel: "#querylist-carto"
             // })
             appActivity.set({
-                message: "querying...",
+                message: "querying bits...",
                 show: true,
                 // altel: "#activity-default"
             })
@@ -107,13 +107,39 @@ var Route = Backbone.Router.extend({
                     
                     // i can't for the life of me get that view to bind to this collection's events - dunno
                     appBitsView.render()
-                    // appCBBMapView.render()
-                    // appActivity.set({
-                    //     message: "",
-                    //     show: false,
-                    //     altel: false
-                    // })
+                    appActivity.set({
+                        message: "extracting mappable bits...",
+                        show: true
+                    });
+
+             appCBB.fetch({
+                // dataType: "jsonp"
+                success: function() {
+                    // console.log("successful fetch of appcbb at 76");
+                    appCBBListView.render()
+                    appCBBMapView.render()
+                    appActivity.set({
+                        message: "",
+                        show: false
+                    })
                 },
+                error: function() {
+                    appConsole.set({
+                        message: "query errored out"
+                    })
+                    // actually, if it's a true error we wanna be more forthcoming:
+                    $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                    appActivity.set({
+                        message: "",
+                        show: false
+                    })
+                    // console.log("failed fetch");
+                }
+            }, {
+                reset: true
+            })
+
+                }, //success fetch
                 error: function() {
                     appConsole.set({
                         message: "query errored out"

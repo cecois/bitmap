@@ -183,6 +183,22 @@ var baselayersdesk = {
                 "noWrap": true
             }
         }
+        , {
+            "name": "dummy",
+            "active": false,
+            "source": "localhost",
+            "nom": "A Real Dummy",
+            // "thumb": "offline/mapbox-mario.png",
+            "thumb": "file:///Users/ccmiller/Sites/mstroke/src/images/2877247_jkms-25-888-g002.png",
+            "mapis": "dark",
+            "definition": {
+                // "subdomains": ["a", "b", "c"],
+                "maxZoom": 18,
+                "url": "file:///Users/ccmiller/Sites/mstroke/src/images/2877247_jkms-25-888-g002.png",
+                // "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
+                "noWrap": true
+            }
+        }
         // , {
         //     "name": "cloudmade",
         //     "active": false,
@@ -329,6 +345,11 @@ appBaseLayersView = new BaseLayersView({
 window.appCartoQuery = new CartoQuery();
 window.appCartoQueryView = new QueryView({
     model: appCartoQuery
+});
+
+window.appQuerySubNav = new QuerySubNav();
+window.appQuerySubNavView = new QuerySubNavView({
+    model: appQuerySubNav
 });
 // var mods = (function() {
 //     var json = null;
@@ -663,15 +684,13 @@ function doctorId(type,id,updown){
 var cid = null
         switch(type) {
     case 'line':
-    updown=="down" ? function(){cid = id/plierline} : function(){cid = id*plierline}
-        // cid = id/plierline
+    if(updown=="down"){cid=Number(id)/plierline} else {cid=Number(id)*plierline}
         break;
     case 'poly':
-    updown=="down" ? function(){cid = id/plierpoly} : function(){cid = id*plierpoly}
-        // cid = id/plierpoly
+    if(updown=="down"){cid=Number(id)/plierpoly} else {cid=Number(id)*plierpoly}
         break;
     default:
-        cid = id;
+        cid = Number(id);
 }
 return cid
 }

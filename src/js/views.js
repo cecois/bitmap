@@ -263,6 +263,7 @@ var BitsView = Backbone.View.extend({
         _.sortBy(this.collection.models, function(mod) {
             return mod.get("active") == 'true';
         });
+        console.log("count of bits in bitsv:");console.log(this.collection.models.length);
         // notice we are wrapping the collection in rows: cuz cartodb does it
         $(this.el).html(this.template({
             count: this.collection.models.length,
@@ -887,6 +888,38 @@ var QueryView = Backbone.View.extend({
         return this
     }
 });
+var QuerySubNavView = Backbone.View.extend({
+    el: $("#query-subnav"),
+    events: {
+        "click .query-subnav-btn": "activate",
+        // "click #query-form-randomize": "randomize",
+        // "click #solrfields .glyphicon": "togglehelp"
+        // "change": "render"
+    },
+    template: Handlebars.templates['querySubNavViewTpl'],
+    initialize: function() {
+        this.render();
+        this.listenTo(this.model, "change", this.render)
+        // this.model.bind("change", this.render, this);
+    },
+    render: function() {
+        // appRoute.update()
+        if (this.model.get("error") == true) {
+            $(this.el).addClass("error")
+        }
+        $(this.el).html(this.template(this.model.toJSON()))
+        // $(this.el).val(this.model.get("solrstring"))
+        return this
+    },
+    activate: function(e){
+
+console.log("activate:");
+$(this.el).find(".query-subnav-btn").removeClass("active")
+$(e.target).addClass("active")
+return this
+
+    }
+});
 /* -------------------------------------------------- CONSOLEVIEW -----------------------  */
 var ConsoleView = Backbone.View.extend({
     el: $("#consoleContainer"),
@@ -1154,8 +1187,8 @@ var MethodView = Backbone.View.extend({
         // "click a":"killtt",
         // "click a":"rewire"
     },
-    el: "#method",
-    template: Handlebars.templates['method'],
+    el: "#fullstory",
+    template: Handlebars.templates['fullstory'],
     initialize: function() {
         if (verbose == true) {
             // console.log("initting huhview")

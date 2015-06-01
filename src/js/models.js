@@ -109,24 +109,35 @@ var BaseLayersCollection = Backbone.Collection.extend({
 /* -------------------------------------------------- CARTODB -----------------------  */
 var CartoItem = Backbone.Model.extend({});
 var BitItem = Backbone.Model.extend({});
+var QuerySubNav = Backbone.Model.extend({
+    defaults:{
+        bits:null,
+        locations:"active"
+    },
+    initialize: function(options) {
+        options || (options = {});
+        // this.listenTo(this, "change", this.displaystring)
+        return this
+    }
+}); //querysubnav
 var CartoQuery = Backbone.Model.extend({
     defaults: {
-        rawstring: "",
-        solrstring: "",
-        urlstring:'*:*'
+        rawstring: "+jesse",
+        displaystring: "jesse",
+        urlstring:'+jesse'
     },
         initialize: function(options) {
         options || (options = {});
-        this.listenTo(this, "change", this.solrstring)
+        this.listenTo(this, "change", this.displaystring)
         return this
     },
-    solrstring: function() {
+    displaystring: function() {
 
 // here because we COULD do some manip at this point
 // but right now we just pass it through
         var ss = this.get("rawstring")
 
-        this.set({solrstring:ss})
+        this.set({displaystring:ss})
         if(ss == '' || ss == null){
             this.set({urlstring : "*:*"})
         } 
@@ -162,8 +173,10 @@ var BitCollection = Backbone.Collection.extend({
     },
     parse: function(resp) {
         if(verbose==true){console.log("in custom parse of BitCollection")}
+            window.respp = resp.response.docs
         var locsornot = _.partition(resp.response.docs, function(e){return e.name=="Location";})
-        window.locsyes = locsornot[0];
+    console.log("locsornot:");console.log(locsornot);
+        var locsyes = locsornot[0];
         var locsno = locsornot[1];
 
 
@@ -193,6 +206,7 @@ console.log("lids:");console.log(lids);
 // var uids=_.unique(lids)
 appCBB.seturl(_.unique(lids))
 
+console.log("locsno:");console.log(locsno);
         // console.log("locsornot0:");console.log(locsornot[0]);
         // console.log("locsornot1:");console.log(locsornot[1]);
         // return resp.response.docs
