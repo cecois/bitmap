@@ -77,7 +77,7 @@ templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,dat
     + escapeExpression(lambda((depth0 != null ? depth0.anno : depth0), depth0))
     + ")</p>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h1 class=\"stroke\" style=\"margin-bottom:43px;\">bits - mappable <span class=\"cbbanno\">("
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h1 class=\"stroke\" style=\"\">bits - mapped <span class=\"cbbanno\">("
     + escapeExpression(((helper = (helper = helpers.count || (depth0 != null ? depth0.count : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"count","hash":{},"data":data}) : helper)))
     + ")</span>\n<!-- <span class=\"episodes hidden\" style=\"margin-left:12px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span>  -->\n</h1>\n\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.rows : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
@@ -148,7 +148,7 @@ templates['querySubNavViewTpl'] = template({"compiler":[6,">= 2.0.0-beta.1"],"ma
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
   return " <div class=\"querysubnavh\">\n<!--for Query:</span> "
     + escapeExpression(((helper = (helper = helpers.displaystring || (depth0 != null ? depth0.displaystring : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"displaystring","hash":{},"data":data}) : helper)))
-    + "\n\n<span class=\"query-console-arrow\" style=\"font-size:.8em;margin-left:30px;margin-right:30px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span> -->\n	<span class=\"query-subnav-btn\">Bits</span>\n	<span class=\"query-subnav-btn active\">Locations</span>\n	</div>";
+    + "\n\n<span class=\"query-console-arrow\" style=\"font-size:.8em;margin-left:30px;margin-right:30px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span> -->\n	<span data-id=\"bits\" class=\"query-subnav-btn\">Bits</span>\n	<span data-id=\"locations\" class=\"query-subnav-btn active\">Locations</span>\n	</div>";
 },"useData":true});
 templates['queryViewTpl'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;

@@ -505,7 +505,7 @@ var methodV = new MethodView({
     }
 
     function pullURL(goto) {
-
+console.log("pullurl508");
         if (typeof goto == 'undefined') {
             // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
             var hel = $(".mainpanel:not('.hidden')")
@@ -518,7 +518,7 @@ var methodV = new MethodView({
             var h = goto;
         }
         var bbx = map.getBounds().toBBoxString();
-        var qs = appCartoQuery.get("urlstring")
+        var qs = appCartoQuery.get("rawstring")
         var bl = appBaseLayers.findWhere({
             active: true
         }).get("name")

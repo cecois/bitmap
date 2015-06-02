@@ -116,7 +116,7 @@ var QuerySubNav = Backbone.Model.extend({
     },
     initialize: function(options) {
         options || (options = {});
-        // this.listenTo(this, "change", this.displaystring)
+        this.listenTo(this, "change", this.displaystring)
         return this
     }
 }); //querysubnav
@@ -128,20 +128,37 @@ var CartoQuery = Backbone.Model.extend({
     },
         initialize: function(options) {
         options || (options = {});
-        this.listenTo(this, "change", this.displaystring)
+        // this.listenTo(this.get("rawstring"), "change", this.urlstring)
         return this
     },
-    displaystring: function() {
+//     setstrings: function() {
+// // console.log("changing displaystring...");
+// // here because we COULD do some manip at this point
+// // but right now we just pass it through
+//         var ss = this.get("rawstring")
 
+//         this.set({displaystring:ss})
+//         this.set({urlstring:ss})
+//         // if(ss == '' || ss == null){
+//         //     this.set({urlstring : "*:*"})
+//         // } 
+//                 return this
+//     },
+    setstrings: function() {
+// console.log("changing urlstring...");
 // here because we COULD do some manip at this point
 // but right now we just pass it through
         var ss = this.get("rawstring")
 
-        this.set({displaystring:ss})
+        
         if(ss == '' || ss == null){
             this.set({urlstring : "*:*"})
-        } 
-                return ss
+            this.set({displaystring : ""})
+        } else {
+            this.set({urlstring:ss})
+            this.set({displaystring:ss})
+        }
+                return this
     }
 
 });
@@ -228,10 +245,11 @@ var CartoCollection = Backbone.Collection.extend({
     },
             seturl: function(arr){
 
+if(arr.length>0){
+this.cartostring = "cartodb_id:("+encodeURIComponent(arr.join(" "))+")"} else {
+    this.cartostring = "cartodb_id:(null)"
+}
 
-this.cartostring = "cartodb_id:("+encodeURIComponent(arr.join(" "))+")"
-
-console.log(this.url());
 
 return this
 

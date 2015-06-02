@@ -263,7 +263,6 @@ var BitsView = Backbone.View.extend({
         _.sortBy(this.collection.models, function(mod) {
             return mod.get("active") == 'true';
         });
-        console.log("count of bits in bitsv:");console.log(this.collection.models.length);
         // notice we are wrapping the collection in rows: cuz cartodb does it
         $(this.el).html(this.template({
             count: this.collection.models.length,
@@ -486,6 +485,8 @@ map.fitBounds(ib)
         if (verbose == true) {
             console.log("rendering cartoplain")
         }
+        if(this.collection.models.length>0){
+
         _.sortBy(this.collection.models, function(mod) {
             return mod.get("active") == 'true';
         });
@@ -496,7 +497,10 @@ map.fitBounds(ib)
             count: this.collection.models.length,
             rows: this.collection.toJSON()
         }));
+    } else {
+        $(this.el).html("<span style='font-size:2em;'>Zero. RU a zero?</span>")
         return this.rewire()
+    }
     }
 });
 var SolrFieldzView = Backbone.View.extend({
@@ -814,6 +818,8 @@ var QueryView = Backbone.View.extend({
     template: Handlebars.templates['queryViewTpl'],
     initialize: function() {
         this.render();
+        var q = this.model;
+    q.on("change", q.setstrings);
         this.listenTo(this.model, "change", this.render)
         // this.model.bind("change", this.render, this);
     },
@@ -823,11 +829,16 @@ var QueryView = Backbone.View.extend({
         if (typeof goto == 'undefined') {
             goto = true
         }
-        verbose==true ? function(){console.log("goto");console.log(goto);} : function(){return null;}
+        if(goto.type=="click"){
+            goto=true
+        }
+        
         var rawstring = $("#query-form-input").val()
         appCartoQuery.set({
             rawstring: rawstring
         })
+        console.log("qv rawstring:");console.log(rawstring);
+        console.log("qv goto:");console.log(goto);
         if (goto == true) {
             appRoute.navigate(pullURL("#query"), {
                 trigger: true,
@@ -910,12 +921,30 @@ var QuerySubNavView = Backbone.View.extend({
         $(this.el).html(this.template(this.model.toJSON()))
         // $(this.el).val(this.model.get("solrstring"))
         return this
+        .activate()
     },
     activate: function(e){
 
-console.log("activate:");
-$(this.el).find(".query-subnav-btn").removeClass("active")
+if(typeof e == 'undefined'){
+    var elid = "locations"
+} else {
+    // $el = $(e.target)
+    var elid = $(e.target).attr("data-id")
 $(e.target).addClass("active")
+}
+
+$(this.el).find(".query-subnav-btn").removeClass("active")
+$(".query-subnav-btn[data-id='"+elid+"']").addClass("active")
+
+// blah - too lazy to fix this sitewide
+
+if(elid=="locations"){
+    $("#querylist-carto").removeClass("hidden")
+    $("#querylist-bits").addClass("hidden")
+} else {
+    $("#querylist-carto").addClass("hidden")
+    $("#querylist-bits").removeClass("hidden")
+}
 return this
 
     }
