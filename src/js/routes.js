@@ -44,7 +44,6 @@ var Route = Backbone.Router.extend({
             h = "query";
         }
         var hmod = "#" + h;
-        console.log("hmod:");console.log(hmod);
         // this in case the pane had been hidden by the alt key
         $("#main").removeClass("hidden")
         _.each($("#main > .mainpanel"), function(p) {
@@ -104,7 +103,7 @@ var Route = Backbone.Router.extend({
                 // dataType: "jsonp"
                 success: function() {
                     if(verbose==true){console.log("successful fetch of appcbb at 76");}
-                    
+
                     // i can't for the life of me get that view to bind to this collection's events - dunno
                     appBitsView.render()
                     appActivity.set({
@@ -118,10 +117,6 @@ var Route = Backbone.Router.extend({
                     // console.log("successful fetch of appcbb at 76");
                     appCBBListView.render()
                     appCBBMapView.render()
-                    appActivity.set({
-                        message: "",
-                        show: false
-                    })
                 },
                 error: function() {
                     appConsole.set({
