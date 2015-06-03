@@ -344,8 +344,8 @@ var a = $(e.currentTarget).parents('li')
     pulleps: function(e) {
 
         var voff = e.currentTarget.offsetTop;
-        var hoff = e.currentTarget.parentElement.clientWidth;
-        $("#querylist-carto").css("left",hoff-hoff+50)
+        // var hoff = e.currentTarget.parentElement.clientWidth;
+        // $("#querylist-carto").css("left",hoff-hoff+50)
 
         appActivity.set({
             message: "fetching episodes...",
@@ -996,13 +996,47 @@ var HiderView = Backbone.View.extend({
     template: Handlebars.templates['hiderViewTpl'],
     initialize: function() {
         this.render();
-        // this.listenTo(appCartoQuery, "change", this.render)
-        this.model.bind("change", this.render, this);
+                this.model.bind("change", this.render, this);
+    },
+    events: {
+        "click": "swap"
+    },
+    swap: function(){
+
+console.log("in swap, model collapsed:")
+console.log(this.model.get("collapsed"))
+if(this.model.get("collapsed")=="false"){console.log("switching from false to true");this.model.set({collapsed:"true",operation:"plus",instructions:"expand main pane"});}
+        else if(this.model.get("collapsed")=="true"){console.log("switching from true to false");this.model.set({collapsed:"false",operation:"minus",instructions:"collapse/hide main pane"});}
+
+        console.log("model swapped:")
+console.log(this.model.get("collapsed"))
+
+return this
     },
     render: function() {
 
+console.log("in render of hiderview")
         $(this.el).html(this.template(this.model.toJSON()))
-        return this;
+
+if(this.model.get("collapsed")=="true"){
+
+    $("#main").addClass('hiddenish');
+
+            appConsole.set({
+            "message": "the 'control' key also toggles the visibility of the main pane"
+        })
+
+} else {
+    $("#main").removeClass('hiddenish');}
+
+        return this
+        .rewire()
+    },
+        rewire: function(){
+
+$(this.el).find('[data-toggle="tooltip"]').tooltip()
+
+return this
     },
     reset: function() {
 

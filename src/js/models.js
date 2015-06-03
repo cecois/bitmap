@@ -125,18 +125,15 @@ var Hider = Backbone.Model.extend({
     // i dunno, maybe the dumbest model ever?
     defaults:{
         // dichotamous, these two
-        collapsed:false,
-        operation:"-"
+        collapsed:"false",
+        operation:"minus",
+        instructions:"collapse/hide main pane - the ctrl key will also toggle this"
     },
     initialize: function(options) {
         options || (options = {});
-        this.listenTo(this, "change", this.swap)
+        // this.listenTo(this, "change", this.swap)
+        // this.bind(this, "change", this.swap)
         return this
-    },
-    swap: function(){
-        if(this.collapsed==false){this.collapsed=true;this.operation="+";}
-        if(this.collapsed==true){this.collapsed=false;this.operation="-";}
-        
     }
 }); //hider
 
@@ -161,7 +158,7 @@ var CartoQuery = Backbone.Model.extend({
 //         this.set({urlstring:ss})
 //         // if(ss == '' || ss == null){
 //         //     this.set({urlstring : "*:*"})
-//         // } 
+//         // }
 //                 return this
 //     },
     setstrings: function() {
@@ -170,7 +167,7 @@ var CartoQuery = Backbone.Model.extend({
 // but right now we just pass it through
         var ss = this.get("rawstring")
 
-        
+
         if(ss == '' || ss == null){
             this.set({urlstring : "*:*"})
             this.set({displaystring : ""})
@@ -185,7 +182,7 @@ var CartoQuery = Backbone.Model.extend({
 var BitCollection = Backbone.Collection.extend({
     model: BitItem,
     // host:window.host,
-    
+
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
         return solrhost+"cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=" + appCartoQuery.get("urlstring")
@@ -218,7 +215,7 @@ var BitCollection = Backbone.Collection.extend({
 
 
 // bad design - i'm tightly coupling these two collections pull out location refs here
-// 
+//
 // var arr = [2,5,7]
 
 // // give it to CartoCollection
@@ -231,7 +228,7 @@ var lids = [];
 
 // ok so there's prolly a nifty underscore thing to pull these ids out, but because we need to doctor them we might as well just loop
 _.each(locsyes,function(l, i) {
-    
+
     var i=l.location_id
     var t=l.location_type
 

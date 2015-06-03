@@ -206,7 +206,7 @@ var baselayersdesk = {
         //     "source": "cloudmade",
         //     "nom": "CloudMade Grey",
         //     "thumb": "http://c.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/22677/256/3/4/2.png",
-        // "mapis":"dark",//     
+        // "mapis":"dark",//
         // "definition": {
         //         "maxZoom": 18,
         //         "subdomains": ["a", "b", "c"],
@@ -219,7 +219,7 @@ var baselayersdesk = {
         //     "source": "cloudmade",
         //     "nom": "Red Alert",
         //     "thumb": "http://c.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/19996/256/3/4/2.png",
-        // "mapis":"dark",//     
+        // "mapis":"dark",//
         // "definition": {
         //         "maxZoom": 18,
         //         "subdomains": ["a", "b", "c"],
@@ -316,7 +316,7 @@ var baselayersmobile = {
                 "noWrap": true
             }
         }
-        
+
     ]
 }
 
@@ -406,7 +406,7 @@ window.appHiderView = new HiderView({
 // }
         window.appBits = new BitCollection();
         window.appCBB = new CartoCollection();
-        
+
 // appCBBCarto.fetch();
 // appCBBCarto.bind('reset', function() {
 //  appCBBCarto.each(function(p) {
@@ -548,7 +548,7 @@ console.log("pullurl508");
             if (i.options.seen == true) {
                 // feature clicks set them as seen - if they're set here, they're stale and we restyle them
                 if (typeof i._point == 'undefined') {
-                    // not a point, so 
+                    // not a point, so
                     i.setStyle(lineseen)
                 } else {
                     i.setStyle(markerseen)
@@ -575,7 +575,7 @@ window.appWikiaz = new Wikiaz()
 appWikiaz.fetch();
 // var solrfz = $.getJSON(solrhost+"cbb_carto/admin/luke?numTerms=0&wt=json&callback=?", {}, function(json, textStatus) {
 //         console.log("json:");console.log(json);
-//         
+//
 var fields = {
     "fields": [{
         "order": 1,
@@ -666,17 +666,18 @@ $(document).ready(function() {
                     show: false,
                     altel: false
                 })
-    // 
-    // 
+    //
+    //
 }); //ready
 $(document).keydown(function(e) {
     if (e.keyCode == 17) {
-        $("#main").toggleClass('hiddenish');
-        $("#bt-showmain").toggleClass("hidden")
+        // $("#main").toggleClass('hiddenish');
+        // $("#bt-showmain").toggleClass("hidden")
         // $("#main").fadeToggle('fast');
-        appConsole.set({
-            "message": "press the 'control' key to toggle better visibility of the map"
-        })
+
+        appHiderView.swap();
+
+
     }
 });
 

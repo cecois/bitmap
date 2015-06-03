@@ -203,9 +203,7 @@ font-size: .8em;
     left: 0;
     z-index: 0;
 }
-#maphider {
-    // display:none;
-}
+
 /* --------------------------------------- HIT MARKER -------------- */
 
 .leaflet-popup-content{
@@ -467,17 +465,37 @@ width:100%;
 } //main
 
 #btn-hider{
+  z-index: 88;
+  &:hover{
+    color:white;
+  }
   padding:0;
+  cursor:pointer;
   top:200px;
   position:fixed;
   height:50px;
-  font-size:3em;
+  /*font-size:3em;*/
 
-  .triangle-topleft-false { 
-  width: 0; 
-  height: 0; 
-  border-top: 50px solid #FF8000; 
+
+
+  .triangle-trigger-false {
+  width: 0;
+  height: 0;
+  border-bottom: 50px solid #FF8000;
   border-right: 50px solid transparent;
+  .hider-copy{padding-top:25px;padding-left:5px;}
+}
+.triangle-trigger-true {
+  width: 0;
+  height: 0;
+  border-bottom: 50px solid #FF8000;
+  border-right: 50px solid transparent;
+  transform: rotate(-135deg);
+  position:relative;
+  left:-25px;
+  .hider-copy{    padding-left: 65px;
+    padding-top: 8px;
+    transform: rotate(135deg);}
 }
 
 } //btn-hider
@@ -847,7 +865,7 @@ text-transform: uppercase;
       margin-top:20px;
   margin-bottom:40px;
   // top:-5px;
-    
+
 }
 
 
