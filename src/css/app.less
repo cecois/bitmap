@@ -464,8 +464,24 @@ width:100%;
   top:65px;
   font-size:.8em;
 }
-
 } //main
+
+#btn-hider{
+  padding:0;
+  top:200px;
+  position:fixed;
+  height:50px;
+  font-size:3em;
+
+  .triangle-topleft-false { 
+  width: 0; 
+  height: 0; 
+  border-top: 50px solid #FF8000; 
+  border-right: 50px solid transparent;
+}
+
+} //btn-hider
+
 
 #main.hiddenish{
     top:95%;
@@ -735,10 +751,14 @@ padding-top:15px;
   overflow:hidden;
   // overflow:hidden;
   li{
+    .carto-plain-title{
+      text-decoration: underline;
+      cursor:pointer;
+    }
     margin-bottom:8px;
     // text-shadow: 2px 0px black;
   }
-  li.true{
+  .carto-plain-title.true{
     // background-color: @quaternarycolor;
     .stroke-active-mock;
     color: @tertiarycolor;
