@@ -278,11 +278,17 @@ var CartoPlainView = Backbone.View.extend({
     el: "#querylist-carto",
     events: {
         "click .bt-cartoobj-zoomto": 'zoomtointernal',
-        "click .bt-cartoobj-episodes": 'pulleps',
+        // "click .bt-cartoobj-episodes": 'pulleps',
+        "click .bt-cartoobj-episodes": 'triage',
+        "click .carto-plain-title": 'triage',
         "click .bt-getid": 'echoid'
     },
-    template: Handlebars.templates['cartoPlainView'],
+    // template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
+        if(agent == "desktop"){
+                this.template = Handlebars.templates['cartoPlainView'];} else if(agent=="mobile"){
+                    this.template = Handlebars.templates['cartoPlainView-Mobile'];
+                }
         // this.collection.bind('change', this.render, this);
         // this.listenTo(this.collection, "change active", this.sort);
         // this.listenTo(this.collection, "change", this.sort);
@@ -317,16 +323,25 @@ var CartoPlainView = Backbone.View.extend({
         $('.bt-cartoobj').tooltip('destroy')
         return this
     },
-    stageeps: function(e) {
-        return this.pulleps(e)
+    triage: function(e) {
+        if(agent=="desktop"){
+                return this.pulleps(e)} else if(agent=="mobile"){
+                    return this.pulleps_mobile(e)
+                }
     },
     sort: function() {
         this.collection.sort()
         return this
     },
+    pulleps_mobile: function(e) {
+
+e.preventDefault()
+
+var a = $(e.currentTarget).parents('li')
+        return this.activate(a)
+
+    },
     pulleps: function(e) {
-        console.log("328")
-        console.log(e);
 
         var voff = e.currentTarget.offsetTop;
         var hoff = e.currentTarget.parentElement.clientWidth;
@@ -340,17 +355,6 @@ var CartoPlainView = Backbone.View.extend({
         var locid = $(e.target).attr("data-id")
 
         var loctype = $(e.target).attr("data-type");
-
-//         switch(loctype) {
-//     case 'line':
-//         locid = locid/999
-//         break;
-//     case 'poly':
-//         locid = locid/9999
-//         break;
-//     default:
-//         locid = locid;
-// }
 
 locid=doctorId(loctype,locid)
 
@@ -406,7 +410,7 @@ locid=doctorId(loctype,locid)
     },
     activate: function(a) {
         // first wipe the list of any true classes (see ~184 for explanation)
-        $(this.el).find("li").removeClass("true")
+        $(this.el).find(".carto-plain-title").removeClass("true")
         // var amid = am.get("cartodb_id")
         var amid = $(a).data("id").toString();
         if (verbose == true) {
@@ -477,7 +481,12 @@ map.fitBounds(ib)
                 // }
             }
         }) //each
-        $(a).addClass("true")
+        // $(a).addClass("true") //OG
+        $(a).find(".carto-plain-title").addClass("true")
+        // if($(a).hasClass('carto-plain-title')){
+        // $(a).addClass("true")
+        // } else {
+        //         $(a).siblings('.carto-plain-title').addClass("true")}
         // $(a).addClass("well")
         processLeaf(amid, true, item.get("geom_type"))
         // GUH? WHAT'S THIS? It's a straight-up jquery hack to waaaaay more quickly light up the active model's list item
@@ -506,7 +515,10 @@ appActivity.set({message: "preparing list display...",show: true})
             rows: this.collection.toJSON()
         }));
     } else {
+        // if there are no locations we wanna be cute and snide but also not make anybody see it
+        appConsole.set({message:'Just fyi - "'+appCartoQuery.get("rawstring")+'" brought zero mappable locations.'})
         $(this.el).html("<span style='font-size:2em;'>Zero. RU a zero?</span>")
+appQuerySubNavView.specify("bits")
         return this.rewire()
     }
     }
@@ -931,7 +943,27 @@ var QuerySubNavView = Backbone.View.extend({
         return this
         .activate()
     },
+    specify: function(w){
+// just an extra we can use to specify which "tab"
+$(this.el).find(".query-subnav-btn").removeClass("active")
+$(".query-subnav-btn[data-id='"+w+"']").addClass("active")
+
+appEpisodesView.reset()
+// blah - too lazy to fix this sitewide
+
+if(w=="locations"){
+    $("#querylist-carto").removeClass("hidden")
+    $("#querylist-bits").addClass("hidden")
+} else {
+    $("#querylist-carto").addClass("hidden")
+    $("#querylist-bits").removeClass("hidden")
+}
+
+return this
+
+    },
     activate: function(e){
+
 
 if(typeof e == 'undefined'){
     var elid = "locations"
@@ -944,6 +976,7 @@ $(e.target).addClass("active")
 $(this.el).find(".query-subnav-btn").removeClass("active")
 $(".query-subnav-btn[data-id='"+elid+"']").addClass("active")
 
+appEpisodesView.reset()
 // blah - too lazy to fix this sitewide
 
 if(elid=="locations"){
@@ -957,6 +990,26 @@ return this
 
     }
 });
+/* -------------------------------------------------- MAINHIDER -----------------------  */
+var HiderView = Backbone.View.extend({
+    el: $("#btn-hider"),
+    template: Handlebars.templates['hiderViewTpl'],
+    initialize: function() {
+        this.render();
+        // this.listenTo(appCartoQuery, "change", this.render)
+        this.model.bind("change", this.render, this);
+    },
+    render: function() {
+
+        $(this.el).html(this.template(this.model.toJSON()))
+        return this;
+    },
+    reset: function() {
+
+        return this.render()
+    }
+});
+
 /* -------------------------------------------------- CONSOLEVIEW -----------------------  */
 var ConsoleView = Backbone.View.extend({
     el: $("#consoleContainer"),
@@ -1160,6 +1213,14 @@ var EpisodesView = Backbone.View.extend({
         $(this.el).empty();
         return this
     },
+    reset:function(){
+
+$(this.el).addClass("hidden")
+$(".episodes-arrow").addClass("hidden")
+return this
+
+    },
+
     render: function() {
         $(this.el).empty()
 

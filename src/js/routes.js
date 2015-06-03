@@ -106,10 +106,7 @@ var Route = Backbone.Router.extend({
 
                     // i can't for the life of me get that view to bind to this collection's events - dunno
                     appBitsView.render()
-                    appActivity.set({
-                        message: "extracting mappable bits...",
-                        show: true
-                    });
+                    
 
              appCBB.fetch({
                 // dataType: "jsonp"

@@ -120,6 +120,26 @@ var QuerySubNav = Backbone.Model.extend({
         return this
     }
 }); //querysubnav
+
+var Hider = Backbone.Model.extend({
+    // i dunno, maybe the dumbest model ever?
+    defaults:{
+        // dichotamous, these two
+        collapsed:false,
+        operation:"-"
+    },
+    initialize: function(options) {
+        options || (options = {});
+        this.listenTo(this, "change", this.swap)
+        return this
+    },
+    swap: function(){
+        if(this.collapsed==false){this.collapsed=true;this.operation="+";}
+        if(this.collapsed==true){this.collapsed=false;this.operation="-";}
+        
+    }
+}); //hider
+
 var CartoQuery = Backbone.Model.extend({
     defaults: {
         rawstring: "+jesse",
@@ -205,6 +225,8 @@ var BitCollection = Backbone.Collection.extend({
 // appCBB.seturl(arr)
 // appCBB.set(locsyes)
 
+appActivity.set({message: "extracting mappable bits...",show: true});
+
 var lids = [];
 
 // ok so there's prolly a nifty underscore thing to pull these ids out, but because we need to doctor them we might as well just loop
@@ -219,11 +241,10 @@ lids.push(cid)
 
 });
 
-console.log("lids:");console.log(lids);
+appActivity.set({message: null,show: false});
 // var uids=_.unique(lids)
 appCBB.seturl(_.unique(lids))
 
-console.log("locsno:");console.log(locsno);
         // console.log("locsornot0:");console.log(locsornot[0]);
         // console.log("locsornot1:");console.log(locsornot[1]);
         // return resp.response.docs

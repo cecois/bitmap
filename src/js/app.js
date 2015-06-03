@@ -6,6 +6,7 @@ window.agent = "mobile";
 window.agent = "desktop";
 }
 
+// agent="mobile"
 
 NProgress.configure({
     parent: '#main'
@@ -350,6 +351,11 @@ window.appCartoQueryView = new QueryView({
 window.appQuerySubNav = new QuerySubNav();
 window.appQuerySubNavView = new QuerySubNavView({
     model: appQuerySubNav
+});
+
+window.appHider = new Hider();
+window.appHiderView = new HiderView({
+    model: appHider
 });
 // var mods = (function() {
 //     var json = null;
