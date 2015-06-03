@@ -644,11 +644,12 @@ $(document).ready(function() {
     //         }
     //     })
     // }) //query-form-bt.click
-    $(".leaflet-control a").each(function() {
-        $(this).css("transform", "rotate(-90deg)")
-    });
-    $(".leaflet-control-container").appendTo("#wrapper").css("z-index", 88)
-    $("a.leaflet-control-zoom-in")
+
+    // $(".leaflet-control a").each(function() {
+    //     $(this).css("transform", "rotate(-90deg)")
+    // });
+    // $(".leaflet-control-container").appendTo("#wrapper").css("z-index", 88)
+    // $("a.leaflet-control-zoom-in")
     $("#bt-solrfields").click(function(e) {
         e.preventDefault()
         $("#solrfields-list").toggleClass('hidden')

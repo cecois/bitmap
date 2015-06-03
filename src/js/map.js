@@ -1,16 +1,15 @@
 (function() {
-	
 
-	window.map = new L.Map('map', 
+
+	window.map = new L.Map('map',
 		{
-			zoomControl:false,
+			zoomControl:true,
 			center: [51.505, -0.09],
     // zoom: 13,
     attributionControl:false
 });
 
-
-
+L.control.zoom({position:'bottomright'}).addTo(map)
 
 	/* ----------
 BASELAYERS
@@ -51,7 +50,7 @@ BASELAYERS
 			appConsoleView.reset();
 	});
 
-// a little hacky, this #returnto -- map load event wasn't firing and 
+// a little hacky, this #returnto -- map load event wasn't firing and
 // we needed to update search model bbox even if nothing has happened on the map yet
 	// baseLayer.on('load', function(e) {
 // setAppSearchBoundsFromMap();
@@ -69,7 +68,7 @@ function setAppSearchBoundsFromMap(){
 
 		appSearch.set({bbox_west:w,bbox_south:s,bbox_east:e,bbox_north:n});
 
-}	
+}
 
 function capLatitude(lat){
 	if(lat > 90){

@@ -370,7 +370,7 @@ bottom:-35px;
 
 } //mnubasemap
 
-.leaflet-control {
+/*.leaflet-control {
     // background-color: transparent;
     // color:white;
 }
@@ -391,7 +391,7 @@ bottom:-35px;
        }
        // background-image: url(images/zoom-out.png);
   }
-}
+}*/
 #fakemap {
     background-color: brown;
     width: 100%;
@@ -502,7 +502,8 @@ width:100%;
 
 
 #main.hiddenish{
-    top:95%;
+    right:97%;
+    /*top:95%;*/
   }
 
 .site-header {
@@ -597,6 +598,26 @@ width:100%;
 #banner-bang{
   font-size:27em;top:-220px;left:-120px;position:absolute;
 }
+#banner-bang.hiddenish{
+    /*left:-380px;*/
+       font-size: 7em;
+    left: -20px;
+    position: absolute;
+    top: -20px;
+    #banner-copy {
+    color: white;
+    font-family: "KiloGram";
+    font-size: 10px;
+    left: 50px;
+    letter-spacing: -1px;
+    line-height: 10px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 1px 1px 0 @secondarycolor, 2px 2px 0 @quaternarycolor, 3px 3px 0 @quaternarycolor, 4px 4px 0 @quaternarycolor, 5px 5px 0 @quaternarycolor, 6px 6px 0 @secondarycolor-trans;
+    top: 55px;
+    transform: rotate(-40deg);
+}
+  }
 
 #banner-copy {
     color: white;
@@ -869,6 +890,58 @@ text-transform: uppercase;
 }
 
 
+// ------------------------------------- LEAFLET/PLUGIN OVERRIDES
+
+/*.leaflet-control-container {
+    left: 400px;
+    position: absolute;
+    top: 220px;
+    transform: rotate(90deg);
+}*/
+
+/*.leaflet-control-container {
+    position: relative;
+    right: 100px;
+    top: -20px;
+    transform: rotate(90deg);
+}*/
+
+/*.leaflet-container .leaflet-control-zoomslider {
+    margin-left: 10px;
+    transform: rotate(90deg);
+}*/
+
+/*.leaflet-control-zoomslider-wrap {
+    background-color: transparent;
+
+    padding-bottom: 5px;
+    padding-top: 5px;
+}*/
+
+/*.leaflet-control-zoomslider-body {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: transparent;
+    border-color: transparent;
+    border-image: none;
+    border-style: solid;
+    border-width: 0 9px;
+    margin: 0 auto;
+    width: 2px;
+}*/
+
+/*.leaflet-control-zoomslider-knob {
+    background-color: #efefef;
+    border: 1px solid #000;
+    border-radius: 50%;
+    height: 20px;
+    margin-left: -10px;
+    position: relative;
+    width: 20px;
+}
+*/
 // ------------------------------------- OTHER
 
 .cbb-marker-inline{

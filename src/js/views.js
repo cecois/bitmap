@@ -1021,13 +1021,16 @@ console.log("in render of hiderview")
 if(this.model.get("collapsed")=="true"){
 
     $("#main").addClass('hiddenish');
+    $("#banner-bang").addClass('hiddenish');
 
             appConsole.set({
             "message": "the 'control' key also toggles the visibility of the main pane"
         })
 
 } else {
-    $("#main").removeClass('hiddenish');}
+    $("#main").removeClass('hiddenish');
+    $("#banner-bang").removeClass('hiddenish');
+}
 
         return this
         .rewire()
