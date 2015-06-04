@@ -185,9 +185,11 @@ templates['hitMarkerViewTpl'] = template({"1":function(depth0,helpers,partials,d
     + "</h5></div>\n";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.anno : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "\n\n<!-- <div class=\"bt marker\" id=\"marker-"
+  return buffer + "\n\n<span data-id=\""
     + escapeExpression(((helper = (helper = helpers.cartodb_id || (depth0 != null ? depth0.cartodb_id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"cartodb_id","hash":{},"data":data}) : helper)))
-    + "><i class=\"glyphicon glyphicon-music\"></i> load episodes</div> -->";
+    + "\" data-type=\""
+    + escapeExpression(((helper = (helper = helpers.geom_type || (depth0 != null ? depth0.geom_type : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"geom_type","hash":{},"data":data}) : helper)))
+    + "\" class=\"glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes\" title=\"pull a list of referencing episodes\"></span>";
 },"useData":true});
 templates['home'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"block\"><h1>What's this, now?</h1>\nCome on guys -- it's a map of all of the locations on earth ever referenced in any <em><a href=\"http://www.earwolf.com/show/comedy-bang-bang/\">Comedy Bang! Bang!</a></em> podcast episode ever recorded. Obviously.</div>\n\n<div class=\"block\"><h1>Why?</h1>\n<p>Because...i dunno, why are <em>you</em> here? That's why. Or maybe <em>fuck you</em> and that's why. Could be! But actually it's just cuz <em><a href=\"http://www.earwolf.com/show/comedy-bang-bang/\">Comedy Bang! Bang!</a></em> is the best thing ever recorded. Or maybe the best thing ever to even happen at all.<p>\n<p>If you really are confused, read more about it in the <a href=\"#fullstory\">Full Story tab</a>.\n <!-- or geek dafuk out in the <a href=\"#minutiae\">Minutiae tab</a> -->\n </p>\n </div>\n\n <div class=\"block\"><h1>Is this official?</h1>\n<p>It isn't.</p>\n </div>\n";

@@ -367,6 +367,9 @@ bottom:-35px;
    //true
 }
 
+.hiddenish{
+  bottom: -70px;
+}
 
 } //mnubasemap
 
@@ -502,7 +505,7 @@ width:100%;
 
 
 #main.hiddenish{
-    right:97%;
+    right:99.5%;
     /*top:95%;*/
   }
 
@@ -891,6 +894,49 @@ text-transform: uppercase;
 
 
 // ------------------------------------- LEAFLET/PLUGIN OVERRIDES
+
+.leaflet-control-container {
+    right: 10px;
+    position: fixed;
+    top: 120px;
+        background-color: transparent;
+    transform: rotate(90deg);
+    a {
+        background-color: transparent;
+        margin-top: 6px;
+        padding-left: 2.5px;
+        padding-top: 2px;
+        text-decoration: none;
+        color: black;
+    transform: rotate(90deg);
+        &:hover {
+            text-decoration: none;
+            background-color:transparent;
+       }
+  }
+
+.leaflet-bar {a {
+  padding:0px 9px 0px 0px;
+    background-color: transparent;
+    border-bottom: none;
+&:hover {
+            background-color:transparent;
+text-shadow:
+    -1px -1px 0 white,
+    1px -1px 0 white,
+    -1px 1px 0 white,
+    1px 1px 0 white;            
+       }
+  }
+    // color: #000;
+    // display: block;
+    // height: 26px;
+    // line-height: 26px;
+    // text-align: center;
+    // text-decoration: none;
+    // width: 26px;
+}
+}
 
 /*.leaflet-control-container {
     left: 400px;

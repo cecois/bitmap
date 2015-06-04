@@ -170,7 +170,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             // "thumb": "offline/mapbox-mario.png",
@@ -186,7 +186,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": false,
+            "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
             // "thumb": "offline/mapbox-mario.png",
@@ -348,6 +348,14 @@ window.appCartoQueryView = new QueryView({
     model: appCartoQuery
 });
 
+window.appConsole = new Console().set({
+    // message: "HINT! Press the 'z' key at any time to reveal the full map."
+    message: "Console. Quasi-important messages will appear here."
+});
+window.appConsoleView = new ConsoleView({
+    model: appConsole
+});
+
 window.appQuerySubNav = new QuerySubNav();
 window.appQuerySubNavView = new QuerySubNavView({
     model: appQuerySubNav
@@ -443,13 +451,7 @@ window.appCBBMapView = new CartoCollxView({
 // }
 // });
 // new console model and view
-window.appConsole = new Console().set({
-    // message: "HINT! Press the 'z' key at any time to reveal the full map."
-    message: "Console. Quasi-important messages will appear here."
-});
-window.appConsoleView = new ConsoleView({
-    model: appConsole
-});
+
 // new activity model and view
 window.appActivity = new Activity({message:"loading..."});
 window.appActivityView = new ActivityView({
@@ -511,7 +513,6 @@ var methodV = new MethodView({
     }
 
     function pullURL(goto) {
-console.log("pullurl508");
         if (typeof goto == 'undefined') {
             // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
             var hel = $(".mainpanel:not('.hidden')")
@@ -524,7 +525,7 @@ console.log("pullurl508");
             var h = goto;
         }
         var bbx = map.getBounds().toBBoxString();
-        var qs = appCartoQuery.get("rawstring")
+        var qs = appCartoQuery.get("urlstring")
         var bl = appBaseLayers.findWhere({
             active: true
         }).get("name")
@@ -668,6 +669,7 @@ $(document).ready(function() {
                     altel: false
                 })
     //
+    L.control.zoom({position:'topright'}).addTo(map)
     //
 }); //ready
 $(document).keydown(function(e) {

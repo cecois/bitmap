@@ -324,6 +324,7 @@ var CartoPlainView = Backbone.View.extend({
         return this
     },
     triage: function(e) {
+
         if(agent=="desktop"){
                 return this.pulleps(e)} else if(agent=="mobile"){
                     return this.pulleps_mobile(e)
@@ -341,20 +342,44 @@ var a = $(e.currentTarget).parents('li')
         return this.activate(a)
 
     },
-    pulleps: function(e) {
-
-        var voff = e.currentTarget.offsetTop;
-        // var hoff = e.currentTarget.parentElement.clientWidth;
-        // $("#querylist-carto").css("left",hoff-hoff+50)
+    pulleps: function(e,etype) {
 
         appActivity.set({
             message: "fetching episodes...",
             show: true,
             altel: "#episodes-list"
         })
-        var locid = $(e.target).attr("data-id")
 
-        var loctype = $(e.target).attr("data-type");
+var t = $.type(e);
+
+console.log("t at 355:");console.log(t);
+
+if(t=="object"){
+    // we're in here from a click, we'll have to sniff out the data attr we need
+
+        var voff = e.currentTarget.offsetTop;
+        // var hoff = e.currentTarget.parentElement.clientWidth;
+        // $("#querylist-carto").css("left",hoff-hoff+50)
+
+
+        var locid = $(e.target).attr("data-id")
+var loctype = $(e.target).attr("data-type");
+
+e.preventDefault()
+        // var am = $(e.currentTarget).parents('li').data("id").toString();
+        var a = $(e.currentTarget).parents('li')
+
+} //t==object - we are done sniffing the data-id and -type from gui elements
+
+else {
+    // this wasn't triggered by a click so we treat the id and type els differently
+    // and we have to *find* the el to activate
+    var locid=e
+    var loctype=etype
+    // var a = $(this.el).find("[data-id='"+locid+"']")
+    var a = $("#querylist-carto").find("span[data-id='"+locid+"']").parents("li")
+
+}
 
 locid=doctorId(loctype,locid)
 
@@ -375,9 +400,7 @@ locid=doctorId(loctype,locid)
                 })
             }
         });
-        e.preventDefault()
-        // var am = $(e.currentTarget).parents('li').data("id").toString();
-        var a = $(e.currentTarget).parents('li')
+        
         return this.activate(a)
     },
     zoomtointernal: function(e) {
@@ -409,6 +432,7 @@ locid=doctorId(loctype,locid)
         return this
     },
     activate: function(a) {
+        console.log("a in activate:");console.log(a);
         // first wipe the list of any true classes (see ~184 for explanation)
         $(this.el).find(".carto-plain-title").removeClass("true")
         // var amid = am.get("cartodb_id")
@@ -776,6 +800,7 @@ var BaseMapView = Backbone.View.extend({
         // this.model.bind("change:bbox_west change:bbox_south change:bbox_east change:bbox_north", this.render, this);
         // this.render();
         return this
+        .wireup()
         // .updateBaseMap()
     },
     debug: function() {
@@ -839,13 +864,15 @@ var QueryView = Backbone.View.extend({
     initialize: function() {
         this.render();
         var q = this.model;
-    q.on("change", q.setstrings);
+    // q.on("change", q.setstrings);
         this.listenTo(this.model, "change", this.render)
         // this.model.bind("change", this.render, this);
     },
     fire: function(goto) {
-        // doubles as a clearer of the episodes arrow
+        // doubles as a clearer of the episodes arrow, some other gui stuff
         $(".episodes-arrow").addClass("hidden")
+        appHider.set({collapsed:"false"})
+
         if (typeof goto == 'undefined') {
             goto = true
         }
@@ -853,12 +880,23 @@ var QueryView = Backbone.View.extend({
             goto=true
         }
 
-        var rawstring = $("#query-form-input").val()
-        appCartoQuery.set({
-            rawstring: rawstring
-        })
-        console.log("qv rawstring:");console.log(rawstring);
-        console.log("qv goto:");console.log(goto);
+        var ss = $("#query-form-input").val()
+        console.log("this.model:");console.log(this.model);
+        if(ss == '' || ss == null){
+            this.model.set({urlstring : "*:*",rawstring : "",displaystring : ""})
+            
+        } else {
+            this.model.set({urlstring : ss,rawstring : ss,displaystring : ss})
+            // this.model.set({urlstring:ss})
+            // this.model.set({displaystring:ss})
+        }
+        console.log("this.model:");console.log(this.model);
+        // if(rawstring == '' || rawstring == null){rawstring = "*:*"}
+        // appCartoQuery.set({
+        //     rawstring: rawstring
+        // })
+        // console.log("qv rawstring:");console.log(rawstring);
+        // console.log("qv goto:");console.log(goto);
         if (goto == true) {
             appRoute.navigate(pullURL("#query"), {
                 trigger: true,
@@ -1003,31 +1041,29 @@ var HiderView = Backbone.View.extend({
     },
     swap: function(){
 
-console.log("in swap, model collapsed:")
-console.log(this.model.get("collapsed"))
-if(this.model.get("collapsed")=="false"){console.log("switching from false to true");this.model.set({collapsed:"true",operation:"plus",instructions:"expand main pane"});}
-        else if(this.model.get("collapsed")=="true"){console.log("switching from true to false");this.model.set({collapsed:"false",operation:"minus",instructions:"collapse/hide main pane"});}
-
-        console.log("model swapped:")
-console.log(this.model.get("collapsed"))
+if(this.model.get("collapsed")=="false"){this.model.set({collapsed:"true",operation:"plus",instructions:"expand main pane"});}
+        else if(this.model.get("collapsed")=="true"){this.model.set({collapsed:"false",operation:"minus",instructions:"collapse/hide main pane"});}
 
 return this
     },
     render: function() {
 
-console.log("in render of hiderview")
-        $(this.el).html(this.template(this.model.toJSON()))
+         $(this.el).html(this.template(this.model.toJSON()))
 
 if(this.model.get("collapsed")=="true"){
 
     $("#main").addClass('hiddenish');
+    $("#mnuBaseMap").addClass('hiddenish');
     $("#banner-bang").addClass('hiddenish');
+    appConsoleView.$el.addClass("hidden")
 
             appConsole.set({
             "message": "the 'control' key also toggles the visibility of the main pane"
         })
 
 } else {
+    $("#mnuBaseMap").removeClass('hiddenish');
+    appConsoleView.$el.removeClass("hidden")
     $("#main").removeClass('hiddenish');
     $("#banner-bang").removeClass('hiddenish');
 }
@@ -1037,7 +1073,7 @@ if(this.model.get("collapsed")=="true"){
     },
         rewire: function(){
 
-$(this.el).find('[data-toggle="tooltip"]').tooltip()
+$(this.el).find('[data-toggle="tooltip"]').tooltip({position:"right"})
 
 return this
     },

@@ -145,7 +145,8 @@ var CartoQuery = Backbone.Model.extend({
     },
         initialize: function(options) {
         options || (options = {});
-        // this.listenTo(this.get("rawstring"), "change", this.urlstring)
+        // this.listenTo(this.get("rawstring"), "change", this.setstrings)
+        // this.bind(this, "change", "setstrings")
         return this
     },
 //     setstrings: function() {
@@ -209,7 +210,6 @@ var BitCollection = Backbone.Collection.extend({
         if(verbose==true){console.log("in custom parse of BitCollection")}
             window.respp = resp.response.docs
         var locsornot = _.partition(resp.response.docs, function(e){return e.name=="Location";})
-    console.log("locsornot:");console.log(locsornot);
         var locsyes = locsornot[0];
         var locsno = locsornot[1];
 
@@ -393,7 +393,8 @@ var BaseMap = Backbone.Model.extend({
             zoom: 4,
             attributionControl: false
         });
-        return this;
+
+        return this
     },
     getBounds: function() {
         var southWest = new L.LatLng(this.get("bbox_south"), this.get("bbox_west"));
