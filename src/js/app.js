@@ -707,11 +707,14 @@ return cid
 }
 
 function puFactory(p){
-    console.log("pufactory!");
-    console.log("p:");console.log(p);
+    /* ------- 
+    this receives one-time fires of popup events and completely wipes their guts, replacing them with...well, the same thing cept it's all bound up in Backbone goodness
+    ---- */
+    
+    // first grab the pu's container node
     var nel = p.popup._contentNode
-    // var guts = $(p.popup._content).serialize()
-    // console.log("guts:");console.log(guts);
-    var pm = new Popup();
+
+    // and since the p obj has been affixed with the original leaflet object's model ("model") we just pass it along like so
+    var pm = new Popup(p.model);
     var pv = new PopupView({model:pm,el: nel})
 }

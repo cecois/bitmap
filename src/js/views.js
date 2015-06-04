@@ -42,6 +42,7 @@ var CartoCollxView = Backbone.View.extend({
         "name": hit.get("name"),
         // "active":hit.get("active"),
         "cartodb_id":hit.get("cartodb_id"),
+        "geom_type":hit.get("geom_type"),
         "anno":hit.get("anno"),
         "created_at":hit.get("created_at"),
         "updated_at":hit.get("updated_at")
@@ -70,6 +71,10 @@ var CartoCollxView = Backbone.View.extend({
                 processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
             })
                  .addOneTimeEventListener("popupopen",function(p){
+                    /* -------------------------------------------------- 
+ok what dafuk is going on here? Well in order to use native Backbone stuff *within* the popup we needed to be able inject a model-view couple into its guts - i.e. we want the guts of this popup to be the $el of a BB view. The way to do that is to throw the popupopen event to an external popup factory that *we* write - just so happens to be a BB view generator based on the "model" we also pass as part of the object. See that piece where we add an attribute to p? p.model = hitm.properties is us passing along this (this!) model to the popup factory. Kinda. You know what i mean.
+                     -----------------------  */
+                    p.model = hitm.properties
                     puFactory(p)
                  }) //on popup
 
@@ -299,7 +304,7 @@ var CartoPlainView = Backbone.View.extend({
         // this.listenTo(this.collection, "change active", this.sort);
         // this.listenTo(this.collection, "change", this.sort);
         // this.listenTo(this.collection, "change", this.sort);
-        this.listenTo(this.collection, "change queued", this.fromzoom);
+// this.listenTo(this.collection, "change queued", this.fromzoom);
         // this.listenTo(this.collection, "change active", this.render);
         // this.listenTo(this.model, "change", this.render);
         // this.collection.bind('change', this.render, this);
@@ -1115,15 +1120,13 @@ var ConsoleView = Backbone.View.extend({
 /* -------------------------------------------------- PUVIEW -----------------------  */
 var PopupView = Backbone.View.extend({
     // el: $("#activityContainer"),
-    // template: Handlebars.templates['activityViewTpl'],
+    template: Handlebars.templates['hitMarkerViewTpl'],
     initialize: function() {
         this.model.bind("change", this.render, this);
-        // this.render();
+        return this.render();
     },
     render: function() {
-        console.log("popupview el:");console.log($(this.el));
-        // $(this.el).html(this.template(this.model.toJSON()))
-        $(this.el).html("yo yo yo")
+        $(this.el).html(this.template(this.model.toJSON()))
         return this
     }
 });
