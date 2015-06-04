@@ -558,6 +558,7 @@ var methodV = new MethodView({
             if (i.options.cartodb_id.toString() == m) {
                 i.setStyle(activeStyle)
                 i.options.seen = true;
+
                 if (pop == true) {
                     i.openPopup()
                 }
@@ -703,4 +704,14 @@ var cid = null
         cid = Number(id);
 }
 return cid
+}
+
+function puFactory(p){
+    console.log("pufactory!");
+    console.log("p:");console.log(p);
+    var nel = p.popup._contentNode
+    // var guts = $(p.popup._content).serialize()
+    // console.log("guts:");console.log(guts);
+    var pm = new Popup();
+    var pv = new PopupView({model:pm,el: nel})
 }

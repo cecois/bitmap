@@ -416,6 +416,12 @@ var Activity = Backbone.Model.extend({
         show:false
     }
 });
+/* -------------------------------------------------- POPUP -----------------------  */
+var Popup = Backbone.Model.extend({
+    defaults: {
+        
+    }
+});
 /* -------------------------------------------------- WIKIAZ
 kind of an unfornuate offline bootstrapping call to previously-downloaded wikiaz content just so we can have full epi titles on hand
 -----------------------  */

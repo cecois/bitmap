@@ -60,12 +60,18 @@ var CartoCollxView = Backbone.View.extend({
 
                  L.geoJson(hitm,{seen:false,cartodb_id:hit.get("cartodb_id"),pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng, activeStyle);
-    }}).bindPopup(pu).addTo(cbbItems).on("click", function(m) {
+    }})
+                 .bindPopup(pu)
+                 .addTo(cbbItems).on("click", function(m) {
+        // first mark it seen
                 var stale = _.find(cbbItems._layers, function(i) {
                     return i.options.seen == true
                 });
                 processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
-            });
+            })
+                 .addOneTimeEventListener("popupopen",function(p){
+                    puFactory(p)
+                 }) //on popup
 
                 // var seenStyle = markerseen
             } else {
@@ -1106,6 +1112,22 @@ var ConsoleView = Backbone.View.extend({
         return this.render()
     }
 });
+/* -------------------------------------------------- PUVIEW -----------------------  */
+var PopupView = Backbone.View.extend({
+    // el: $("#activityContainer"),
+    // template: Handlebars.templates['activityViewTpl'],
+    initialize: function() {
+        this.model.bind("change", this.render, this);
+        // this.render();
+    },
+    render: function() {
+        console.log("popupview el:");console.log($(this.el));
+        // $(this.el).html(this.template(this.model.toJSON()))
+        $(this.el).html("yo yo yo")
+        return this
+    }
+});
+
 /* -------------------------------------------------- ACTIVITYVIEW -----------------------  */
 var ActivityView = Backbone.View.extend({
     el: $("#activityContainer"),
