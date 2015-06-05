@@ -299,7 +299,7 @@ var CartoPlainView = Backbone.View.extend({
         // this.listenTo(this.collection, "change active", this.sort);
         // this.listenTo(this.collection, "change", this.sort);
         // this.listenTo(this.collection, "change", this.sort);
-        this.listenTo(this.collection, "change queued", this.fromzoom);
+// this.listenTo(this.collection, "change queued", this.fromzoom);
         // this.listenTo(this.collection, "change active", this.render);
         // this.listenTo(this.model, "change", this.render);
         // this.collection.bind('change', this.render, this);
@@ -406,7 +406,7 @@ locid=doctorId(loctype,locid)
                 })
             }
         });
-        
+
         return this.activate(a)
     },
     zoomtointernal: function(e) {
@@ -890,7 +890,7 @@ var QueryView = Backbone.View.extend({
         console.log("this.model:");console.log(this.model);
         if(ss == '' || ss == null){
             this.model.set({urlstring : "*:*",rawstring : "",displaystring : ""})
-            
+
         } else {
             this.model.set({urlstring : ss,rawstring : ss,displaystring : ss})
             // this.model.set({urlstring:ss})
@@ -1117,8 +1117,9 @@ var PopupView = Backbone.View.extend({
     // el: $("#activityContainer"),
     // template: Handlebars.templates['activityViewTpl'],
     initialize: function() {
-        this.model.bind("change", this.render, this);
-        // this.render();
+        console.log("inittin popupview")
+        // this.model.bind("change", this.render, this);
+        return this.render()
     },
     render: function() {
         console.log("popupview el:");console.log($(this.el));
