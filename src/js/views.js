@@ -1125,6 +1125,15 @@ var PopupView = Backbone.View.extend({
         this.model.bind("change", this.render, this);
         return this.render();
     },
+    events: {
+        "click .bt-cartoobj-episodes": "pulleps"
+    },
+    pulleps: function(){
+// consider this a meta
+var locid = this.model.get("cartodb_id")
+console.log("locid in click of ppv:");console.log(locid);
+
+    },
     render: function() {
         $(this.el).html(this.template(this.model.toJSON()))
         return this
