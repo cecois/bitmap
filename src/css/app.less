@@ -206,6 +206,7 @@ font-size: .8em;
 
 /* --------------------------------------- HIT MARKER -------------- */
 
+.leaflet-popup-content-wrapper{
 .leaflet-popup-content{
   h5{
     color:@primarycolor;
@@ -215,6 +216,28 @@ font-size: .8em;
 div.leaflet-popup-content .marker.bt{
   color:@secondarycolor;
   cursor:pointer;
+}}
+
+.leaflet-popup-content-wrapper.newspaceready{
+  height:200px;
+  width:420px;
+  overflow: hidden;
+  .leaflet-popup-content{
+    background-color: black;
+
+    position: relative;
+    
+    left: 85%;
+    height:100%;
+    
+  }
+  .altspace{
+    position:relative;
+    padding:10px;
+    background-color:orange;
+    width:85%;
+    height:100%;
+  }
 }
 
 /* --------------------------------------- HIT BUTTONS -------------- */
@@ -223,7 +246,7 @@ div.leaflet-popup-content .marker.bt{
   cursor: pointer;
   margin-left: 5px;
   &:hover{
-  color:@secondarycolor;
+  color:@quaternarycolor;
   }
 }
 
@@ -1014,3 +1037,4 @@ text-shadow:
 .bt-getid{
   cursor:pointer;
 }
+

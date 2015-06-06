@@ -139,9 +139,12 @@ var Hider = Backbone.Model.extend({
 
 var CartoQuery = Backbone.Model.extend({
     defaults: {
-        rawstring: "+jesse",
-        displaystring: "jesse",
-        urlstring:'+jesse'
+        // rawstring: "+jesse",
+        // displaystring: "jesse",
+        // urlstring:'+jesse'
+        rawstring: "+location_type:point",
+        displaystring: "location_type:point",
+        urlstring:'+location_type:point'
     },
         initialize: function(options) {
         options || (options = {});

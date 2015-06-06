@@ -90,7 +90,13 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
                     return i.options.seen == true
                 });
                 processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
-            });
+            }).addOneTimeEventListener("popupopen",function(p){
+                    /* -------------------------------------------------- 
+ok what dafuk is going on here? Well in order to use native Backbone stuff *within* the popup we needed to be able inject a model-view couple into its guts - i.e. we want the guts of this popup to be the $el of a BB view. The way to do that is to throw the popupopen event to an external popup factory that *we* write - just so happens to be a BB view generator based on the "model" we also pass as part of the object. See that piece where we add an attribute to p? p.model = hitm.properties is us passing along this (this!) model to the popup factory. Kinda. You know what i mean.
+                     -----------------------  */
+                    p.model = hitm.properties
+                    puFactory(p)
+                 }) //on popup
                 // var hitm = L.multiPolyline(hitll, linenew);
             }
             // var hitm = wkt.toObject().addTo(cbbItems).on("click", function(m) {
@@ -362,8 +368,6 @@ var a = $(e.currentTarget).parents('li')
         })
 
 var t = $.type(e);
-
-console.log("t at 355:");console.log(t);
 
 if(t=="object"){
     // we're in here from a click, we'll have to sniff out the data attr we need
@@ -1126,13 +1130,46 @@ var PopupView = Backbone.View.extend({
         return this.render();
     },
     events: {
-        "click .bt-cartoobj-episodes": "pulleps"
+        "click .bt-cartoobj-episodes": "pulleps",
+        "click .bt-cartoobj-feedback": "ghsubmit",
+        "click .leaflet-popup-close-button": "reset"
+    },
+    reset: function(){
+
+console.log("here we can reset everything");
+
     },
     pulleps: function(){
+        this.prepspace()
+
+
 // consider this a meta
 var locid = this.model.get("cartodb_id")
-console.log("locid in click of ppv:");console.log(locid);
+var loctype = this.model.get("geom_type")
 
+
+// appCBBListView.pulleps(locid,loctype)
+return this
+    },
+    ghsubmit: function(){
+        this.prepspace()
+
+var locid = this.model.get("cartodb_id")
+
+    return this
+
+    },
+    prepspace: function(replace) {
+$guts = $(this.el)
+var gwide = $guts.width()
+
+// $guts.parent().css("overflow","hidden").css("height","400px").css("weight","500px")
+$guts.parent().addClass("newspaceready")
+// $guts.css("position","relative").css("left","85%");
+
+$guts.parent().prepend('<div class="altspace pull-left" style="width:'+gwide+'px;">stuff can actually go here?</div>');
+
+    return this
     },
     render: function() {
         $(this.el).html(this.template(this.model.toJSON()))
@@ -1331,13 +1368,9 @@ return this
     render: function() {
         $(this.el).empty()
 
-        // console.log("voff in epiview:");
-        // console.log(this.collection.verticaloffset);
-
         $(this.el).css("top",this.collection.verticaloffset-20)
         $('.episodes-arrow').removeClass('hidden').css("position","relative").css("top",this.collection.verticaloffset-10)
 
-        // $(this.el).html(" <h3><span class='episodes' style='margin-right:12px;'>--------></span>Episodes</h3> <span class='cbbepsanno'>(referencing location: '" + appCBB.findWhere({
         $(this.el).html(" <h3>Episodes</h3> <span class='cbbepsanno'>(referencing location: '" + appCBB.findWhere({
             active: true
         }).get("name") + "')</span>")

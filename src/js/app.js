@@ -170,7 +170,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": false,
+            "active": true,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             // "thumb": "offline/mapbox-mario.png",
@@ -186,7 +186,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": true,
+            "active": false,
             "source": "localhost",
             "nom": "A Real Dummy",
             // "thumb": "offline/mapbox-mario.png",
@@ -361,7 +361,7 @@ window.appQuerySubNavView = new QuerySubNavView({
     model: appQuerySubNav
 });
 
-window.appHider = new Hider();
+window.appHider = new Hider({collapsed:"true"});
 window.appHiderView = new HiderView({
     model: appHider
 });
@@ -714,6 +714,8 @@ function puFactory(p){
     // first grab the pu's container node
     var nel = p.popup._contentNode
 
+console.log("nel:");
+console.log(nel);
     // and since the p obj has been affixed with the original leaflet object's model ("model") we just pass it along like so
     var pm = new Popup(p.model);
     var pv = new PopupView({model:pm,el: nel})
