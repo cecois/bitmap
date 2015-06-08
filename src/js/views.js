@@ -1132,11 +1132,20 @@ var PopupView = Backbone.View.extend({
     events: {
         "click .bt-cartoobj-episodes": "pulleps",
         "click .bt-cartoobj-feedback": "ghsubmit",
-        "click .leaflet-popup-close-button": "reset"
+        "click .bt-cartoobj-leafletcloser": "reset"
     },
-    reset: function(){
+    reset: function(e){
 
-console.log("here we can reset everything");
+console.log("here we can maybe reset everything...and then actually close the thing too");
+
+$guts = $(this.el)
+$guts.parent().find('div').first().html('');
+$guts.parent().removeClass("newspaceready")
+
+var lid = this.model.get("leafletid")
+
+map._layers[lid].closePopup()
+return this
 
     },
     pulleps: function(){
@@ -1167,11 +1176,13 @@ var gwide = $guts.width()
 $guts.parent().addClass("newspaceready")
 // $guts.css("position","relative").css("left","85%");
 
-$guts.parent().prepend('<div class="altspace pull-left" style="width:'+gwide+'px;">stuff can actually go here?</div>');
+// $guts.parent().prepend('<div class="altspace pull-left" style="width:'+gwide+'px;">stuff can actually go here?</div>');
+$guts.parent().prepend('<div class="altspace pull-left">stuff can actually go here?</div>');
 
     return this
     },
     render: function() {
+        console.log("model in puview:");console.log(this.model);
         $(this.el).html(this.template(this.model.toJSON()))
         return this
     }

@@ -714,9 +714,23 @@ function puFactory(p){
     // first grab the pu's container node
     var nel = p.popup._contentNode
 
-console.log("nel:");
-console.log(nel);
+console.log("p in pufactory:");console.log(p);
+
     // and since the p obj has been affixed with the original leaflet object's model ("model") we just pass it along like so
-    var pm = new Popup(p.model);
+// but also we affix the leaflet id of the feature so we can close this mofo later (among other ops maybe)
+    var pm = new Popup(p.model).set({leafletid:p.layer._leaflet_id});
     var pv = new PopupView({model:pm,el: nel})
 }
+// function puForecloser(p){
+    
+//     // first grab the pu's container node
+//     var nel = p.popup._contentNode
+
+//     console.log(p);
+
+// console.log("nel:");
+// console.log(nel);
+//     // and since the p obj has been affixed with the original leaflet object's model ("model") we just pass it along like so
+//     var pm = new Popup(p.model);
+//     var pv = new PopupView({model:pm,el: nel})
+// }

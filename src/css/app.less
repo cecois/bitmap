@@ -218,25 +218,31 @@ div.leaflet-popup-content .marker.bt{
   cursor:pointer;
 }}
 
-.leaflet-popup-content-wrapper.newspaceready{
-  height:200px;
-  width:420px;
+.leaflet-popup-content-wrapper{
+  // height:200px;
+  // width:420px;
   overflow: hidden;
   .leaflet-popup-content{
-    background-color: black;
 
     position: relative;
-    
-    left: 85%;
-    height:100%;
-    
-  }
-  .altspace{
-    position:relative;
-    padding:10px;
-    background-color:orange;
+    .leafraud-popup-og{
+    position: relative;
+        height:100%;
+      }
+      .leafraud-popup-og.replaced{
+        left: 95%;
+      }
+
+.leafraud-popup-replacer{
+  width:0px;
+  overflow: hidden;
+}
+.leafraud-popup-replacer.replaced{
+      background-color:black;
+      height:100%;
     width:85%;
-    height:100%;
+  }
+    
   }
 }
 

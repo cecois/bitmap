@@ -1,4 +1,33 @@
-<div"><h5>{{name}}</h5></div>
-{{#if anno}}<div><p class="text-muted">{{anno}}</p></div>{{/if}}
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+  </ol>
 
-<span data-id="{{cartodb_id}}" data-type="{{geom_type}}" class="glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes" title="pull a list of referencing episodes"></span><span data-id="{{cartodb_id}}" data-type="{{geom_type}}" class="glyphicon glyphicon-flag bt-cartoobj bt-cartoobj-feedback" title="report an issue with this one"></span>
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div style="height:100%;" class="item active">
+      <div class="carousel-caption">
+item1
+      </div>
+    </div>
+    <div style="height:100%;" class="item">
+      <div class="carousel-caption">
+item2
+      </div>
+    </div>
+    ?
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
