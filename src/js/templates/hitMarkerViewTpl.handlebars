@@ -1,33 +1,20 @@
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-  </ol>
+<div class="btn-group btn-group-xs" role="group" aria-label="...">
 
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
-    <div style="height:100%;" class="item active">
-      <div class="carousel-caption">
-item1
-      </div>
-    </div>
-    <div style="height:100%;" class="item">
-      <div class="carousel-caption">
-item2
-      </div>
-    </div>
-    ?
-  </div>
+<button data-target="marker" type="button" class="btn btn-default btn-pu-nav active"><span class="bt-cartoobj bt-cartoobj-feedback carto-plain-geomtype icom-{{this.geom_type}}"></span></button>
 
-  <!-- Controls -->
-  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+  <button data-target="episodes" data-id="episodes" type="button" class="btn btn-default btn-pu-nav"><span data-id="{{cartodb_id}}" data-type="{{geom_type}}" class="glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes" title="pull a list of referencing episodes"></span></button>
+
+  <button data-target="feedback" data-id="feedback" type="button" class="btn btn-default btn-pu-nav"><span data-id="{{cartodb_id}}" data-type="{{geom_type}}" class="glyphicon glyphicon-edit bt-cartoobj bt-cartoobj-feedback" title="pull a list of referencing episodes"></span></button>
+
 </div>
+
+
+<div class="pu-copy pu-copy-marker">
+<h5>{{name}}</h5>
+{{#if anno}}<p class="text-muted">{{anno}}</p>{{/if}}</div>
+
+<div class="hidden pu-copy pu-copy-episodes">
+<p class="text-muted">HEYOOOOOO eps</p></div>
+
+<div class="hidden pu-copy pu-copy-feedback">
+<p class="text-muted">HEYOO feed</p></div>

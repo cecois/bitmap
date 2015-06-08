@@ -71,7 +71,7 @@ var CartoCollxView = Backbone.View.extend({
                 processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
             })
                  .addOneTimeEventListener("popupopen",function(p){
-                    /* -------------------------------------------------- 
+                    /* --------------------------------------------------
 ok what dafuk is going on here? Well in order to use native Backbone stuff *within* the popup we needed to be able inject a model-view couple into its guts - i.e. we want the guts of this popup to be the $el of a BB view. The way to do that is to throw the popupopen event to an external popup factory that *we* write - just so happens to be a BB view generator based on the "model" we also pass as part of the object. See that piece where we add an attribute to p? p.model = hitm.properties is us passing along this (this!) model to the popup factory. Kinda. You know what i mean.
                      -----------------------  */
                     p.model = hitm.properties
@@ -91,7 +91,7 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
                 });
                 processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
             }).addOneTimeEventListener("popupopen",function(p){
-                    /* -------------------------------------------------- 
+                    /* --------------------------------------------------
 ok what dafuk is going on here? Well in order to use native Backbone stuff *within* the popup we needed to be able inject a model-view couple into its guts - i.e. we want the guts of this popup to be the $el of a BB view. The way to do that is to throw the popupopen event to an external popup factory that *we* write - just so happens to be a BB view generator based on the "model" we also pass as part of the object. See that piece where we add an attribute to p? p.model = hitm.properties is us passing along this (this!) model to the popup factory. Kinda. You know what i mean.
                      -----------------------  */
                     p.model = hitm.properties
@@ -415,7 +415,7 @@ locid=doctorId(loctype,locid)
                 })
             }
         });
-        
+
         return this.activate(a)
     },
     zoomtointernal: function(e) {
@@ -899,7 +899,7 @@ var QueryView = Backbone.View.extend({
         console.log("this.model:");console.log(this.model);
         if(ss == '' || ss == null){
             this.model.set({urlstring : "*:*",rawstring : "",displaystring : ""})
-            
+
         } else {
             this.model.set({urlstring : ss,rawstring : ss,displaystring : ss})
             // this.model.set({urlstring:ss})
@@ -1130,9 +1130,30 @@ var PopupView = Backbone.View.extend({
         return this.render();
     },
     events: {
-        "click .bt-cartoobj-episodes": "pulleps",
-        "click .bt-cartoobj-feedback": "ghsubmit",
-        "click .bt-cartoobj-leafletcloser": "reset"
+        // "click .bt-cartoobj-episodes": "pulleps",
+        // "click .bt-cartoobj-feedback": "ghsubmit",
+        // "click .bt-cartoobj-leafletcloser": "reset"
+        "click .btn-pu-nav":"navinternal"
+    },
+    navinternal: function(e){
+
+$cuta = $(e.currentTarget)
+
+// so few no real performance hit here
+$(this.el).find(".btn-pu-nav").removeClass("active")
+$cuta.addClass("active")
+
+// var tel = e.currentTarget.getAttribute("data-target")
+var tel = $cuta.attr("data-target")
+console.log(e)
+// e.currentTarget(
+
+
+$(this.el).find(".pu-copy").addClass("hidden")
+$(this.el).find(".pu-copy-"+tel).removeClass("hidden")
+
+return this
+
     },
     reset: function(e){
 
