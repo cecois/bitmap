@@ -35,7 +35,7 @@ templates['bitsView'] = template({"1":function(depth0,helpers,partials,data) {
 },"2":function(depth0,helpers,partials,data) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;
   return escapeExpression(lambda((depth0 != null ? depth0.desc : depth0), depth0))
-    + " \n";
+    + "\n";
 },"4":function(depth0,helpers,partials,data) {
   return "(no description provided)\n";
   },"6":function(depth0,helpers,partials,data) {
@@ -44,9 +44,9 @@ templates['bitsView'] = template({"1":function(depth0,helpers,partials,data) {
     + escapeExpression(lambda((depth0 != null ? depth0.elucidation : depth0), depth0))
     + ")</div>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h1 class=\"stroke\" style=\"margin-bottom:43px;\">Unmappable Bits<span class=\"cbbanno\">("
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<!-- <h1 class=\"stroke\" style=\"margin-bottom:43px;\">Unmappable Bits<span class=\"cbbanno\">("
     + escapeExpression(((helper = (helper = helpers.count || (depth0 != null ? depth0.count : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"count","hash":{},"data":data}) : helper)))
-    + ")</span>\n<!-- <span class=\"episodes hidden\" style=\"margin-left:12px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span>  -->\n</h1>\n<!-- <div class=\"cbbanno\">(Bits in the Tracker but without Locations)</div> -->\n\n";
+    + ")</span> </h1> -->\n<!-- <span class=\"episodes hidden\" style=\"margin-left:12px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span>  -->\n<!-- <div class=\"cbbanno\">(Bits in the Tracker but without Locations)</div> -->\n\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.rows : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer;
@@ -118,9 +118,9 @@ templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,dat
     + escapeExpression(lambda((depth0 != null ? depth0.anno : depth0), depth0))
     + ")</p>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h1 class=\"stroke\" style=\"\">bits - mapped <span class=\"cbbanno\">("
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<!-- <h1 class=\"stroke\" style=\"\">bits - mapped <span class=\"cbbanno\">("
     + escapeExpression(((helper = (helper = helpers.count || (depth0 != null ? depth0.count : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"count","hash":{},"data":data}) : helper)))
-    + ")</span>\n<!-- <span class=\"episodes hidden\" style=\"margin-left:12px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span>  -->\n</h1>\n\n";
+    + ")</span> </h1> -->\n<!-- <span class=\"episodes hidden\" style=\"margin-left:12px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span>  -->\n\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.rows : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer;
@@ -185,13 +185,13 @@ templates['hitMarkerViewTpl'] = template({"1":function(depth0,helpers,partials,d
     + "</h5>\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.anno : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "\n</div> <!-- marker -->\n\n<div class=\" content-wrap col-sm-12 hidden pu-copy pu-copy-episodes\">\n        <p class=\"text-muted\">HEYOOOOOO eps</p>\n</div> <!-- episodes -->\n\n<div class=\"hidden pu-copy pu-copy-feedback content-wrap col-sm-12\">\n            <p class=\"text-muted\">\n            Until we have a full-on crowd-source component to this, it will have to suffice to anonymously create an issue at <a href=\"https://github.com/cecois/bitmap/issues\">this project's GitHub repo</a>. Go ahead - try to be specific, but anything that comes in I'll check out.\n            </p>\n            <p class=\"text-muted\">\n            Now, if you really gotta know what becomes of this, enter some handle of yours in the handle field (use Twitter, email, GitHub username, InstaGram handle I suppose -- don't get too crazy). I'll let you know what becomes of it. Seriously! I have 0% interest in doing anything else w/ this datum, but be aware it will part of the public GitHub issue.\n            </p>\n        <div class=\"pu-copy pu-copy-feedback pu-copy-feedback-form\">\n                <label for=\"\">Feature In Question (this)</label>\n            <input data-class=\"pu-issue-title\" class=\"form-control input-sm\" type=\"text\" placeholder=\""
+  return buffer + "\n</div> <!-- marker -->\n\n<div class=\" content-wrap col-sm-12 hidden pu-copy pu-copy-episodes\">\n        <p class=\"text-muted\">HEYOOOOOO eps</p>\n</div> <!-- episodes -->\n\n<div class=\"hidden pu-copy pu-copy-feedback content-wrap col-sm-12\">\n            <p class=\"text-muted\">\n            Until we have a full-on crowd-source component to this, it will have to suffice to anonymously create an issue at <a href=\"https://github.com/cecois/bitmap/issues\">this project's GitHub repo</a>. Go ahead! Try to be specific, but anything that comes in I'll check out.\n            </p>\n            <p class=\"text-muted\">\n            If you really gotta know what becomes of your submission, enter some handle of yours in the handle field (use Twitter, email, GitHub username, InstaGram handle I suppose -- don't get too crazy). I'll let you know what becomes of it. Seriously! I have 0% interest in doing anything else w/ this datum, but be aware it will be part of the public GitHub issue.\n            </p>\n        <div class=\"pu-copy pu-copy-feedback pu-copy-feedback-form\">\n                <label for=\"\">Feature in Question (this)</label>\n            <input data-class=\"pu-issue-title\" class=\"form-control input-sm\" type=\"text\" placeholder=\""
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
     + " ("
     + escapeExpression(((helper = (helper = helpers.geom_type || (depth0 != null ? depth0.geom_type : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"geom_type","hash":{},"data":data}) : helper)))
     + ":"
     + escapeExpression(((helper = (helper = helpers.cartodb_id || (depth0 != null ? depth0.cartodb_id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"cartodb_id","hash":{},"data":data}) : helper)))
-    + ")\" disabled>\n            <label for=\"\">Issue Body</label>\n            <textarea data-class=\"pu-issue-body\" placeholder=\"What's wrong with this one? (All suggestions will be investigated.)\" class=\"form-control\" rows=\"3\"></textarea>\n            <label for=\"\">Contact Handle (totally optional)</label>\n            <input data-class=\"pu-issue-contact\" class=\"form-control input-sm\" type=\"text\" placeholder=\"e.g. @toddglass or just github.com/huellhowser or something\">\n        </div> <!-- form -->\n        \n            <div style=\"margin-top:5px;\"><button class=\"btn btn-default btn-xs btn-block\" type=\"submit\">Submit</button></div>\n</div> <!-- feedback -->\n\n\n<div class=\"btn-group btn-group-xs pull-right\" style=\"margin-bottom:8px;\" role=\"group\">\n\n<button data-toggle=\"tooltip\" data-target=\"marker\" type=\"button\" title=\"marker info\" class=\"btn btn-default btn-pu-nav active\"><span class=\"bt-cartoobj bt-cartoobj-feedback carto-plain-geomtype icom-"
+    + ")\" disabled>\n            <label for=\"\">Issue Body</label>\n            <textarea data-class=\"pu-issue-body\" placeholder=\"What's wrong with this one? (All suggestions will be investigated.)\" class=\"form-control\" rows=\"3\"></textarea>\n            <label for=\"\">Contact Handle (totally optional)</label>\n            <input data-class=\"pu-issue-contact\" class=\"form-control input-sm\" type=\"text\" placeholder=\"e.g. @toddglass or just github.com/huellhowser or something\">\n        </div> <!-- form -->\n\n            <div style=\"margin-top:5px;\"><button class=\"btn btn-default btn-xs btn-block\" type=\"submit\">Submit</button></div>\n</div> <!-- feedback -->\n\n\n<div class=\"btn-group btn-group-xs pull-right\" style=\"margin-bottom:8px;\" role=\"group\">\n\n<button data-toggle=\"tooltip\" data-target=\"marker\" type=\"button\" title=\"marker info\" class=\"btn btn-default btn-pu-nav active\"><span class=\"bt-cartoobj bt-cartoobj-feedback carto-plain-geomtype icom-"
     + escapeExpression(lambda((depth0 != null ? depth0.geom_type : depth0), depth0))
     + "\"></span></button>\n\n  <button data-toggle=\"tooltip\" data-target=\"episodes\" data-id=\"episodes\" type=\"button\" class=\"btn btn-default btn-pu-nav\"><span data-id=\""
     + escapeExpression(((helper = (helper = helpers.cartodb_id || (depth0 != null ? depth0.cartodb_id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"cartodb_id","hash":{},"data":data}) : helper)))
@@ -213,7 +213,7 @@ templates['querySubNavViewTpl'] = template({"compiler":[6,">= 2.0.0-beta.1"],"ma
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
   return " <div class=\"querysubnavh\">\n<!--for Query:</span> "
     + escapeExpression(((helper = (helper = helpers.displaystring || (depth0 != null ? depth0.displaystring : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"displaystring","hash":{},"data":data}) : helper)))
-    + "\n\n<span class=\"query-console-arrow\" style=\"font-size:.8em;margin-left:30px;margin-right:30px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span> -->\n	<span data-id=\"bits\" class=\"query-subnav-btn\">Bits</span>\n	<span data-id=\"locations\" class=\"query-subnav-btn active\">Locations</span>\n	</div>";
+    + "\n\n<span class=\"query-console-arrow\" style=\"font-size:.8em;margin-left:30px;margin-right:30px;\">\\-\\-\\-\\-\\-\\-\\-\\-></span> -->\n	<span data-id=\"bits\" class=\"query-subnav-btn\">Bits <span class=\"query-subnav-count query-subnav-count-bits\"></span></span>\n	<span data-id=\"locations\" class=\"query-subnav-btn active\">Locations <span class=\"query-subnav-count query-subnav-count-locations\"></span></span>\n	</div>";
 },"useData":true});
 templates['queryViewTpl'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;

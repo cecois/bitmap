@@ -132,6 +132,19 @@ appActivity.set({message: null,show: false})
         return this.fit()
     }
 });
+var BitsCountView = Backbone.View.extend({
+    el: ".query-subnav-btn[data-id='bits']",
+        initialize: function() {
+        return this
+        // .render()
+    },
+    render: function() {
+
+        $(this.el).html(this.collection.models.length);
+        return this
+    }
+}); //bitscountview
+
 var BitsView = Backbone.View.extend({
     // tagName: "li",
     el: "#querylist-bits",
@@ -983,6 +996,8 @@ var QuerySubNavView = Backbone.View.extend({
     template: Handlebars.templates['querySubNavViewTpl'],
     initialize: function() {
         this.render();
+        // this.listenTo(appBits,"reset",this.accoutrement)
+        // this.listenTo(appCBB,"reset",this.accoutrement)
         this.listenTo(this.model, "change", this.render)
         // this.model.bind("change", this.render, this);
     },
@@ -991,6 +1006,8 @@ var QuerySubNavView = Backbone.View.extend({
         if (this.model.get("error") == true) {
             $(this.el).addClass("error")
         }
+
+
         $(this.el).html(this.template(this.model.toJSON()))
         // $(this.el).val(this.model.get("solrstring"))
         return this
@@ -1015,6 +1032,15 @@ if(w=="locations"){
 return this
 
     },
+//     accoutrement: function(){
+
+// // because we're subnavvin here, the models themselves aren't really here
+
+// $(this.el).find('.query-subnav-count-bits').html("("+appBits.length+")")
+// $(this.el).find('.query-subnav-count-locations').html("("+appCBB.length+")")
+
+
+//     },
     activate: function(e){
 
 
@@ -1040,6 +1066,7 @@ if(elid=="locations"){
     $("#querylist-bits").removeClass("hidden")
 }
 return this
+// .accoutrement()
 
     }
 });
@@ -1173,7 +1200,7 @@ return this
 $(this.el).find('[data-toggle="tooltip"]').tooltip({position:"right"})
 
 // and the submit button
-// 
+//
 // $(this.el).find("button[type='submit']").click(function(t){
 
 // this.issue_submit()
@@ -1192,12 +1219,14 @@ if(typeof ib == 'undefined' || ib==null || ib==''){
 $(e.currentTarget).html("<span class='glyphicon glyphicon-warning-sign'></span> Submit")
 } else {
 
+appActivity.set({message:"submitting issue to GitHub...",show:true})
 // do the submit
 console.log(it);
 console.log(ib);
 console.log(ic);
 // success will put a checkmark in submit button or something - github (octokat) doesn't return much
 
+appActivity.set({message:null,show:false})
 $(e.currentTarget).html("<span class='glyphicon glyphicon-thumbs-up' disabled></span> Thanks")
 
 }

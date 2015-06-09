@@ -170,7 +170,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": false,
+            "active": true,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             // "thumb": "offline/mapbox-mario.png",
@@ -186,7 +186,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": true,
+            "active": false,
             "source": "localhost",
             "nom": "A Real Dummy",
             // "thumb": "offline/mapbox-mario.png",
@@ -428,9 +428,15 @@ window.appCBBListView = new CartoPlainView({
 window.appBitsView = new BitsView({
     collection: appBits
 })
+window.appBitsCountView = new BitsCountView({
+    collection: appBits
+})
 window.appCBBMapView = new CartoCollxView({
     collection: appCBB
 })
+
+
+
 // honestly not sure why i gotta chain the render here, but there it is :-/
 // appCBBCarto.fetch({
 //     success:function(collx,resp,opt){
@@ -707,10 +713,10 @@ return cid
 }
 
 function puFactory(p){
-    /* ------- 
+    /* -------
     this receives one-time fires of popup events and completely wipes their guts, replacing them with...well, the same thing cept it's all bound up in Backbone goodness
     ---- */
-    
+
     // first grab the pu's container node
     var nel = p.popup._contentNode
 
@@ -720,7 +726,7 @@ function puFactory(p){
     var pv = new PopupView({model:pm,el: nel})
 }
 // function puForecloser(p){
-    
+
 //     // first grab the pu's container node
 //     var nel = p.popup._contentNode
 

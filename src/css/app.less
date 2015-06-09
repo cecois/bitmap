@@ -910,16 +910,29 @@ padding-top:15px;
 color:white;
 text-transform: uppercase;
 
+.query-subnav-count{
+font-size:.5em;
+font-weight:200;
+text-decoration:none;
+}
+
 .query-subnav-btn{
       color:white;
       cursor:pointer;
-      text-decoration: underline;
+      /*text-decoration: underline;*/
       margin-right:50px;
       font-size:1.5em;
+      &:hover{
+text-decoration:underline;
+      }
     }
       .query-subnav-btn.active{
-        // text-shadow: 2px 2px 0 @secondarycolor, 5px 5px 0 @quaternarycolor, 7px 7px 0 @quaternarycolor, 9px 9px 0 @quaternarycolor, 11px 11px 0 @quaternarycolor, 13px 13px 0 @secondarycolor-trans;
+
         .stroke;
+        &:hover{
+text-decoration:none;
+
+      }
       }
 }
 
