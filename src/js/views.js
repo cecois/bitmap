@@ -1126,6 +1126,7 @@ var PopupView = Backbone.View.extend({
     // el: $("#activityContainer"),
     template: Handlebars.templates['hitMarkerViewTpl'],
     initialize: function() {
+        this.ogwidth = null;
         this.model.bind("change", this.render, this);
         return this.render();
     },
@@ -1133,11 +1134,14 @@ var PopupView = Backbone.View.extend({
         // "click .bt-cartoobj-episodes": "pulleps",
         // "click .bt-cartoobj-feedback": "ghsubmit",
         // "click .bt-cartoobj-leafletcloser": "reset"
+        "click button[type='submit']": "issue_submit",
         "click .btn-pu-nav":"navinternal"
     },
     navinternal: function(e){
 
 $cuta = $(e.currentTarget)
+
+
 
 // so few no real performance hit here
 $(this.el).find(".btn-pu-nav").removeClass("active")
@@ -1145,14 +1149,61 @@ $cuta.addClass("active")
 
 // var tel = e.currentTarget.getAttribute("data-target")
 var tel = $cuta.attr("data-target")
-console.log(e)
-// e.currentTarget(
+
+console.log("this.ogwidth:");console.log(this.ogwidth);
+$(".leaflet-popup-content").css("width",this.ogwidth+"px")
 
 
 $(this.el).find(".pu-copy").addClass("hidden")
 $(this.el).find(".pu-copy-"+tel).removeClass("hidden")
 
+if(tel=="episodes"){
+    return this.pulleps()
+} else if(tel=="feedback"){
+    return this.issue($cuta)
+} else {
+
 return this
+}
+
+    },
+    rewire: function(){
+
+// wire up those tooltips
+$(this.el).find('[data-toggle="tooltip"]').tooltip({position:"right"})
+
+// and the submit button
+// 
+// $(this.el).find("button[type='submit']").click(function(t){
+
+// this.issue_submit()
+
+// });
+
+    },
+    issue_submit: function(e){
+
+var it = $(this.el).find("[data-class='pu-issue-title']").attr("placeholder")
+var ib = $(this.el).find("[data-class='pu-issue-body']").val()
+var ic = $(this.el).find("[data-class='pu-issue-contact']").val()
+
+if(typeof ib == 'undefined' || ib==null || ib==''){
+    $(this.el).find("[data-class='pu-issue-body']").attr("placeholder","please provide some sort of clue to what's wrong")
+$(e.currentTarget).html("<span class='glyphicon glyphicon-warning-sign'></span> Submit")
+} else {
+
+// do the submit
+console.log(it);
+console.log(ib);
+console.log(ic);
+// success will put a checkmark in submit button or something - github (octokat) doesn't return much
+
+$(e.currentTarget).html("<span class='glyphicon glyphicon-thumbs-up' disabled></span> Thanks")
+
+}
+
+return this
+
 
     },
     reset: function(e){
@@ -1170,7 +1221,7 @@ return this
 
     },
     pulleps: function(){
-        this.prepspace()
+        // this.prepspace()
 
 
 // consider this a meta
@@ -1181,31 +1232,37 @@ var loctype = this.model.get("geom_type")
 // appCBBListView.pulleps(locid,loctype)
 return this
     },
-    ghsubmit: function(){
-        this.prepspace()
+    issue: function(el){
+        // this.prepspace()
+
+
+$(".leaflet-popup-content").css("width","450px")
 
 var locid = this.model.get("cartodb_id")
 
     return this
 
     },
-    prepspace: function(replace) {
-$guts = $(this.el)
-var gwide = $guts.width()
+//     prepspace: function(replace) {
+// $guts = $(this.el)
+// var gwide = $guts.width()
 
-// $guts.parent().css("overflow","hidden").css("height","400px").css("weight","500px")
-$guts.parent().addClass("newspaceready")
-// $guts.css("position","relative").css("left","85%");
+// // $guts.parent().css("overflow","hidden").css("height","400px").css("weight","500px")
+// $guts.parent().addClass("newspaceready")
+// // $guts.css("position","relative").css("left","85%");
 
-// $guts.parent().prepend('<div class="altspace pull-left" style="width:'+gwide+'px;">stuff can actually go here?</div>');
-$guts.parent().prepend('<div class="altspace pull-left">stuff can actually go here?</div>');
+// // $guts.parent().prepend('<div class="altspace pull-left" style="width:'+gwide+'px;">stuff can actually go here?</div>');
+// $guts.parent().prepend('<div class="altspace pull-left">stuff can actually go here?</div>');
 
-    return this
-    },
+//     return this
+//     },
     render: function() {
-        console.log("model in puview:");console.log(this.model);
+        // bc we'll be messing with this width once in a while, we sock away the original
+        this.ogwidth = $(".leaflet-popup-content").width()
+
         $(this.el).html(this.template(this.model.toJSON()))
         return this
+        .rewire()
     }
 });
 

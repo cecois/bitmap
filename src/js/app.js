@@ -170,7 +170,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             // "thumb": "offline/mapbox-mario.png",
@@ -186,7 +186,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": false,
+            "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
             // "thumb": "offline/mapbox-mario.png",
@@ -713,8 +713,6 @@ function puFactory(p){
     
     // first grab the pu's container node
     var nel = p.popup._contentNode
-
-console.log("p in pufactory:");console.log(p);
 
     // and since the p obj has been affixed with the original leaflet object's model ("model") we just pass it along like so
 // but also we affix the leaflet id of the feature so we can close this mofo later (among other ops maybe)

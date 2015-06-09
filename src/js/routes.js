@@ -120,7 +120,6 @@ var Route = Backbone.Router.extend({
                         message: "query errored out"
                     })
                     // actually, if it's a true error we wanna be more forthcoming:
-                    $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                     appActivity.set({
                         message: "",
                         show: false
@@ -137,6 +136,7 @@ var Route = Backbone.Router.extend({
                         message: "query errored out"
                     })
                     // actually, if it's a true error we wanna be more forthcoming:
+                    $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                     $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                     appActivity.set({
                         message: "",
