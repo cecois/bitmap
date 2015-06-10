@@ -7,6 +7,7 @@ var CartoCollxView = Backbone.View.extend({
     },
     initialize: function() {
         // this.collection.bind('change', this.debug, this);
+        this.listenTo(this.collection, 'reset', this.render);
         // this.listenTo(this.collection, "change", this.render);
         return this
         // .render()
@@ -77,7 +78,6 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
                     p.model = hitm.properties
                     puFactory(p)
                  }) //on popup
-
                 // var seenStyle = markerseen
             } else {
                 // var hitm = wkt.toObject().setStyle(linenew)
@@ -133,13 +133,31 @@ appActivity.set({message: null,show: false})
     }
 });
 var BitsCountView = Backbone.View.extend({
-    el: ".query-subnav-btn[data-id='bits']",
+    el: ".query-subnav-count-bits",
         initialize: function() {
+            this.listenTo(this.collection, 'reset', this.render);
+            console.log("bitscount el:");console.log($(this.el));
         return this
-        // .render()
+        .render()
     },
     render: function() {
-
+var len = this.collection.models.length
+console.log("len bits:");console.log(len);
+        $(this.el).html(this.collection.models.length);
+        return this
+    }
+}); //bitscountview
+var CartoCollxCountView = Backbone.View.extend({
+    el: ".query-subnav-count-locations",
+        initialize: function() {
+            this.listenTo(this.collection, 'reset', this.render);
+            console.log("cartcount el:");console.log($(this.el));
+        return this
+        .render()
+    },
+    render: function() {
+var len = this.collection.models.length
+console.log("len cbb:");console.log(len);
         $(this.el).html(this.collection.models.length);
         return this
     }
@@ -155,6 +173,7 @@ var BitsView = Backbone.View.extend({
     },
     template: Handlebars.templates['bitsView'],
     initialize: function() {
+        this.listenTo(this.collection, 'reset', this.render);
         // this.collection.bind('change', this.render, this);
         // this.listenTo(this.collection, "change active", this.sort);
         // this.listenTo(this.collection, "change", this.sort);
@@ -178,6 +197,7 @@ var BitsView = Backbone.View.extend({
     },
     unwire: function() {
         $('.bt-cartoobj').tooltip('destroy')
+
         return this
     },
     stageeps: function(e) {
@@ -315,6 +335,7 @@ var CartoPlainView = Backbone.View.extend({
     },
     // template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
+        this.listenTo(this.collection, 'reset', this.render);
         if(agent == "desktop"){
                 this.template = Handlebars.templates['cartoPlainView'];} else if(agent=="mobile"){
                     this.template = Handlebars.templates['cartoPlainView-Mobile'];
@@ -372,8 +393,11 @@ var a = $(e.currentTarget).parents('li')
         return this.activate(a)
 
     },
-    pulleps: function(e,etype) {
+    pulleps: function(e,etype,source) {
 
+if(typeof source == 'undefined' || source == null){
+    var source = "self"
+}
         appActivity.set({
             message: "fetching episodes...",
             show: true,
@@ -408,6 +432,9 @@ else {
     var a = $("#querylist-carto").find("span[data-id='"+locid+"']").parents("li")
 
 }
+
+if(source=="pu"){
+$("#episodes-list").addClass("episodespecial")}
 
 locid=doctorId(loctype,locid)
 
@@ -823,6 +850,7 @@ var BaseMapView = Backbone.View.extend({
     id: "map",
     initialize: function() {
         // this.updateBaseMap();
+        this.listenTo(this.collection, 'reset', this.render);
         // this.model.bind("change", this.updateBaseMap, this);
         // this.listenTo(this.model, "change", this.debug);
         // this.model.bind("change:bbox_west change:bbox_south change:bbox_east change:bbox_north", this.render, this);
@@ -1079,7 +1107,7 @@ var HiderView = Backbone.View.extend({
                 this.model.bind("change", this.render, this);
     },
     events: {
-        "click": "swap"
+        "click": "setpos"
     },
     swap: function(){
 
@@ -1088,15 +1116,80 @@ if(this.model.get("collapsed")=="false"){this.model.set({collapsed:"true",operat
 
 return this
     },
+    setpos: function(newforwhom,collaps){
+
+if(typeof newforwhom == 'undefined' || newforwhom == null){
+    var newforwhom = "main"
+}
+if(typeof collaps == 'undefined' || collaps == null){
+    
+    // nothing explicit came in -- let's swap whatever current state is
+    if(this.model.get("collapsed")=="true"){
+    var collaps = "false"
+    } else {
+    var collaps = "true"
+
+    }
+}
+
+switch (collaps){
+    case "true":
+    var op="plus"
+    var instro="expand main pane"
+    break;
+    case "false":
+    var op="minus"
+    var instro="collapse/hide main pane"
+}
+
+// if(this.model.get("collapsed")=="false"){
+    this.model.set({collapsed:collaps,forwhom:newforwhom,operation:op,instructions:instro});
+// } else {
+
+//         this.model.set({collapsed:"false",operation:"minus",instructions:"collapse/hide main pane"})
+//     }
+
+return this
+
+    },
+//     position: function(much){
+
+// if(typeof much == 'undefined' || much == null){
+//     var much = '99.5%';
+// }
+// this.model.set({collapsed:"true",operation:"plus",instructions:"expand main pane",distance:much});
+        
+
+// return this
+// .render()
+//     },
     render: function() {
 
+
+var forwhom=this.model.get("forwhom")
          $(this.el).html(this.template(this.model.toJSON()))
 
 if(this.model.get("collapsed")=="true"){
 
-    $("#main").addClass('hiddenish');
-    $("#mnuBaseMap").addClass('hiddenish');
-    $("#banner-bang").addClass('hiddenish');
+
+switch (forwhom) {   
+    case "main":
+        forclass="hiddenish"
+        break;   
+        case "episodes-pu":
+        forclass="hiddenish-episodes-pu";
+        break;
+    default:
+    forclass="hiddenish"
+}
+
+// first we clear out any current state
+// $("#main").attr("class","")
+
+console.log("forclass right b4 apply:");console.log(forclass);
+    $("#main").addClass(forclass);
+    $("#mnuBaseMap").addClass(forclass);
+    $("#banner-bang").addClass(forclass);
     appConsoleView.$el.addClass("hidden")
 
             appConsole.set({
@@ -1106,8 +1199,12 @@ if(this.model.get("collapsed")=="true"){
 } else {
     $("#mnuBaseMap").removeClass('hiddenish');
     appConsoleView.$el.removeClass("hidden")
-    $("#main").removeClass('hiddenish');
+    $("#main").removeClass('hiddenish hiddenish-episodes-pu');
     $("#banner-bang").removeClass('hiddenish');
+}
+
+if(typeof this.model.get("distance") !== 'undefined' || this.model.get("distance") !== null){
+    $("#main").css('right',this.model.get("distance"));
 }
 
         return this
@@ -1158,7 +1255,7 @@ var PopupView = Backbone.View.extend({
         return this.render();
     },
     events: {
-        // "click .bt-cartoobj-episodes": "pulleps",
+        "click .bt-cartoobj-episodes": "pulleps",
         // "click .bt-cartoobj-feedback": "ghsubmit",
         // "click .bt-cartoobj-leafletcloser": "reset"
         "click button[type='submit']": "issue_submit",
@@ -1235,20 +1332,17 @@ return this
 
 
     },
-    reset: function(e){
+//     reset: function(e){
 
-console.log("here we can maybe reset everything...and then actually close the thing too");
+// $guts = $(this.el)
+// $guts.parent().find('div').first().html('');
+// $guts.parent().removeClass("newspaceready")
+// var lid = this.model.get("leafletid")
+// map._layers[lid].closePopup()
 
-$guts = $(this.el)
-$guts.parent().find('div').first().html('');
-$guts.parent().removeClass("newspaceready")
+// return this
 
-var lid = this.model.get("leafletid")
-
-map._layers[lid].closePopup()
-return this
-
-    },
+//     },
     pulleps: function(){
         // this.prepspace()
 
@@ -1258,7 +1352,9 @@ var locid = this.model.get("cartodb_id")
 var loctype = this.model.get("geom_type")
 
 
-// appCBBListView.pulleps(locid,loctype)
+appCBBListView.pulleps(locid,loctype,"pu")
+appHiderView.setpos("episodes-pu","true")
+// appHiderView.render("episodes-pu");
 return this
     },
     issue: function(el){

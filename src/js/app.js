@@ -170,7 +170,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             // "thumb": "offline/mapbox-mario.png",
@@ -186,7 +186,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": false,
+            "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
             // "thumb": "offline/mapbox-mario.png",
@@ -361,7 +361,7 @@ window.appQuerySubNavView = new QuerySubNavView({
     model: appQuerySubNav
 });
 
-window.appHider = new Hider({collapsed:"true"});
+window.appHider = new Hider({collapsed:"false"});
 window.appHiderView = new HiderView({
     model: appHider
 });
@@ -434,6 +434,9 @@ window.appBitsCountView = new BitsCountView({
 window.appCBBMapView = new CartoCollxView({
     collection: appCBB
 })
+window.appCBBCountView = new CartoCollxCountView({
+    collection: appCBB
+})
 
 
 
@@ -463,15 +466,15 @@ window.appActivity = new Activity({message:"loading..."});
 window.appActivityView = new ActivityView({
     model: appActivity
 });
-var recentsCollx = new RecentsCollection();
-var recentsCollxView = new RecentsView({
-    collection: recentsCollx
-})
-recentsCollx.fetch({
-    success: function() {
-        recentsCollxView.render()
-    }
-})
+// var recentsCollx = new RecentsCollection();
+// var recentsCollxView = new RecentsView({
+//     collection: recentsCollx
+// })
+// recentsCollx.fetch({
+//     success: function() {
+//         recentsCollxView.render()
+//     }
+// })
 var huh = new Huh();
 var huhV = new HuhView({
     model: huh
