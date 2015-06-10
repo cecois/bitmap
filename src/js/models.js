@@ -422,7 +422,7 @@ var Activity = Backbone.Model.extend({
 /* -------------------------------------------------- POPUP -----------------------  */
 var Popup = Backbone.Model.extend({
     defaults: {
-        
+
     }
 });
 /* -------------------------------------------------- WIKIAZ

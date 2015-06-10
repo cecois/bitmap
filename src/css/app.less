@@ -76,7 +76,6 @@ color:@secondarycolor;
 #nprogress {
   .bar {
   background: @primarycolor;
-  // background: black;
 
   position: fixed;
   z-index: 1031;
@@ -84,7 +83,7 @@ color:@secondarycolor;
   left: 0;
 
   width: 100%;
-  height: 2px;
+  height: 12px;
 }}
 
 /* --------------------------------------- GENERAL -------------- */
@@ -416,6 +415,10 @@ bottom:-35px;
 
 } //mnubasemap
 
+.leaflet-control-zoom.leaflet-bar.leaflet-control{
+  box-shadow:0 0 1px 1px @secondarycolor-trans;
+  a{color:white}
+}
 /*.leaflet-control {
     // background-color: transparent;
     // color:white;
@@ -840,6 +843,9 @@ padding-top:15px;
   overflow:hidden;
   // overflow:hidden;
   li{
+    .bt-cartoobj{
+  color:white;
+}
     .carto-plain-title{
       text-decoration: underline;
       cursor:pointer;

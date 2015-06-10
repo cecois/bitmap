@@ -103,12 +103,11 @@ var Route = Backbone.Router.extend({
                 reset:true,
                 // dataType: "jsonp"
                 success: function() {
-                    if(verbose==true){console.log("successful fetch of appcbb at 76");}
 
                     // i can't for the life of me get that view to bind to this collection's events - dunno
                     // appBitsView.render()
                     // appBitsCountView.render()
-                    
+
 
              appCBB.fetch({
                 reset:true,

@@ -498,12 +498,15 @@ var methodV = new MethodView({
         }
         var solrstring = $(e.currentTarget).attr("data-string")
         var markerid = solrstring.split(",")[1]
-        appCartoQuery.set({
-            rawstring: solrstring
-        })
-        appCartoQuery.set({
-            rawstring: solrstring
-        })
+
+$("#query-form-input").val(solrstring)
+
+        // appCartoQuery.set({
+        //     rawstring: solrstring
+        // })
+        // appCartoQuery.set({
+        //     rawstring: solrstring
+        // })
         appCartoQueryView.fire(goto)
         // appRoute.navigate(pullURL("#query"), {
         //     trigger: true,

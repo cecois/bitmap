@@ -157,6 +157,7 @@ var CartoCollxCountView = Backbone.View.extend({
     },
     render: function() {
 var len = this.collection.models.length
+
 console.log("len cbb:");console.log(len);
         $(this.el).html(this.collection.models.length);
         return this
@@ -598,6 +599,7 @@ appActivity.set({message: "preparing list display...",show: true})
         appConsole.set({message:'Just fyi - "'+appCartoQuery.get("rawstring")+'" brought zero mappable locations.'})
         $(this.el).html("<span style='font-size:2em;'>Zero. RU a zero?</span>")
 appQuerySubNavView.specify("bits")
+appCBBCountView.render()
         return this.rewire()
     }
     }
@@ -937,7 +939,6 @@ var QueryView = Backbone.View.extend({
         }
 
         var ss = $("#query-form-input").val()
-        console.log("this.model:");console.log(this.model);
         if(ss == '' || ss == null){
             this.model.set({urlstring : "*:*",rawstring : "",displaystring : ""})
 
@@ -946,14 +947,15 @@ var QueryView = Backbone.View.extend({
             // this.model.set({urlstring:ss})
             // this.model.set({displaystring:ss})
         }
-        console.log("this.model:");console.log(this.model);
         // if(rawstring == '' || rawstring == null){rawstring = "*:*"}
         // appCartoQuery.set({
         //     rawstring: rawstring
         // })
         // console.log("qv rawstring:");console.log(rawstring);
         // console.log("qv goto:");console.log(goto);
+
         if (goto == true) {
+        console.log("let's go to there")
             appRoute.navigate(pullURL("#query"), {
                 trigger: true,
                 replace: true
@@ -962,40 +964,60 @@ var QueryView = Backbone.View.extend({
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it
             //
-            // appCBB.fetch({
-            //     success: function() {
-            //         appCBBListView.render()
-            //         appCBBMapView.render()
-            //         appActivity.set({
-            //             message: "",
-            //             show: false,
-            //             altel: false
-            //         })
+           appActivity.set({
+                message: "querying bits...",
+                show: true,
+                // altel: "#activity-default"
+            })
 
-            //          appRoute.navigate(pullURL("#query"), {
-            //     trigger: false,
-            //     replace: true
-            // })
+            appBits.fetch({
+                reset:true,
+                // dataType: "jsonp"
+                success: function() {
 
-            //     }, //success
-            //     error: function() {
-            //         appConsole.set({
-            //             message: "query errored out"
-            //         })
+                    // i can't for the life of me get that view to bind to this collection's events - dunno
+                    // appBitsView.render()
+                    // appBitsCountView.render()
 
-            //         // actually, if it's a true error we wanna be more forthcoming:
-            //         $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
 
-            //         appActivity.set({
-            //             message: "",
-            //             show: false,
-            //             altel: false
-            //         })
-            //         // console.log("failed fetch");
-            //     } //error
-            // }, {
-            //     reset: true
-            // })
+             appCBB.fetch({
+                reset:true,
+                // dataType: "jsonp"
+                success: function() {
+                    // console.log("successful fetch of appcbb at 76");
+                    // appCBBListView.render()
+                    // appCBBMapView.render()
+                    // appCBBCountView.render()
+                },
+                error: function() {
+                    appConsole.set({
+                        message: "query errored out"
+                    })
+                    // actually, if it's a true error we wanna be more forthcoming:
+                    appActivity.set({
+                        message: "",
+                        show: false
+                    })
+                    // console.log("failed fetch");
+                }
+            })
+
+                }, //success fetch
+                error: function() {
+                    appConsole.set({
+                        message: "query errored out"
+                    })
+                    // actually, if it's a true error we wanna be more forthcoming:
+                    $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                    $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                    appActivity.set({
+                        message: "",
+                        show: false,
+                        altel: false
+                    })
+                    // console.log("failed fetch");
+                }
+            })
             //
             //
         }
@@ -1122,7 +1144,7 @@ if(typeof newforwhom == 'undefined' || newforwhom == null){
     var newforwhom = "main"
 }
 if(typeof collaps == 'undefined' || collaps == null){
-    
+
     // nothing explicit came in -- let's swap whatever current state is
     if(this.model.get("collapsed")=="true"){
     var collaps = "false"
@@ -1158,7 +1180,7 @@ return this
 //     var much = '99.5%';
 // }
 // this.model.set({collapsed:"true",operation:"plus",instructions:"expand main pane",distance:much});
-        
+
 
 // return this
 // .render()
@@ -1657,6 +1679,15 @@ var MethodView = Backbone.View.extend({
         $(this.el).html(this.template(this.model.toJSON()))
         // }, this);
         return this
+        .rewire()
+    },
+    rewire: function(){
+
+// class="loc-trigger" data-toggle="tooltip"
+$(this.el).find('[data-toggle="tooltip"]').tooltip({position:"right",html:true,title:"These links will load the results in the background - hide the map (<strong>CTRL KEY</strong>) or switch to the query tab to interrogate further."})
+
+return this
+
     }
 });
 
