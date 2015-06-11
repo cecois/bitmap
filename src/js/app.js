@@ -170,7 +170,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-mario.png",
@@ -186,7 +186,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": false,
+            "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
             "thumb": "offline/mapbox-mario.png",

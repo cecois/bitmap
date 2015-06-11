@@ -183,7 +183,7 @@ var BitsView = Backbone.View.extend({
         // this.listenTo(this.collection, "change queued", this.fromzoom);
         // this.listenTo(this.collection, "change active", this.render);
         // this.listenTo(this.model, "change", this.render);
-        this.listenTo(this.collection, "reset", this.render);
+// this.listenTo(this.collection, "reset", this.render);
         // this.collection.bind('change', this.render, this);
         return this
             // .render()
@@ -311,9 +311,7 @@ var BitsView = Backbone.View.extend({
     },
     render: function() {
         this.unwire()
-        if (verbose == true) {
-            console.log("rendering bits")
-        }
+        
         _.sortBy(this.collection.models, function(mod) {
             return mod.get("active") == 'true';
         });
@@ -1340,14 +1338,20 @@ var PopupView = Backbone.View.extend({
         //     })
 
         appCBB.activate(locid,loctype)
+
+        // appHiderView.setpos("episodes-pu","true")
+        // appCBBListView.pulleps("pu")
+        return this
+        .navaway()
+    },
+    navaway: function(){
+
 appRoute.navigate(pullURL("#query"), {
                 trigger: true,
                 replace: true
             })
 
-        // appHiderView.setpos("episodes-pu","true")
-        // appCBBListView.pulleps("pu")
-        return this
+
     },
     issue: function(el) {
         // this.prepspace()

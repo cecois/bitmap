@@ -310,8 +310,8 @@ this.deactivate()
 var actv = this.findWhere({cartodb_id: id,geom_type:type})
 
 console.log("in cbb activate, actv:");console.log(actv);
-
-actv.set({active:true})
+if(actv.get("active")!== "true"){
+actv.set({active:true})}
 console.log("in cbb activate after set active, actv:");console.log(actv);
 
     },
