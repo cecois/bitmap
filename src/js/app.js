@@ -158,8 +158,8 @@ var baselayersdesk = {
             "active": false,
             "source": "mapbox",
             "nom": "Eleanor Lutz' Space Station Earth",
-            // "thumb": "offline/mapbox-mario.png",
-            "thumb": "https://b.tiles.mapbox.com/v4/examples.3hqcl3di/4/4/6@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
+            "thumb": "offline/mapbox-mario.png",
+            // "thumb": "https://b.tiles.mapbox.com/v4/examples.3hqcl3di/4/4/6@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
             "mapis": "dark",
             "definition": {
                 "subdomains": ["a", "b", "c"],
@@ -173,8 +173,8 @@ var baselayersdesk = {
             "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
-            // "thumb": "offline/mapbox-mario.png",
-            "thumb": "https://a.tiles.mapbox.com/v4/examples.a4c252ab/6/18/26@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
+            "thumb": "offline/mapbox-mario.png",
+            // "thumb": "https://a.tiles.mapbox.com/v4/examples.a4c252ab/6/18/26@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
             "mapis": "dark",
             "definition": {
                 "subdomains": ["a", "b", "c"],
@@ -189,8 +189,8 @@ var baselayersdesk = {
             "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
-            // "thumb": "offline/mapbox-mario.png",
-            "thumb": "file:///Users/ccmiller/Sites/mstroke/src/images/2877247_jkms-25-888-g002.png",
+            "thumb": "offline/mapbox-mario.png",
+            // "thumb": "file:///Users/ccmiller/Sites/mstroke/src/images/2877247_jkms-25-888-g002.png",
             "mapis": "dark",
             "definition": {
                 // "subdomains": ["a", "b", "c"],
@@ -205,7 +205,8 @@ var baselayersdesk = {
         //     "active": false,
         //     "source": "cloudmade",
         //     "nom": "CloudMade Grey",
-        //     "thumb": "http://c.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/22677/256/3/4/2.png",
+            // "thumb":null,
+            // "thumb": "http://c.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/22677/256/3/4/2.png",
         // "mapis":"dark",//
         // "definition": {
         //         "maxZoom": 18,
@@ -218,7 +219,8 @@ var baselayersdesk = {
         //     "active": false,
         //     "source": "cloudmade",
         //     "nom": "Red Alert",
-        //     "thumb": "http://c.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/19996/256/3/4/2.png",
+            // "thumb":null,
+            // "thumb": "http://c.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/19996/256/3/4/2.png",
         // "mapis":"dark",//
         // "definition": {
         //         "maxZoom": 18,
@@ -232,7 +234,8 @@ var baselayersdesk = {
         //     "active": false,
         //     "source": "opencycle",
         //     "nom": "OpenCycle",
-        //     // "thumb": "http://a.tile.opencyclemap.org/cycle/4/8/4.png",
+            // "thumb":null,
+            // "thumb": "http://a.tile.opencyclemap.org/cycle/4/8/4.png",
         //     "thumb": "offline/opencyclemap.png",
         //     "mapis": "light",
         //     "definition": {
@@ -305,8 +308,8 @@ var baselayersmobile = {
             "active": true,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
-            // "thumb": "offline/mapbox-mario.png",
-            "thumb": "https://a.tiles.mapbox.com/v4/examples.a4c252ab/6/18/26@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
+            "thumb": "offline/mapbox-mario.png",
+            // "thumb": "https://a.tiles.mapbox.com/v4/examples.a4c252ab/6/18/26@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
             "mapis": "dark",
             "definition": {
                 "subdomains": ["a", "b", "c"],
@@ -541,8 +544,16 @@ $("#query-form-input").val(solrstring)
         var bl = appBaseLayers.findWhere({
             active: true
         }).get("name")
-        var url = h + "/" + qs + "/" + bbx + "/" + bl
-        console.log(url);
+        var url = h + "/" + qs + "/" + bbx + "/" + bl + "/" 
+        var act = appCBB.findWhere({
+            active:true
+        })
+        if(typeof act !== 'undefined'){
+                var aid = act.attributes.cartodb_id
+                var atp = act.attributes.geom_type
+url+=aid + "/" + atp
+            }
+
         return url
     }
 

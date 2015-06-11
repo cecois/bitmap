@@ -10,15 +10,19 @@ var CartoCollxView = Backbone.View.extend({
         this.listenTo(this.collection, 'reset', this.render);
         // this.listenTo(this.collection, "change", this.render);
         return this
-        // .render()
+            // .render()
     },
     fit: function() {
         map.fitBounds(cbbItems.getBounds())
         return this
     },
     render: function() {
-        appActivity.set({message: "preparing map objects...",show: true})
+        appActivity.set({
+            message: "preparing map objects...",
+            show: true
+        })
         cbbItems.clearLayers();
+
         this.collection.each(function(hit, i) {
             // var gjraw = hit.get("the_geom_gj");
             var hitTemplate = Handlebars.templates['hitMarkerViewTpl']
@@ -35,135 +39,132 @@ var CartoCollxView = Backbone.View.extend({
             // wkt.read(hit.get("the_geom"));
             // var geomtype = wkt.type
             var geomtype = hit.get("geom_type")
-
-
- var hitm = {
-    "type": "Feature",
-    "properties": {
-        "name": hit.get("name"),
-        // "active":hit.get("active"),
-        "cartodb_id":hit.get("cartodb_id"),
-        "geom_type":hit.get("geom_type"),
-        "anno":hit.get("anno"),
-        "created_at":hit.get("created_at"),
-        "updated_at":hit.get("updated_at")
-    },
-    "geometry": $.parseJSON(hit.get("the_geom"))
-    // hit.get("the_geom")
-};
-
- // .get("the_geom");
- // console.log("hitm:");console.log(hitm);
-
+            var hitm = {
+                "type": "Feature",
+                "properties": {
+                    "name": hit.get("name"),
+                    // "active":hit.get("active"),
+                    "cartodb_id": hit.get("cartodb_id"),
+                    "geom_type": hit.get("geom_type"),
+                    "anno": hit.get("anno"),
+                    "created_at": hit.get("created_at"),
+                    "updated_at": hit.get("updated_at")
+                },
+                "geometry": $.parseJSON(hit.get("the_geom"))
+                    // hit.get("the_geom")
+            };
+            // .get("the_geom");
+            // console.log("hitm:");console.log(hitm);
             if (geomtype == "point") {
                 // var hitll = wkt.toObject().getLatLng()
                 // var hitm = L.circleMarker(hitll, markernew)
                 var activeStyle = markernew
-
-                 L.geoJson(hitm,{seen:false,cartodb_id:hit.get("cartodb_id"),pointToLayer: function (feature, latlng) {
-        return L.circleMarker(latlng, activeStyle);
-    }})
-                 .bindPopup(pu)
-                 .addTo(cbbItems).on("click", function(m) {
-        // first mark it seen
-                var stale = _.find(cbbItems._layers, function(i) {
-                    return i.options.seen == true
-                });
-                processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
-            })
-                 .addOneTimeEventListener("popupopen",function(p){
-                    /* --------------------------------------------------
+                L.geoJson(hitm, {
+                        seen: false,
+                        cartodb_id: hit.get("cartodb_id"),
+                        pointToLayer: function(feature, latlng) {
+                            return L.circleMarker(latlng, activeStyle);
+                        }
+                    }).bindPopup(pu).addTo(cbbItems).on("click", function(m) {
+                        // first mark it seen
+                        var stale = _.find(cbbItems._layers, function(i) {
+                            return i.options.seen == true
+                        });
+                        processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
+                    }).addOneTimeEventListener("popupopen", function(p) {
+                        /* --------------------------------------------------
 ok what dafuk is going on here? Well in order to use native Backbone stuff *within* the popup we needed to be able inject a model-view couple into its guts - i.e. we want the guts of this popup to be the $el of a BB view. The way to do that is to throw the popupopen event to an external popup factory that *we* write - just so happens to be a BB view generator based on the "model" we also pass as part of the object. See that piece where we add an attribute to p? p.model = hitm.properties is us passing along this (this!) model to the popup factory. Kinda. You know what i mean.
                      -----------------------  */
-                    p.model = hitm.properties
-                    puFactory(p)
-                 }) //on popup
-                // var seenStyle = markerseen
+                        p.model = hitm.properties
+                        puFactory(p)
+                    })
+                     //on popup
+                    // var seenStyle = markerseen
             } else {
                 // var hitm = wkt.toObject().setStyle(linenew)
                 var activeStyle = linenew
-                // var zoomer = hitm.coordinates
-                // var seenStyle = lineseen
-                // console.log("hitll:");console.log(hitll);
-            L.geoJson(hitm,{seen:false,cartodb_id:hit.get("cartodb_id"),style:activeStyle}).bindPopup(pu).addTo(cbbItems).on("click", function(m) {
-                var stale = _.find(cbbItems._layers, function(i) {
-                    return i.options.seen == true
-                });
-                processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
-            }).addOneTimeEventListener("popupopen",function(p){
-                    /* --------------------------------------------------
+                    // var zoomer = hitm.coordinates
+                    // var seenStyle = lineseen
+                    // console.log("hitll:");console.log(hitll);
+                L.geoJson(hitm, {
+                        seen: false,
+                        cartodb_id: hit.get("cartodb_id"),
+                        style: activeStyle
+                    }).bindPopup(pu).addTo(cbbItems).on("click", function(m) {
+                        var stale = _.find(cbbItems._layers, function(i) {
+                            return i.options.seen == true
+                        });
+                        processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
+                    }).addOneTimeEventListener("popupopen", function(p) {
+                        /* --------------------------------------------------
 ok what dafuk is going on here? Well in order to use native Backbone stuff *within* the popup we needed to be able inject a model-view couple into its guts - i.e. we want the guts of this popup to be the $el of a BB view. The way to do that is to throw the popupopen event to an external popup factory that *we* write - just so happens to be a BB view generator based on the "model" we also pass as part of the object. See that piece where we add an attribute to p? p.model = hitm.properties is us passing along this (this!) model to the popup factory. Kinda. You know what i mean.
                      -----------------------  */
-                    p.model = hitm.properties
-                    puFactory(p)
-                 }) //on popup
-                // var hitm = L.multiPolyline(hitll, linenew);
+                        p.model = hitm.properties
+                        puFactory(p)
+                    }) //on popup
+                    // var hitm = L.multiPolyline(hitll, linenew);
             }
+
+                                if(this.collection.length==1){
+    
+    cbbItems.openPopup()
+    
+}
             // var hitm = wkt.toObject().addTo(cbbItems).on("click", function(m) {
             // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
             // console.log("hitm just after bindpopu:");console.log(hitm);
-
-
-
             // hitm.bindPopup(pu).addTo(cbbItems).on("click", function(m) {
             //     var stale = _.find(cbbItems._layers, function(i) {
             //         return i.options.seen == true
             //     });
             //     processLeaf(hit.get("cartodb_id").toString(), false, geomtype);
             // });
-
-
             if (typeof hitm.options == 'undefined') {
                 hitm.options = {
                     cartodb_id: null
                 }
             }
             hitm.options.cartodb_id = hit.get("cartodb_id").toString()
-            var count = this.collection.length;
+            // var count = this.collection.length;
             // if (hit.get("active") == true || count == 1) {
-                // if (map.getBounds().contains(hitm.getLatLng()) == false) {
-                //     map.setView(hitm.getLatLng(), 9);
-                // }
-                // hitm.openPopup()
-                // hitm.zoomTo()
+            // if (map.getBounds().contains(hitm.getLatLng()) == false) {
+            //     map.setView(hitm.getLatLng(), 9);
+            // }
+            
+            // hitm.zoomTo()
             // }
         }, this);
-appActivity.set({message: null,show: false})
+        appActivity.set({
+            message: null,
+            show: false
+        })
         return this.fit()
     }
 });
 var BitsCountView = Backbone.View.extend({
     el: ".query-subnav-count-bits",
-        initialize: function() {
-            this.listenTo(this.collection, 'reset', this.render);
-            console.log("bitscount el:");console.log($(this.el));
-        return this
-        .render()
+    initialize: function() {
+        this.listenTo(this.collection, 'reset', this.render);
+        return this.render()
     },
     render: function() {
-var len = this.collection.models.length
-console.log("len bits:");console.log(len);
+        var len = this.collection.models.length
         $(this.el).html(this.collection.models.length);
         return this
     }
 }); //bitscountview
 var CartoCollxCountView = Backbone.View.extend({
     el: ".query-subnav-count-locations",
-        initialize: function() {
-            this.listenTo(this.collection, 'reset', this.render);
-            console.log("cartcount el:");console.log($(this.el));
-        return this
-        .render()
+    initialize: function() {
+        this.listenTo(this.collection, 'reset', this.render);
+        return this.render()
     },
     render: function() {
-var len = this.collection.models.length
-
-console.log("len cbb:");console.log(len);
+        var len = this.collection.models.length
         $(this.el).html(this.collection.models.length);
         return this
     }
 }); //bitscountview
-
 var BitsView = Backbone.View.extend({
     // tagName: "li",
     el: "#querylist-bits",
@@ -185,7 +186,7 @@ var BitsView = Backbone.View.extend({
         this.listenTo(this.collection, "reset", this.render);
         // this.collection.bind('change', this.render, this);
         return this
-        // .render()
+            // .render()
     },
     debug: function() {
         console.log("here cuzza change queued");
@@ -193,12 +194,11 @@ var BitsView = Backbone.View.extend({
     echoid: function(e) {
         var locid = $(e.target).attr("data-id")
         var str = '<span class="loc-trigger" data-string="cartodb_id:' + locid + '"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
-       console.log(str);
+        console.log(str);
         return this
     },
     unwire: function() {
         $('.bt-cartoobj').tooltip('destroy')
-
         return this
     },
     stageeps: function(e) {
@@ -210,29 +210,25 @@ var BitsView = Backbone.View.extend({
     },
     pulleps: function(e) {
         console.log(e);
-
         var voff = e.currentTarget.offsetTop;
-
         appActivity.set({
             message: "fetching episodes...",
             show: true,
-            altel: "#episodes-list"
+            altel: null
+                // altel: "#episodes-list"
         })
         var locid = $(e.target).attr("data-id")
-
         var loctype = $(e.target).attr("data-type");
-
-        switch(loctype) {
-    case 'line':
-        locid = locid/plierline
-        break;
-    case 'poly':
-        locid = locid/plierpoly
-        break;
-    default:
-        locid = locid;
-}
-
+        switch (loctype) {
+            case 'line':
+                locid = locid / plierline
+                break;
+            case 'poly':
+                locid = locid / plierpoly
+                break;
+            default:
+                locid = locid;
+        }
         appEpisodes.activeloc = Number(locid);
         appEpisodes.loctype = loctype;
         appEpisodes.verticaloffset = voff;
@@ -251,7 +247,7 @@ var BitsView = Backbone.View.extend({
             }
         });
         e.preventDefault()
-        // var am = $(e.currentTarget).parents('li').data("id").toString();
+            // var am = $(e.currentTarget).parents('li').data("id").toString();
         var a = $(e.currentTarget).parents('li')
         return this.activate(a)
     },
@@ -274,7 +270,7 @@ var BitsView = Backbone.View.extend({
     activate: function(a) {
         // first wipe the list of any true classes (see ~184 for explanation)
         $(this.el).find("li").removeClass("true")
-        // var amid = am.get("cartodb_id")
+            // var amid = am.get("cartodb_id")
         var amid = $(a).data("id").toString();
         if (verbose == true) {
             console.log("in activate for " + a);
@@ -299,14 +295,12 @@ var BitsView = Backbone.View.extend({
         // })
         // send id and popup flag
         //
-
-// SHOULD NOT BE AN EACH #returnto
-//
-
+        // SHOULD NOT BE AN EACH #returnto
+        //
         $(a).addClass("true")
         $(a).addClass("well")
         return this
-        // .render()
+            // .render()
     },
     render: function() {
         this.unwire()
@@ -337,20 +331,21 @@ var CartoPlainView = Backbone.View.extend({
     // template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
         this.listenTo(this.collection, 'reset', this.render);
-        if(agent == "desktop"){
-                this.template = Handlebars.templates['cartoPlainView'];} else if(agent=="mobile"){
-                    this.template = Handlebars.templates['cartoPlainView-Mobile'];
-                }
+        if (agent == "desktop") {
+            this.template = Handlebars.templates['cartoPlainView'];
+        } else if (agent == "mobile") {
+            this.template = Handlebars.templates['cartoPlainView-Mobile'];
+        }
         // this.collection.bind('change', this.render, this);
         // this.listenTo(this.collection, "change active", this.sort);
         // this.listenTo(this.collection, "change", this.sort);
         // this.listenTo(this.collection, "change", this.sort);
-// this.listenTo(this.collection, "change queued", this.fromzoom);
+        // this.listenTo(this.collection, "change queued", this.fromzoom);
         // this.listenTo(this.collection, "change active", this.render);
         // this.listenTo(this.model, "change", this.render);
         // this.collection.bind('change', this.render, this);
         return this
-        // .render()
+            // .render()
     },
     debug: function() {
         console.log("here cuzza change queued");
@@ -358,7 +353,7 @@ var CartoPlainView = Backbone.View.extend({
     echoid: function(e) {
         var locid = $(e.target).attr("data-id")
         var str = '<span class="loc-trigger" data-string="cartodb_id:' + locid + '"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
-       console.log(str);
+        console.log(str);
         return this
     },
     fromzoom: function(cm) {
@@ -376,69 +371,56 @@ var CartoPlainView = Backbone.View.extend({
         return this
     },
     triage: function(e) {
-
-        if(agent=="desktop"){
-                return this.pulleps(e)} else if(agent=="mobile"){
-                    return this.pulleps_mobile(e)
-                }
+        if (agent == "desktop") {
+            return this.pulleps(e)
+        } else if (agent == "mobile") {
+            return this.pulleps_mobile(e)
+        }
     },
     sort: function() {
         this.collection.sort()
         return this
     },
     pulleps_mobile: function(e) {
-
-e.preventDefault()
-
-var a = $(e.currentTarget).parents('li')
+        e.preventDefault()
+        var a = $(e.currentTarget).parents('li')
         return this.activate(a)
-
     },
-    pulleps: function(e,etype,source) {
-
-if(typeof source == 'undefined' || source == null){
-    var source = "self"
-}
+    pulleps: function(e, etype, source) {
+        if (typeof source == 'undefined' || source == null) {
+            var source = "self"
+        }
         appActivity.set({
             message: "fetching episodes...",
             show: true,
-            altel: "#episodes-list"
+            // altel: "#episodes-list"
         })
+        var t = $.type(e);
+        if (t == "object") {
+            // we're in here from a click, we'll have to sniff out the data attr we need
+            var voff = e.currentTarget.offsetTop;
+            // var hoff = e.currentTarget.parentElement.clientWidth;
+            // $("#querylist-carto").css("left",hoff-hoff+50)
+            var locid = $(e.target).attr("data-id")
+            var loctype = $(e.target).attr("data-type");
+            e.preventDefault()
+                // var am = $(e.currentTarget).parents('li').data("id").toString();
+            var a = $(e.currentTarget).parents('li')
+        } //t==object - we are done sniffing the data-id and -type from gui elements
+        else {
+            // this wasn't triggered by a click so we treat the id and type els differently
+            // and we have to *find* the el to activate
+            var locid = e
+            var loctype = etype
+                // var a = $(this.el).find("[data-id='"+locid+"']")
+            var a = $("#querylist-carto").find("span[data-id='" + locid + "']").parents("li")
+        }
 
-var t = $.type(e);
-
-if(t=="object"){
-    // we're in here from a click, we'll have to sniff out the data attr we need
-
-        var voff = e.currentTarget.offsetTop;
-        // var hoff = e.currentTarget.parentElement.clientWidth;
-        // $("#querylist-carto").css("left",hoff-hoff+50)
-
-
-        var locid = $(e.target).attr("data-id")
-var loctype = $(e.target).attr("data-type");
-
-e.preventDefault()
-        // var am = $(e.currentTarget).parents('li').data("id").toString();
-        var a = $(e.currentTarget).parents('li')
-
-} //t==object - we are done sniffing the data-id and -type from gui elements
-
-else {
-    // this wasn't triggered by a click so we treat the id and type els differently
-    // and we have to *find* the el to activate
-    var locid=e
-    var loctype=etype
-    // var a = $(this.el).find("[data-id='"+locid+"']")
-    var a = $("#querylist-carto").find("span[data-id='"+locid+"']").parents("li")
-
-}
-
-if(source=="pu"){
-$("#episodes-list").addClass("episodespecial")}
-
-locid=doctorId(loctype,locid)
-
+        if (source == "pu") {
+            $("#episodes-list").addClass("episodespecial")
+            appHiderView.setpos("episodes-pu","true")
+        }
+        locid = doctorId(loctype, locid)
         appEpisodes.activeloc = Number(locid);
         appEpisodes.loctype = loctype;
         appEpisodes.verticaloffset = voff;
@@ -456,13 +438,12 @@ locid=doctorId(loctype,locid)
                 })
             }
         });
-
         return this.activate(a)
     },
     zoomtointernal: function(e) {
         e.preventDefault()
         var a = $(e.currentTarget).parents('li')
-        // console.log("a at 186:");console.log(a);
+            // console.log("a at 186:");console.log(a);
         return this.activate(a)
     },
     zoomfromexternal: function(czid) {
@@ -479,129 +460,129 @@ locid=doctorId(loctype,locid)
             filterChildSelector: 'div'
         });
         $('.bt-cartoobj').tooltip({
-            container: 'body',
-            placement: 'right',
-            trigger: 'hover'
-        })
-        // a little non-backbone stuff
+                container: 'body',
+                placement: 'right',
+                trigger: 'hover'
+            })
+            // a little non-backbone stuff
         $("#stats-hits").html("total hits: " + this.collection.length)
         return this
     },
     activate: function(a) {
-        console.log("a in activate:");console.log(a);
+        
         // first wipe the list of any true classes (see ~184 for explanation)
         $(this.el).find(".carto-plain-title").removeClass("true")
-        // var amid = am.get("cartodb_id")
         var amid = $(a).data("id").toString();
-        if (verbose == true) {
-            console.log("in activate for " + a);
-        }
-        // actually first silently deactivate the others
-        _.each(_.reject(this.collection.models, function(mod) {
-            return mod.get("cartodb_id") == amid;
-        }), function(mo) {
-            mo.set({
-                active: false,
-                queued: false
-            }, {
-                silent: true
-            })
-        }, this)
-        //
-        var item = this.collection.findWhere({
-            "cartodb_id": amid
+        var amtyp = $(a).data("type").toString();
+
+        
+        appCBB.activate(amid,amtyp)
+        // // actually first silently deactivate the others
+        // _.each(_.reject(this.collection.models, function(mod) {
+        //         return mod.get("cartodb_id") == amid;
+        //     }), function(mo) {
+        //         mo.set({
+        //             active: false,
+        //             queued: false
+        //         }, {
+        //             silent: true
+        //         })
+        //     }, this)
+        //     //
+        // var item = this.collection.findWhere({
+        //     "cartodb_id": amid
+        // });
+                var item = this.collection.findWhere({
+            "active": true
         });
-        item.set({
-            active: true
-        })
-        // send id and popup flag
-        //
-
-// SHOULD NOT BE AN EACH #returnto
-//
+        // item.set({
+        //         active: true
+        //     })
+            //
+            // SHOULD NOT BE AN EACH #returnto
+            //
         _.each(cbbItems._layers, function(i) {
-            // console.log("i in cbbitems zoomloop:");
-            // console.log(i);
-            // console.log(item.get("geom_type"))
-            if (i.options.cartodb_id == amid) {
-
-                // if(item.get("geom_type")=="line"){
-                //     if (map.getBounds().contains(i.getLatLng()) == false) {
-                //     map.setView(i.getLatLng(), 9);
-                // }
-                // }
-                // if (map.getBounds().contains(i.getBounds()) == false) {
+                
+                // we can shop the now-active id to the leaflet layers bc we stored that id when we added them to the map
+                if (i.options.cartodb_id == amid) {
+                // if (i.active == true) {
+                    // if(item.get("geom_type")=="line"){
+                    //     if (map.getBounds().contains(i.getLatLng()) == false) {
+                    //     map.setView(i.getLatLng(), 9);
+                    // }
+                    // }
+                    // if (map.getBounds().contains(i.getBounds()) == false) {
                     // map.setView(i.getLatLng(), 9);
                     // map.fitBounds(i.getBounds());
-                // }
-
-var ib = i.getBounds();
-if(verbose==true){
-console.log("ib:");console.log(ib);}
-var typ = item.get("geom_type")
-
-
-        switch(typ) {
-    case 'point':
-// map.setView(i.getBounds(),7)
-map.fitBounds(ib)
-        break;
-    case 'poly':
-// map.setView(i.getBounds(),7)
-map.fitBounds(ib)
-        break;
-    default:
-    // i.e. line
-map.fitBounds(ib)
-        // locid = locid;
-}
-
-                // if (map.getBounds().contains(i.getLatLng()) == false) {
-                //     map.setView(i.getLatLng(), 9);
-                // }
-            }
-        }) //each
-        // $(a).addClass("true") //OG
+                    // }
+                    var ib = i.getBounds();
+                    if (verbose == true) {
+                        console.log("ib:");
+                        console.log(ib);
+                    }
+                    var typ = item.get("geom_type")
+                    switch (typ) {
+                        case 'point':
+                            // map.setView(i.getBounds(),7)
+                            map.fitBounds(ib)
+                            break;
+                        case 'poly':
+                            // map.setView(i.getBounds(),7)
+                            map.fitBounds(ib)
+                            break;
+                        default:
+                            // i.e. line
+                            map.fitBounds(ib)
+                                // locid = locid;
+                    }
+                    // if (map.getBounds().contains(i.getLatLng()) == false) {
+                    //     map.setView(i.getLatLng(), 9);
+                    // }
+                }
+            }) //each
+            // $(a).addClass("true") //OG
         $(a).find(".carto-plain-title").addClass("true")
-        // if($(a).hasClass('carto-plain-title')){
-        // $(a).addClass("true")
-        // } else {
-        //         $(a).siblings('.carto-plain-title').addClass("true")}
-        // $(a).addClass("well")
+            // if($(a).hasClass('carto-plain-title')){
+            // $(a).addClass("true")
+            // } else {
+            //         $(a).siblings('.carto-plain-title').addClass("true")}
+            // $(a).addClass("well")
         processLeaf(amid, true, item.get("geom_type"))
-        // GUH? WHAT'S THIS? It's a straight-up jquery hack to waaaaay more quickly light up the active model's list item
-        // cuz doing it with a proper backbone re-render took forever (.8 seconds)
+            // GUH? WHAT'S THIS? It's a straight-up jquery hack to waaaaay more quickly light up the active model's list item
+            // cuz doing it with a proper backbone re-render took forever (.8 seconds)
         return this
-        // .render()
+            // .render()
     },
     render: function() {
         this.unwire()
-
-appActivity.set({message: "preparing list display...",show: true})
-
+        appActivity.set({
+            message: "preparing list display...",
+            show: true
+        })
         if (verbose == true) {
             console.log("rendering cartoplain")
         }
-        if(this.collection.models.length>0){
-
-        _.sortBy(this.collection.models, function(mod) {
-            return mod.get("active") == 'true';
-        });
-        // var esc = appCartoQuery.solrstring()
-        // $("#query-form-input").val(esc)
-        // notice we are wrapping the collection in rows: cuz cartodb does it
-        $(this.el).html(this.template({
-            count: this.collection.models.length,
-            rows: this.collection.toJSON()
-        }));
-    } else {
-        // if there are no locations we wanna be cute and snide but also not make anybody see it
-        appConsole.set({message:'Just fyi - "'+appCartoQuery.get("rawstring")+'" brought zero mappable locations.'})
-        $(this.el).html("<span style='font-size:2em;'>Zero. RU a zero?</span>")
-appQuerySubNavView.specify("bits")
-appCBBCountView.render()
-        return this.rewire()
-    }
+        if (this.collection.models.length > 0) {
+            _.sortBy(this.collection.models, function(mod) {
+                return mod.get("active") == 'true';
+            });
+            // var esc = appCartoQuery.solrstring()
+            // $("#query-form-input").val(esc)
+            // notice we are wrapping the collection in rows: cuz cartodb does it
+            $(this.el).html(this.template({
+                count: this.collection.models.length,
+                rows: this.collection.toJSON()
+            }));
+        } else {
+            // if there are no locations we wanna be cute and snide but also not make anybody see it
+            appConsole.set({
+                message: 'Just fyi - "' + appCartoQuery.get("rawstring") + '" brought zero mappable locations.'
+            })
+            $(this.el).html("<span style='font-size:2em;'>Zero. RU a zero?</span>")
+            appQuerySubNavView.specify("bits")
+            appCBBCountView.render()
+            return this.rewire()
+        }
     }
 });
 var SolrFieldzView = Backbone.View.extend({
@@ -656,7 +637,7 @@ var HuhView = Backbone.View.extend({
     },
     render: function() {
         $(this.el).html(this.template(this.model.toJSON()))
-        // }, this);
+            // }, this);
         return this
     },
     reset: function() {
@@ -690,8 +671,8 @@ var BaseLayerMenuItemView = Backbone.View.extend({
     },
     setActive: function(e) {
         e.preventDefault()
-        // first a little sugar
-        // $("#BaseMapConsole").css("color","white").animate(1500)
+            // first a little sugar
+            // $("#BaseMapConsole").css("color","white").animate(1500)
         if (this.model.get("active") == true) {
             // it's already active, do nothing
             return this
@@ -771,7 +752,7 @@ var BaseLayersMenuView = Backbone.View.extend({
         // $("#mnuBaseMap").attr("title",this.title)
         $("#mnuBaseMap").tooltip()
         $("#BaseMapConsole").html($(".mnuThumbnail.true").attr("title"))
-        //
+            //
         this.$(".mnuThumbnail").hover(function() {
             $("#BaseMapConsole").addClass("temp")
             $("#BaseMapConsole").html(this.title)
@@ -779,26 +760,26 @@ var BaseLayersMenuView = Backbone.View.extend({
             /* Stuff to do when the mouse leaves the element */
             // $("#BaseMapConsole").html(og)
             $("#BaseMapConsole").removeClass("temp")
-            // $("#BaseMapConsole").html(_.findWhere(this.collection,model.get("active")==true));
+                // $("#BaseMapConsole").html(_.findWhere(this.collection,model.get("active")==true));
             $("#BaseMapConsole").html($(".mnuThumbnail.true").attr("title"));
         }, this);
         return this
     },
     process: function(amodel) {
-        //A model was toggled (on or off)
-        if (amodel.get('active') == true) {
-            //A model was toggled ON, so check if a different model is already selected
-            var nonActive = this.collection.find(function(model) {
-                return amodel !== model && model.get('active');
-            });
-            if (nonActive != null) {
-                //Another model was selected, so toggle it to off
-                nonActive.set({
-                    'active': false
+            //A model was toggled (on or off)
+            if (amodel.get('active') == true) {
+                //A model was toggled ON, so check if a different model is already selected
+                var nonActive = this.collection.find(function(model) {
+                    return amodel !== model && model.get('active');
                 });
+                if (nonActive != null) {
+                    //Another model was selected, so toggle it to off
+                    nonActive.set({
+                        'active': false
+                    });
+                }
             }
-        }
-    } //process
+        } //process
 });
 var BaseLayersView = Backbone.View.extend({
     // tagName: "ul",
@@ -844,7 +825,7 @@ var BaseLayersView = Backbone.View.extend({
         map.addLayer(baseLayer);
         baseLayer.bringToBack();
         return this
-        // .rewire()
+            // .rewire()
     }
 });
 /* -------------------------------------------------- BASEMAPVIEW -----------------------  */
@@ -857,9 +838,8 @@ var BaseMapView = Backbone.View.extend({
         // this.listenTo(this.model, "change", this.debug);
         // this.model.bind("change:bbox_west change:bbox_south change:bbox_east change:bbox_north", this.render, this);
         // this.render();
-        return this
-        .wireup()
-        // .updateBaseMap()
+        return this.wireup()
+            // .updateBaseMap()
     },
     debug: function() {
         console.log("debug bmv 338:");
@@ -870,7 +850,7 @@ var BaseMapView = Backbone.View.extend({
         var mapBounds = this.model.getBounds();
         // map.fitBounds(mapBounds);
         return this
-        // .zoomCheck()
+            // .zoomCheck()
     },
     zoomCheck: function() {
         var def = this.model.get("definition");
@@ -906,7 +886,7 @@ var BaseMapView = Backbone.View.extend({
         map.addLayer(baseLayer);
         baseLayer.bringToBack();
         return this
-        // .zoomCheck()
+            // .zoomCheck()
     }
 });
 /* -------------------------------------------------- QUERYVIEW -----------------------  */
@@ -916,36 +896,43 @@ var QueryView = Backbone.View.extend({
         "click #query-form-bt": "fire",
         "click #query-form-randomize": "randomize",
         "click #solrfields .glyphicon": "togglehelp"
-        // "change": "render"
+            // "change": "render"
     },
     template: Handlebars.templates['queryViewTpl'],
     initialize: function() {
         this.render();
         var q = this.model;
-    // q.on("change", q.setstrings);
+        // q.on("change", q.setstrings);
         this.listenTo(this.model, "change", this.render)
-        // this.model.bind("change", this.render, this);
+            // this.model.bind("change", this.render, this);
     },
     fire: function(goto) {
         // doubles as a clearer of the episodes arrow, some other gui stuff
         $(".episodes-arrow").addClass("hidden")
-        appHider.set({collapsed:"false"})
-
+        appHider.set({
+            collapsed: "false"
+        })
         if (typeof goto == 'undefined') {
             goto = true
         }
-        if(goto.type=="click"){
-            goto=true
+        if (goto.type == "click") {
+            goto = true
         }
-
         var ss = $("#query-form-input").val()
-        if(ss == '' || ss == null){
-            this.model.set({urlstring : "*:*",rawstring : "",displaystring : ""})
-
+        if (ss == '' || ss == null) {
+            this.model.set({
+                urlstring: "*:*",
+                rawstring: "",
+                displaystring: ""
+            })
         } else {
-            this.model.set({urlstring : ss,rawstring : ss,displaystring : ss})
-            // this.model.set({urlstring:ss})
-            // this.model.set({displaystring:ss})
+            this.model.set({
+                    urlstring: ss,
+                    rawstring: ss,
+                    displaystring: ss
+                })
+                // this.model.set({urlstring:ss})
+                // this.model.set({displaystring:ss})
         }
         // if(rawstring == '' || rawstring == null){rawstring = "*:*"}
         // appCartoQuery.set({
@@ -953,9 +940,8 @@ var QueryView = Backbone.View.extend({
         // })
         // console.log("qv rawstring:");console.log(rawstring);
         // console.log("qv goto:");console.log(goto);
-
         if (goto == true) {
-        console.log("let's go to there")
+            console.log("let's go to there")
             appRoute.navigate(pullURL("#query"), {
                 trigger: true,
                 replace: true
@@ -964,62 +950,57 @@ var QueryView = Backbone.View.extend({
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it
             //
-           appActivity.set({
+            appActivity.set({
                 message: "querying bits...",
                 show: true,
                 // altel: "#activity-default"
             })
-
             appBits.fetch({
-                reset:true,
-                // dataType: "jsonp"
-                success: function() {
-
-                    // i can't for the life of me get that view to bind to this collection's events - dunno
-                    // appBitsView.render()
-                    // appBitsCountView.render()
-
-
-             appCBB.fetch({
-                reset:true,
-                // dataType: "jsonp"
-                success: function() {
-                    // console.log("successful fetch of appcbb at 76");
-                    // appCBBListView.render()
-                    // appCBBMapView.render()
-                    // appCBBCountView.render()
-                },
-                error: function() {
-                    appConsole.set({
-                        message: "query errored out"
-                    })
-                    // actually, if it's a true error we wanna be more forthcoming:
-                    appActivity.set({
-                        message: "",
-                        show: false
-                    })
-                    // console.log("failed fetch");
-                }
-            })
-
-                }, //success fetch
-                error: function() {
-                    appConsole.set({
-                        message: "query errored out"
-                    })
-                    // actually, if it's a true error we wanna be more forthcoming:
-                    $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                    $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                    appActivity.set({
-                        message: "",
-                        show: false,
-                        altel: false
-                    })
-                    // console.log("failed fetch");
-                }
-            })
-            //
-            //
+                    reset: true,
+                    // dataType: "jsonp"
+                    success: function() {
+                        // i can't for the life of me get that view to bind to this collection's events - dunno
+                        // appBitsView.render()
+                        // appBitsCountView.render()
+                        appCBB.fetch({
+                            reset: true,
+                            // dataType: "jsonp"
+                            success: function() {
+                                // console.log("successful fetch of appcbb at 76");
+                                // appCBBListView.render()
+                                // appCBBMapView.render()
+                                // appCBBCountView.render()
+                            },
+                            error: function() {
+                                appConsole.set({
+                                        message: "query errored out"
+                                    })
+                                    // actually, if it's a true error we wanna be more forthcoming:
+                                appActivity.set({
+                                        message: "",
+                                        show: false
+                                    })
+                                    // console.log("failed fetch");
+                            }
+                        })
+                    }, //success fetch
+                    error: function() {
+                        appConsole.set({
+                                message: "query errored out"
+                            })
+                            // actually, if it's a true error we wanna be more forthcoming:
+                        $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                        $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                        appActivity.set({
+                                message: "",
+                                show: false,
+                                altel: false
+                            })
+                            // console.log("failed fetch");
+                    }
+                })
+                //
+                //
         }
     },
     setstage: function() {
@@ -1031,7 +1012,7 @@ var QueryView = Backbone.View.extend({
             $(this.el).addClass("error")
         }
         $(this.el).html(this.template(this.model.toJSON()))
-        // $(this.el).val(this.model.get("solrstring"))
+            // $(this.el).val(this.model.get("solrstring"))
         return this
     }
 });
@@ -1049,75 +1030,58 @@ var QuerySubNavView = Backbone.View.extend({
         // this.listenTo(appBits,"reset",this.accoutrement)
         // this.listenTo(appCBB,"reset",this.accoutrement)
         this.listenTo(this.model, "change", this.render)
-        // this.model.bind("change", this.render, this);
+            // this.model.bind("change", this.render, this);
     },
     render: function() {
         // appRoute.update()
         if (this.model.get("error") == true) {
             $(this.el).addClass("error")
         }
-
-
         $(this.el).html(this.template(this.model.toJSON()))
-        // $(this.el).val(this.model.get("solrstring"))
+            // $(this.el).val(this.model.get("solrstring"))
+        return this.activate()
+    },
+    specify: function(w) {
+        // just an extra we can use to specify which "tab"
+        $(this.el).find(".query-subnav-btn").removeClass("active")
+        $(".query-subnav-btn[data-id='" + w + "']").addClass("active")
+        appEpisodesView.reset()
+            // blah - too lazy to fix this sitewide
+        if (w == "locations") {
+            $("#querylist-carto").removeClass("hidden")
+            $("#querylist-bits").addClass("hidden")
+        } else {
+            $("#querylist-carto").addClass("hidden")
+            $("#querylist-bits").removeClass("hidden")
+        }
         return this
-        .activate()
     },
-    specify: function(w){
-// just an extra we can use to specify which "tab"
-$(this.el).find(".query-subnav-btn").removeClass("active")
-$(".query-subnav-btn[data-id='"+w+"']").addClass("active")
-
-appEpisodesView.reset()
-// blah - too lazy to fix this sitewide
-
-if(w=="locations"){
-    $("#querylist-carto").removeClass("hidden")
-    $("#querylist-bits").addClass("hidden")
-} else {
-    $("#querylist-carto").addClass("hidden")
-    $("#querylist-bits").removeClass("hidden")
-}
-
-return this
-
-    },
-//     accoutrement: function(){
-
-// // because we're subnavvin here, the models themselves aren't really here
-
-// $(this.el).find('.query-subnav-count-bits').html("("+appBits.length+")")
-// $(this.el).find('.query-subnav-count-locations').html("("+appCBB.length+")")
-
-
-//     },
-    activate: function(e){
-
-
-if(typeof e == 'undefined'){
-    var elid = "locations"
-} else {
-    // $el = $(e.target)
-    var elid = $(e.target).attr("data-id")
-$(e.target).addClass("active")
-}
-
-$(this.el).find(".query-subnav-btn").removeClass("active")
-$(".query-subnav-btn[data-id='"+elid+"']").addClass("active")
-
-appEpisodesView.reset()
-// blah - too lazy to fix this sitewide
-
-if(elid=="locations"){
-    $("#querylist-carto").removeClass("hidden")
-    $("#querylist-bits").addClass("hidden")
-} else {
-    $("#querylist-carto").addClass("hidden")
-    $("#querylist-bits").removeClass("hidden")
-}
-return this
-// .accoutrement()
-
+    //     accoutrement: function(){
+    // // because we're subnavvin here, the models themselves aren't really here
+    // $(this.el).find('.query-subnav-count-bits').html("("+appBits.length+")")
+    // $(this.el).find('.query-subnav-count-locations').html("("+appCBB.length+")")
+    //     },
+    activate: function(e) {
+        if (typeof e == 'undefined') {
+            var elid = "locations"
+        } else {
+            // $el = $(e.target)
+            var elid = $(e.target).attr("data-id")
+            $(e.target).addClass("active")
+        }
+        $(this.el).find(".query-subnav-btn").removeClass("active")
+        $(".query-subnav-btn[data-id='" + elid + "']").addClass("active")
+        appEpisodesView.reset()
+            // blah - too lazy to fix this sitewide
+        if (elid == "locations") {
+            $("#querylist-carto").removeClass("hidden")
+            $("#querylist-bits").addClass("hidden")
+        } else {
+            $("#querylist-carto").addClass("hidden")
+            $("#querylist-bits").removeClass("hidden")
+        }
+        return this
+            // .accoutrement()
     }
 });
 /* -------------------------------------------------- MAINHIDER -----------------------  */
@@ -1126,124 +1090,114 @@ var HiderView = Backbone.View.extend({
     template: Handlebars.templates['hiderViewTpl'],
     initialize: function() {
         this.render();
-                this.model.bind("change", this.render, this);
+        this.model.bind("change", this.render, this);
     },
     events: {
         "click": "setpos"
     },
-    swap: function(){
-
-if(this.model.get("collapsed")=="false"){this.model.set({collapsed:"true",operation:"plus",instructions:"expand main pane"});}
-        else if(this.model.get("collapsed")=="true"){this.model.set({collapsed:"false",operation:"minus",instructions:"collapse/hide main pane"});}
-
-return this
-    },
-    setpos: function(newforwhom,collaps){
-
-if(typeof newforwhom == 'undefined' || newforwhom == null){
-    var newforwhom = "main"
-}
-if(typeof collaps == 'undefined' || collaps == null){
-
-    // nothing explicit came in -- let's swap whatever current state is
-    if(this.model.get("collapsed")=="true"){
-    var collaps = "false"
-    } else {
-    var collaps = "true"
-
-    }
-}
-
-switch (collaps){
-    case "true":
-    var op="plus"
-    var instro="expand main pane"
-    break;
-    case "false":
-    var op="minus"
-    var instro="collapse/hide main pane"
-}
-
-// if(this.model.get("collapsed")=="false"){
-    this.model.set({collapsed:collaps,forwhom:newforwhom,operation:op,instructions:instro});
-// } else {
-
-//         this.model.set({collapsed:"false",operation:"minus",instructions:"collapse/hide main pane"})
-//     }
-
-return this
-
-    },
-//     position: function(much){
-
-// if(typeof much == 'undefined' || much == null){
-//     var much = '99.5%';
-// }
-// this.model.set({collapsed:"true",operation:"plus",instructions:"expand main pane",distance:much});
-
-
-// return this
-// .render()
-//     },
-    render: function() {
-
-
-var forwhom=this.model.get("forwhom")
-         $(this.el).html(this.template(this.model.toJSON()))
-
-if(this.model.get("collapsed")=="true"){
-
-
-switch (forwhom) {   
-    case "main":
-        forclass="hiddenish"
-        break;   
-        case "episodes-pu":
-        forclass="hiddenish-episodes-pu";
-        break;
-    default:
-    forclass="hiddenish"
-}
-
-// first we clear out any current state
-// $("#main").attr("class","")
-
-console.log("forclass right b4 apply:");console.log(forclass);
-    $("#main").addClass(forclass);
-    $("#mnuBaseMap").addClass(forclass);
-    $("#banner-bang").addClass(forclass);
-    appConsoleView.$el.addClass("hidden")
-
-            appConsole.set({
-            "message": "the 'control' key also toggles the visibility of the main pane"
-        })
-
-} else {
-    $("#mnuBaseMap").removeClass('hiddenish');
-    appConsoleView.$el.removeClass("hidden")
-    $("#main").removeClass('hiddenish hiddenish-episodes-pu');
-    $("#banner-bang").removeClass('hiddenish');
-}
-
-if(typeof this.model.get("distance") !== 'undefined' || this.model.get("distance") !== null){
-    $("#main").css('right',this.model.get("distance"));
-}
-
+    swap: function() {
+        if (this.model.get("collapsed") == "false") {
+            this.model.set({
+                collapsed: "true",
+                operation: "plus",
+                instructions: "expand main pane"
+            });
+        } else if (this.model.get("collapsed") == "true") {
+            this.model.set({
+                collapsed: "false",
+                operation: "minus",
+                instructions: "collapse/hide main pane"
+            });
+        }
         return this
-        .rewire()
     },
-        rewire: function(){
-
-$(this.el).find('[data-toggle="tooltip"]').tooltip({position:"right"})
-
-return this
+    setpos: function(newforwhom, collaps) {
+        if (typeof newforwhom == 'undefined' || newforwhom == null) {
+            var newforwhom = "main"
+        }
+        if (typeof collaps == 'undefined' || collaps == null) {
+            // nothing explicit came in -- let's swap whatever current state is
+            if (this.model.get("collapsed") == "true") {
+                var collaps = "false"
+            } else {
+                var collaps = "true"
+            }
+        }
+        switch (collaps) {
+            case "true":
+                var op = "plus"
+                var instro = "expand main pane"
+                break;
+            case "false":
+                var op = "minus"
+                var instro = "collapse/hide main pane"
+        }
+        // if(this.model.get("collapsed")=="false"){
+        this.model.set({
+            collapsed: collaps,
+            forwhom: newforwhom,
+            operation: op,
+            instructions: instro
+        });
+        // } else {
+        //         this.model.set({collapsed:"false",operation:"minus",instructions:"collapse/hide main pane"})
+        //     }
+        return this
+    },
+    //     position: function(much){
+    // if(typeof much == 'undefined' || much == null){
+    //     var much = '99.5%';
+    // }
+    // this.model.set({collapsed:"true",operation:"plus",instructions:"expand main pane",distance:much});
+    // return this
+    // .render()
+    //     },
+    render: function() {
+        var forwhom = this.model.get("forwhom")
+        $(this.el).html(this.template(this.model.toJSON()))
+        if (this.model.get("collapsed") == "true") {
+            switch (forwhom) {   
+                case "main":
+                    forclass = "hiddenish"
+                    break;   
+                case "episodes-pu":
+                    forclass = "hiddenish-episodes-pu";
+                    break;
+                default:
+                    forclass = "hiddenish"
+            }
+            // first we clear out any current state
+            // $("#main").attr("class","")
+            console.log("forclass right b4 apply:");
+            console.log(forclass);
+            $("#main").addClass(forclass);
+            $("#mnuBaseMap").addClass(forclass);
+            $("#banner-bang").addClass(forclass);
+            appConsoleView.$el.addClass("hidden")
+            appConsole.set({
+                "message": "the 'control' key also toggles the visibility of the main pane"
+            })
+        } else {
+            $("#mnuBaseMap").removeClass('hiddenish');
+            appConsoleView.$el.removeClass("hidden")
+            $("#main").removeClass('hiddenish hiddenish-episodes-pu');
+            $("#banner-bang").removeClass('hiddenish');
+        }
+        if (typeof this.model.get("distance") !== 'undefined' || this.model.get("distance") !== null) {
+            $("#main").css('right', this.model.get("distance"));
+        }
+        return this.rewire()
+    },
+    rewire: function() {
+        $(this.el).find('[data-toggle="tooltip"]').tooltip({
+            position: "right"
+        })
+        return this
     },
     reset: function() {
-
         return this.render()
     }
 });
-
 /* -------------------------------------------------- CONSOLEVIEW -----------------------  */
 var ConsoleView = Backbone.View.extend({
     el: $("#consoleContainer"),
@@ -1281,138 +1235,115 @@ var PopupView = Backbone.View.extend({
         // "click .bt-cartoobj-feedback": "ghsubmit",
         // "click .bt-cartoobj-leafletcloser": "reset"
         "click button[type='submit']": "issue_submit",
-        "click .btn-pu-nav":"navinternal"
+        "click .btn-pu-nav": "navinternal"
     },
-    navinternal: function(e){
-
-$cuta = $(e.currentTarget)
-
-
-
-// so few no real performance hit here
-$(this.el).find(".btn-pu-nav").removeClass("active")
-$cuta.addClass("active")
-
-// var tel = e.currentTarget.getAttribute("data-target")
-var tel = $cuta.attr("data-target")
-
-console.log("this.ogwidth:");console.log(this.ogwidth);
-$(".leaflet-popup-content").css("width",this.ogwidth+"px")
-
-
-$(this.el).find(".pu-copy").addClass("hidden")
-$(this.el).find(".pu-copy-"+tel).removeClass("hidden")
-
-if(tel=="episodes"){
-    return this.pulleps()
-} else if(tel=="feedback"){
-    return this.issue($cuta)
-} else {
-
-return this
-}
-
+    navinternal: function(e) {
+        $cuta = $(e.currentTarget)
+            // so few no real performance hit here
+        $(this.el).find(".btn-pu-nav").removeClass("active")
+        $cuta.addClass("active")
+            // var tel = e.currentTarget.getAttribute("data-target")
+        var tel = $cuta.attr("data-target")
+        console.log("this.ogwidth:");
+        console.log(this.ogwidth);
+        $(".leaflet-popup-content").css("width", this.ogwidth + "px")
+        $(this.el).find(".pu-copy").addClass("hidden")
+        $(this.el).find(".pu-copy-" + tel).removeClass("hidden")
+        if (tel == "episodes") {
+            return this.pulleps()
+        } else if (tel == "feedback") {
+            return this.issue($cuta)
+        } else {
+            return this
+        }
     },
-    rewire: function(){
-
-// wire up those tooltips
-$(this.el).find('[data-toggle="tooltip"]').tooltip({position:"right"})
-
-// and the submit button
-//
-// $(this.el).find("button[type='submit']").click(function(t){
-
-// this.issue_submit()
-
-// });
-
+    rewire: function() {
+        // wire up those tooltips
+        $(this.el).find('[data-toggle="tooltip"]').tooltip({
+                position: "right"
+            })
+            // and the submit button
+            //
+            // $(this.el).find("button[type='submit']").click(function(t){
+            // this.issue_submit()
+            // });
     },
-    issue_submit: function(e){
-
-var it = $(this.el).find("[data-class='pu-issue-title']").attr("placeholder")
-var ib = $(this.el).find("[data-class='pu-issue-body']").val()
-var ic = $(this.el).find("[data-class='pu-issue-contact']").val()
-
-if(typeof ib == 'undefined' || ib==null || ib==''){
-    $(this.el).find("[data-class='pu-issue-body']").attr("placeholder","please provide some sort of clue to what's wrong")
-$(e.currentTarget).html("<span class='glyphicon glyphicon-warning-sign'></span> Submit")
-} else {
-
-appActivity.set({message:"submitting issue to GitHub...",show:true})
-// do the submit
-console.log(it);
-console.log(ib);
-console.log(ic);
-// success will put a checkmark in submit button or something - github (octokat) doesn't return much
-
-appActivity.set({message:null,show:false})
-$(e.currentTarget).html("<span class='glyphicon glyphicon-thumbs-up' disabled></span> Thanks")
-
-}
-
-return this
-
-
+    issue_submit: function(e) {
+        var it = $(this.el).find("[data-class='pu-issue-title']").attr("placeholder")
+        var ib = $(this.el).find("[data-class='pu-issue-body']").val()
+        var ic = $(this.el).find("[data-class='pu-issue-contact']").val()
+        if (typeof ib == 'undefined' || ib == null || ib == '') {
+            $(this.el).find("[data-class='pu-issue-body']").attr("placeholder", "please provide some sort of clue to what's wrong")
+            $(e.currentTarget).html("<span class='glyphicon glyphicon-warning-sign'></span> Submit")
+        } else {
+            appActivity.set({
+                    message: "submitting issue to GitHub...",
+                    show: true
+                })
+                // do the submit
+            console.log(it);
+            console.log(ib);
+            console.log(ic);
+            // success will put a checkmark in submit button or something - github (octokat) doesn't return much
+            appActivity.set({
+                message: null,
+                show: false
+            })
+            $(e.currentTarget).html("<span class='glyphicon glyphicon-thumbs-up' disabled></span> Thanks")
+        }
+        return this
     },
-//     reset: function(e){
-
-// $guts = $(this.el)
-// $guts.parent().find('div').first().html('');
-// $guts.parent().removeClass("newspaceready")
-// var lid = this.model.get("leafletid")
-// map._layers[lid].closePopup()
-
-// return this
-
-//     },
-    pulleps: function(){
+    //     reset: function(e){
+    // $guts = $(this.el)
+    // $guts.parent().find('div').first().html('');
+    // $guts.parent().removeClass("newspaceready")
+    // var lid = this.model.get("leafletid")
+    // map._layers[lid].closePopup()
+    // return this
+    //     },
+    pulleps: function() {
         // this.prepspace()
-
-
-// consider this a meta
-var locid = this.model.get("cartodb_id")
-var loctype = this.model.get("geom_type")
-
-
-appCBBListView.pulleps(locid,loctype,"pu")
-appHiderView.setpos("episodes-pu","true")
-// appHiderView.render("episodes-pu");
-return this
+        // consider this a meta
+        var locid = this.model.get("cartodb_id")
+        var loctype = this.model.get("geom_type")
+            // ay ya ya this is fuxked up lazy #returnto
+        // localStorage.setItem("activelocid", locid)
+        // localStorage.setItem("activeloctype", loctype)
+            // because we don't wan cbblistview to always show itself (and why bother passing a var), reveal it here manually
+        // appRoute.navigate(pullURL("#query"), {
+        //         trigger: false,
+        //         replace: false
+        //     })
+        
+        appCBB.activate(locid,loctype)
+            // appCBBListView.pulleps(locid,loctype,"pu")
+            // appHiderView.setpos("episodes-pu","true")
+            // appHiderView.render("episodes-pu");
+        return this
     },
-    issue: function(el){
+    issue: function(el) {
         // this.prepspace()
-
-
-$(".leaflet-popup-content").css("width","450px")
-
-var locid = this.model.get("cartodb_id")
-
-    return this
-
+        $(".leaflet-popup-content").css("width", "450px")
+        var locid = this.model.get("cartodb_id")
+        return this
     },
-//     prepspace: function(replace) {
-// $guts = $(this.el)
-// var gwide = $guts.width()
-
-// // $guts.parent().css("overflow","hidden").css("height","400px").css("weight","500px")
-// $guts.parent().addClass("newspaceready")
-// // $guts.css("position","relative").css("left","85%");
-
-// // $guts.parent().prepend('<div class="altspace pull-left" style="width:'+gwide+'px;">stuff can actually go here?</div>');
-// $guts.parent().prepend('<div class="altspace pull-left">stuff can actually go here?</div>');
-
-//     return this
-//     },
+    //     prepspace: function(replace) {
+    // $guts = $(this.el)
+    // var gwide = $guts.width()
+    // // $guts.parent().css("overflow","hidden").css("height","400px").css("weight","500px")
+    // $guts.parent().addClass("newspaceready")
+    // // $guts.css("position","relative").css("left","85%");
+    // // $guts.parent().prepend('<div class="altspace pull-left" style="width:'+gwide+'px;">stuff can actually go here?</div>');
+    // $guts.parent().prepend('<div class="altspace pull-left">stuff can actually go here?</div>');
+    //     return this
+    //     },
     render: function() {
         // bc we'll be messing with this width once in a while, we sock away the original
         this.ogwidth = $(".leaflet-popup-content").width()
-
         $(this.el).html(this.template(this.model.toJSON()))
-        return this
-        .rewire()
+        return this.rewire()
     }
 });
-
 /* -------------------------------------------------- ACTIVITYVIEW -----------------------  */
 var ActivityView = Backbone.View.extend({
     el: $("#activityContainer"),
@@ -1424,25 +1355,21 @@ var ActivityView = Backbone.View.extend({
     render: function() {
         var show = this.model.get("show")
         var msg = this.model.get("message")
-        var altel = this.model.get("altel")
-        if (show == true) {
-            if (typeof altel == 'undefined' || altel == false || altel == null) {
-            var altel = "#activity-default"
-            }
-            // else {
-            //     // if(spin==true)  {
-            //     // NProgress.start();
-            // }
-            NProgress.configure({
-                    parent: altel
-                });
-                NProgress.start();
+        var altelstring = this.model.get("altel")
+        if (typeof altelstring == 'undefined' || altelstring == false || altelstring == null) {
+            var altel = $("#activity-default").find(".throbber");
         } else {
-            // NProgress.done();
-            NProgress.done()
-            // .configure({
-            //     parent: "#main"
-            // });
+            var altel = $(altelstring)
+        }
+        if (show == true) {
+            altel.addClass("refreshing-loader")
+                // NProgress.configure({
+                //         parent: altel
+                //     });
+                //     NProgress.start();
+        } else {
+            altel.remove(".throbber")
+                // NProgress.done()
         }
         $(this.el).html(this.template(this.model.toJSON()))
         return this
@@ -1505,14 +1432,11 @@ var RecentsView = Backbone.View.extend({
             // console.log("rendering recentsview")
             // console.log(this.collection)
         }
-
-this.collection.sortBy('location_id')
-
-// this.collection.sortBy(function(m) {
-// console.log("803 sortby:");console.log(m);
-//     return -m.get('updated_at') });
-
-        // sorted.each(function(recentitem) {
+        this.collection.sortBy('location_id')
+            // this.collection.sortBy(function(m) {
+            // console.log("803 sortby:");console.log(m);
+            //     return -m.get('updated_at') });
+            // sorted.each(function(recentitem) {
         this.collection.each(function(recentitem) {
             if (verbose == true) {
                 // console.log("gonna render the recentitemview")
@@ -1552,15 +1476,13 @@ var EpisodeView = Backbone.View.extend({
         // console.log(this.model);
         return this.render()
     },
-    rewire: function(){
-
-this.$("a").tooltip({
+    rewire: function() {
+        this.$("a").tooltip({
             container: "body",
             placement: 'right',
             trigger: 'hover'
         });
-
-return this
+        return this
     },
     // ,className:"general foundicon-plus"
     render: function() {
@@ -1568,8 +1490,7 @@ return this
             // console.log("rendering recentitemview")
         }
         $(this.el).html(this.template(this.model.toJSON()));
-        return this
-        .rewire()
+        return this.rewire()
     }
 });
 /* -------------------------------------------------- EpsV
@@ -1593,24 +1514,19 @@ var EpisodesView = Backbone.View.extend({
         $(this.el).empty();
         return this
     },
-    reset:function(){
-
-$(this.el).addClass("hidden")
-$(".episodes-arrow").addClass("hidden")
-return this
-
+    reset: function() {
+        $(this.el).addClass("hidden")
+        $(".episodes-arrow").addClass("hidden")
+        return this
     },
-
     render: function() {
         $(this.el).empty()
-
-        $(this.el).css("top",this.collection.verticaloffset-20)
-        $('.episodes-arrow').removeClass('hidden').css("position","relative").css("top",this.collection.verticaloffset-10)
-
+        $(this.el).css("top", this.collection.verticaloffset - 20)
+        $('.episodes-arrow').removeClass('hidden').css("position", "relative").css("top", this.collection.verticaloffset - 10)
         $(this.el).html(" <h3>Episodes</h3> <span class='cbbepsanno'>(referencing location: '" + appCBB.findWhere({
-            active: true
-        }).get("name") + "')</span>")
-        // we use .episodes cuz we have some stuff outside of the el we wanna unhide, too
+                active: true
+            }).get("name") + "')</span>")
+            // we use .episodes cuz we have some stuff outside of the el we wanna unhide, too
         if (this.collection.models.length > 0) {
             $(".episodes").removeClass('hidden')
         } else {
@@ -1624,9 +1540,7 @@ return this
             if (verbose == true) {
                 // console.log("gonna render the recentitemview")
             }
-            console.log("episode:");
-            console.log(episode);
-            console.log(episode.get("id_wikia"));
+            
             var wikiaid = Number(episode.get("id_wikia"))
             var wikia = appWikiaz.findWhere({
                 "id": wikiaid
@@ -1677,20 +1591,19 @@ var MethodView = Backbone.View.extend({
     },
     render: function() {
         $(this.el).html(this.template(this.model.toJSON()))
-        // }, this);
-        return this
-        .rewire()
+            // }, this);
+        return this.rewire()
     },
-    rewire: function(){
-
-// class="loc-trigger" data-toggle="tooltip"
-$(this.el).find('[data-toggle="tooltip"]').tooltip({position:"right",html:true,title:"These links will load the results in the background - hide the map (<strong>CTRL KEY</strong>) or switch to the query tab to interrogate further."})
-
-return this
-
+    rewire: function() {
+        // class="loc-trigger" data-toggle="tooltip"
+        $(this.el).find('[data-toggle="tooltip"]').tooltip({
+            position: "right",
+            html: true,
+            title: "These links will load the results in the background - hide the map (<strong>CTRL KEY</strong>) or switch to the query tab to interrogate further."
+        })
+        return this
     }
 });
-
 /* -------------------------------------------------- Minutiae
 -------------------------------*/
 var MinutiaeView = Backbone.View.extend({
@@ -1716,7 +1629,7 @@ var MinutiaeView = Backbone.View.extend({
     },
     render: function() {
         $(this.el).html(this.template(this.model.toJSON()))
-        // }, this);
+            // }, this);
         return this
     }
 });

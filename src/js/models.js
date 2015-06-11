@@ -297,6 +297,23 @@ return this
         })
         return this
     },
+    deactivate: function(){
+
+this.invoke('set', {"active": false});
+
+    },
+    activate: function(id,type){
+
+this.deactivate()
+
+var actv = this.findWhere({cartodb_id: id,geom_type:type})
+
+console.log("in cbb activate, actv:");console.log(actv);
+
+actv.set({active:true})
+console.log("in cbb activate after set active, actv:");console.log(actv);
+
+    },
     sync: function(method, collection, options) {
         // By setting the dataType to "jsonp", jQuery creates a function
         // and adds it as a callback parameter to the request, e.g.:
@@ -314,71 +331,71 @@ return this
         return response.response.docs
     }
 }); //livecarto
-var CartoCollectionDev = Backbone.Collection.extend({
-    model: CartoItem,
-        host:window.host,
-        seturl: function(arr){
+// var CartoCollectionDev = Backbone.Collection.extend({
+//     model: CartoItem,
+//         host:window.host,
+//         seturl: function(arr){
 
 
-this.cartostring = "location_id:("+encodeURIComponent(arr.join(" "))+")"
+// this.cartostring = "location_id:("+encodeURIComponent(arr.join(" "))+")"
 
-console.log(this.url());
+// console.log(this.url());
 
-return this
+// return this
 
-    },
-    url: function() {
-        // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return solrhost+"cbb_carto/select?json.wrf=cwmccallback&rows=100&wt=json&q=" + this.cartostring
-    },
-    comparator: function(m) {
-    return -m.get('active');
-},
-    initialize: function(options) {
-        options || (options = {});
-        this.bind('change queued', this.queue, this);
-        return this
-    },
-    queue: function(qmod) {
-        var inid = qmod.get("cartodb_id").toString()
-        // actually first silently deactivate the others
-        _.each(_.reject(this.models, function(mod) {
-            return mod.get("cartodb_id") == inid;
-        }), function(mo) {
-            mo.set({
-                active: false
-            }, {
-                silent: true
-            })
-        }, this)
-        var item = this.findWhere({
-            "cartodb_id": inid
-        });
-        // this should fire any change active listeners
-        item.set({
-            active: true,
-            queued: false
-        })
-        return this
-    },
-    sync: function(method, collection, options) {
-        // By setting the dataType to "jsonp", jQuery creates a function
-        // and adds it as a callback parameter to the request, e.g.:
-        // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
-        // If you want another name for the callback, also specify the
-        // jsonpCallback option.
-        // After this function is called (by the JSONP response), the script tag
-        // is removed and the parse method is called, just as it would be
-        // when AJAX was used.
-        options.dataType = "jsonp";
-        options.jsonpCallback = 'cwmccallback';
-        return Backbone.sync(method, collection, options);
-    },
-    parse: function(response) {
-        // console.log("rsponse at 261:");console.log(response);
-        return response.response.docs
-    }
-}); //fakecarto
+//     },
+//     url: function() {
+//         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
+//         return solrhost+"cbb_carto/select?json.wrf=cwmccallback&rows=100&wt=json&q=" + this.cartostring
+//     },
+//     comparator: function(m) {
+//     return -m.get('active');
+// },
+//     initialize: function(options) {
+//         options || (options = {});
+//         this.bind('change queued', this.queue, this);
+//         return this
+//     },
+//     queue: function(qmod) {
+//         var inid = qmod.get("cartodb_id").toString()
+//         // actually first silently deactivate the others
+//         _.each(_.reject(this.models, function(mod) {
+//             return mod.get("cartodb_id") == inid;
+//         }), function(mo) {
+//             mo.set({
+//                 active: false
+//             }, {
+//                 silent: true
+//             })
+//         }, this)
+//         var item = this.findWhere({
+//             "cartodb_id": inid
+//         });
+//         // this should fire any change active listeners
+//         item.set({
+//             active: true,
+//             queued: false
+//         })
+//         return this
+//     },
+//     sync: function(method, collection, options) {
+//         // By setting the dataType to "jsonp", jQuery creates a function
+//         // and adds it as a callback parameter to the request, e.g.:
+//         // [url]&callback=jQuery19104472605645155031_1373700330157&q=bananarama
+//         // If you want another name for the callback, also specify the
+//         // jsonpCallback option.
+//         // After this function is called (by the JSONP response), the script tag
+//         // is removed and the parse method is called, just as it would be
+//         // when AJAX was used.
+//         options.dataType = "jsonp";
+//         options.jsonpCallback = 'cwmccallback';
+//         return Backbone.sync(method, collection, options);
+//     },
+//     parse: function(response) {
+//         // console.log("rsponse at 261:");console.log(response);
+//         return response.response.docs
+//     }
+// }); //fakecarto
 
 /* -------------------------------------------------- BASEMAP -----------------------  */
 var BaseMap = Backbone.Model.extend({

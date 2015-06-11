@@ -4,7 +4,7 @@ var Route = Backbone.Router.extend({
         // ":hash": "default",
         // docs/:section(/:subsection)
         // ":hash(/:q)(/:bbox)": "default",
-        "(:hash)(/:q)(/:bbox)(/:basemap)(/)": "default"
+        "(:hash)(/:q)(/:bbox)(/:basemap)(/:activeid/:activetype)(/)": "default"
         // ":hash": "routepractice"
         // "home": "home",
         // "about": "about",
@@ -25,7 +25,9 @@ var Route = Backbone.Router.extend({
             replace: false
         })
     },
-    default: function(h, q, bbox, basemap) {
+    default: function(h, q, bbox, basemap,activeid,activetype) {
+        console.log("in route, activeid:");console.log(activeid);
+        console.log("in route, activetype:");console.log(activetype);
         if (typeof basemap !== 'undefined' && basemap !== null) {
             var inbl = appBaseLayers.findWhere({
                 "name": basemap
@@ -44,8 +46,11 @@ var Route = Backbone.Router.extend({
             h = "query";
         }
         var hmod = "#" + h;
-        // this in case the pane had been hidden by the alt key
-        $("#main").removeClass("hidden")
+        // this in case the pane had been hidden by the hider
+        
+        // appHider.set({collapsed:"true",fromwhom:""})
+
+        // $("#main").removeClass("hidden")
         _.each($("#main > .mainpanel"), function(p) {
             if (p.id == h) {
                 $(p).removeClass("hidden")
@@ -60,6 +65,8 @@ var Route = Backbone.Router.extend({
                 $(m).removeClass("active")
             }
         }, this)
+
+
         // now if *that* didn't set up our query, something needs to
         // console.log("rawstring at 47 of route");
         // console.log(appCartoQuery.get("rawstring"));
@@ -177,6 +184,30 @@ var Route = Backbone.Router.extend({
             //     reset: true
             // })
         } //h is query for fetch
+
+// if((typeof localStorage.getItem("activelocid") !== 'undefined' || localStorage.getItem("activelocid") !== 'undefined') && (typeof localStorage.getItem("activeloctype") !== 'undefined' || localStorage.getItem("activeloctype") !== 'undefined')){
+
+// WTF is going on here? Well, 
+
+// var act = appCBB.where({active: true})
+
+// console.log("act:");
+//     console.log(act);
+
+// if(act.length<1){
+    
+//     // hot one coming in -- prolly activated before a Backbone.navigate op
+//     var locid = act.attributes.cartodb_id
+//     var loctype = act.attributes.geom_type
+//     var so = "pu"
+//     appCBBListView.pulleps(locid,loctype,so)
+// } else {
+//     console.log("no act");
+// }
+
+// }
+// localStorage.setItem("activeloctype",loctype))
+
         // var hmod = "#" + h;
         // // this in case the pane had been hidden by the alt key
         // $("#main").removeClass("hidden")

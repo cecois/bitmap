@@ -1081,3 +1081,15 @@ text-shadow:
   cursor:pointer;
 }
 
+// ------------------------------------- CSS-SPINNER
+// 
+.refreshing-loader:not(:required) {
+    border-color: black transparent;
+    font-size: 6px;
+    height: 2em;
+}
+
+// disable that arrow
+.refreshing-loader:not(:required)::after {
+    border-color: none;
+}

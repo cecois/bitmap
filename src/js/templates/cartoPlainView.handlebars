@@ -3,7 +3,7 @@
 
 {{#each rows}}
 
-<li data-id="{{this.cartodb_id}}" class="">
+<li data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="">
 
 <div class="">
 <span class="carto-plain-geomtype icom-{{this.geom_type}}"></span>

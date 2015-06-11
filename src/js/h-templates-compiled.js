@@ -1,10 +1,10 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['activityViewTpl'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, buffer = "<span class=\"\">\n  ";
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, buffer = "  <span class=\"activity-message\">";
   stack1 = ((helper = (helper = helpers.message || (depth0 != null ? depth0.message : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"message","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "\n</span>";
+  return buffer + "</span>\n  <span class=\"throbber pull-right\"></span>";
 },"useData":true});
 templates['baseLayerMnuItem'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
@@ -89,6 +89,8 @@ templates['cartoPlainView-Mobile'] = template({"1":function(depth0,helpers,parti
 templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, buffer = "\n<li data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
+    + "\" data-type=\""
+    + escapeExpression(lambda((depth0 != null ? depth0.geom_type : depth0), depth0))
     + "\" class=\"\">\n\n<div class=\"\">\n<span class=\"carto-plain-geomtype icom-"
     + escapeExpression(lambda((depth0 != null ? depth0.geom_type : depth0), depth0))
     + "\"></span>\n<span data-id=\""
