@@ -26,8 +26,6 @@ var Route = Backbone.Router.extend({
         })
     },
     default: function(h, q, bbox, basemap,activeid,activetype) {
-        console.log("in route, activeid:");console.log(activeid);
-        console.log("in route, activetype:");console.log(activetype);
         if (typeof basemap !== 'undefined' && basemap !== null) {
             var inbl = appBaseLayers.findWhere({
                 "name": basemap
@@ -47,7 +45,7 @@ var Route = Backbone.Router.extend({
         }
         var hmod = "#" + h;
         // this in case the pane had been hidden by the hider
-        
+
         // appHider.set({collapsed:"true",fromwhom:""})
 
         // $("#main").removeClass("hidden")
@@ -183,11 +181,19 @@ var Route = Backbone.Router.extend({
             // }, {
             //     reset: true
             // })
+
+if(typeof activeid !== 'undefined' && typeof activetype !== 'undefined'){
+// appCBB.activate(activeid,activetype)
+    appCBBListView.pulleps("route")
+}
+
+
+
         } //h is query for fetch
 
 // if((typeof localStorage.getItem("activelocid") !== 'undefined' || localStorage.getItem("activelocid") !== 'undefined') && (typeof localStorage.getItem("activeloctype") !== 'undefined' || localStorage.getItem("activeloctype") !== 'undefined')){
 
-// WTF is going on here? Well, 
+// WTF is going on here? Well,
 
 // var act = appCBB.where({active: true})
 
@@ -195,7 +201,7 @@ var Route = Backbone.Router.extend({
 //     console.log(act);
 
 // if(act.length<1){
-    
+
 //     // hot one coming in -- prolly activated before a Backbone.navigate op
 //     var locid = act.attributes.cartodb_id
 //     var loctype = act.attributes.geom_type

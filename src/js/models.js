@@ -299,7 +299,8 @@ return this
     },
     deactivate: function(){
 
-this.invoke('set', {"active": false});
+// i don't know about this silent thing - could bite later
+this.invoke('set', {"active": false},{silent:true});
 
     },
     activate: function(id,type){

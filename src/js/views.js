@@ -106,9 +106,9 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
             }
 
                                 if(this.collection.length==1){
-    
+
     cbbItems.openPopup()
-    
+
 }
             // var hitm = wkt.toObject().addTo(cbbItems).on("click", function(m) {
             // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
@@ -130,7 +130,7 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
             // if (map.getBounds().contains(hitm.getLatLng()) == false) {
             //     map.setView(hitm.getLatLng(), 9);
             // }
-            
+
             // hitm.zoomTo()
             // }
         }, this);
@@ -210,7 +210,7 @@ var BitsView = Backbone.View.extend({
     },
     pulleps: function(e) {
         console.log(e);
-        var voff = e.currentTarget.offsetTop;
+
         appActivity.set({
             message: "fetching episodes...",
             show: true,
@@ -231,7 +231,7 @@ var BitsView = Backbone.View.extend({
         }
         appEpisodes.activeloc = Number(locid);
         appEpisodes.loctype = loctype;
-        appEpisodes.verticaloffset = voff;
+
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
@@ -249,6 +249,13 @@ var BitsView = Backbone.View.extend({
         e.preventDefault()
             // var am = $(e.currentTarget).parents('li').data("id").toString();
         var a = $(e.currentTarget).parents('li')
+
+// some positioning so it's clear what wz activated
+        // $(a).scrollIntoView()
+        // var voff = e.currentTarget.offsetTop;
+        var voff = $(a).offsetTop;
+// appEpisodes.verticaloffset = voff;
+
         return this.activate(a)
     },
     rewire: function() {
@@ -371,22 +378,30 @@ var CartoPlainView = Backbone.View.extend({
         return this
     },
     triage: function(e) {
+
+e.preventDefault()
+
+        var locid = $(e.target).attr("data-id")
+        var loctype = $(e.target).attr("data-type");
+
+        appCBB.activate(locid,loctype);
+
         if (agent == "desktop") {
-            return this.pulleps(e)
+            return this.pulleps()
         } else if (agent == "mobile") {
-            return this.pulleps_mobile(e)
+            return this.pulleps_mobile()
         }
     },
     sort: function() {
         this.collection.sort()
         return this
     },
-    pulleps_mobile: function(e) {
+    pulleps_mobile: function() {
         e.preventDefault()
         var a = $(e.currentTarget).parents('li')
         return this.activate(a)
     },
-    pulleps: function(e, etype, source) {
+    pulleps: function(source) {
         if (typeof source == 'undefined' || source == null) {
             var source = "self"
         }
@@ -395,35 +410,33 @@ var CartoPlainView = Backbone.View.extend({
             show: true,
             // altel: "#episodes-list"
         })
-        var t = $.type(e);
-        if (t == "object") {
-            // we're in here from a click, we'll have to sniff out the data attr we need
-            var voff = e.currentTarget.offsetTop;
-            // var hoff = e.currentTarget.parentElement.clientWidth;
-            // $("#querylist-carto").css("left",hoff-hoff+50)
-            var locid = $(e.target).attr("data-id")
-            var loctype = $(e.target).attr("data-type");
-            e.preventDefault()
-                // var am = $(e.currentTarget).parents('li').data("id").toString();
-            var a = $(e.currentTarget).parents('li')
-        } //t==object - we are done sniffing the data-id and -type from gui elements
-        else {
-            // this wasn't triggered by a click so we treat the id and type els differently
-            // and we have to *find* the el to activate
-            var locid = e
-            var loctype = etype
-                // var a = $(this.el).find("[data-id='"+locid+"']")
-            var a = $("#querylist-carto").find("span[data-id='" + locid + "']").parents("li")
-        }
 
-        if (source == "pu") {
+            // we have to find the el to activate
+            var act = appCBB.findWhere({active:true})
+            var locid = act.attributes.cartodb_id
+            var loctype = act.attributes.geom_type
+
+            var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
+
+// $('#main').animate({scrollTop: a.offset().top}, 500);
+
+// console.log("a:"); console.log(a);
+            // var voff = a.offsetTop;
+            // console.log("voff:"); console.log(voff);
+
+        if (source == "self") {
+            // force the scroll to the top jic we left it at the bottom
+            $("#main").scrollTo(".querysubnavh");
+        } else {
+            // it means we're coming from somewhere else (prolly a popup or the router), which means in turn we might need to nudge the now-active gui elements into view
+            $("#main").scrollTo($(a),200,{offset:-100});
             $("#episodes-list").addClass("episodespecial")
             appHiderView.setpos("episodes-pu","true")
         }
-        locid = doctorId(loctype, locid)
-        appEpisodes.activeloc = Number(locid);
+        locidDrd = doctorId(loctype, locid)
+        appEpisodes.activeloc = Number(locidDrd);
         appEpisodes.loctype = loctype;
-        appEpisodes.verticaloffset = voff;
+        // appEpisodes.verticaloffset = voff;
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
@@ -438,6 +451,12 @@ var CartoPlainView = Backbone.View.extend({
                 })
             }
         });
+
+        // some positioning so it's clear what wz activated
+        // a.scrollIntoView()
+        // var voff = e.currentTarget.offsetTop;
+// appEpisodes.verticaloffset = voff;
+
         return this.activate(a)
     },
     zoomtointernal: function(e) {
@@ -469,14 +488,16 @@ var CartoPlainView = Backbone.View.extend({
         return this
     },
     activate: function(a) {
-        
+
         // first wipe the list of any true classes (see ~184 for explanation)
         $(this.el).find(".carto-plain-title").removeClass("true")
         var amid = $(a).data("id").toString();
         var amtyp = $(a).data("type").toString();
 
-        
-        appCBB.activate(amid,amtyp)
+
+// this should be done already
+        // appCBB.activate(amid,amtyp)
+
         // // actually first silently deactivate the others
         // _.each(_.reject(this.collection.models, function(mod) {
         //         return mod.get("cartodb_id") == amid;
@@ -502,7 +523,7 @@ var CartoPlainView = Backbone.View.extend({
             // SHOULD NOT BE AN EACH #returnto
             //
         _.each(cbbItems._layers, function(i) {
-                
+
                 // we can shop the now-active id to the leaflet layers bc we stored that id when we added them to the map
                 if (i.options.cartodb_id == amid) {
                 // if (i.active == true) {
@@ -541,7 +562,9 @@ var CartoPlainView = Backbone.View.extend({
                 }
             }) //each
             // $(a).addClass("true") //OG
+
         $(a).find(".carto-plain-title").addClass("true")
+
             // if($(a).hasClass('carto-plain-title')){
             // $(a).addClass("true")
             // } else {
@@ -551,7 +574,6 @@ var CartoPlainView = Backbone.View.extend({
             // GUH? WHAT'S THIS? It's a straight-up jquery hack to waaaaay more quickly light up the active model's list item
             // cuz doing it with a proper backbone re-render took forever (.8 seconds)
         return this
-            // .render()
     },
     render: function() {
         this.unwire()
@@ -908,6 +930,7 @@ var QueryView = Backbone.View.extend({
     },
     fire: function(goto) {
         // doubles as a clearer of the episodes arrow, some other gui stuff
+        appCBB.deactivate()
         $(".episodes-arrow").addClass("hidden")
         appHider.set({
             collapsed: "false"
@@ -1301,9 +1324,10 @@ var PopupView = Backbone.View.extend({
     // map._layers[lid].closePopup()
     // return this
     //     },
-    pulleps: function() {
-        // this.prepspace()
-        // consider this a meta
+    pulleps: function(source) {
+
+
+
         var locid = this.model.get("cartodb_id")
         var loctype = this.model.get("geom_type")
             // ay ya ya this is fuxked up lazy #returnto
@@ -1314,11 +1338,15 @@ var PopupView = Backbone.View.extend({
         //         trigger: false,
         //         replace: false
         //     })
-        
+
         appCBB.activate(locid,loctype)
-            // appCBBListView.pulleps(locid,loctype,"pu")
-            // appHiderView.setpos("episodes-pu","true")
-            // appHiderView.render("episodes-pu");
+appRoute.navigate(pullURL("#query"), {
+                trigger: true,
+                replace: true
+            })
+
+        // appHiderView.setpos("episodes-pu","true")
+        // appCBBListView.pulleps("pu")
         return this
     },
     issue: function(el) {
@@ -1521,8 +1549,15 @@ var EpisodesView = Backbone.View.extend({
     },
     render: function() {
         $(this.el).empty()
-        $(this.el).css("top", this.collection.verticaloffset - 20)
-        $('.episodes-arrow').removeClass('hidden').css("position", "relative").css("top", this.collection.verticaloffset - 10)
+
+// by the time we get here, plainview will have an active element, go get it to match its position
+var ael = $(".carto-plain-title.true")
+$(this.el).css("top",$(ael).position().top);
+// and that stupid arrow
+$(".episodes-arrow").removeClass("hidden").css("top",$(ael).position().top);
+
+        // $(this.el).css("top", this.collection.verticaloffset - 20)
+        // $('.episodes-arrow').removeClass('hidden').css("position", "relative").css("top", this.collection.verticaloffset - 10)
         $(this.el).html(" <h3>Episodes</h3> <span class='cbbepsanno'>(referencing location: '" + appCBB.findWhere({
                 active: true
             }).get("name") + "')</span>")
@@ -1540,7 +1575,7 @@ var EpisodesView = Backbone.View.extend({
             if (verbose == true) {
                 // console.log("gonna render the recentitemview")
             }
-            
+
             var wikiaid = Number(episode.get("id_wikia"))
             var wikia = appWikiaz.findWhere({
                 "id": wikiaid
