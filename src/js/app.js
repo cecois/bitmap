@@ -170,7 +170,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": false,
+            "active": true,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-mario.png",
@@ -186,7 +186,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": true,
+            "active": false,
             "source": "localhost",
             "nom": "A Real Dummy",
             "thumb": "offline/mapbox-mario.png",
@@ -425,7 +425,7 @@ window.appHiderView = new HiderView({
 //     console.log(p);
 // });
 // });
-window.appCBBListView = new CartoPlainView({
+window.appCBBListView = new CartoListView({
     collection: appCBB
 })
 window.appBitsView = new BitsView({
@@ -482,10 +482,10 @@ var huh = new Huh();
 var huhV = new HuhView({
     model: huh
 })
-var minutiae = new Minutiae();
-var minutiaeV = new MinutiaeView({
-    model:minutiae
-})
+// var minutiae = new Minutiae();
+// var minutiaeV = new MinutiaeView({
+//     model:minutiae
+// })
 var method = new Method();
 var methodV = new MethodView({
     model: method
@@ -527,7 +527,7 @@ $("#query-form-input").val(solrstring)
         // })
     }
 
-    function pullURL(goto) {
+    function urlFactory(goto) {
         if (typeof goto == 'undefined') {
             // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
             var hel = $(".mainpanel:not('.hidden')")
@@ -551,7 +551,7 @@ $("#query-form-input").val(solrstring)
         if(typeof act !== 'undefined'){
                 var aid = act.attributes.cartodb_id
                 var atp = act.attributes.geom_type
-url+=aid + "/" + atp
+url+=aid + ":" + atp
             }
 
         return url

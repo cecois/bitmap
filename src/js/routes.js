@@ -4,7 +4,7 @@ var Route = Backbone.Router.extend({
         // ":hash": "default",
         // docs/:section(/:subsection)
         // ":hash(/:q)(/:bbox)": "default",
-        "(:hash)(/:q)(/:bbox)(/:basemap)(/:activeid/:activetype)(/)": "default"
+        "(:hash)(/:q)(/:bbox)(/:basemap)(/:activecouple)(/)": "default"
         // ":hash": "routepractice"
         // "home": "home",
         // "about": "about",
@@ -18,14 +18,14 @@ var Route = Backbone.Router.extend({
         // console.log("update of route cuzza appcartoquery change trigger ");
         // console.log("el is:");
         // console.log(el);
-        var url = pullURL(el)
+        var url = urlFactory(el)
         // console.log("appcartoquery at 25 here:");console.log(appCartoQuery.get("rawstring"));
         this.navigate(url, {
             trigger: false,
             replace: false
         })
     },
-    default: function(h, q, bbox, basemap,activeid,activetype) {
+    default: function(h, q, bbox, basemap,activecouple) {
         if (typeof basemap !== 'undefined' && basemap !== null) {
             var inbl = appBaseLayers.findWhere({
                 "name": basemap
@@ -35,7 +35,8 @@ var Route = Backbone.Router.extend({
             })
         }
         if (typeof q !== 'undefined' && q !== null) {
-            // console.log("incoming q is:"+q);
+            console.log("q existed, setting appcartoquery to q, which is");
+            console.log(q);
             appCartoQuery.set({
                 rawstring: q
             })
@@ -44,11 +45,7 @@ var Route = Backbone.Router.extend({
             h = "query";
         }
         var hmod = "#" + h;
-        // this in case the pane had been hidden by the hider
-
-        // appHider.set({collapsed:"true",fromwhom:""})
-
-        // $("#main").removeClass("hidden")
+        
         _.each($("#main > .mainpanel"), function(p) {
             if (p.id == h) {
                 $(p).removeClass("hidden")
@@ -64,11 +61,6 @@ var Route = Backbone.Router.extend({
             }
         }, this)
 
-
-        // now if *that* didn't set up our query, something needs to
-        // console.log("rawstring at 47 of route");
-        // console.log(appCartoQuery.get("rawstring"));
-        // }
         if (typeof bbox !== 'undefined' && bbox !== null && bbox !== "null") {
             // #returnto to clean this up
             var asarr = bbox.split(",");
@@ -118,6 +110,22 @@ var Route = Backbone.Router.extend({
                 reset:true,
                 // dataType: "jsonp"
                 success: function() {
+
+// this.activate("point:419")
+
+// if(typeof activecouple !== 'undefined'){
+//     var activeid = activecouple.split(":")[0]
+//     var activetype = activecouple.split(":")[1]
+
+//     console.log("activecouple in success");console.log(activecouple);
+// console.log("activeid in success");console.log(activeid);
+// console.log("activetype in success");console.log(activetype);
+
+// this.activate(activeid,activetype)
+//     // appCBBListView.pulleps("route")
+// }
+
+
                     // console.log("successful fetch of appcbb at 76");
                     // appCBBListView.render()
                     // appCBBMapView.render()
@@ -134,7 +142,7 @@ var Route = Backbone.Router.extend({
                     })
                     // console.log("failed fetch");
                 }
-            })
+            },this)
 
                 }, //success fetch
                 error: function() {
@@ -153,84 +161,8 @@ var Route = Backbone.Router.extend({
                 }
             })
 
-            //             appCBB.fetch({
-            //     // dataType: "jsonp"
-            //     success: function() {
-            //         // console.log("successful fetch of appcbb at 76");
-            //         appCBBListView.render()
-            //         appCBBMapView.render()
-            //         appActivity.set({
-            //             message: "",
-            //             show: false,
-            //             altel: false
-            //         })
-            //     },
-            //     error: function() {
-            //         appConsole.set({
-            //             message: "query errored out"
-            //         })
-            //         // actually, if it's a true error we wanna be more forthcoming:
-            //         $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-            //         appActivity.set({
-            //             message: "",
-            //             show: false,
-            //             altel: false
-            //         })
-            //         // console.log("failed fetch");
-            //     }
-            // }, {
-            //     reset: true
-            // })
-
-if(typeof activeid !== 'undefined' && typeof activetype !== 'undefined'){
-// appCBB.activate(activeid,activetype)
-    appCBBListView.pulleps("route")
-}
-
-
-
         } //h is query for fetch
 
-// if((typeof localStorage.getItem("activelocid") !== 'undefined' || localStorage.getItem("activelocid") !== 'undefined') && (typeof localStorage.getItem("activeloctype") !== 'undefined' || localStorage.getItem("activeloctype") !== 'undefined')){
-
-// WTF is going on here? Well,
-
-// var act = appCBB.where({active: true})
-
-// console.log("act:");
-//     console.log(act);
-
-// if(act.length<1){
-
-//     // hot one coming in -- prolly activated before a Backbone.navigate op
-//     var locid = act.attributes.cartodb_id
-//     var loctype = act.attributes.geom_type
-//     var so = "pu"
-//     appCBBListView.pulleps(locid,loctype,so)
-// } else {
-//     console.log("no act");
-// }
-
-// }
-// localStorage.setItem("activeloctype",loctype))
-
-        // var hmod = "#" + h;
-        // // this in case the pane had been hidden by the alt key
-        // $("#main").removeClass("hidden")
-        // _.each($("#main > .mainpanel"), function(p) {
-        //     if (p.id == h) {
-        //         $(p).removeClass("hidden")
-        //     } else {
-        //         $(p).addClass("hidden")
-        //     }
-        // });
-        // _.each($("nav.site-nav > ul > li > a"), function(m) {
-        //     if ($(m).attr("href") == hmod) {
-        //         $(m).addClass("active")
-        //     } else {
-        //         $(m).removeClass("active")
-        //     }
-        // }, this)
         return this
     } // end home
 });

@@ -51,7 +51,7 @@ templates['bitsView'] = template({"1":function(depth0,helpers,partials,data) {
   if (stack1 != null) { buffer += stack1; }
   return buffer;
 },"useData":true});
-templates['cartoPlainView-Mobile'] = template({"1":function(depth0,helpers,partials,data) {
+templates['cartoListView-Mobile'] = template({"1":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, buffer = "\n<li data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
     + "\" class=\"\">\n\n<div class=\"\">\n<span class=\"carto-geom-type\">"
@@ -86,7 +86,7 @@ templates['cartoPlainView-Mobile'] = template({"1":function(depth0,helpers,parti
   if (stack1 != null) { buffer += stack1; }
   return buffer;
 },"useData":true});
-templates['cartoPlainView'] = template({"1":function(depth0,helpers,partials,data) {
+templates['cartoListView'] = template({"1":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, buffer = "\n<li data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
     + "\" data-type=\""

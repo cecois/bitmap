@@ -145,11 +145,13 @@ var CartoQuery = Backbone.Model.extend({
         rawstring: "+location_type:point",
         displaystring: "location_type:point",
         urlstring:'+location_type:point'
+        
     },
         initialize: function(options) {
         options || (options = {});
         // this.listenTo(this.get("rawstring"), "change", this.setstrings)
         // this.bind(this, "change", "setstrings")
+        this.on('change', this.setstrings, this);
         return this
     },
 //     setstrings: function() {
@@ -298,22 +300,41 @@ return this
         return this
     },
     deactivate: function(){
-
+if(verbose==true){
+    console.log("deactivating all cbb models...");
+}
 // i don't know about this silent thing - could bite later
 this.invoke('set', {"active": false},{silent:true});
-
+return this
     },
-    activate: function(id,type){
+    activate: function(activecouple){
 
 this.deactivate()
 
-var actv = this.findWhere({cartodb_id: id,geom_type:type})
+
+if(typeof activecouple !== 'undefined'){
+    var aid = activecouple.split(":")[1]
+    var atype = activecouple.split(":")[0]
+
+
+
+
+// var actv = this.findWhere({cartodb_id: aid,geom_type:type})
+console.log("id is type:");console.log(typeof aid);
+// var actv = this.find(function(m) { return m.get('cartodb_id') == id; });
+var search_obj = {};
+search_obj["cartodb_id"] = aid;
+search_obj["geom_type"] = atype;
+
+var actv =this.findWhere(search_obj);
+
 
 console.log("in cbb activate, actv:");console.log(actv);
 if(actv.get("active")!== "true"){
+    console.log("model not currently active (shouldn't be), activating...");
 actv.set({active:true})}
-console.log("in cbb activate after set active, actv:");console.log(actv);
-
+}
+return this
     },
     sync: function(method, collection, options) {
         // By setting the dataType to "jsonp", jQuery creates a function
