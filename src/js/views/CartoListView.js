@@ -21,6 +21,7 @@ var CartoListView = Backbone.View.extend({
     echoid: function(e) {
         var locid = $(e.target).attr("data-id")
         var str = '<span class="loc-trigger" data-string="cartodb_id:' + locid + '"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
+        console.log(str);
         return this
     },
     fromzoom: function(cm) {
@@ -41,8 +42,14 @@ var CartoListView = Backbone.View.extend({
         // activecouple = loctype+":"+locid
         
         activecouple = activeFactory(loctype+":"+locid)
-
         appCBB.activate();
+
+        // this is one we want the url to reflect
+        appRoute.navigate(urlFactory("#query"), {
+trigger: false,
+replace: false
+})
+
         if (agent == "desktop") {
             return this.pulleps()
         } else if (agent == "mobile") {

@@ -26,7 +26,7 @@ var EpisodesView = Backbone.View.extend({
         $(this.el).empty()
             // by the time we get here, plainview will have an active element, go get it to match its position
         var ael = $(".carto-plain-title.true")
-        $(this.el).css("top", $(ael).position().top);
+        $(this.el).css("top", $(ael).position().top-30);
         // and that stupid arrow
         $(".episodes-arrow").removeClass("hidden").css("top", $(ael).position().top);
         // $(this.el).css("top", this.collection.verticaloffset - 20)

@@ -531,10 +531,14 @@ function activeFactory(a){
 
 if(typeof a == 'undefined' || a == null){
 
+if(typeof activecouple !== 'undefined' || activecouple !== null){
 var activeid = activecouple.split(":")[1]
     var activetype = activecouple.split(":")[0]
 
-    return [activetype,activeid]
+    return [activetype,activeid]}
+    else {
+        return null
+    }
 } else {
     activecouple=a
     return a
@@ -561,9 +565,15 @@ var activeid = activecouple.split(":")[1]
         }).get("name")
         var url = h + "/" + qs + "/" + bbx + "/" + bl + "/"
         
-        if(typeof activeid !== 'undefined' && typeof activeid !== null && typeof activetype !== 'undefined' && typeof activetype !== null){
-url+=activetype + ":" + activeid
-            }
+if(typeof activecouple !== 'undefined' && activecouple !== null){
+var ac = activeFactory();
+
+// url+=activetype + ":" + activeid
+url+=ac.join(":")
+
+}        
+        // if(typeof activeid !== 'undefined' && typeof activeid !== null && typeof activetype !== 'undefined' && typeof activetype !== null){
+            // }
 
         return url
     }
