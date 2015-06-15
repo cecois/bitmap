@@ -527,6 +527,21 @@ $("#query-form-input").val(solrstring)
         // })
     }
 
+function activeFactory(a){
+
+if(typeof a == 'undefined' || a == null){
+
+var activeid = activecouple.split(":")[1]
+    var activetype = activecouple.split(":")[0]
+
+    return [activetype,activeid]
+} else {
+    activecouple=a
+    return a
+}
+
+}
+
     function urlFactory(goto) {
         if (typeof goto == 'undefined') {
             // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
@@ -545,13 +560,9 @@ $("#query-form-input").val(solrstring)
             active: true
         }).get("name")
         var url = h + "/" + qs + "/" + bbx + "/" + bl + "/"
-        var act = appCBB.findWhere({
-            active:true
-        })
-        if(typeof act !== 'undefined'){
-                var aid = act.attributes.cartodb_id
-                var atp = act.attributes.geom_type
-url+=aid + ":" + atp
+        
+        if(typeof activeid !== 'undefined' && typeof activeid !== null && typeof activetype !== 'undefined' && typeof activetype !== null){
+url+=activetype + ":" + activeid
             }
 
         return url
@@ -741,6 +752,7 @@ function puFactory(p){
 // but also we affix the leaflet id of the feature so we can close this mofo later (among other ops maybe)
     var pm = new Popup(p.model).set({leafletid:p.layer._leaflet_id});
     var pv = new PopupView({model:pm,el: nel})
+
 }
 // function puForecloser(p){
 

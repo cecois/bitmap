@@ -53,10 +53,10 @@ var QueryView = Backbone.View.extend({
         // console.log("qv goto:");console.log(goto);
         if (goto == true) {
             console.log("let's go to there")
-            appRoute.navigate(urlFactory("#query"), {
-                trigger: true,
-                replace: true
-            })
+            // appRoute.navigate(urlFactory("#query"), {
+            //     trigger: true,
+            //     replace: true
+            // })
         } else {
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it

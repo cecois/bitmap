@@ -263,6 +263,7 @@ var CartoCollection = Backbone.Collection.extend({
         // + this.cartostring
     },
     initialize: function(options) {
+        // this.bind("change:active",this.activate);
         options || (options = {});
         return this
     },
@@ -307,33 +308,55 @@ if(verbose==true){
 this.invoke('set', {"active": false},{silent:true});
 return this
     },
-    activate: function(activecouple){
+    activate: function(){
 
 this.deactivate()
 
 
-if(typeof activecouple !== 'undefined'){
-    var aid = activecouple.split(":")[1]
-    var atype = activecouple.split(":")[0]
+console.log("in cartocollx activate, checking...");
+console.log("active global is:");
+console.log(activecouple);
+
+if(typeof activecouple !== 'undefined' && activecouple !== null)
+{
+    console.log("we need to activate!");
+
+        var activeid = activecouple.split(":")[1]
+    var activetype = activecouple.split(":")[0]
+//     
+_.each(this.models,function(d,index) {
+
+    if(d.get("cartodb_id")==activeid && d.get("geom_type")==activetype){
+
+console.log("GOT ONE! Setting to true...");
+        d.set({active:true});
+        console.log(d);
+    }
+});
+} //if global actives
+
+// if(typeof activecouple !== 'undefined'){
+//     var aid = activecouple.split(":")[1]
+//     var atype = activecouple.split(":")[0]
 
 
 
 
-// var actv = this.findWhere({cartodb_id: aid,geom_type:type})
-console.log("id is type:");console.log(typeof aid);
-// var actv = this.find(function(m) { return m.get('cartodb_id') == id; });
-var search_obj = {};
-search_obj["cartodb_id"] = aid;
-search_obj["geom_type"] = atype;
+// // var actv = this.findWhere({cartodb_id: aid,geom_type:type})
+// console.log("id is type:");console.log(typeof aid);
+// // var actv = this.find(function(m) { return m.get('cartodb_id') == id; });
+// var search_obj = {};
+// search_obj["cartodb_id"] = aid;
+// search_obj["geom_type"] = atype;
 
-var actv =this.findWhere(search_obj);
+// var actv =this.findWhere(search_obj);
 
 
-console.log("in cbb activate, actv:");console.log(actv);
-if(actv.get("active")!== "true"){
-    console.log("model not currently active (shouldn't be), activating...");
-actv.set({active:true})}
-}
+// console.log("in cbb activate, actv:");console.log(actv);
+// if(actv.get("active")!== "true"){
+//     console.log("model not currently active (shouldn't be), activating...");
+// actv.set({active:true})}
+// }
 return this
     },
     sync: function(method, collection, options) {
@@ -350,7 +373,12 @@ return this
         return Backbone.sync(method, collection, options);
     },
     parse: function(response) {
-        return response.response.docs
+
+var docs = response.response.docs
+
+
+
+        return docs
     }
 }); //livecarto
 // var CartoCollectionDev = Backbone.Collection.extend({

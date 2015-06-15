@@ -2,7 +2,7 @@ var CartoListView = Backbone.View.extend({
     // tagName: "li",
     el: "#querylist-carto",
     events: {
-        "click .bt-cartoobj-zoomto": 'zoomtointernal',
+        // "click .bt-cartoobj-zoomto": 'zoomtointernal',
         // "click .bt-cartoobj-episodes": 'pulleps',
         "click .bt-cartoobj-episodes": 'triage',
         "click .carto-plain-title": 'triage',
@@ -26,7 +26,8 @@ var CartoListView = Backbone.View.extend({
     fromzoom: function(cm) {
         var czid = cm.get("cartodb_id")
         var a = $(this.el).find("li[data-id='" + czid + "']")
-        return this.activate(a)
+        // return this.activate(a)
+        return this
     },
     unwire: function() {
         $('.bt-cartoobj').tooltip('destroy')
@@ -36,7 +37,12 @@ var CartoListView = Backbone.View.extend({
         e.preventDefault()
         var locid = $(e.target).attr("data-id")
         var loctype = $(e.target).attr("data-type");
-        appCBB.activate(locid, loctype);
+        // appCBB.activate(locid, loctype);
+        // activecouple = loctype+":"+locid
+        
+        activecouple = activeFactory(loctype+":"+locid)
+
+        appCBB.activate();
         if (agent == "desktop") {
             return this.pulleps()
         } else if (agent == "mobile") {
@@ -50,7 +56,8 @@ var CartoListView = Backbone.View.extend({
     pulleps_mobile: function() {
         e.preventDefault()
         var a = $(e.currentTarget).parents('li')
-        return this.activate(a)
+        // return this.activate(a)
+        return this
     },
     pulleps: function() {
         
@@ -59,12 +66,14 @@ var CartoListView = Backbone.View.extend({
                 show: true,
             })
             // we have to find the el to activate
-        var act = appCBB.findWhere({
-            active: true
-        })
-        var locid = act.attributes.cartodb_id
-        var loctype = act.attributes.geom_type
-        var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
+        // var act = appCBB.findWhere({
+        //     active: true
+        // })
+        // var locid = act.get("cartodb_id")
+        // var loctype = act.get("geom_type") 
+        
+        var actv = activeFactory();
+        // var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
         // if (source == "self") {
         //     // force the scroll to the top jic we left it at the bottom
         //     $("#main").scrollTo(".querysubnavh");
@@ -76,7 +85,12 @@ var CartoListView = Backbone.View.extend({
         //     $("#episodes-list").addClass("episodespecial")
         //     appHiderView.setpos("episodes-pu", "true")
         // }
+        // locidDrd = doctorId(loctype, locid)
+        
+        var loctype=actv[0]
+        var locid=actv[1]
         locidDrd = doctorId(loctype, locid)
+
         appEpisodes.activeloc = Number(locidDrd);
         appEpisodes.loctype = loctype;
         appEpisodes.fetch({
@@ -89,16 +103,20 @@ var CartoListView = Backbone.View.extend({
                 })
             }
         });
-        return this.activate(a)
+        // return this.activate(a)
+        return this
+        .render()
     },
     zoomtointernal: function(e) {
         e.preventDefault()
         var a = $(e.currentTarget).parents('li')
-        return this.activate(a)
+        // return this.activate(a)
+        return this
     },
     zoomfromexternal: function(czid) {
         var a = $(this.el).find("li[data-id='" + czid + "']")
-        return this.activate(a)
+        // return this.activate(a)
+        return this
     },
     rewire: function() {
         // reactivating some pieces that get wiped in the render
@@ -116,7 +134,18 @@ var CartoListView = Backbone.View.extend({
         $("#stats-hits").html("total hits: " + this.collection.length)
         return this
     },
-    activate: function(a) {
+    activate4all: function(){
+
+// this view is always listening, so we can have it handle the activation of the CBB collection for all the other listeners
+
+this.collection.activate()
+
+
+
+return this
+
+    },
+    activateold: function(a) {
         // first wipe the list of any true classes (see ~184 for explanation)
         $(this.el).find(".carto-plain-title").removeClass("true")
         var amid = $(a).data("id").toString();
@@ -198,6 +227,7 @@ var CartoListView = Backbone.View.extend({
         return this
     },
     render: function() {
+        // this.activate4all()
         this.unwire()
         appActivity.set({
             message: "preparing list display...",

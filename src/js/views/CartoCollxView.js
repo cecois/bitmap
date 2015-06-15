@@ -15,6 +15,7 @@ var CartoCollxView = Backbone.View.extend({
         return this
     },
     render: function() {
+
         appActivity.set({
             message: "preparing map objects...",
             show: true
@@ -56,13 +57,15 @@ var CartoCollxView = Backbone.View.extend({
                 // var hitll = wkt.toObject().getLatLng()
                 // var hitm = L.circleMarker(hitll, markernew)
                 var activeStyle = markernew
-                L.geoJson(hitm, {
+                var foot = L.geoJson(hitm, {
                         seen: false,
                         cartodb_id: hit.get("cartodb_id"),
                         pointToLayer: function(feature, latlng) {
                             return L.circleMarker(latlng, activeStyle);
                         }
-                    }).bindPopup(pu).addTo(cbbItems).on("click", function(m) {
+                    })
+
+                foot.bindPopup(pu).addTo(cbbItems).on("click", function(m) {
                         // first mark it seen
                         var stale = _.find(cbbItems._layers, function(i) {
                             return i.options.seen == true
@@ -83,13 +86,12 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
                     // var zoomer = hitm.coordinates
                     // var seenStyle = lineseen
                     // console.log("hitll:");console.log(hitll);
-                var puobj = L.geoJson(hitm, {
-                        seen: false,
-                        cartodb_id: hit.get("cartodb_id"),
-                        style: activeStyle
-                    })
-
-                puobj.bindPopup(pu).addTo(cbbItems).on("click", function(m) {
+                var foot = L.geoJson(hitm, {
+                    seen: false,
+                    cartodb_id: hit.get("cartodb_id"),
+                    style: activeStyle
+                })
+                foot.bindPopup(pu).addTo(cbbItems).on("click", function(m) {
                         var stale = _.find(cbbItems._layers, function(i) {
                             return i.options.seen == true
                         });
@@ -101,12 +103,16 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
                         p.model = hitm.properties
                         puFactory(p)
                     }) //on popup
-
-                    if(hit.get("active"=="true")){
-puobj.openPopup()
-                    }
-                    // var hitm = L.multiPolyline(hitll, linenew);
+                
+                // var hitm = L.multiPolyline(hitll, linenew);
             }
+
+            if (hit.get("active" == "true")) {
+
+                console.log("active hit! we'll pop its popup...");
+                console.log(foot);
+                    foot.openPopup()
+                }
             // if (this.collection.length == 1) {
             //     cbbItems.openPopup()
             // }

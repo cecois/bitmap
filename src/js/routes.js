@@ -20,12 +20,25 @@ var Route = Backbone.Router.extend({
         // console.log(el);
         var url = urlFactory(el)
         // console.log("appcartoquery at 25 here:");console.log(appCartoQuery.get("rawstring"));
-        this.navigate(url, {
-            trigger: false,
-            replace: false
-        })
+// this.navigate(url, {
+//     trigger: false,
+//     replace: false
+// })
     },
     default: function(h, q, bbox, basemap,activecouple) {
+
+/*
+Tried to not do this, but it does kinda make sense to make the active mod a global. Otherwise we have to pass it to BitCollection first, and then *further* on to CartoCollx since Carto gets filled *after* the custom parse of bits.
+ */
+
+window.activecouple=activecouple
+
+// if(typeof activecouple !== 'undefined' && activecouple !== null){
+//     window.activeid = activecouple.split(":")[1]
+//     window.activetype = activecouple.split(":")[0]
+// }
+
+
         if (typeof basemap !== 'undefined' && basemap !== null) {
             var inbl = appBaseLayers.findWhere({
                 "name": basemap
@@ -105,44 +118,62 @@ var Route = Backbone.Router.extend({
                     // appBitsView.render()
                     // appBitsCountView.render()
 
+console.log("success cb of appBits fetch - maybe we wont do appcbb fetch here after all?");
 
              appCBB.fetch({
                 reset:true,
-                // dataType: "jsonp"
-                success: function() {
+                success: function(collx) {
 
-// this.activate("point:419")
+// if(verbose == true){
+//     console.log("in route's appCBB fetch (a success callback fun from Bits.fetch, the result of #query)");
+// }
 
-// if(typeof activecouple !== 'undefined'){
-//     var activeid = activecouple.split(":")[0]
-//     var activetype = activecouple.split(":")[1]
+// // here's where if we have an activecouple incoming (one of the query results that are supposed to be highlighted/popped up) we set that on our end
+// if(typeof activecouple !== 'undefined' && activecouple !== null){
+//     var activeid = activecouple.split(":")[1]
+//     var activetype = activecouple.split(":")[0]
 
-//     console.log("activecouple in success");console.log(activecouple);
-// console.log("activeid in success");console.log(activeid);
-// console.log("activetype in success");console.log(activetype);
+// // findWhere wz failing here weirdly but consistently btw
+// var actv = collx.models.find(function(m){return (m.get("geom_type")==activetype && m.get("cartodb_id")==activeid);});
 
-// this.activate(activeid,activetype)
+// // now it's possible we didn't find it - feasibly one could manually pass an active model that isn't returned by the query
+// // we don't wanna bomb out here so we conditionalize it (silently for now)
+// if(typeof actv !== 'undefined'){
+// actv.set({active:true})
+// collx.set(actv)}
+
+// // this.activate(activeid,activetype)
 //     // appCBBListView.pulleps("route")
+// } else {
+//     appConsole.set({message:"The feature passed in as 'active' (highlighted) wasn't returned by the query - a rare thing."})
+// }
+
+// if(collx.length==1){
+//     // also set it to active
+// var actv = collx.models[0];
+
+// actv.set({active:true})
+// collx.set(actv)
 // }
 
 
-                    // console.log("successful fetch of appcbb at 76");
-                    // appCBBListView.render()
-                    // appCBBMapView.render()
-                    // appCBBCountView.render()
-                },
-                error: function() {
-                    appConsole.set({
-                        message: "query errored out"
-                    })
-                    // actually, if it's a true error we wanna be more forthcoming:
-                    appActivity.set({
-                        message: "",
-                        show: false
-                    })
-                    // console.log("failed fetch");
+//                     // console.log("successful fetch of appcbb at 76");
+//                     // appCBBListView.render()
+//                     // appCBBMapView.render()
+//                     // appCBBCountView.render()
+//                 },
+//                 error: function() {
+//                     appConsole.set({
+//                         message: "query errored out"
+//                     })
+//                     // actually, if it's a true error we wanna be more forthcoming:
+//                     appActivity.set({
+//                         message: "",
+//                         show: false
+//                     })
+//                     // console.log("failed fetch");
                 }
-            },this)
+            })
 
                 }, //success fetch
                 error: function() {

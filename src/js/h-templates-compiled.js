@@ -97,7 +97,9 @@ templates['cartoListView'] = template({"1":function(depth0,helpers,partials,data
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
     + "\" data-type=\""
     + escapeExpression(lambda((depth0 != null ? depth0.geom_type : depth0), depth0))
-    + "\" class=\"carto-plain-title\">"
+    + "\" class=\"carto-plain-title "
+    + escapeExpression(lambda((depth0 != null ? depth0.active : depth0), depth0))
+    + "\">"
     + escapeExpression(lambda((depth0 != null ? depth0.name : depth0), depth0))
     + "</span> <span class=\"glyphicon glyphicon-share-alt bt-cartoobj bt-cartoobj-zoomto\" title=\"zoom to this\"></span>\n<span data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))

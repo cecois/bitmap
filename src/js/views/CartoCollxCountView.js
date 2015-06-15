@@ -1,5 +1,5 @@
-var BitsCountView = Backbone.View.extend({
-    el: ".query-subnav-count-bits",
+var CartoCollxCountView = Backbone.View.extend({
+    el: ".query-subnav-count-locations",
     initialize: function() {
         this.listenTo(this.collection, 'reset', this.render);
         return this.render()
