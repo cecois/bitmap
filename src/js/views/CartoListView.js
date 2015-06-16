@@ -6,7 +6,7 @@ var CartoListView = Backbone.View.extend({
         // "click .bt-cartoobj-episodes": 'pulleps',
         "click .bt-cartoobj-episodes": 'triage',
         "click .carto-plain-title": 'triage',
-        "click .bt-getid": 'echoid'
+        // "click .bt-getid": 'echoid'
     },
     // template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
@@ -19,17 +19,18 @@ var CartoListView = Backbone.View.extend({
         return this
     },
     echoid: function(e) {
-        var locid = $(e.target).attr("data-id")
-        var loctyp = $(e.target).attr("data-type")
-        var str = '<span class="loc-trigger" data-string="location_id:'+locid+' AND location_type:'+loctyp+'" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-'+loctyp+'"></span>'
-
+        // var locid = $(e.target).attr("data-id")
+        var locid = $(e.currentTarget).attr("data-id")
+        var loctyp = $(e.currentTarget).attr("data-type")
+        // var loctyp = $(e.target).attr("data-type")
+        var str = '<span class="loc-trigger" data-string="location_id:' + locid + ' AND location_type:' + loctyp + '" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-' + loctyp + '"></span>'
         console.log(str);
         return this
     },
     fromzoom: function(cm) {
         var czid = cm.get("cartodb_id")
         var a = $(this.el).find("li[data-id='" + czid + "']")
-        // return this.activate(a)
+            // return this.activate(a)
         return this
     },
     unwire: function() {
@@ -38,23 +39,20 @@ var CartoListView = Backbone.View.extend({
     },
     triage: function(e) {
         e.preventDefault()
-        if(dev==true){
-            this.echoid()
+        if (dev == true) {
+            this.echoid(e)
         }
         var locid = $(e.target).attr("data-id")
         var loctype = $(e.target).attr("data-type");
         // appCBB.activate(locid, loctype);
         // activecouple = loctype+":"+locid
-        
-        activecouple = activeFactory(loctype+":"+locid)
+        activecouple = activeFactory(loctype + ":" + locid)
         appCBB.activate();
-
         // this is one we want the url to reflect
         appRoute.navigate(urlFactory("#query"), {
-trigger: false,
-replace: false
-})
-
+            trigger: false,
+            replace: false
+        })
         if (agent == "desktop") {
             return this.pulleps()
         } else if (agent == "mobile") {
@@ -68,22 +66,20 @@ replace: false
     pulleps_mobile: function() {
         e.preventDefault()
         var a = $(e.currentTarget).parents('li')
-        // return this.activate(a)
+            // return this.activate(a)
         return this
     },
     pulleps: function() {
-        
         appActivity.set({
                 message: "fetching episodes...",
                 show: true,
             })
             // we have to find the el to activate
-        // var act = appCBB.findWhere({
-        //     active: true
-        // })
-        // var locid = act.get("cartodb_id")
-        // var loctype = act.get("geom_type") 
-        
+            // var act = appCBB.findWhere({
+            //     active: true
+            // })
+            // var locid = act.get("cartodb_id")
+            // var loctype = act.get("geom_type") 
         var actv = activeFactory();
         // var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
         // if (source == "self") {
@@ -98,11 +94,9 @@ replace: false
         //     appHiderView.setpos("episodes-pu", "true")
         // }
         // locidDrd = doctorId(loctype, locid)
-        
-        var loctype=actv[0]
-        var locid=actv[1]
+        var loctype = actv[0]
+        var locid = actv[1]
         locidDrd = doctorId(loctype, locid)
-
         appEpisodes.activeloc = Number(locidDrd);
         appEpisodes.loctype = loctype;
         appEpisodes.fetch({
@@ -116,18 +110,17 @@ replace: false
             }
         });
         // return this.activate(a)
-        return this
-        .render()
+        return this.render()
     },
     zoomtointernal: function(e) {
         e.preventDefault()
         var a = $(e.currentTarget).parents('li')
-        // return this.activate(a)
+            // return this.activate(a)
         return this
     },
     zoomfromexternal: function(czid) {
         var a = $(this.el).find("li[data-id='" + czid + "']")
-        // return this.activate(a)
+            // return this.activate(a)
         return this
     },
     rewire: function() {
@@ -146,16 +139,45 @@ replace: false
         $("#stats-hits").html("total hits: " + this.collection.length)
         return this
     },
-    activate4all: function(){
-
-// this view is always listening, so we can have it handle the activation of the CBB collection for all the other listeners
-
-this.collection.activate()
-
-
-
-return this
-
+    activate4all: function() {
+        // this view is always listening, so we can have it handle the activation of the CBB collection for all the other listeners
+        this.collection.activate()
+        return this.zoomto()
+    },
+    zoomto: function() {
+        appActivity.set({
+            message: "zooming to selected feature...",
+            show: true
+        })
+        var actv = activeFactory();
+        var amtyp = actv[0]
+        var amid = actv[1]
+        _.each(cbbItems._layers, function(i) {
+                if (i.options.cartodb_id == amid) {
+                    var ib = i.getBounds();
+                    if (verbose == true) {
+                        console.log("ib:");
+                        console.log(ib);
+                    }
+                    var typ = item.get("geom_type")
+                    switch (typ) {
+                        case 'point':
+                            // map.setView(i.getBounds(),7)
+                            map.fitBounds(ib)
+                            break;
+                        case 'poly':
+                            // map.setView(i.getBounds(),7)
+                            map.fitBounds(ib)
+                            break;
+                        default:
+                            // i.e. line
+                            map.fitBounds(ib)
+                                // locid = locid;
+                    }
+                }
+            }) //each
+        processLeaf(amid, true, item.get("geom_type"))
+        return this
     },
     activateold: function(a) {
         // first wipe the list of any true classes (see ~184 for explanation)
