@@ -20,7 +20,9 @@ var CartoListView = Backbone.View.extend({
     },
     echoid: function(e) {
         var locid = $(e.target).attr("data-id")
-        var str = '<span class="loc-trigger" data-string="cartodb_id:' + locid + '"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
+        var loctyp = $(e.target).attr("data-type")
+        var str = '<span class="loc-trigger" data-string="location_id:'+locid+' AND location_type:'+loctyp+'" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-'+loctyp+'"></span>'
+
         console.log(str);
         return this
     },
@@ -36,6 +38,9 @@ var CartoListView = Backbone.View.extend({
     },
     triage: function(e) {
         e.preventDefault()
+        if(dev==true){
+            this.echoid()
+        }
         var locid = $(e.target).attr("data-id")
         var loctype = $(e.target).attr("data-type");
         // appCBB.activate(locid, loctype);

@@ -107,10 +107,10 @@ templates['cartoListView'] = template({"1":function(depth0,helpers,partials,data
     + escapeExpression(lambda((depth0 != null ? depth0.geom_type : depth0), depth0))
     + "\" class=\"glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes\" title=\"pull a list of associated episodes\"></span> -->\n        <!-- <span data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.cartodb_id : depth0), depth0))
-    + "\" class=\"glyphicon glyphicon-asterisk bt-getid\" title=\"echo model id (dev only)\"></span> -->\n        ";
+    + "\" class=\"glyphicon glyphicon-asterisk bt-getid\" title=\"echo model id (dev only)\"></span> -->\n        <!-- ";
   stack1 = ((helpers.indev || (depth0 && depth0.indev) || helperMissing).call(depth0, (depth0 != null ? depth0.cartodb_id : depth0), (depth0 != null ? depth0.geom_type : depth0), {"name":"indev","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data}));
   if (stack1 != null) { buffer += stack1; }
-  buffer += "\n";
+  buffer += " -->\n";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.anno : depth0), {"name":"if","hash":{},"fn":this.program(4, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer + "    </div>\n</li>\n";
