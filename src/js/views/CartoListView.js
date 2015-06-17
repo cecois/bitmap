@@ -79,12 +79,12 @@ var CartoListView = Backbone.View.extend({
             //     active: true
             // })
             // var locid = act.get("cartodb_id")
-            // var loctype = act.get("geom_type") 
+            // var loctype = act.get("geom_type")
         var actv = activeFactory();
         // var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
         // if (source == "self") {
         //     // force the scroll to the top jic we left it at the bottom
-        //     $("#main").scrollTo(".querysubnavh");
+            // $("#main").scrollTo(".querysubnavh");
         // } else {
         //     // it means we're coming from somewhere else (prolly a popup or the router), which means in turn we might need to nudge the now-active gui elements into view
         //     $("#main").scrollTo($(a), 200, {
@@ -148,7 +148,7 @@ var CartoListView = Backbone.View.extend({
     zoomto: function() {
 
         var actv = activeFactory();
-        
+
         if(actv !==null && actv.length==2){
 
         appActivity.set({
@@ -184,7 +184,7 @@ var CartoListView = Backbone.View.extend({
                 }
             }) //each
         processLeaf(amid, true, amtyp)
-       } //actv length test 
+       } //actv length test
         return this
     },
     activateold: function(a) {

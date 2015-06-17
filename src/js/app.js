@@ -170,7 +170,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": false,
+            "active": true,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-mario.png",
@@ -186,7 +186,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": true,
+            "active": false,
             "source": "localhost",
             "nom": "A Real Dummy",
             "thumb": "offline/mapbox-mario.png",
@@ -564,14 +564,14 @@ var activeid = activecouple.split(":")[1]
             active: true
         }).get("name")
         var url = h + "/" + qs + "/" + bbx + "/" + bl + "/"
-        
+
 if(typeof activecouple !== 'undefined' && activecouple !== null){
 var ac = activeFactory();
 
 // url+=activetype + ":" + activeid
 url+=ac.join(":")
 
-}        
+}
         // if(typeof activeid !== 'undefined' && typeof activeid !== null && typeof activetype !== 'undefined' && typeof activetype !== null){
             // }
 
