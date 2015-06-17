@@ -26,7 +26,21 @@ var EpisodesView = Backbone.View.extend({
         $(this.el).empty()
             // by the time we get here, plainview will have an active element, go get it to match its position
         var ael = $(".carto-plain-title.true")
-        $(this.el).css("top", $(ael).position().top-30);
+        // $(this.el).css("top", $(ael).position().top-30);
+
+// $("#episodes-list").css("top", $("#episodes-list").position().top-130);
+
+// $(this.el).scrollintoview(
+// {
+//     // duration: 2500,
+//     direction: "vertical",
+//     complete: function() {
+//         // highlight the element so user's focus gets where it needs to be
+//         // $("#episodes-list").css("top", $("#episodes-list").position().top-130);
+//     }
+// }
+// );
+
         // and that stupid arrow
         $(".episodes-arrow").removeClass("hidden").css("top", $(ael).position().top);
         // $(this.el).css("top", this.collection.verticaloffset - 20)

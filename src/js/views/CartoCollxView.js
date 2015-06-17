@@ -116,6 +116,14 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
             // if (this.collection.length == 1) {
             //     cbbItems.openPopup()
             // }
+            
+            foot.on("popupopen",function(p){
+
+activecouple = activeFactory(hit.get("geom_type") + ":" + hit.get("cartodb_id"))
+        appCBB.activate();
+
+            }) //.on
+
             // var hitm = wkt.toObject().addTo(cbbItems).on("click", function(m) {
             // var hitm = L.circleMarker(hitll, mstyle).addTo(cbbItems).on("click", function(m) {
             // console.log("hitm just after bindpopu:");console.log(hitm);

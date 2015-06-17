@@ -126,7 +126,7 @@ var CartoListView = Backbone.View.extend({
     rewire: function() {
         // reactivating some pieces that get wiped in the render
         // actually -- first, since we're here for the same reason -- let's wipe the episodes list, too
-        appEpisodesView.wipe();
+// appEpisodesView.wipe();
         $('#querylist-carto').liveFilter("#query-livefilter", 'li', {
             filterChildSelector: 'div'
         });
@@ -138,20 +138,27 @@ var CartoListView = Backbone.View.extend({
             // a little non-backbone stuff
         $("#stats-hits").html("total hits: " + this.collection.length)
         return this
+        .zoomto()
     },
-    activate4all: function() {
-        // this view is always listening, so we can have it handle the activation of the CBB collection for all the other listeners
-        this.collection.activate()
-        return this.zoomto()
-    },
+    // activate4all: function() {
+    //     // this view is always listening, so we can have it handle the activation of the CBB collection for all the other listeners
+    //     this.collection.activate()
+    //     return this.zoomto()
+    // },
     zoomto: function() {
+
+        var actv = activeFactory();
+        
+        if(actv !==null && actv.length==2){
+
         appActivity.set({
             message: "zooming to selected feature...",
             show: true
         })
-        var actv = activeFactory();
         var amtyp = actv[0]
         var amid = actv[1]
+
+
         _.each(cbbItems._layers, function(i) {
                 if (i.options.cartodb_id == amid) {
                     var ib = i.getBounds();
@@ -159,8 +166,8 @@ var CartoListView = Backbone.View.extend({
                         console.log("ib:");
                         console.log(ib);
                     }
-                    var typ = item.get("geom_type")
-                    switch (typ) {
+                    // var typ = i.get("geom_type")
+                    switch (amtyp) {
                         case 'point':
                             // map.setView(i.getBounds(),7)
                             map.fitBounds(ib)
@@ -176,7 +183,8 @@ var CartoListView = Backbone.View.extend({
                     }
                 }
             }) //each
-        processLeaf(amid, true, item.get("geom_type"))
+        processLeaf(amid, true, amtyp)
+       } //actv length test 
         return this
     },
     activateold: function(a) {
@@ -289,7 +297,7 @@ var CartoListView = Backbone.View.extend({
             $(this.el).html("<span style='font-size:2em;'>Zero. RU a zero?</span>")
             appQuerySubNavView.specify("bits")
             appCBBCountView.render()
-            return this.rewire()
         }
+            return this.rewire()
     }
 });

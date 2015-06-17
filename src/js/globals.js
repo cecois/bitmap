@@ -1,5 +1,6 @@
 window.verbose = true;
 window.dev = true;
+window.local = true;
 window.plierpoint=1;
 window.plierpoly=9999;
 window.plierline=999;

@@ -84,6 +84,7 @@ var HiderView = Backbone.View.extend({
             console.log("forclass right b4 apply:");
             console.log(forclass);
             $("#main").addClass(forclass);
+            $("#episodes-list").addClass(forclass);
             $("#mnuBaseMap").addClass(forclass);
             $("#banner-bang").addClass(forclass);
             appConsoleView.$el.addClass("hidden")
@@ -94,6 +95,7 @@ var HiderView = Backbone.View.extend({
             $("#mnuBaseMap").removeClass('hiddenish');
             appConsoleView.$el.removeClass("hidden")
             $("#main").removeClass('hiddenish hiddenish-episodes-pu');
+            $("#episodes-list").removeClass("hiddenish-episodes-pu hiddenish");
             $("#banner-bang").removeClass('hiddenish');
         }
         if (typeof this.model.get("distance") !== 'undefined' || this.model.get("distance") !== null) {

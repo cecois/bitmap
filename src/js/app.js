@@ -170,7 +170,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-mario.png",
@@ -186,7 +186,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": false,
+            "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
             "thumb": "offline/mapbox-mario.png",
@@ -531,7 +531,7 @@ function activeFactory(a){
 
 if(typeof a == 'undefined' || a == null){
 
-if(typeof activecouple !== 'undefined' || activecouple !== null){
+if(typeof activecouple !== 'undefined' && activecouple !== null){
 var activeid = activecouple.split(":")[1]
     var activetype = activecouple.split(":")[0]
 
@@ -578,7 +578,7 @@ url+=ac.join(":")
         return url
     }
 
-    function processLeaf(m, pop, geom) {
+    function processLeaf(mid, pop, geom) {
         if(typeof pop == 'undefined'){
             var pop = true
         }
@@ -599,7 +599,7 @@ url+=ac.join(":")
                     i.setStyle(markerseen)
                 }
             }
-            if (i.options.cartodb_id.toString() == m) {
+            if (i.options.cartodb_id.toString() == mid) {
                 i.setStyle(activeStyle)
                 i.options.seen = true;
 

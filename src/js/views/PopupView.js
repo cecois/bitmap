@@ -7,7 +7,7 @@ var PopupView = Backbone.View.extend({
         return this.render();
     },
     events: {
-        "click .bt-cartoobj-episodes": "pulleps",
+        "click .bt-cartoobj-episodes": "triage",
         // "click .bt-cartoobj-feedback": "ghsubmit",
         // "click .bt-cartoobj-leafletcloser": "reset"
         "click button[type='submit']": "issue_submit",
@@ -77,6 +77,34 @@ var PopupView = Backbone.View.extend({
     // map._layers[lid].closePopup()
     // return this
     //     },
+//     triage: function(e) {
+//         e.preventDefault()
+
+//         console.log("in triage of puview");
+
+//         var locid = $(e.target).find("span").attr("data-id")
+//         var loctype = $(e.target).find("span").attr("data-type");
+
+// console.log("locid:");console.log(locid);
+// console.log("loctype:");console.log(loctype);
+
+//         // appCBB.activate(locid, loctype);
+//         // activecouple = loctype+":"+locid
+//         activecouple = activeFactory(loctype + ":" + locid)
+//         appCBB.activate();
+//         // this is one we want the url to reflect
+//         appRoute.navigate(urlFactory("#query"), {
+//             trigger: false,
+//             replace: false
+//         })
+//         if (agent == "desktop") {
+//             // return this.pulleps()
+//             return this
+//         } else if (agent == "mobile") {
+//             // return this.pulleps_mobile()
+//             return this
+//         }
+//     },
     pulleps: function(source) {
         var locid = this.model.get("cartodb_id")
         var loctype = this.model.get("geom_type")
@@ -89,16 +117,17 @@ var PopupView = Backbone.View.extend({
             //         replace: false
             //     })
         appCBB.activate(locid, loctype)
-            // appHiderView.setpos("episodes-pu","true")
-            // appCBBListView.pulleps("pu")
-        return this.navaway()
+            appHiderView.setpos("episodes-pu","true")
+            appCBBListView.pulleps()
+        return this
+        // .navaway()
     },
-    navaway: function() {
-        appRoute.navigate(urlFactory("#query"), {
-            trigger: true,
-            replace: true
-        })
-    },
+    // navaway: function() {
+    //     appRoute.navigate(urlFactory("#query"), {
+    //         trigger: true,
+    //         replace: true
+    //     })
+    // },
     issue: function(el) {
         // this.prepspace()
         $(".leaflet-popup-content").css("width", "450px")
