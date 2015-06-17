@@ -474,10 +474,10 @@ bottom:-35px;
   /*border-top:solid 2px @secondarycolor;*/
   // border-top:none;
   border-bottom:solid 50px @secondarycolor;
-  width:100%;
+  /*width:100%;*/
   height:70%;
-  top:200px;
-  position:fixed;
+  top:121px;
+  /*position:fixed;*/
     // background-color:white;
     opacity:.9;
   overflow:auto;
@@ -502,6 +502,50 @@ width:100%;
 }
 
   } //mainpanel
+
+@media(max-width:992px){
+   border-top:solid 2px @secondarycolor;
+  border-bottom:solid 2px @secondarycolor;
+  height:70%;
+  top:65px;
+  font-size:.8em;
+}
+} //main
+
+#episodes{
+  background-color: @primarycolor;
+  border-top:solid 50px @secondarycolor;
+  /*border-top:solid 2px @secondarycolor;*/
+  // border-top:none;
+  border-bottom:solid 50px @secondarycolor;
+  /*width:100%;*/
+  height:70%;
+  top:171px;
+  /*position:fixed;*/
+    // background-color:white;
+    opacity:.9;
+  overflow:auto;
+// position:absolute;
+  .mainpanel{
+    .block{
+      h1{margin-bottom:30px;
+        margin-left: -20px;
+       }
+       } //block
+  padding:0px 100px;
+position: relative;
+width:100%;
+
+@media(max-width:992px){
+.block{
+      h1{margin-bottom:5px;
+        margin-left: 0px;
+       }
+       } //block
+  padding:5px 10px;
+}
+
+  } //episodespanel
 
 @media(max-width:992px){
    border-top:solid 2px @secondarycolor;
@@ -550,8 +594,16 @@ width:100%;
 
 
 #main.hiddenish{
-    right:99.5%;
+    /*right:99.5%;*/
+    right:66%;
     /*top:95%;*/
+  }
+
+#episodes.hiddenish{
+    left:32%;
+
+    transition: all 0.5s ease;
+
   }
 
 #main.hiddenish-episodes-pu{
