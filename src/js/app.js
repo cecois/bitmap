@@ -170,7 +170,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-mario.png",
@@ -186,7 +186,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": false,
+            "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
             "thumb": "offline/mapbox-mario.png",
@@ -364,9 +364,32 @@ window.appQuerySubNavView = new QuerySubNavView({
     model: appQuerySubNav
 });
 
-window.appHider = new Hider({collapsed:"false"});
-window.appHiderView = new HiderView({
-    model: appHider
+// window.appHider = new Hider({collapsed:"false"});
+// window.appHiderView = new HiderView({
+//     model: appHider
+// });
+
+
+// momap,collapsed
+
+var states = [{
+            "name": "main",
+            "posish": "open",
+            "visible":true
+        }, {
+            "name": "episodes",
+            "posish": "open",
+            "visible":true
+        }
+
+    ]
+
+// appBaseLayers = new BaseLayersCollection(baselayers.layers);
+window.appStates = new States(
+states
+    );
+window.appStatesView = new StatesView({
+    collection: appStates
 });
 // var mods = (function() {
 //     var json = null;
@@ -708,11 +731,11 @@ $(document).ready(function() {
     // var url = pullURL('#query');
     // appRoute.navigate(url, {trigger: true, replace: true})
     // })
-                    appActivity.set({
-                    message: "",
-                    show: false,
-                    altel: false
-                })
+                //     appActivity.set({
+                //     message: "",
+                //     show: false,
+                //     altel: false
+                // })
     //
     L.control.zoom({position:'topright'}).addTo(map)
     //

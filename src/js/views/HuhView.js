@@ -18,10 +18,10 @@ var HuhView = Backbone.View.extend({
         return this
     },
     reset: function() {
-        console.log("showmain clicked");
-        console.log(e);
-        $("#bt-showmain").addClass('hidden')
-        $("#main").addClass('hiddenish')
+        // console.log("showmain clicked");
+        // console.log(e);
+        // $("#bt-showmain").addClass('hidden')
+        // $("#main").addClass('hiddenish')
         return this
     }
 });

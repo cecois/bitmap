@@ -121,21 +121,18 @@ var QuerySubNav = Backbone.Model.extend({
     }
 }); //querysubnav
 
-var Hider = Backbone.Model.extend({
+var State = Backbone.Model.extend({});
+var States = Backbone.Collection.extend({
     // i dunno, maybe the dumbest model ever?
-    defaults:{
-        // dichotamous, these two
-        collapsed:"false",
-        operation:"minus",
-        instructions:"collapse/hide main pane - the ctrl key will also toggle this"
-    },
+    model: State,
+    url: null,
     initialize: function(options) {
         options || (options = {});
         // this.listenTo(this, "change", this.swap)
         // this.bind(this, "change", this.swap)
         return this
     }
-}); //hider
+}); //states
 
 var CartoQuery = Backbone.Model.extend({
     defaults: {
@@ -227,7 +224,7 @@ var BitCollection = Backbone.Collection.extend({
 // appCBB.seturl(arr)
 // appCBB.set(locsyes)
 
-appActivity.set({message: "extracting mappable bits...",show: true});
+// appActivity.set({message: "extracting mappable bits...",show: true});
 
 var lids = [];
 
@@ -243,7 +240,7 @@ lids.push(cid)
 
 });
 
-appActivity.set({message: null,show: false});
+// appActivity.set({message: null,show: false});
 // var uids=_.unique(lids)
 appCBB.seturl(_.unique(lids))
 

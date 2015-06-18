@@ -1,12 +1,50 @@
-var HiderView = Backbone.View.extend({
+var StatesView = Backbone.View.extend({
     el: $("#btn-hider"),
-    template: Handlebars.templates['hiderViewTpl'],
+    template: Handlebars.templates['statesViewTpl'],
     initialize: function() {
         this.render();
-        this.model.bind("change", this.render, this);
+        this.collection.bind("change", this.render, this);
     },
     events: {
         "click": "setpos"
+    },
+    render: function() {
+        // hidden,momap,collapsed
+        _.each(this.collection.models, function(mo, index) {
+            var elstr = "#" + mo.get("name")
+            var elpos = mo.get("posish")
+            var elviz = mo.get("visible")
+            $el = $(elstr);
+            
+            switch (elviz) {   
+                case true:
+                    $el.removeClass("hidden");
+                    break;
+                case false:
+                    $el.addClass("hidden");
+                    break;
+                default:
+                    $el.removeClass("hidden");
+            }
+
+// clear all first
+$el.removeClass (function (index, css) {
+    return (css.match (/(^|\s)statie-\S+/g) || []).join(' ');
+});
+
+            switch (elpos) {   
+                case "momap":
+                
+                    $el.addClass("statie-momap");
+                    break;
+                case "collapsed":
+                    $el.addClass("statie-collapsed");
+                    break;
+                default:
+                    
+            }
+        });
+        return this
     },
     swap: function() {
         if (this.model.get("collapsed") == "false") {
@@ -65,7 +103,7 @@ var HiderView = Backbone.View.extend({
     // return this
     // .render()
     //     },
-    render: function() {
+    renderOG: function() {
         var forwhom = this.model.get("forwhom")
         $(this.el).html(this.template(this.model.toJSON()))
         if (this.model.get("collapsed") == "true") {
@@ -83,11 +121,11 @@ var HiderView = Backbone.View.extend({
             // $("#main").attr("class","")
             console.log("forclass right b4 apply:");
             console.log(forclass);
-            $("#main").addClass(forclass);
-            $("#episodes").addClass(forclass);
+            $("#main").addClass(forclass, 100);
+            $("#episodes").addClass(forclass, 50);
             $("#episodes-list").addClass(forclass);
             $("#mnuBaseMap").addClass(forclass);
-            $("#banner-bang").addClass(forclass);
+            $("#banner-bang").addClass(forclass, 100);
             appConsoleView.$el.addClass("hidden")
             appConsole.set({
                 "message": "the 'control' key also toggles the visibility of the main pane"

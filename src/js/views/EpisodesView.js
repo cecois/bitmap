@@ -44,13 +44,13 @@ var EpisodesView = Backbone.View.extend({
 // ael.scrollintoview()
 
         // and that stupid arrow
-        $(".episodes-arrow").removeClass("hidden").css("top", $(ael).position().top);
+        // $(".episodes-arrow").removeClass("hidden").css("top", $(ael).position().top);
 
-        $(".episodes-arrow").removeClass("hidden");
+        // $(".episodes-arrow").removeClass("hidden");
 
         // $(this.el).css("top", this.collection.verticaloffset - 20)
         // $('.episodes-arrow').removeClass('hidden').css("position", "relative").css("top", this.collection.verticaloffset - 10)
-        $(this.el).html(" <h3>Episodes</h3> <span class='cbbepsanno'>(referencing location: '" + appCBB.findWhere({
+        $(this.el).html("<span class='cbbepsanno col-sm-12'>(referencing location: '" + appCBB.findWhere({
                 active: true
             }).get("name") + "')</span>")
             // we use .episodes cuz we have some stuff outside of the el we wanna unhide, too

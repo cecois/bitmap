@@ -52,19 +52,19 @@ var PopupView = Backbone.View.extend({
             $(this.el).find("[data-class='pu-issue-body']").attr("placeholder", "please provide some sort of clue to what's wrong")
             $(e.currentTarget).html("<span class='glyphicon glyphicon-warning-sign'></span> Submit")
         } else {
-            appActivity.set({
-                    message: "submitting issue to GitHub...",
-                    show: true
-                })
+            // appActivity.set({
+            //         message: "submitting issue to GitHub...",
+            //         show: true
+            //     })
                 // do the submit
             console.log(it);
             console.log(ib);
             console.log(ic);
             // success will put a checkmark in submit button or something - github (octokat) doesn't return much
-            appActivity.set({
-                message: null,
-                show: false
-            })
+            // appActivity.set({
+            //     message: null,
+            //     show: false
+            // })
             $(e.currentTarget).html("<span class='glyphicon glyphicon-thumbs-up' disabled></span> Thanks")
         }
         return this

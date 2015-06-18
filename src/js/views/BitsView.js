@@ -43,12 +43,12 @@ var BitsView = Backbone.View.extend({
     },
     pulleps: function(e) {
         console.log(e);
-        appActivity.set({
-            message: "fetching episodes...",
-            show: true,
-            altel: null
-                // altel: "#episodes-list"
-        })
+        // appActivity.set({
+        //     message: "fetching episodes...",
+        //     show: true,
+        //     altel: null
+        //         // altel: "#episodes-list"
+        // })
         var locid = $(e.target).attr("data-id")
         var loctype = $(e.target).attr("data-type");
         switch (loctype) {
@@ -70,11 +70,11 @@ var BitsView = Backbone.View.extend({
                 // appActivityView.stfu()
                 // again i'm not sure why this isn't firing from its event trigger
                 // appEpisodesView.render()
-                appActivity.set({
-                    message: "",
-                    show: false,
-                    altel: false
-                })
+                // appActivity.set({
+                //     message: "",
+                //     show: false,
+                //     altel: false
+                // })
             }
         });
         e.preventDefault()

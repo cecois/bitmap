@@ -76,7 +76,7 @@
 
  <!-- <div id="BaseMapConsoleWrapper" class="content-wrap pull-right"><span>BaseMap:</span><div id="BaseMapConsole" class=""></div></div> -->
 <!-- <div id="BaseMapConsole" class=""></div> -->
-<div id="activityContainer" class="pull-right col-sm-7">
+<div id="activityContainer" class="pull-right col-sm-9">
   <!-- <span id="activity-spin" class="hidden">|</span> -->
 </div> <!-- activitycontainer -->
 <!-- <div id="activity-default" class="pull-right col-sm-offset-1 col-sm-7 "> -->
@@ -86,7 +86,7 @@
  </div>
 </header>
 <div id="btn-hider" class=""></div>
-<div id="main" class="col-lg-8 pull-left">
+<div id="main" class="col-lg-9 pull-left">
 
 <div id="huh" class="mainpanel hidden">
 <div class="panel-wrap">
@@ -200,40 +200,27 @@
 
     </div>
 
-    <ul id="episodes-list" class="episodes hidden pull-right col-lg-5 list-unstyled">
-      <li>Lorem ipsum dolor  consectetur ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>
-      <li>Lorem ipsum dolor  et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>
-      <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt  dolore
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>
-      <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>
-      <li>
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>
-      <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor  dolore
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>
-    </ul>
+   
 </div>
 </div> <!-- ./query -->
 </div>  <!-- ./main  -->
-<div id="episodes" class="col-lg-4 pull-right">
+<div id="episodes" class="col-lg-3 pull-right hidden">
 
-<div id="huh" class="mainpanel hidden">
-<div class="panel-wrap">
-    <h1>EPS</h1>
+<div class="panel-wrap col-sm-12">
+    <h3 class="col-sm-12">Episodes</h3>
 </div>
-</div> <!-- ./huh -->
+
+     <ul id="episodes-list" class="episodes hidden pull-right col-lg-12 list-unstyled">
+      <li>Lorem ipsum dolor  consectetur ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</li>
+    </ul>
+
 </div>  <!-- ./main  -->
 
 <div id="livefooter" class="col-sm-12">
 <ul id="mnuBaseMap" class="col-sm-6 list-inline pull-left" ></ul>
 
- <div id="consoleContainer" class="col-sm-4 pull-right"></div>
+ <!-- <div id="consoleContainer" class="col-sm-4 pull-right"></div> -->
 
 </div> <!-- livefooter -->
 
@@ -243,6 +230,7 @@
 <script type="text/javascript" src="lib/tile.stamen.js?v1.2.0"></script>
 <script src="js/h-templates-compiled.js"></script>
 <script src="lib/components/jquery/jquery.min.js"></script>
+<script src="lib/jquery-ui.min.js"></script>
 <!-- <script type="text/javascript" language="Javascript" src="lib/jquery.visible.min.js"></script> -->
 <!-- <script type="text/javascript" language="Javascript" src="lib/jquery.scrollIntoView.min.js"></script> -->
 <script type="text/javascript" language="Javascript" src="lib/jquery.scrollTo.min.js"></script>
@@ -263,7 +251,7 @@
 <script type="text/javascript" language="Javascript" src="js/models.js"></script>
 <!-- <script type="text/javascript" language="Javascript" src="js/views.js"></script> -->
 
-<script type="text/javascript" language="Javascript" src="js/views/ActivityView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BaseLayerMenuItemView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BaseLayersMenuView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BaseLayersView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BaseMapView.js"></script><script type="text/javascript" language="Javascript" src="js/views/CartoCollxCountView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BitsView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BitsCountView.js"></script><script type="text/javascript" language="Javascript" src="js/views/CartoCollxView.js"></script><script type="text/javascript" language="Javascript" src="js/views/CartoListView.js"></script><script type="text/javascript" language="Javascript" src="js/views/ConsoleView.js"></script><script type="text/javascript" language="Javascript" src="js/views/EpisodesView.js"></script><script type="text/javascript" language="Javascript" src="js/views/EpisodeView.js"></script><script type="text/javascript" language="Javascript" src="js/views/HiderView.js"></script><script type="text/javascript" language="Javascript" src="js/views/HuhView.js"></script><script type="text/javascript" language="Javascript" src="js/views/MethodView.js"></script><script type="text/javascript" language="Javascript" src="js/views/PopupView.js"></script><script type="text/javascript" language="Javascript" src="js/views/QuerySubNavView.js"></script><script type="text/javascript" language="Javascript" src="js/views/QueryView.js"></script><script type="text/javascript" language="Javascript" src="js/views/SolrFieldzView.js"></script>
+<script type="text/javascript" language="Javascript" src="js/views/ActivityView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BaseLayerMenuItemView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BaseLayersMenuView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BaseLayersView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BaseMapView.js"></script><script type="text/javascript" language="Javascript" src="js/views/CartoCollxCountView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BitsView.js"></script><script type="text/javascript" language="Javascript" src="js/views/BitsCountView.js"></script><script type="text/javascript" language="Javascript" src="js/views/CartoCollxView.js"></script><script type="text/javascript" language="Javascript" src="js/views/CartoListView.js"></script><script type="text/javascript" language="Javascript" src="js/views/ConsoleView.js"></script><script type="text/javascript" language="Javascript" src="js/views/EpisodesView.js"></script><script type="text/javascript" language="Javascript" src="js/views/EpisodeView.js"></script><script type="text/javascript" language="Javascript" src="js/views/StatesView.js"></script><script type="text/javascript" language="Javascript" src="js/views/HuhView.js"></script><script type="text/javascript" language="Javascript" src="js/views/MethodView.js"></script><script type="text/javascript" language="Javascript" src="js/views/PopupView.js"></script><script type="text/javascript" language="Javascript" src="js/views/QuerySubNavView.js"></script><script type="text/javascript" language="Javascript" src="js/views/QueryView.js"></script><script type="text/javascript" language="Javascript" src="js/views/SolrFieldzView.js"></script>
 
 <!-- <script src="lib/components/off-canvas-menu/off-canvas-menu.js"></script> -->
 

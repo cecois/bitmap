@@ -75,10 +75,10 @@ var Route = Backbone.Router.extend({
                 // a live one, this, let's fire off the query
                 $(".episodes-arrow").addClass('hidden')
                 this.update("#query")
-                appActivity.set({
-                    message: "querying bits...",
-                    show: true,
-                })
+                // appActivity.set({
+                //     message: "querying bits...",
+                //     show: true,
+                // })
                 appBits.fetch({
                     reset: true,
                     success: function() {
@@ -100,11 +100,11 @@ var Route = Backbone.Router.extend({
                             // actually, if it's a true error we wanna be more forthcoming:
                         $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                         $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                        appActivity.set({
-                                message: "",
-                                show: false,
-                                altel: false
-                            })
+                        // appActivity.set({
+                        //         message: "",
+                        //         show: false,
+                        //         altel: false
+                        //     })
                             // console.log("failed fetch");
                     }
                 })

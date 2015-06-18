@@ -70,16 +70,23 @@ var CartoListView = Backbone.View.extend({
         return this
     },
     pulleps: function() {
-        appActivity.set({
-                message: "fetching episodes...",
-                show: true,
-            })
+
+
+        $("#episodes-list").html("throb here?...")
+
+        $("#episodes").removeClass("hidden")
+
+        // appActivity.set({
+        //         message: "fetching episodes...",
+        //         show: true,
+        //     })
             // we have to find the el to activate
             // var act = appCBB.findWhere({
             //     active: true
             // })
             // var locid = act.get("cartodb_id")
             // var loctype = act.get("geom_type")
+            
         var actv = activeFactory();
         // var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
         // if (source == "self") {
@@ -102,11 +109,11 @@ var CartoListView = Backbone.View.extend({
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
-                appActivity.set({
-                    message: "",
-                    show: false,
-                    altel: false
-                })
+                // appActivity.set({
+                //     message: "",
+                //     show: false,
+                //     altel: false
+                // })
             }
         });
         // return this.activate(a)
@@ -151,10 +158,10 @@ var CartoListView = Backbone.View.extend({
 
         if(actv !==null && actv.length==2){
 
-        appActivity.set({
-            message: "zooming to selected feature...",
-            show: true
-        })
+        // appActivity.set({
+        //     message: "zooming to selected feature...",
+        //     show: true
+        // })
         var amtyp = actv[0]
         var amid = actv[1]
 
@@ -271,10 +278,10 @@ var CartoListView = Backbone.View.extend({
     render: function() {
         // this.activate4all()
         this.unwire()
-        appActivity.set({
-            message: "preparing list display...",
-            show: true
-        })
+        // appActivity.set({
+        //     message: "preparing list display...",
+        //     show: true
+        // })
         if (verbose == true) {
             console.log("rendering cartoplain")
         }

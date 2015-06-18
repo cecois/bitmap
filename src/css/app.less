@@ -300,14 +300,14 @@ div.leaflet-popup-content .marker.bt{
   padding-left:20px;
 }
 
+#activityContainer.idle {
+    z-index:0;
+    display:none;
+}
+
 #activityContainer {
-
-
-
-  color:@primarycolor;
+  
   #activity-spin{margin-right:6px;}
-
-
   #activity-spin.true{
 content: "88888";
 color:"#b4a5b1";
@@ -317,27 +317,28 @@ color:"#b4a5b1";
 content: "000";
 color:"#a9d9d1";
   }
-    // bottom:25px;
-    // top:5px;
-    // top:-35px;
-    margin-right:15px;
-    padding:5px 10px;
-    background-color: white;
-    // background-color:@tertiarycolor-trans;
-    // margin-left: 0px;
-    font-size: .8em;
-    // right: 0;
-    position: relative;
-    // position: fixed;
-    text-align: right;
-    border-radius:3px;
-
-          border-bottom-width: 0;
+    
+        background-color: white;
+    border-bottom-width: 0;
     border-left-width: 0;
+    border-radius: 3px;
+  color:@primarycolor;
+    // font-size: 0.8em;
+    height: 30px;
     margin-bottom: 0;
-    height:30px;
-    opacity: .6;
-    span{padding:7px;}
+    margin-right: 15px;
+    font-weight: 800;
+    opacity: 0.9;
+    padding: 5px 10px;
+    position: absolute;
+    right: 88px;
+    text-align: right;
+    top: 17px;
+    z-index: 8;
+
+    // span{
+      // padding:7px;
+    // }
 }
 
 /* --------------------------------------- MAP MENU -------------- */
@@ -409,7 +410,7 @@ bottom:-35px;
    //true
 }
 
-.hiddenish{
+.statie-collapsed{
   bottom: -70px;
 }
 
@@ -476,7 +477,8 @@ bottom:-35px;
   border-bottom:solid 50px @secondarycolor;
   /*width:100%;*/
   height:70%;
-  top:121px;
+  // top:121px;
+  top:142px;
   /*position:fixed;*/
     // background-color:white;
     opacity:.9;
@@ -513,6 +515,12 @@ width:100%;
 } //main
 
 #episodes{
+  h3{
+    color:white;
+    .stroke-active;
+    right:5%;
+    position:relative;
+  }
   background-color: @primarycolor;
   border-top:solid 50px @secondarycolor;
   /*border-top:solid 2px @secondarycolor;*/
@@ -593,20 +601,20 @@ width:100%;
 } //btn-hider
 
 
-#main.hiddenish{
+#main.statie-collapsed{
     /*right:99.5%;*/
-    right:66%;
+    // right:66%;
+    right:74%;
     /*top:95%;*/
   }
 
-#episodes.hiddenish{
-    left:32%;
-
-    transition: all 0.5s ease;
+#episodes.statie-collapsed{
+    // left:32%;
+    left:22%;
 
   }
 
-#main.hiddenish-episodes-pu{
+#main.statie-momap{
   right:70%;
 }
 
@@ -702,7 +710,7 @@ width:100%;
 #banner-bang{
   font-size:27em;top:-220px;left:-120px;position:absolute;
 }
-#banner-bang.hiddenish{
+#banner-bang.statie-collapsed{
     /*left:-380px;*/
        font-size: 7em;
     left: -20px;
@@ -941,6 +949,7 @@ padding-top:15px;
     .stroke-active-mock;
     color:@tertiarycolor;
     font-weight: 800;
+    text-align: center;
   }
   li{
     // text-shadow: 2px 0px black;
@@ -958,13 +967,14 @@ padding-top:15px;
     color:@secondarycolor;
     font-size:.9em;
     position: relative;
-    top: -5px;
+    margin-bottom:12px;
+    text-align: center;
 }
 }
 
 // #episodes-list.episodespecial{text-align:right;padding-right:0;margin-right:0}
 
-#episodes-list.hiddenish-episodes-pu{
+#episodes-list.statie-momap{
   text-align:right;
 }
 
@@ -995,7 +1005,7 @@ text-decoration:none;
       cursor:pointer;
       /*text-decoration: underline;*/
       margin-right:50px;
-      font-size:1.5em;
+      font-size:1.1em;
       &:hover{
 text-decoration:underline;
       }
@@ -1028,7 +1038,7 @@ text-decoration:none;
 .leaflet-control-container {
     right: 10px;
     position: fixed;
-    top: 120px;
+    top: 90px;
         background-color: transparent;
     transform: rotate(90deg);
     a {
