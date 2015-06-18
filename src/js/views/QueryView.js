@@ -18,9 +18,9 @@ var QueryView = Backbone.View.extend({
         // doubles as a clearer of the episodes arrow, some other gui stuff
         appCBB.deactivate()
         $(".episodes-arrow").addClass("hidden")
-        appHider.set({
-            collapsed: "false"
-        })
+        // appStat.set({
+        //     collapsed: "false"
+        // })
         if (typeof goto == 'undefined') {
             console.log("not sure who fired this, setting goto to false:");
             console.log(goto);

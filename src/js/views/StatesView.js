@@ -1,5 +1,5 @@
 var StatesView = Backbone.View.extend({
-    el: $("#btn-hider"),
+    el: $("#btn-statie"),
     template: Handlebars.templates['statesViewTpl'],
     initialize: function() {
         this.render();
@@ -15,7 +15,7 @@ var StatesView = Backbone.View.extend({
             var elpos = mo.get("posish")
             var elviz = mo.get("visible")
             $el = $(elstr);
-            
+
             switch (elviz) {   
                 case true:
                     $el.removeClass("hidden");
@@ -34,14 +34,14 @@ $el.removeClass (function (index, css) {
 
             switch (elpos) {   
                 case "momap":
-                
+
                     $el.addClass("statie-momap");
                     break;
                 case "collapsed":
                     $el.addClass("statie-collapsed");
                     break;
                 default:
-                    
+
             }
         });
         return this

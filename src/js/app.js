@@ -81,8 +81,8 @@ lineseen = {
     // fillOpacity: 0.6,
     // cartodb_id: hit.get("cartodb_id").toString()
 };
-$(".leaflet-control-zoom").append('<a class="leaflet-control-zoomprevious glyphicon glyphicon-step-backward" href="#" title="Zoom to Previous"></a>');
-$(".leaflet-control-zoom").append('<a class="leaflet-control-zoomfull glyphicon glyphicon-fullscreen" href="#" title="Zoom Way dafuk out"></a>');
+// $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomprevious glyphicon glyphicon-step-backward" href="#" title="Zoom to Previous"></a>');
+// $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomfull glyphicon glyphicon-fullscreen" href="#" title="Zoom Way dafuk out"></a>');
 window.appURL = new URL();
 window.appEpisodes = new Episodes();
 // window.appEpisodes = new Episodes();
@@ -158,7 +158,7 @@ var baselayersdesk = {
             "active": false,
             "source": "mapbox",
             "nom": "Eleanor Lutz' Space Station Earth",
-            "thumb": "offline/mapbox-mario.png",
+            "thumb": "offline/mapbox-spacestation.png",
             // "thumb": "https://b.tiles.mapbox.com/v4/examples.3hqcl3di/4/4/6@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
             "mapis": "dark",
             "definition": {
@@ -173,7 +173,7 @@ var baselayersdesk = {
             "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
-            "thumb": "offline/mapbox-mario.png",
+            "thumb": "offline/mapbox-pencil.png",
             // "thumb": "https://a.tiles.mapbox.com/v4/examples.a4c252ab/6/18/26@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
             "mapis": "dark",
             "definition": {
@@ -189,7 +189,7 @@ var baselayersdesk = {
             "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
-            "thumb": "offline/mapbox-mario.png",
+            "thumb": "offline/dummy-thumb.png",
             // "thumb": "file:///Users/ccmiller/Sites/mstroke/src/images/2877247_jkms-25-888-g002.png",
             "mapis": "dark",
             "definition": {
@@ -738,6 +738,7 @@ $(document).ready(function() {
                 // })
     //
     L.control.zoom({position:'topright'}).addTo(map)
+    new L.HistoryControl().addTo(map);
     //
 }); //ready
 $(document).keydown(function(e) {
@@ -746,7 +747,7 @@ $(document).keydown(function(e) {
         // $("#bt-showmain").toggleClass("hidden")
         // $("#main").fadeToggle('fast');
 
-        appHiderView.swap();
+        appStatesView.swap();
 
 
     }

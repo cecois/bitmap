@@ -117,7 +117,7 @@ var PopupView = Backbone.View.extend({
             //         replace: false
             //     })
         appCBB.activate(locid, loctype)
-            appHiderView.setpos("episodes-pu","true")
+            appStatesView.setpos("episodes-pu","true")
             appCBBListView.pulleps()
         return this
         // .navaway()
