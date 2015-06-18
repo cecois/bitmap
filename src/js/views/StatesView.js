@@ -45,12 +45,12 @@ $el.removeClass (function (index, css) {
 
             switch (elpos) {   
                 case "momap":
-plus = true
                     $el.addClass("statie-momap");
+plus = true
                     break;
                 case "collapsed":
-                plus = true
                     $el.addClass("statie-collapsed");
+                plus = true
                     break;
 
                     case "full":
@@ -85,10 +85,14 @@ return this
     swap: function() {
 
 if(this.universal == true){
-    this.collection.invoke('set', {"posish": "open"});
+
+    // unfortunately this is going to have to be router-savvy
+   // appStates.set({"name": "main","posish": "open"},{"name": "episodes","posish":"open"},{"name": "banner-bang","posish":"open"})
+   this.collection.invoke('set', {"posish": "open"});
     this.universal = false;
 } else if(this.universal == false){
     this.collection.invoke('set', {"posish": "collapsed"});
+    // appStates.set({"name": "main","posish": "collapsed"},{"name": "episodes","posish":"collapsed"},{"name": "banner-bang","posish":"collapsed"})
     this.universal = true;
 }
 
@@ -101,11 +105,13 @@ if(this.universal == true){
    case "huh":
 appStates.set({"name": "main","posish": "full"},{"name": "episodes","visible":false},{"name": "banner-bang","posish":"open"})
       break;
+      case "fullstory":
+appStates.set({"name": "main","posish": "full"},{"name": "episodes","visible":false},{"name": "banner-bang","posish":"open"})
+      break;
    case "query":
 appStates.set({"name": "main","posish": "open"},{"name": "episodes","visible":true,"posish":"open"},{"name": "banner-bang","posish":"open"})
       break;
    default:
-      console.log("boring!")
 }
 
 return this
