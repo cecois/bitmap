@@ -2,14 +2,24 @@ var StatesView = Backbone.View.extend({
     el: $("#btn-statie"),
     template: Handlebars.templates['statesViewTpl'],
     initialize: function() {
+        this.universal=false;
         this.render();
         this.collection.bind("change", this.render, this);
+        // this.collection.bind("reset", this.render, this);
     },
     events: {
-        "click": "setpos"
+        "click": "swap"
     },
     render: function() {
-        // hidden,momap,collapsed
+
+        // kill stragglers
+$(this.el).find('[data-toggle="tooltip"]').tooltip('destroy');
+
+
+        // assume for now the btn-statie is in default state (showing a '-', upright vs showing a '+' and turned)
+        var plus = false;
+
+        // options are: hidden,momap,collapsed
         _.each(this.collection.models, function(mo, index) {
             var elstr = "#" + mo.get("name")
             var elpos = mo.get("posish")
@@ -22,6 +32,7 @@ var StatesView = Backbone.View.extend({
                     break;
                 case false:
                     $el.addClass("hidden");
+                    plus=true
                     break;
                 default:
                     $el.removeClass("hidden");
@@ -34,33 +45,71 @@ $el.removeClass (function (index, css) {
 
             switch (elpos) {   
                 case "momap":
-
+plus = true
                     $el.addClass("statie-momap");
                     break;
                 case "collapsed":
+                plus = true
                     $el.addClass("statie-collapsed");
+                    break;
+
+                    case "full":
+                    // main only
+                    if(elstr == "#main"){
+                                        $el.addClass("statie-full");}
                     break;
                 default:
 
             }
         });
         return this
+        .buttonize(plus)
+    },
+    buttonize: function(plus){
+
+
+      switch (plus) {
+   case true:
+      $("#btn-statie").html('<div class="triangle-trigger-true" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus hider-copy"></span></div>')
+      break;
+   case false:
+      $("#btn-statie").html('<div class="triangle-trigger-false" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="glyphicon glyphicon-minus hider-copy"></span></div>')
+      break;
+   default:
+
+}
+
+return this
+.rewire()
     },
     swap: function() {
-        if (this.model.get("collapsed") == "false") {
-            this.model.set({
-                collapsed: "true",
-                operation: "plus",
-                instructions: "expand main pane"
-            });
-        } else if (this.model.get("collapsed") == "true") {
-            this.model.set({
-                collapsed: "false",
-                operation: "minus",
-                instructions: "collapse/hide main pane"
-            });
-        }
+
+if(this.universal == true){
+    this.collection.invoke('set', {"posish": "open"});
+    this.universal = false;
+} else if(this.universal == false){
+    this.collection.invoke('set', {"posish": "collapsed"});
+    this.universal = true;
+}
+
+
         return this
+    },
+    prebaked: function(set){
+
+      switch (set) {
+   case "huh":
+appStates.set({"name": "main","posish": "full"},{"name": "episodes","visible":false},{"name": "banner-bang","posish":"open"})
+      break;
+   case "query":
+appStates.set({"name": "main","posish": "open"},{"name": "episodes","visible":true,"posish":"open"},{"name": "banner-bang","posish":"open"})
+      break;
+   default:
+      console.log("boring!")
+}
+
+return this
+.render()
     },
     setpos: function(newforwhom, collaps) {
         if (typeof newforwhom == 'undefined' || newforwhom == null) {
@@ -144,9 +193,12 @@ $el.removeClass (function (index, css) {
         return this.rewire()
     },
     rewire: function() {
+
         $(this.el).find('[data-toggle="tooltip"]').tooltip({
-            position: "right"
+            position: "right",
+            container:'body'
         })
+
         return this
     },
     reset: function() {

@@ -20,6 +20,9 @@ var Route = Backbone.Router.extend({
             Tried to not do this, but it does kinda make sense to make the active mod a global. Otherwise we have to pass it to BitCollection first, and then *further* on to CartoCollx since Carto gets filled *after* the custom parse of bits.
              */
             window.activecouple = activecouple
+// and then there's this universal, what *panelizer*? anyway we can position lotsa window elements at once
+appStatesView.prebaked(h)
+
             if (typeof basemap !== 'undefined' && basemap !== null) {
                 var inbl = appBaseLayers.findWhere({
                     "name": basemap

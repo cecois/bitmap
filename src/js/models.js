@@ -142,7 +142,7 @@ var CartoQuery = Backbone.Model.extend({
         rawstring: "+location_type:point",
         displaystring: "location_type:point",
         urlstring:'+location_type:point'
-        
+
     },
         initialize: function(options) {
         options || (options = {});
@@ -320,7 +320,7 @@ if(typeof activecouple !== 'undefined' && activecouple !== null)
 
         var activeid = activecouple.split(":")[1]
     var activetype = activecouple.split(":")[0]
-//     
+//
 _.each(this.models,function(d,index) {
 
     if(d.get("cartodb_id")==activeid && d.get("geom_type")==activetype){

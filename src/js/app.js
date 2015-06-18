@@ -370,7 +370,7 @@ window.appQuerySubNavView = new QuerySubNavView({
 // });
 
 
-// momap,collapsed
+// momap,collapsed, full (main only)
 
 var states = [{
             "name": "main",
@@ -378,6 +378,10 @@ var states = [{
             "visible":true
         }, {
             "name": "episodes",
+            "posish": "open",
+            "visible":true
+        }, {
+            "name": "banner-bang",
             "posish": "open",
             "visible":true
         }
