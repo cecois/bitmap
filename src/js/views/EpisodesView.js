@@ -36,6 +36,7 @@ return this
         return this
     },
     render: function() {
+        
         $(this.el).empty()
             // by the time we get here, plainview will have an active element, go get it to match its position
         var ael = $(".carto-plain-title.true")

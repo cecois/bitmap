@@ -80,16 +80,29 @@ var StatesView = Backbone.View.extend({
             this.prebaked(Backbone.history.getHash())
             this.universal = false;
         } else if (this.universal == false) {
-            this.collection.invoke('set', {
-                "posish": "collapsed"
-            });
+            if(appEpisodes.length==0){
+                        this.collection.invoke('set', {
+                            "posish": "collapsed"
+                        });} else {
+                           // k there are episodes showing, which means we need to be a little pickier
+                           _.each(this.collection.models,function(mo) {
+                               if(mo.get("name")=="episodes"){
+                                mo.set({posish:"momap"})
+                               } else {
+                                mo.set({posish:"collapsed"})
+
+                               }
+                           });
+
+                        }
+
             // appStates.set({"name": "main","posish": "collapsed"},{"name": "episodes","posish":"collapsed"},{"name": "banner-bang","posish":"collapsed"})
             this.universal = true;
         }
         return this
     },
     prebaked: function(set) {
-        switch (set) {
+        // switch (set) {
             // case "huh":
                 // appStates.set([{
                 //                     "name": "main",
@@ -117,46 +130,60 @@ var StatesView = Backbone.View.extend({
                 // case "browse":
                 
                 // break;
-            case "query":
-                appStates.set([{
-                                    "name": "main",
-                                    "posish": "open"
-                                }, {
-                                    "name": "episodes",
-                                    "visible": true,
-                                    "posish": "open"
-                                }, {
-                                    "name": "banner-bang",
-                                    "posish": "open"
-                                }])
-                break;
-                case "":
-                appStates.set([{
-                                    "name": "main",
-                                    "posish": "open"
-                                }, {
-                                    "name": "episodes",
-                                    "visible": true,
-                                    "posish": "open"
-                                }, {
-                                    "name": "banner-bang",
-                                    "posish": "open"
-                                }])
-                break;
-            default:
+            // case "query":
+            if (set.indexOf("query")>=0){
+                if(appEpisodes.length==0){
+                                            appStates.set([{
+                                                                "name": "main",
+                                                                "posish": "open"
+                                                            }, {
+                                                                "name": "episodes",
+                                                                "visible": true,
+                                                                "posish": "open"
+                                                            }, {
+                                                                "name": "banner-bang",
+                                                                "posish": "open"
+                                                            }])} else {
 
-            appStates.set([{
-                                    "name": "main",
-                                    "posish": "full"
-                                }, {
-                                    "name": "episodes",
-                                    "visible": false
-                                }, {
-                                    "name": "banner-bang",
-                                    "posish": "open"
-                                }])
-            break;
-        }
+                                                appStates.set([{
+                                                                "name": "main",
+                                                                "posish": "open"
+                                                            }, {
+                                                                "name": "episodes",
+                                                                "visible": true,
+                                                                "posish": "momap"
+                                                            }, {
+                                                                "name": "banner-bang",
+                                                                "posish": "open"
+                                                            }])
+                                            } //episodes.length test
+                                        }
+                else if(set== ""){
+                                appStates.set([{
+                                                    "name": "main",
+                                                    "posish": "open"
+                                                }, {
+                                                    "name": "episodes",
+                                                    "visible": true,
+                                                    "posish": "open"
+                                                }, {
+                                                    "name": "banner-bang",
+                                                    "posish": "open"
+                                                }])}
+                else {
+                
+                            appStates.set([{
+                                                    "name": "main",
+                                                    "posish": "full"
+                                                }, {
+                                                    "name": "episodes",
+                                                    "visible": false
+                                                }, {
+                                                    "name": "banner-bang",
+                                                    "posish": "open"
+                                                }])}
+            // break;
+        // }
         return this.render()
     },
     setpos: function(newforwhom, collaps) {
