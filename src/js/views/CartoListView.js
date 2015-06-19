@@ -11,6 +11,7 @@ var CartoListView = Backbone.View.extend({
     // template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
         this.listenTo(this.collection, 'reset', this.render);
+        this.listenTo(this.collection, 'change:active', this.rendermin);
         if (agent == "desktop") {
             this.template = Handlebars.templates['cartoListView'];
         } else if (agent == "mobile") {
@@ -82,7 +83,7 @@ var CartoListView = Backbone.View.extend({
             // })
             // var locid = act.get("cartodb_id")
             // var loctype = act.get("geom_type")
-            
+
         var actv = activeFactory();
         // var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
         // if (source == "self") {
@@ -121,10 +122,13 @@ var CartoListView = Backbone.View.extend({
             // return this.activate(a)
         return this
     },
-    rewire: function() {
+    rewire: function(zoomto) {
         // reactivating some pieces that get wiped in the render
         // actually -- first, since we're here for the same reason -- let's wipe the episodes list, too
-// appEpisodesView.wipe();
+
+if(typeof zoomto == 'undefined'){
+    var zoomto = true
+}
         $('#querylist-carto').liveFilter("#query-livefilter", 'li', {
             filterChildSelector: 'div'
         });
@@ -136,8 +140,13 @@ var CartoListView = Backbone.View.extend({
 
             // a little non-backbone stuff
         $("#stats-hits").html("total hits: " + this.collection.length)
-        return this
-        .zoomto()
+
+        if(zoomto == true){
+
+        return this.zoomto()
+        } else {
+            return this
+        }
     },
     zoomto: function() {
 
@@ -258,10 +267,20 @@ var CartoListView = Backbone.View.extend({
             // cuz doing it with a proper backbone re-render took forever (.8 seconds)
         return this
     },
+    rendermin: function(){
+
+$(this.el).html(this.template({
+                count: this.collection.models.length,
+                rows: this.collection.toJSON()
+            }));
+
+return this.rewire(false)
+
+    },
     render: function() {
         // this.activate4all()
         this.unwire()
-        
+
         if (verbose == true) {
             console.log("rendering cartoplain")
         }

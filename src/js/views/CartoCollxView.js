@@ -102,7 +102,7 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
                         p.model = hitm.properties
                         puFactory(p)
                     }) //on popup
-                
+
                 // var hitm = L.multiPolyline(hitll, linenew);
             }
 
@@ -115,7 +115,7 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
             // if (this.collection.length == 1) {
             //     cbbItems.openPopup()
             // }
-            
+
             foot.on("popupopen",function(p){
 
 activecouple = activeFactory(hit.get("geom_type") + ":" + hit.get("cartodb_id"))

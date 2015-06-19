@@ -3,7 +3,9 @@ var PopupView = Backbone.View.extend({
     template: Handlebars.templates['hitMarkerViewTpl'],
     initialize: function() {
         this.ogwidth = null;
-        this.model.bind("change", this.render, this);
+        // this.model.bind("change", this.render, this);
+        // this.model.bind("change", this.triage, this);
+        this.listenTo(appCBB, 'change:active', this.triage);
         return this.render();
     },
     events: {
@@ -48,7 +50,8 @@ return this
             // $(this.el).find("button[type='submit']").click(function(t){
             // this.issue_submit()
             // });
-            return this.pulleps()
+            return this
+            // .triage()
     },
     issue_submit: function(e) {
         var it = $(this.el).find("[data-class='pu-issue-title']").attr("placeholder")
@@ -58,13 +61,13 @@ return this
             $(this.el).find("[data-class='pu-issue-body']").attr("placeholder", "please provide some sort of clue to what's wrong")
             $(e.currentTarget).html("<span class='glyphicon glyphicon-warning-sign'></span> Submit")
         } else {
-            
+
                 // do the submit
             console.log(it);
             console.log(ib);
             console.log(ic);
             // success will put a checkmark in submit button or something - github (octokat) doesn't return much
-            
+
             $(e.currentTarget).html("<span class='glyphicon glyphicon-thumbs-up' disabled></span> Thanks")
         }
         return this
@@ -105,23 +108,39 @@ return this
 //             return this
 //         }
 //     },
-    pulleps: function(source) {
-        // var locid = this.model.get("cartodb_id")
-        // var loctype = this.model.get("geom_type")
-            // ay ya ya this is fuxked up lazy #returnto
-            // localStorage.setItem("activelocid", locid)
-            // localStorage.setItem("activeloctype", loctype)
-            // because we don't wan cbblistview to always show itself (and why bother passing a var), reveal it here manually
-            // appRoute.navigate(pullURL("#query"), {
-            //         trigger: false,
-            //         replace: false
-            //     })
-        // activecouple = activeFactory(loctype + ":" + locid)
-        // appCBB.activate();
-            // appStatesView.setpos("episodes-pu","true")
-            // appCBBListView.pulleps()
+triage: function(){
+
+var actv = activeFactory();
+        var loctype = actv[0]
+        var locid = actv[1]
+
+console.log('<span class="loc-trigger" data-string="location_id:'+locid+ ' AND location_type:'+loctype+'" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-'+loctype+'"></span>')
+
+if (agent == "desktop") {
+            return this.pulleps()
+        } else if (agent == "mobile") {
+            return this.pulleps_mobile()
+        }
+
+},
+    pulleps: function() {
+
+
+        $("#episodes-list").html("throb here?...")
+
+        var actv = activeFactory();
+        var loctype = actv[0]
+        var locid = actv[1]
+        locidDrd = doctorId(loctype, locid)
+        appEpisodes.activeloc = Number(locidDrd);
+        appEpisodes.loctype = loctype;
+        appEpisodes.fetch({
+            reset: true,
+            success: function(c, r, o) {
+            }
+        });
         return this
-        // .navaway()
+        .rewire()
     },
     // navaway: function() {
     //     appRoute.navigate(urlFactory("#query"), {
@@ -149,6 +168,7 @@ return this
         // bc we'll be messing with this width once in a while, we sock away the original
         this.ogwidth = $(".leaflet-popup-content").width()
         $(this.el).html(this.template(this.model.toJSON()))
-        return this.rewire()
+        return this.
+        triage()
     }
 });
