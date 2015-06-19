@@ -208,12 +208,12 @@ var StatesView = Backbone.View.extend({
                 var instro = "collapse/hide main pane"
         }
         // if(this.model.get("collapsed")=="false"){
-        this.model.set({
-            collapsed: collaps,
-            forwhom: newforwhom,
-            operation: op,
-            instructions: instro
-        });
+        // this.model.set({
+        //     collapsed: collaps,
+        //     forwhom: newforwhom,
+        //     operation: op,
+        //     instructions: instro
+        // });
         // } else {
         //         this.model.set({collapsed:"false",operation:"minus",instructions:"collapse/hide main pane"})
         //     }

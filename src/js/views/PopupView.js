@@ -13,6 +13,11 @@ var PopupView = Backbone.View.extend({
         "click button[type='submit']": "issue_submit",
         "click .btn-pu-nav": "navinternal"
     },
+    yo: function(e){
+console.log("in yo, e");
+console.log(e);
+return this
+    },
     navinternal: function(e) {
         $cuta = $(e.currentTarget)
             // so few no real performance hit here
@@ -43,6 +48,7 @@ var PopupView = Backbone.View.extend({
             // $(this.el).find("button[type='submit']").click(function(t){
             // this.issue_submit()
             // });
+            return this.pulleps()
     },
     issue_submit: function(e) {
         var it = $(this.el).find("[data-class='pu-issue-title']").attr("placeholder")
@@ -100,8 +106,8 @@ var PopupView = Backbone.View.extend({
 //         }
 //     },
     pulleps: function(source) {
-        var locid = this.model.get("cartodb_id")
-        var loctype = this.model.get("geom_type")
+        // var locid = this.model.get("cartodb_id")
+        // var loctype = this.model.get("geom_type")
             // ay ya ya this is fuxked up lazy #returnto
             // localStorage.setItem("activelocid", locid)
             // localStorage.setItem("activeloctype", loctype)
@@ -110,9 +116,10 @@ var PopupView = Backbone.View.extend({
             //         trigger: false,
             //         replace: false
             //     })
-        appCBB.activate(locid, loctype)
-            appStatesView.setpos("episodes-pu","true")
-            appCBBListView.pulleps()
+        // activecouple = activeFactory(loctype + ":" + locid)
+        // appCBB.activate();
+            // appStatesView.setpos("episodes-pu","true")
+            // appCBBListView.pulleps()
         return this
         // .navaway()
     },
