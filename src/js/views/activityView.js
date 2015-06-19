@@ -6,31 +6,35 @@ var ActivityView = Backbone.View.extend({
         this.model.bind("change", this.render, this);
         this.render();
     },
-    reset: function(){
+    stfu: function(){
+        NProgress.done()
         $(this.el).addClass("idle")
-        this.model.set({message:null,show:null,altel:null})
+        // this.model.set({message:null,show:null,altel:null})
         return this
     },
     render: function() {
-        var show = this.model.get("show")
+        // var show = this.model.get("show")
+        var show = true
         var msg = this.model.get("message")
         var altelstring = this.model.get("altel")
-        $(this.el).removeClass("hidden")
-        if (typeof altelstring == 'undefined' || altelstring == false || altelstring == null) {
-            var altel = $("#activity-default").find(".throbber");
-        } else {
-            var altel = $(altelstring)
-        }
-        if (show == true) {
-            altel.addClass("refreshing-loader")
-                // NProgress.configure({
-                //         parent: altel
-                //     });
-                //     NProgress.start();
-        } else {
-            altel.remove(".throbber")
+        $(this.el).removeClass("idle")
+        // $(this.el).find(".throbber").removeClass("hidden")
+        // if (typeof altelstring == 'undefined' || altelstring == false || altelstring == null) {
+        //     // var altel = $("#activity-default").find(".throbber");
+        //     var altel = $("#activityContainer");
+        // } else {
+        //     var altel = $(altelstring)
+        // }
+        // if (show == true) {
+            // altel.addClass("refreshing-loader")
+                NProgress.configure({
+                        parent: "#activityContainer"
+                    });
+                    NProgress.start();
+        // } else {
+            // altel.remove(".throbber")
                 // NProgress.done()
-        }
+        // }
         $(this.el).html(this.template(this.model.toJSON()))
         return this
     }

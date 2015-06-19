@@ -6,9 +6,22 @@ var EpisodesView = Backbone.View.extend({
             // console.log("initting recentsview")
         }
         this.collection.bind('reset', this.render, this);
+        this.collection.bind('request', this.speak, this);
         // this.collection.bind("reset", _.bind(this.debug, this));
         // this.listenTo(this.collection, "change", this.render);
         // return this.render()
+    },
+    speak: function(){
+
+appActivity.set({message:"pulling associated episodes..."})
+
+return this
+
+    },
+    stfu: function(){
+        // meta stfu
+        appActivityView.stfu()
+        return this
     },
     debug: function() {
         console.log("RESET trigger");
@@ -89,6 +102,9 @@ var EpisodesView = Backbone.View.extend({
                 // "recent item will go here"
             );
         }, this);
+
+        
         return this
+        .stfu()
     }
 });

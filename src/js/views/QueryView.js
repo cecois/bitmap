@@ -61,11 +61,7 @@ var QueryView = Backbone.View.extend({
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it
             //
-            // appActivity.set({
-            //     message: "querying bits...",
-            //     show: true,
-            //     // altel: "#activity-default"
-            // })
+            
             appBits.fetch({
                     reset: true,
                     // dataType: "jsonp"
@@ -86,12 +82,7 @@ var QueryView = Backbone.View.extend({
                                 appConsole.set({
                                         message: "query errored out"
                                     })
-                                    // actually, if it's a true error we wanna be more forthcoming:
-                                // appActivity.set({
-                                //         message: "",
-                                //         show: false
-                                //     })
-                                    // console.log("failed fetch");
+                                
                             }
                         })
                     }, //success fetch
@@ -102,12 +93,7 @@ var QueryView = Backbone.View.extend({
                             // actually, if it's a true error we wanna be more forthcoming:
                         $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                         $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                        // appActivity.set({
-                        //         message: "",
-                        //         show: false,
-                        //         altel: false
-                        //     })
-                            // console.log("failed fetch");
+                        
                     }
                 })
                 //

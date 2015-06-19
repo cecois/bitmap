@@ -83,6 +83,13 @@ lineseen = {
 };
 // $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomprevious glyphicon glyphicon-step-backward" href="#" title="Zoom to Previous"></a>');
 // $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomfull glyphicon glyphicon-fullscreen" href="#" title="Zoom Way dafuk out"></a>');
+// 
+// new activity model and view
+window.appActivity = new Activity({message:"loading..."});
+window.appActivityView = new ActivityView({
+    model: appActivity
+});
+
 window.appURL = new URL();
 window.appEpisodes = new Episodes();
 // window.appEpisodes = new Episodes();
@@ -491,11 +498,7 @@ window.appCBBCountView = new CartoCollxCountView({
 // });
 // new console model and view
 
-// new activity model and view
-window.appActivity = new Activity({message:"loading..."});
-window.appActivityView = new ActivityView({
-    model: appActivity
-});
+
 // var recentsCollx = new RecentsCollection();
 // var recentsCollxView = new RecentsView({
 //     collection: recentsCollx
@@ -694,25 +697,18 @@ window.appSoFozView = new SolrFieldzView({
 //         appSolrzView.render()
 //     }
 // },{reset:true});
-// appActivity.set({message: "fetching Luke/Solr fields...",show: true,altel:false})
 /* -------------------------------------------------- READY -----------------------  */
 $(document).ready(function() {
     // $('#query-form-bt').click(function(e){
     //     e.preventDefault()
     //     var rawstring = $("#query-form-input").val()
     //     appCartoQuery.set({rawstring:rawstring})
-    //         appActivity.set({
-    //             message: "querying...",
-    //             show: true
-    //         })
     //     appCBB.fetch({
     //         success: function(c) {
     //                 appCBBListView.render()
     //                 appCBBMapView.render()
-    //                 appActivity.set({message: "",show: false,altel:false})
     //         },
     //         error: function() {
-    //           appActivity.set({message: "",show: false,altel:false})
     //             appConsole.set({message:"query failed",error:true})
     //         }
     //     })
@@ -735,14 +731,10 @@ $(document).ready(function() {
     // var url = pullURL('#query');
     // appRoute.navigate(url, {trigger: true, replace: true})
     // })
-                //     appActivity.set({
-                //     message: "",
-                //     show: false,
-                //     altel: false
-                // })
     //
     L.control.zoom({position:'topright'}).addTo(map)
     new L.HistoryControl().addTo(map);
+
     //
 }); //ready
 $(document).keydown(function(e) {

@@ -76,10 +76,6 @@ var CartoListView = Backbone.View.extend({
 
         $("#episodes").removeClass("hidden")
 
-        // appActivity.set({
-        //         message: "fetching episodes...",
-        //         show: true,
-        //     })
             // we have to find the el to activate
             // var act = appCBB.findWhere({
             //     active: true
@@ -109,11 +105,6 @@ var CartoListView = Backbone.View.extend({
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
-                // appActivity.set({
-                //     message: "",
-                //     show: false,
-                //     altel: false
-                // })
             }
         });
         // return this.activate(a)
@@ -142,26 +133,18 @@ var CartoListView = Backbone.View.extend({
                 placement: 'right',
                 trigger: 'hover'
             })
+
             // a little non-backbone stuff
         $("#stats-hits").html("total hits: " + this.collection.length)
         return this
         .zoomto()
     },
-    // activate4all: function() {
-    //     // this view is always listening, so we can have it handle the activation of the CBB collection for all the other listeners
-    //     this.collection.activate()
-    //     return this.zoomto()
-    // },
     zoomto: function() {
 
         var actv = activeFactory();
 
         if(actv !==null && actv.length==2){
 
-        // appActivity.set({
-        //     message: "zooming to selected feature...",
-        //     show: true
-        // })
         var amtyp = actv[0]
         var amid = actv[1]
 
@@ -278,10 +261,7 @@ var CartoListView = Backbone.View.extend({
     render: function() {
         // this.activate4all()
         this.unwire()
-        // appActivity.set({
-        //     message: "preparing list display...",
-        //     show: true
-        // })
+        
         if (verbose == true) {
             console.log("rendering cartoplain")
         }

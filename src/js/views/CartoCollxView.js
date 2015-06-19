@@ -16,10 +16,9 @@ var CartoCollxView = Backbone.View.extend({
     },
     render: function() {
 
-        // appActivity.set({
-        //     message: "preparing map objects...",
-        //     show: true
-        // })
+        appActivity.set({
+            message: "preparing map objects..."
+        })
         cbbItems.clearLayers();
         this.collection.each(function(hit, i) {
             // var gjraw = hit.get("the_geom_gj");
@@ -151,6 +150,7 @@ activecouple = activeFactory(hit.get("geom_type") + ":" + hit.get("cartodb_id"))
         //     message: null,
         //     show: false
         // })
+        appActivityView.stfu()
         return this.fit()
     }
 });

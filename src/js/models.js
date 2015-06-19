@@ -224,7 +224,6 @@ var BitCollection = Backbone.Collection.extend({
 // appCBB.seturl(arr)
 // appCBB.set(locsyes)
 
-// appActivity.set({message: "extracting mappable bits...",show: true});
 
 var lids = [];
 
@@ -240,7 +239,6 @@ lids.push(cid)
 
 });
 
-// appActivity.set({message: null,show: false});
 // var uids=_.unique(lids)
 appCBB.seturl(_.unique(lids))
 

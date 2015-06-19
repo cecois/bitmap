@@ -20,8 +20,6 @@ var Route = Backbone.Router.extend({
             Tried to not do this, but it does kinda make sense to make the active mod a global. Otherwise we have to pass it to BitCollection first, and then *further* on to CartoCollx since Carto gets filled *after* the custom parse of bits.
              */
             window.activecouple = activecouple
-// and then there's this universal, what *panelizer*? anyway we can position lotsa window elements at once
-appStatesView.prebaked(h)
 
             if (typeof basemap !== 'undefined' && basemap !== null) {
                 var inbl = appBaseLayers.findWhere({
@@ -41,6 +39,10 @@ appStatesView.prebaked(h)
             if (typeof h == 'undefined' || h == null) {
                 h = "query";
             }
+
+            // now we are sure there's an h there's this universal, what *panelizer*? anyway we can position lotsa window elements at once
+appStatesView.prebaked(h)
+
             var hmod = "#" + h;
             _.each($("#main > .mainpanel"), function(p) {
                 if (p.id == h) {
@@ -76,16 +78,15 @@ appStatesView.prebaked(h)
             }
             if (h == 'query') {
                 // a live one, this, let's fire off the query
-                $(".episodes-arrow").addClass('hidden')
+                // $(".episodes-arrow").addClass('hidden')
                 this.update("#query")
-                // appActivity.set({
-                //     message: "querying bits...",
-                //     show: true,
-                // })
+                appActivity.set({
+                    message: "querying bits..."
+                })
                 appBits.fetch({
                     reset: true,
                     success: function() {
-                        console.log("success cb of appBits fetch - maybe we wont do appcbb fetch here after all?");
+                                        appActivity.set({message: "pulling out locations..."})
                         appCBB.fetch({
                             reset: true,
                             success: function(collx) {
@@ -93,6 +94,7 @@ appStatesView.prebaked(h)
                                     collx.activate();
                                     appCBBListView.pulleps()
                                 }
+                                appActivityView.stfu()
                             }
                         })
                     }, //success fetch

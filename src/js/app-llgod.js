@@ -122,11 +122,9 @@ window.appActivityView = new ActivityView({
 // oh, about that activity console...
 // let's just presume that any time we kill a layer we'll also reset the activity console
 map.on('layerremove', function(e) {
-    appActivityView.reset();
     appConsoleView.reset();
 });
 map.on('layeradd', function(e) {
-    // appActivityView.reset();
 });
 
 //all purpose modal and view
@@ -281,7 +279,6 @@ var hitwidth = "span5";
 	$("#paneContainer").addClass(hitwidth);
 
 	var $el = $("#paneContainer > #search > #searchhitsWrapper > #searchhits");
-	appActivity.set({spin: true,message: "searching..."});
 
 	// we want a new hits obj using current appSearch model's query
 	var qurl = appSearch.get("qurl")
@@ -301,7 +298,6 @@ var hitwidth = "span5";
 			
 		},
 		complete: function(xhr, textStatus) {
-			appActivityView.reset();
 		},
 		success: function(data, textStatus, xhr) {
 			appHits = new Hits(data.response.docs)
@@ -551,7 +547,6 @@ function wakeTheKids(el, extruz) {
 it's probably ok to have a global killer of some stuff that triggers upon an href click, y?
 ------------ */
 		$('.popover').hide();
-		appActivityView.reset()
 
 if(el !== "search"){
 	$("#paneContainer").removeClass("span5")

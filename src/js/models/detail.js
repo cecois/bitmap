@@ -53,7 +53,7 @@ layers=series+":"+handle
 			appActivityView.render()
 		});
 		gwc.on('load', function() {
-			appActivityView.reset()
+			appActivityView.stfu()
 			appConsoleView.render()
 		});
 		return gwc;

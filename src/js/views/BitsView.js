@@ -66,15 +66,7 @@ var BitsView = Backbone.View.extend({
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
-                // appActivity.set({message:"fetching episodes...",spin:true})
-                // appActivityView.stfu()
-                // again i'm not sure why this isn't firing from its event trigger
-                // appEpisodesView.render()
-                // appActivity.set({
-                //     message: "",
-                //     show: false,
-                //     altel: false
-                // })
+                
             }
         });
         e.preventDefault()

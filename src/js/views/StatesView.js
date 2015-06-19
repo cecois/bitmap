@@ -2,7 +2,7 @@ var StatesView = Backbone.View.extend({
     el: $("#btn-statie"),
     template: Handlebars.templates['statesViewTpl'],
     initialize: function() {
-        this.universal=false;
+        this.universal = false;
         this.render();
         this.collection.bind("change", this.render, this);
         // this.collection.bind("reset", this.render, this);
@@ -11,111 +11,153 @@ var StatesView = Backbone.View.extend({
         "click": "swap"
     },
     render: function() {
-
         // kill stragglers
-$(this.el).find('[data-toggle="tooltip"]').tooltip('destroy');
-
-
+        $(this.el).find('[data-toggle="tooltip"]').tooltip('destroy');
         // assume for now the btn-statie is in default state (showing a '-', upright vs showing a '+' and turned)
         var plus = false;
-
         // options are: hidden,momap,collapsed
         _.each(this.collection.models, function(mo, index) {
             var elstr = "#" + mo.get("name")
             var elpos = mo.get("posish")
             var elviz = mo.get("visible")
             $el = $(elstr);
-
             switch (elviz) {   
                 case true:
                     $el.removeClass("hidden");
                     break;
                 case false:
                     $el.addClass("hidden");
-                    plus=true
+                    plus = true
                     break;
                 default:
                     $el.removeClass("hidden");
             }
-
-// clear all first
-$el.removeClass (function (index, css) {
-    return (css.match (/(^|\s)statie-\S+/g) || []).join(' ');
-});
-
+            // clear all first
+            $el.removeClass(function(index, css) {
+                return (css.match(/(^|\s)statie-\S+/g) || []).join(' ');
+            });
             switch (elpos) {   
                 case "momap":
                     $el.addClass("statie-momap");
-plus = true
+                    plus = true
                     break;
                 case "collapsed":
                     $el.addClass("statie-collapsed");
-                plus = true
+                    plus = true
                     break;
-
-                    case "full":
+                case "full":
                     // main only
-                    if(elstr == "#main"){
-                                        $el.addClass("statie-full");}
+                    if (elstr == "#main") {
+                        $el.addClass("statie-full");
+                    }
                     break;
                 default:
-
             }
         });
-        return this
-        .buttonize(plus)
+        return this.buttonize(plus)
     },
-    buttonize: function(plus){
-
-
-      switch (plus) {
-   case true:
-      $("#btn-statie").html('<div class="triangle-trigger-true" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus hider-copy"></span></div>')
-      break;
-   case false:
-      $("#btn-statie").html('<div class="triangle-trigger-false" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="glyphicon glyphicon-minus hider-copy"></span></div>')
-      break;
-   default:
-
-}
-
-return this
-.rewire()
+    buttonize: function(plus) {
+        switch (plus) {
+            case true:
+                $("#btn-statie").html('<div class="triangle-trigger-true" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus hider-copy"></span></div>')
+                break;
+            case false:
+                $("#btn-statie").html('<div class="triangle-trigger-false" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="glyphicon glyphicon-minus hider-copy"></span></div>')
+                break;
+            default:
+        }
+        return this.rewire()
     },
     swap: function() {
-
-if(this.universal == true){
-
-    // unfortunately this is going to have to be router-savvy
-   // appStates.set({"name": "main","posish": "open"},{"name": "episodes","posish":"open"},{"name": "banner-bang","posish":"open"})
-   this.collection.invoke('set', {"posish": "open"});
-    this.universal = false;
-} else if(this.universal == false){
-    this.collection.invoke('set', {"posish": "collapsed"});
-    // appStates.set({"name": "main","posish": "collapsed"},{"name": "episodes","posish":"collapsed"},{"name": "banner-bang","posish":"collapsed"})
-    this.universal = true;
-}
-
-
+        if (this.universal == true) {
+            // unfortunately this is going to have to be router-savvy
+            // appStates.set({"name": "main","posish": "open"},{"name": "episodes","posish":"open"},{"name": "banner-bang","posish":"open"})
+            // this.collection.invoke('set', {
+            //     "posish": "open"
+            // });
+            // 
+            // just set it back to the default for this route
+            this.prebaked(Backbone.history.getHash())
+            this.universal = false;
+        } else if (this.universal == false) {
+            this.collection.invoke('set', {
+                "posish": "collapsed"
+            });
+            // appStates.set({"name": "main","posish": "collapsed"},{"name": "episodes","posish":"collapsed"},{"name": "banner-bang","posish":"collapsed"})
+            this.universal = true;
+        }
         return this
     },
-    prebaked: function(set){
+    prebaked: function(set) {
+        switch (set) {
+            // case "huh":
+                // appStates.set([{
+                //                     "name": "main",
+                //                     "posish": "full"
+                //                 }, {
+                //                     "name": "episodes",
+                //                     "visible": false
+                //                 }, {
+                //                     "name": "banner-bang",
+                //                     "posish": "open"
+                //                 }])
+            //     break;
+            // case "fullstory":
+                // appStates.set([{
+                //                     "name": "main",
+                //                     "posish": "full"
+                //                 }, {
+                //                     "name": "episodes",
+                //                     "visible": false
+                //                 }, {
+                //                     "name": "banner-bang",
+                //                     "posish": "open"
+                //                 }])
+                // break;
+                // case "browse":
+                
+                // break;
+            case "query":
+                appStates.set([{
+                                    "name": "main",
+                                    "posish": "open"
+                                }, {
+                                    "name": "episodes",
+                                    "visible": true,
+                                    "posish": "open"
+                                }, {
+                                    "name": "banner-bang",
+                                    "posish": "open"
+                                }])
+                break;
+                case "":
+                appStates.set([{
+                                    "name": "main",
+                                    "posish": "open"
+                                }, {
+                                    "name": "episodes",
+                                    "visible": true,
+                                    "posish": "open"
+                                }, {
+                                    "name": "banner-bang",
+                                    "posish": "open"
+                                }])
+                break;
+            default:
 
-      switch (set) {
-   case "huh":
-appStates.set({"name": "main","posish": "full"},{"name": "episodes","visible":false},{"name": "banner-bang","posish":"open"})
-      break;
-      case "fullstory":
-appStates.set({"name": "main","posish": "full"},{"name": "episodes","visible":false},{"name": "banner-bang","posish":"open"})
-      break;
-   case "query":
-appStates.set({"name": "main","posish": "open"},{"name": "episodes","visible":true,"posish":"open"},{"name": "banner-bang","posish":"open"})
-      break;
-   default:
-}
-
-return this
-.render()
+            appStates.set([{
+                                    "name": "main",
+                                    "posish": "full"
+                                }, {
+                                    "name": "episodes",
+                                    "visible": false
+                                }, {
+                                    "name": "banner-bang",
+                                    "posish": "open"
+                                }])
+            break;
+        }
+        return this.render()
     },
     setpos: function(newforwhom, collaps) {
         if (typeof newforwhom == 'undefined' || newforwhom == null) {
@@ -199,12 +241,10 @@ return this
         return this.rewire()
     },
     rewire: function() {
-
         $(this.el).find('[data-toggle="tooltip"]').tooltip({
             position: "right",
-            container:'body'
+            container: 'body'
         })
-
         return this
     },
     reset: function() {
