@@ -3,7 +3,7 @@
 {{#each rows}}
 <li data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="">
     <div class="">
-        <span class="carto-plain-geomtype icom-{{this.geom_type}}"></span>
+        <span style="color:white;" class="carto-plain-geomtype icom-{{this.geom_type}}"></span>
         <span data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="carto-plain-title {{this.active}}">{{this.name}}</span> 
         <!-- <span class="glyphicon glyphicon-share-alt bt-cartoobj bt-cartoobj-zoomto" title="zoom to this"></span> -->
         <!-- <span data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes" title="pull a list of associated episodes"></span> -->

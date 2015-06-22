@@ -18,10 +18,10 @@
     <link href="lib/components/off-canvas-menu/off-canvas-menu.css" rel="stylesheet" type="text/css">
     <link href="lib/components/off-canvas-menu/general.css" rel="stylesheet" type="text/css">
     <link href="lib/components/off-canvas-menu/header.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="lib/components/font-awesome/css/font-awesome.min.css">
+    
     <link rel="stylesheet" href="lib/components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/components/fontello/css/menu.css">
-    <link rel="stylesheet" href="lib/components/css-spinners/css/spinner/refreshing.css">
+    
     <!-- <link rel="stylesheet" href="lib/zoomslider/L.Control.Zoomslider.css"> -->
     <link rel="stylesheet" href="lib/leaflet-history.css">
 
@@ -31,7 +31,7 @@
     <link rel="stylesheet/less" type="text/css" href="css/app.less" >
         <script src="lib/less-1.7.5.min.js" type="text/javascript"></script>
         <!-- <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css" /> -->
-        <link rel="stylesheet" href="offline/cartodb.css" />
+        <!-- <link rel="stylesheet" href="offline/cartodb.css" /> -->
     </head>
     <body ontouchstart="">
         <div id="map"></div>
@@ -197,16 +197,16 @@
 
 
 
-    <ul id="querylist-bits" class="pull-left col-lg-5 hidden">
+    <ul id="querylist-bits" class="pull-left col-lg-12 hidden">
     </ul>
-    <ul id="querylist-carto" class="pull-left col-lg-5 ">
+    <ul id="querylist-carto" class="pull-left col-lg-12 ">
     </ul>
 
-    <div class="col-sm-2">
-       <span class="episodes-arrow hidden" style="">------</span>
+    <!-- <div class="col-sm-2"> -->
+       <!-- <span class="episodes-arrow hidden" style="">------</span> -->
       <!-- currenly unused -->
 
-    </div>
+    <!-- </div> -->
 
 
 </div>
@@ -215,7 +215,10 @@
 <div id="episodes" class="col-lg-3 pull-right hidden">
 
 <div class="panel-wrap col-sm-12">
-    <h3 class="col-sm-12">Episodes</h3>
+    <h3 class="col-sm-8">Episodes</h3>
+    <span class="col-sm-4 pull-right la-cog">
+        <div></div>
+    </span>
 </div>
 
      <ul id="episodes-list" class="episodes pull-right col-lg-12 list-unstyled">

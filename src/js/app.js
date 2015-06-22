@@ -25,6 +25,13 @@ Handlebars.registerHelper('indev', function(id,type, options) {
         return '<span data-id="'+cid+'" class="glyphicon glyphicon-asterisk bt-getid" title="echo model id (dev only)"></span>'} else{return '';}
         });
 
+Handlebars.registerHelper('urler', function(str,options) {
+
+
+
+  // return options.fn(this);
+});
+
 /* -------------------------------------------------- HANDLEBARS END -----------------------  */
 // jeez i hate to bootstrap this w/ an extra ajax call but i don't wanna have to remember to update this when i change the solr schema
 // $.getJSON(solrhost+'/cbb_bits/admin/luke?numTerms=0', {wt: 'json'}, function(json, textStatus) {
@@ -177,7 +184,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": false,
+            "active": true,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-pencil.png",
@@ -193,7 +200,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": true,
+            "active": false,
             "source": "localhost",
             "nom": "A Real Dummy",
             "thumb": "offline/dummy-thumb.png",
@@ -540,11 +547,11 @@ $("#query-form-input").val(solrstring)
         // appCartoQuery.set({
         //     rawstring: solrstring
         // })
-        appCartoQueryView.fire(goto)
-        // appRoute.navigate(pullURL("#query"), {
-        //     trigger: true,
-        //     replace: true
-        // })
+        // appCartoQueryView.fire(goto)
+        appRoute.navigate(pullURL("#query"), {
+            trigger: true,
+            replace: true
+        })
         // appCBB.fetch({
         //     success: function(clx) {
         //         appCBBMapView.render()
@@ -576,7 +583,7 @@ var activeid = activecouple.split(":")[1]
 
 }
 
-    function urlFactory(goto) {
+    function urlFactory(goto,qs) {
         if (typeof goto == 'undefined') {
             // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
             var hel = $(".mainpanel:not('.hidden')")
@@ -589,6 +596,7 @@ var activeid = activecouple.split(":")[1]
             var h = goto;
         }
         var bbx = map.getBounds().toBBoxString();
+        
         var qs = appCartoQuery.get("urlstring")
         var bl = appBaseLayers.findWhere({
             active: true

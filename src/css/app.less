@@ -103,7 +103,7 @@ body{
   text-decoration:none;
   font-weight:100;
     text-shadow: none;
-    color:@tertiarycolor-trans;
+    color:@tertiarycolor;
     font-size:.8em;
     margin-left:30px;
 }
@@ -326,13 +326,14 @@ color:"#a9d9d1";
   color:@primarycolor;
     height: 30px;
     margin-bottom: 0;
-    margin-right: 15px;
+    // margin-right: 15px;
     font-weight: 800;
     opacity: 0.9;
     padding: 5px 10px;
-    position: absolute;
-    right: 90px;
-    text-align: right;
+    // position: absolute;
+    // right: 90px;
+    // right: 99px;
+    // text-align: right;
     top: 17px;
     z-index: 8;
 
@@ -923,6 +924,8 @@ padding-top:15px;
     // background-color: @quaternarycolor;
     .stroke-active-mock;
     color: @tertiarycolor;
+    font-size:1.4em;
+    text-decoration: none;
   }
 }
 
@@ -1208,13 +1211,13 @@ text-shadow:
 
 // ------------------------------------- CSS-SPINNER
 //
-.refreshing-loader:not(:required) {
-    border-color: black transparent;
-    font-size: 6px;
-    height: 2em;
-}
+// .refreshing-loader:not(:required) {
+//     border-color: black transparent;
+//     font-size: 6px;
+//     height: 2em;
+// }
 
 // disable that arrow
-.refreshing-loader:not(:required)::after {
-    border-color: none;
-}
+// .refreshing-loader:not(:required)::after {
+//     border-color: none;
+// }

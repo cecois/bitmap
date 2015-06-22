@@ -168,7 +168,7 @@ if (agent == "desktop") {
         // bc we'll be messing with this width once in a while, we sock away the original
         this.ogwidth = $(".leaflet-popup-content").width()
         $(this.el).html(this.template(this.model.toJSON()))
-        return this.
-        triage()
+        return this
+        // .triage()
     }
 });

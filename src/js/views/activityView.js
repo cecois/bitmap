@@ -9,6 +9,7 @@ var ActivityView = Backbone.View.extend({
     stfu: function(){
         NProgress.done()
         $(this.el).addClass("idle")
+        $("#query-form").removeClass("hidden")
         // this.model.set({message:null,show:null,altel:null})
         return this
     },
@@ -18,6 +19,7 @@ var ActivityView = Backbone.View.extend({
         var msg = this.model.get("message")
         var altelstring = this.model.get("altel")
         $(this.el).removeClass("idle")
+        $("#query-form").addClass("hidden")
         // $(this.el).find(".throbber").removeClass("hidden")
         // if (typeof altelstring == 'undefined' || altelstring == false || altelstring == null) {
         //     // var altel = $("#activity-default").find(".throbber");
