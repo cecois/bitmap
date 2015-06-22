@@ -90,7 +90,7 @@ lineseen = {
 };
 // $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomprevious glyphicon glyphicon-step-backward" href="#" title="Zoom to Previous"></a>');
 // $(".leaflet-control-zoom").append('<a class="leaflet-control-zoomfull glyphicon glyphicon-fullscreen" href="#" title="Zoom Way dafuk out"></a>');
-// 
+//
 // new activity model and view
 window.appActivity = new Activity({message:"loading..."});
 window.appActivityView = new ActivityView({
@@ -544,14 +544,14 @@ $("#query-form-input").val(solrstring)
         // appCartoQuery.set({
         //     rawstring: solrstring
         // })
-        // appCartoQuery.set({
-        //     rawstring: solrstring
-        // })
-        // appCartoQueryView.fire(goto)
-        appRoute.navigate(pullURL("#query"), {
-            trigger: true,
-            replace: true
+        appCartoQuery.set({
+            rawstring: solrstring
         })
+        appCartoQueryView.fire(goto)
+        // appRoute.navigate(urlFactory("#query"), {
+        //     trigger: true,
+        //     replace: true
+        // })
         // appCBB.fetch({
         //     success: function(clx) {
         //         appCBBMapView.render()
@@ -596,7 +596,7 @@ var activeid = activecouple.split(":")[1]
             var h = goto;
         }
         var bbx = map.getBounds().toBBoxString();
-        
+
         var qs = appCartoQuery.get("urlstring")
         var bl = appBaseLayers.findWhere({
             active: true

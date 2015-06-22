@@ -1,7 +1,7 @@
 var MethodView = Backbone.View.extend({
     // tagName: "li",
     events: {
-        // "click .loc-trigger": "singular",
+        "click .loc-trigger": "singular",
         // "click a":"killtt",
         // "click a":"rewire"
     },
@@ -15,8 +15,9 @@ var MethodView = Backbone.View.extend({
         this.render()
     },
     singular: function(e) {
+        if(verbose==true){console.log("processing singular click")}
         e.preventDefault()
-        locTrigger(e, false)
+        locTrigger(e, true)
         return this
     },
     render: function() {
