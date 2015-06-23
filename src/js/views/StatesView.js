@@ -55,14 +55,12 @@ var StatesView = Backbone.View.extend({
                     break;
                 default:
             }
-            console.log("plus from elviz::");
-            console.log(plus);
         });
         return this.buttonize(plus)
     },
     buttonize: function(plus) {
 
-var co = _.countBy(appStates.models, function(s) {return (s.get("posish")=="hidden"}||s.get("posish")=="collapsed"));
+var co = _.countBy(appStates.models, function(s) {return (s.get("posish")=="hidden"||s.get("posish")=="collapsed")});
 
 if(co.true > 0){
     var plusm=true
@@ -88,7 +86,7 @@ if(co.true > 0){
             // this.collection.invoke('set', {
             //     "posish": "open"
             // });
-            // 
+            //
             // just set it back to the default for this route
             this.prebaked(Backbone.history.getHash())
             this.universal = false;
@@ -141,7 +139,7 @@ if(co.true > 0){
                 //                 }])
                 // break;
                 // case "browse":
-                
+
                 // break;
             // case "query":
             if (set.indexOf("query")>=0){
@@ -184,7 +182,7 @@ if(co.true > 0){
                                                     "posish": "open"
                                                 }])}
                 else {
-                
+
                             appStates.set([{
                                                     "name": "main",
                                                     "posish": "full"
