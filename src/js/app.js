@@ -184,7 +184,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-pencil.png",
@@ -200,7 +200,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": false,
+            "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
             "thumb": "offline/dummy-thumb.png",
@@ -528,16 +528,31 @@ var methodV = new MethodView({
     model: method
 })
 /* -------------------------------------------------- Free Funcs -----------------------  */
-    function locTrigger(e, goto) {
+    function locTrigger(e, goto, active) {
+        
+
         e.preventDefault()
+
         if (typeof goto == 'undefined') {
             var goto = true
         }
+
+var solrstring="*:*"
+
+if(typeof active !== 'undefined'){
+        if(active.indexOf(":")>=0){
+            var loctype = active.split(":")[0]
+            var locid = active.split(":")[1]
+            activeFactory(active)
+        solrstring = "location_type:"+loctype+" AND location_id:"+locid
+         } else {
+        solrstring = $(e.currentTarget).attr("data-string")
+         }}
+
         if (verbose == true) {
             console.log("in locTrigger");
         }
-        var solrstring = $(e.currentTarget).attr("data-string")
-        var markerid = solrstring.split(",")[1]
+        // var markerid = solrstring.split(",")[1]
 
 $("#query-form-input").val(solrstring)
 

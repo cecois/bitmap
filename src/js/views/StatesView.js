@@ -17,7 +17,9 @@ var StatesView = Backbone.View.extend({
         var plus = false;
         // options are: hidden,momap,collapsed
         _.each(this.collection.models, function(mo, index) {
+
             var elstr = "#" + mo.get("name")
+            console.log("elstr:"+elstr);
             var elpos = mo.get("posish")
             var elviz = mo.get("visible")
             $el = $(elstr);
@@ -27,7 +29,7 @@ var StatesView = Backbone.View.extend({
                     break;
                 case false:
                     $el.addClass("hidden");
-                    plus = true
+                    // plus = true
                     break;
                 default:
                     $el.removeClass("hidden");
@@ -39,11 +41,11 @@ var StatesView = Backbone.View.extend({
             switch (elpos) {   
                 case "momap":
                     $el.addClass("statie-momap");
-                    plus = true
+                    // plus = true
                     break;
                 case "collapsed":
                     $el.addClass("statie-collapsed");
-                    plus = true
+                    // plus = true
                     break;
                 case "full":
                     // main only
@@ -53,11 +55,22 @@ var StatesView = Backbone.View.extend({
                     break;
                 default:
             }
+            console.log("plus from elviz::");
+            console.log(plus);
         });
         return this.buttonize(plus)
     },
     buttonize: function(plus) {
-        switch (plus) {
+
+var co = _.countBy(appStates.models, function(s) {return (s.get("posish")=="hidden"}||s.get("posish")=="collapsed"));
+
+if(co.true > 0){
+    var plusm=true
+} else {
+    plusm = false
+}
+
+        switch (plusm) {
             case true:
                 $("#btn-statie").html('<div class="triangle-trigger-true" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus hider-copy"></span></div>')
                 break;

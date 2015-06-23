@@ -24,7 +24,7 @@ var CartoListView = Backbone.View.extend({
         var locid = $(e.currentTarget).attr("data-id")
         var loctyp = $(e.currentTarget).attr("data-type")
         // var loctyp = $(e.target).attr("data-type")
-        var str = '<span class="loc-trigger" data-string="location_id:' + locid + ' AND location_type:' + loctyp + '" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-' + loctyp + '"></span>'
+        var str = '<span class="loc-trigger" data-string="'+loctyp +':' + locid + '" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-' + loctyp + '"></span>'
         console.log(str);
         return this
     },
