@@ -529,7 +529,7 @@ var methodV = new MethodView({
 })
 /* -------------------------------------------------- Free Funcs -----------------------  */
     function locTrigger(e, goto, active) {
-        
+
 
         e.preventDefault()
 
@@ -542,7 +542,8 @@ var solrstring="*:*"
 if(typeof active !== 'undefined'){
         if(active.indexOf(":")>=0){
             var loctype = active.split(":")[0]
-            var locid = active.split(":")[1]
+            // var locid = active.split(":")[1]
+var locid = doctorId(loctype,active.split(":")[1]);
             activeFactory(active)
         solrstring = "location_type:"+loctype+" AND location_id:"+locid
          } else {
