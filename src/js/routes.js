@@ -20,7 +20,6 @@ var Route = Backbone.Router.extend({
             Tried to not do this, but it does kinda make sense to make the active mod a global. Otherwise we have to pass it to BitCollection first, and then *further* on to CartoCollx since Carto gets filled *after* the custom parse of bits.
              */
             window.activecouple = activecouple
-
             if (typeof basemap !== 'undefined' && basemap !== null) {
                 var inbl = appBaseLayers.findWhere({
                     "name": basemap
@@ -39,10 +38,8 @@ var Route = Backbone.Router.extend({
             if (typeof h == 'undefined' || h == null) {
                 h = "query";
             }
-
             // now we are sure there's an h there's this universal, what *panelizer*? anyway we can position lotsa window elements at once
-appStatesView.prebaked(h)
-
+            appStatesView.prebaked(h)
             var hmod = "#" + h;
             _.each($("#main > .mainpanel"), function(p) {
                 if (p.id == h) {
@@ -85,31 +82,49 @@ appStatesView.prebaked(h)
                 })
                 appBits.fetch({
                     reset: true,
-                    success: function() {
-                                        appActivity.set({message: "pulling out locations..."})
-                        appCBB.fetch({
-                            reset: true,
-                            success: function(collx) {
-                                if (typeof activecouple !== 'undefined' && activecouple !== null) {
-                                    collx.activate();
-                                    appCBBListView.pulleps()
-                                }
-                                appActivityView.stfu()
-                            }
+                    success: function(c) {
+                        // var len = c.find(==)"Location"
+                        appActivity.set({
+                            message: "sniffing for locations..."
                         })
-                    }, //success fetch
+                        var le = _.countBy(c.models, function(mo) {
+                            return mo.get("name") == "Location"
+                        });
+                        if(typeof le.true !== 'undefined' && le.true !== null){
+                                                appActivity.set({
+                                                    message: "pulling out locations..."
+                                                })
+                                                appCBB.fetch({
+                                                    reset: true,
+                                                    success: function(collx) {
+                                                        if (typeof activecouple !== 'undefined' && activecouple !== null) {
+                                                            collx.activate();
+                                                            appCBBListView.pulleps()
+                                                        }
+                                                        appActivityView.stfu()
+                                                    }
+                                                })
+                                            } //if Locations check
+                                            else {
+
+                                                appActivity.set({
+                                                    message: "no locations in result, nothing to map"
+                                                })
+
+                                            }
+                    }, //success fetch - bits
                     error: function() {
                         appConsole.set({
                                 message: "query errored out"
                             })
                             // actually, if it's a true error we wanna be more forthcoming:
-                        $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                        $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                        // appActivity.set({
-                        //         message: "",
-                        //         show: false,
-                        //         altel: false
-                        //     })
+                        $("#querylist-carto").append("<li style='margin-top:50px;font-size:1.2em;'>QUERY ERRORED OUT, SRY</li>")
+                        $("#querylist-bits").append("<li style='margin-top:50px;font-size:1.2em;'>QUERY ERRORED OUT, SRY</li>")
+                            // appActivity.set({
+                            //         message: "",
+                            //         show: false,
+                            //         altel: false
+                            //     })
                             // console.log("failed fetch");
                     }
                 })

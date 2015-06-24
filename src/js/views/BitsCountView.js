@@ -2,7 +2,15 @@ var BitsCountView = Backbone.View.extend({
     el: ".query-subnav-count-bits",
     initialize: function() {
         this.listenTo(this.collection, 'reset', this.render);
+        this.listenTo(this.collection, 'request', this.throb);
         return this.render()
+    },
+        throb: function(){
+
+$(".query-subnav-count-bits").html('<div class="spinner"></div>');
+
+return this
+
     },
     render: function() {
         var len = this.collection.models.length

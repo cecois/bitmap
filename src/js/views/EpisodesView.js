@@ -6,7 +6,7 @@ var EpisodesView = Backbone.View.extend({
             // console.log("initting recentsview")
         }
         this.collection.bind('reset', this.render, this);
-        this.collection.bind('request', this.speak, this);
+        // this.collection.bind('request', this.speak, this);
         // this.collection.bind("reset", _.bind(this.debug, this));
         // this.listenTo(this.collection, "change", this.render);
         // return this.render()
@@ -16,8 +16,18 @@ var EpisodesView = Backbone.View.extend({
 appActivity.set({message:"pulling associated episodes..."})
 
 return this
+// .throb()
 
     },
+//     throb: function(){
+
+// // $(".query-subnav-count-locations").html('<div class="spinner"></div>');
+// $(".episodes-throbber").removeClass("hidden")
+// $(".episodes-throbber").removeClass("hidden")
+
+// return this
+
+//     },
     stfu: function(){
         // meta stfu
         appActivityView.stfu()

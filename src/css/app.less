@@ -269,6 +269,10 @@ div.leaflet-popup-content .marker.bt{
   }
 }
 
+.bt-cartoobj-episodes{
+  color:white;
+}
+
 /* --------------------------------------- CONSOLE -------------- */
 
 #consoleContainer {
@@ -308,16 +312,20 @@ div.leaflet-popup-content .marker.bt{
 
 #activityContainer {
 
-  #activity-spin{margin-right:6px;}
-  #activity-spin.true{
-content: "88888";
-color:"#b4a5b1";
-  }
-  #activity-spin.false{
-    display:none;
-content: "000";
-color:"#a9d9d1";
-  }
+//   #activity-spin{margin-right:6px;}
+//   #activity-spin.true{
+// content: "88888";
+// color:"#b4a5b1";
+//   }
+//   #activity-spin.false{
+//     display:none;
+// content: "000";
+// color:"#a9d9d1";
+//   }
+
+.activity-cancel{
+  cursor:pointer;
+}
 
         background-color: white;
     border-bottom-width: 0;
@@ -340,6 +348,13 @@ color:"#a9d9d1";
     // span{
       // padding:7px;
     // }
+}
+
+#activityContainer.warn{
+
+  background-color:#BE0A18;
+  color:white;
+  font-weight: 800;
 }
 
 /* --------------------------------------- MAP MENU -------------- */
@@ -991,7 +1006,7 @@ padding-top:15px;
 
   .querysubnavh{
   font-weight: bold;
-  margin-right: 20px;
+  // margin-right: 20px;
   font-size:1.9em;
 color:white;
 text-transform: uppercase;
@@ -1013,7 +1028,7 @@ text-decoration:none;
       color:white;
       cursor:pointer;
       /*text-decoration: underline;*/
-      margin-right:50px;
+      // margin-right:50px;
       font-size:1.1em;
       &:hover{
 text-decoration:underline;
@@ -1210,3 +1225,57 @@ text-shadow:
 }
 
 // ------------------------------------- CSS-SPINNER
+// 
+// FINALLY! http://www.designcouch.com/home/why/2013/05/23/dead-simple-pure-css-loading-spinner/
+
+.spinner {
+  height: 20px;
+  width: 20px;
+  margin: 0px auto 0 auto;
+  position: relative;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border-left: 2px solid rgba(0, 174, 239, .15);
+  border-right: 2px solid rgba(0, 174, 239, .15);
+  border-bottom: 2px solid rgba(0, 174, 239, .15);
+  border-top: 2px solid rgba(0, 174, 239, .8);
+  border-radius: 100%;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+  }
+}
+
+@-o-keyframes rotation {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(359deg);
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

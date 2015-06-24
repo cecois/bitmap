@@ -3,7 +3,7 @@ var BitsView = Backbone.View.extend({
     el: "#querylist-bits",
     events: {
         // "click .bt-cartoobj-zoomto": 'zoomtointernal',
-        // "click .bt-cartoobj-episodes": 'pulleps',
+        "click .bt-cartoobj-episodes": 'triage',
         // "click .bt-getid": 'echoid'
     },
     template: Handlebars.templates['bitsView'],
@@ -41,7 +41,63 @@ var BitsView = Backbone.View.extend({
         this.collection.sort()
         return this
     },
-    pulleps: function(e) {
+    triage: function(e) {
+        e.preventDefault()
+        if (dev == true) {
+            // this.echoid(e)
+        }
+        // var locid = $(e.target).attr("data-id")
+        // var loctype = $(e.target).attr("data-type");
+        // appCBB.activate(locid, loctype);
+        // activecouple = loctype+":"+locid
+        // activecouple = activeFactory(loctype + ":" + locid)
+        // appCBB.activate();
+        // this is one we want the url to reflect
+        appRoute.navigate(urlFactory("#query"), {
+            trigger: false,
+            replace: false
+        })
+        if (agent == "desktop") {
+            return this.pulleps()
+        } else if (agent == "mobile") {
+            return this.pulleps_mobile()
+        }
+    },
+    pulleps: function() {
+
+
+        // $("#episodes-list").html("throb here?...")
+
+        $("#episodes").removeClass("hidden")
+
+        // var actv = activeFactory();
+        // var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
+        // if (source == "self") {
+        //     // force the scroll to the top jic we left it at the bottom
+            // $("#main").scrollTo(".querysubnavh");
+        // } else {
+        //     // it means we're coming from somewhere else (prolly a popup or the router), which means in turn we might need to nudge the now-active gui elements into view
+        //     $("#main").scrollTo($(a), 200, {
+        //         offset: -100
+        //     });
+        //     $("#episodes-list").addClass("episodespecial")
+        //     appHiderView.setpos("episodes-pu", "true")
+        // }
+        // locidDrd = doctorId(loctype, locid)
+        // var loctype = actv[0]
+        // var locid = actv[1]
+        // locidDrd = doctorId(loctype, locid)
+        // appEpisodes.activeloc = Number(locidDrd);
+        // appEpisodes.loctype = loctype;
+        appEpisodes.fetch({
+            reset: true,
+            success: function(c, r, o) {
+            }
+        });
+        // return this.activate(a)
+        return this.render()
+    },
+    pullepsOG: function(e) {
         console.log(e);
         // appActivity.set({
         //     message: "fetching episodes...",
@@ -91,6 +147,11 @@ var BitsView = Backbone.View.extend({
         //     placement: 'right',
         //     trigger: 'hover'
         // })
+$('.bt-cartoobj-episodes').tooltip({
+            container: 'body',
+            placement: 'right',
+            trigger: 'hover'
+        })
         // a little non-backbone stuff
         // $("#stats-hits").html("total hits: " + this.collection.length)
         return this

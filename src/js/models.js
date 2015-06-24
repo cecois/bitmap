@@ -61,7 +61,7 @@ var Episodes = Backbone.Collection.extend({
     model: Episode,
     activeloc: null,
     // shouldn't do this, but...here we are
-    verticaloffset:null,
+    // verticaloffset:null,
     loctype: null,
     url: function() {
         // var aloc = Number(this.activeloc);
@@ -139,9 +139,9 @@ var CartoQuery = Backbone.Model.extend({
         // rawstring: "+jesse",
         // displaystring: "jesse",
         // urlstring:'+jesse'
-        rawstring: "+location_type:point",
-        displaystring: "location_type:point",
-        urlstring:'+location_type:point'
+        rawstring: "+location_type:''",
+        displaystring: "location_type:''",
+        urlstring:'+location_type:""'
 
     },
         initialize: function(options) {
