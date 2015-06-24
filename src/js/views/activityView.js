@@ -1,6 +1,9 @@
 var ActivityView = Backbone.View.extend({
     el: $("#activityContainer"),
     template: Handlebars.templates['activityViewTpl'],
+    events: {
+        "click .activity-cancel": "stfu",
+    },
     initialize: function() {
         // this.listenTo(appConsole,"change",this.listler)
         this.model.bind("change", this.render, this);
@@ -10,8 +13,25 @@ var ActivityView = Backbone.View.extend({
         NProgress.done()
         $(this.el).addClass("idle")
         $("#query-form").removeClass("hidden")
-        // this.model.set({message:null,show:null,altel:null})
+
+$(this.el).removeClass('warn')
+        
+        // better these would listen for this but it wasn't working/i was lazy
+        appCBBCountView.render()
+        appBitsCountView.render()
         return this
+    },
+    warn: function(){
+
+NProgress.done()
+
+$(this.el).addClass('warn')
+
+// setTimeout(function(this){ this.stfu() }, 3000);
+setTimeout(_.bind(this.stfu, this), 4000);
+
+return this
+
     },
     render: function() {
         // var show = this.model.get("show")
@@ -38,6 +58,9 @@ var ActivityView = Backbone.View.extend({
                 // NProgress.done()
         // }
         $(this.el).html(this.template(this.model.toJSON()))
-        return this
+        if(this.model.get("warn")==true){
+            return this.warn()
+        } else {
+                return this}
     }
 });
