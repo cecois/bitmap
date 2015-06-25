@@ -126,7 +126,7 @@ if (agent == "desktop") {
     pulleps: function() {
 
 
-        $("#episodes-list").html("throb here?...")
+        $("#episodes-list").html('<div class="spinner-gold"></div>')
 
         var actv = activeFactory();
         var loctype = actv[0]

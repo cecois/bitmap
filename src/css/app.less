@@ -946,6 +946,7 @@ padding-top:15px;
   // overflow:hidden;
   li{
     margin-bottom:8px;
+    cursor:pointer;
     // text-shadow: 2px 0px black;
   }
   li.true{
@@ -1018,6 +1019,11 @@ text-decoration:none;
       font-size:1.1em;
       &:hover{
 text-decoration:underline;
+text-shadow:
+    -1px -1px 0 @secondarycolor,
+    1px -1px 0 @secondarycolor,
+    -1px 1px 0 @secondarycolor,
+    1px 1px 0 @secondarycolor;
       }
     }
       .query-subnav-btn.active{
@@ -1212,6 +1218,22 @@ text-shadow:
 
 // ------------------------------------- CSS-SPINNER
 // FINALLY! http://www.designcouch.com/home/why/2013/05/23/dead-simple-pure-css-loading-spinner/
+
+.spinner-gold {
+  height: 20px;
+  width: 20px;
+  margin: 0px auto 0 auto;
+  position: relative;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border-left: 2px solid @secondarycolor;
+  border-right: 2px solid @secondarycolor;
+  border-bottom: 2px solid @secondarycolor;
+  border-top: 2px solid @secondarycolor-trans;
+  border-radius: 100%;
+}
 
 .spinner {
   height: 20px;

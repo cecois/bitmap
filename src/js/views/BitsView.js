@@ -3,7 +3,8 @@ var BitsView = Backbone.View.extend({
     el: "#querylist-bits",
     events: {
         // "click .bt-cartoobj-zoomto": 'zoomtointernal',
-        // "click .bt-cartoobj-episodes": 'pulleps',
+        "click .bt-cartoobj-episodes": 'triage',
+        // "click": 'triage',
         // "click .bt-getid": 'echoid'
     },
     template: Handlebars.templates['bitsView'],
@@ -41,7 +42,67 @@ var BitsView = Backbone.View.extend({
         this.collection.sort()
         return this
     },
-    pulleps: function(e) {
+    triage: function(e) {
+        e.preventDefault()
+        if (dev == true) {
+            // this.echoid(e)
+        }
+        var bitid = $(e.target).attr("data-id")
+        activecouple = activeFactory("_id:" + bitid)
+        this.collection.activate();
+        // this is one we want the url to reflect
+        appRoute.navigate(urlFactory("#query"), {
+            trigger: false,
+            replace: false
+        })
+        if (agent == "desktop") {
+            return this.pulleps()
+        } else if (agent == "mobile") {
+            return this.pulleps_mobile()
+        }
+    },
+   pulleps: function() {
+
+
+        $("#episodes-list").html('<div class="spinner-gold"></div>')
+
+        $("#episodes").removeClass("hidden")
+
+            // we have to find the el to activate
+            // var act = appCBB.findWhere({
+            //     active: true
+            // })
+            // var locid = act.get("cartodb_id")
+            // var loctype = act.get("geom_type")
+
+        var actv = activeFactory();
+        // var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
+        // if (source == "self") {
+        //     // force the scroll to the top jic we left it at the bottom
+            // $("#main").scrollTo(".querysubnavh");
+        // } else {
+        //     // it means we're coming from somewhere else (prolly a popup or the router), which means in turn we might need to nudge the now-active gui elements into view
+        //     $("#main").scrollTo($(a), 200, {
+        //         offset: -100
+        //     });
+        //     $("#episodes-list").addClass("episodespecial")
+        //     appHiderView.setpos("episodes-pu", "true")
+        // }
+        // locidDrd = doctorId(loctype, locid)
+        var loctype = actv[0]
+        var bitid = actv[1]
+        // bitidDrd = doctorId(loctype, bitid)
+        appEpisodes.activeloc = bitid;
+        appEpisodes.loctype = loctype;
+        appEpisodes.fetch({
+            reset: true,
+            success: function(c, r, o) {
+            }
+        });
+        // return this.activate(a)
+        return this.render()
+    },
+    pullepsOG: function(e) {
         console.log(e);
         // appActivity.set({
         //     message: "fetching episodes...",
@@ -91,6 +152,11 @@ var BitsView = Backbone.View.extend({
         //     placement: 'right',
         //     trigger: 'hover'
         // })
+$('.bt-cartoobj-episodes').tooltip({
+            container: 'body',
+            placement: 'right',
+            trigger: 'hover'
+        })
         // a little non-backbone stuff
         // $("#stats-hits").html("total hits: " + this.collection.length)
         return this
@@ -135,11 +201,15 @@ var BitsView = Backbone.View.extend({
         _.sortBy(this.collection.models, function(mod) {
             return mod.get("active") == 'true';
         });
-        // notice we are wrapping the collection in rows: cuz cartodb does it
-        $(this.el).html(this.template({
-            count: this.collection.models.length,
-            rows: this.collection.toJSON()
-        }));
+
+        if(this.collection.length>0){
+                // notice we are wrapping the collection in rows: cuz cartodb does it
+                $(this.el).html(this.template({
+                    count: this.collection.models.length,
+                    rows: this.collection.toJSON()
+                }));} else {
+                    $(this.el).html("None. Either they were all mappable or none came in from the query.")
+                }
         return this.rewire()
     }
 });

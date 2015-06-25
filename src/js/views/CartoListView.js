@@ -6,6 +6,7 @@ var CartoListView = Backbone.View.extend({
         // "click .bt-cartoobj-episodes": 'pulleps',
         "click .bt-cartoobj-episodes": 'triage',
         "click .carto-plain-title": 'triage',
+        "click .loc-trigger": "singular",
         // "click .bt-getid": 'echoid'
     },
     // template: Handlebars.templates['cartoPlainView'],
@@ -17,6 +18,13 @@ var CartoListView = Backbone.View.extend({
         } else if (agent == "mobile") {
             this.template = Handlebars.templates['cartoListView-Mobile'];
         }
+        return this
+    },
+    singular: function(e) {
+         
+        e.preventDefault()
+         var ds = $(e.currentTarget).attr("data-string")
+        locTrigger(e, true, ds)
         return this
     },
     echoid: function(e) {
@@ -73,7 +81,7 @@ var CartoListView = Backbone.View.extend({
     pulleps: function() {
 
 
-        $("#episodes-list").html("throb here?...")
+        $("#episodes-list").html('<div class="spinner-gold"></div>')
 
         $("#episodes").removeClass("hidden")
 
@@ -300,7 +308,7 @@ return this.rewire(false)
             appConsole.set({
                 message: 'Just fyi - "' + appCartoQuery.get("rawstring") + '" brought zero mappable locations.'
             })
-            $(this.el).html("<span style='font-size:2em;'>Zero. RU a zero?</span>")
+            $(this.el).html("<span style='font-size:2em;'>Zero. RU a zero?</span>"+'<div data-string="huell" data-toggle="tooltip" class="loc-trigger"><span class="loc-string">Huell has tons</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></div>')
             appQuerySubNavView.specify("bits")
             appCBBCountView.render()
         }

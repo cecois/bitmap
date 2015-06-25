@@ -6,6 +6,11 @@ var ActivityView = Backbone.View.extend({
     },
     initialize: function() {
         // this.listenTo(appConsole,"change",this.listler)
+                        
+                        NProgress.configure({
+                        parent: "#activityContainer"
+                    });
+
         this.model.bind("change", this.render, this);
         this.render();
     },
@@ -17,8 +22,9 @@ var ActivityView = Backbone.View.extend({
 $(this.el).removeClass('warn')
         
         // better these would listen for this but it wasn't working/i was lazy
-        appCBBCountView.render()
-        appBitsCountView.render()
+        // appCBBCountView.render()
+        // appBitsCountView.render()
+        // this.model.set({message:""},{silent:true})
         return this
     },
     warn: function(){
@@ -34,10 +40,12 @@ return this
 
     },
     render: function() {
+        if(verbose==true){console.log("rendering activityview")}
+                    NProgress.start();
         // var show = this.model.get("show")
-        var show = true
-        var msg = this.model.get("message")
-        var altelstring = this.model.get("altel")
+        // var show = true
+        // var msg = this.model.get("message")
+        // var altelstring = this.model.get("altel")
         $(this.el).removeClass("idle")
         $("#query-form").addClass("hidden")
         // $(this.el).find(".throbber").removeClass("hidden")
@@ -49,18 +57,16 @@ return this
         // }
         // if (show == true) {
             // altel.addClass("refreshing-loader")
-                NProgress.configure({
-                        parent: "#activityContainer"
-                    });
-                    NProgress.start();
+
         // } else {
             // altel.remove(".throbber")
                 // NProgress.done()
         // }
         $(this.el).html(this.template(this.model.toJSON()))
-        if(this.model.get("warn")==true){
-            return this.warn()
-        } else {
-                return this}
+        // if(this.model.get("warn")==true){
+            // return this.warn()
+        // } else {
+                return this
+            // }
     }
 });

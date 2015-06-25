@@ -1,7 +1,7 @@
 var QuerySubNavView = Backbone.View.extend({
     el: $("#query-subnav"),
     events: {
-        "click .query-subnav-btn": "activate",
+        "click .query-subnav-btn": "switchto",
         // "click #query-form-randomize": "randomize",
         // "click #solrfields .glyphicon": "togglehelp"
         // "change": "render"
@@ -21,7 +21,7 @@ var QuerySubNavView = Backbone.View.extend({
         }
         $(this.el).html(this.template(this.model.toJSON()))
             // $(this.el).val(this.model.get("solrstring"))
-        return this.activate()
+        return this.switchto()
     },
     specify: function(w) {
         // just an extra we can use to specify which "tab"
@@ -43,16 +43,29 @@ var QuerySubNavView = Backbone.View.extend({
     // $(this.el).find('.query-subnav-count-bits').html("("+appBits.length+")")
     // $(this.el).find('.query-subnav-count-locations').html("("+appCBB.length+")")
     //     },
-    activate: function(e) {
+    switchto: function(e) {
         if (typeof e == 'undefined') {
             var elid = "locations"
         } else {
             // $el = $(e.target)
-            var elid = $(e.target).attr("data-id")
-            $(e.target).addClass("active")
+            // var elid = $(e.target).attr("data-id")
+            var elid = $(e.target.parentElement).attr("data-id")
+            // $(e.target).addClass("active")
         }
-        $(this.el).find(".query-subnav-btn").removeClass("active")
+
+// console.log("e:");console.log(e);
+// console.log("elid:");console.log(elid);
+
+        // console.log("btn:");console.log($(this.el).find(".query-subnav-btn"));
+        
+        // $(this.el).find(".query-subnav-btn").removeClass("active")
+        // $(e.target).removeClass("active")
+        
+        // kill em all we'll sort it out
+$(this.el).find(".query-subnav-btn").removeClass("active")
+        // $(".query-subnav-btn:not([data-id='" + elid + "'])").removeClass("active")
         $(".query-subnav-btn[data-id='" + elid + "']").addClass("active")
+
         appEpisodesView.reset()
             // blah - too lazy to fix this sitewide
         if (elid == "locations") {
