@@ -998,6 +998,8 @@ padding-top:15px;
 color:white;
 text-transform: uppercase;
 
+
+
 .episodes{
   .stroke-active-mock;
     color:@tertiarycolor;
@@ -1017,6 +1019,13 @@ text-decoration:none;
       /*text-decoration: underline;*/
       margin-right:50px;
       font-size:1.1em;
+
+      .query-subnav-arro{
+  transform:rotate(90deg);
+  display:none;
+}
+
+
       &:hover{
 text-decoration:underline;
 text-shadow:
@@ -1027,6 +1036,11 @@ text-shadow:
       }
     }
       .query-subnav-btn.active{
+
+        .query-subnav-arro{
+  // transform:rotate(90deg);
+  display:inline-block;
+}
 
         .stroke;
         &:hover{
