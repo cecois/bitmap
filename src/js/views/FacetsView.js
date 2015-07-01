@@ -9,8 +9,17 @@ var FacetsView = Backbone.View.extend({
     },
     chop: function() {
         // this.collection = this.collection.episode
-        console.log("in chop, collx");
-        console.log(this.collection);
+        console.log("in chop, fat_tags collx");
+                var fattags = _.find(this.collection.models, function(e,i) {
+// console.log("keys:")
+// console.log(e.keys())
+return _.findWhere(e.keys(),function(k){k=="tags"})
+// return e.keys()["tags"]
+            // return _.findWhere(e.keys(),"tags");
+        })
+
+        console.log("fattags:");
+        console.log(fattags);
         return this.render()
     },
     throb: function() {

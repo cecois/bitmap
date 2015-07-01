@@ -111,7 +111,7 @@ var Facets = Backbone.Collection.extend({
     model: Facet,
     // which: "bits",
     url: function() {
-        return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("urlstring")+"&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags"
+        return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("urlstring")+"&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr"
         // return solrhost + "cbb_bits/select?q=holding%3Afalse&wt=json&indent=true&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags
     },
     initialize: function(options) {
@@ -125,7 +125,7 @@ var Facets = Backbone.Collection.extend({
     },
     parse: function(response) {
         console.log(response.facet_counts.facet_fields);
-        return response.facet_counts.facet_fields.tags
+        return response.facet_counts.facet_fields
     }
 }); //facets
 /* -------------------------------------------------- CARTODB -----------------------  */
