@@ -184,7 +184,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-pencil.png",
@@ -200,7 +200,7 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": false,
+            "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
             "thumb": "offline/dummy-thumb.png",
@@ -364,6 +364,12 @@ window.appCartoQuery = new CartoQuery();
 window.appCartoQueryView = new QueryView({
     model: appCartoQuery
 });
+
+window.appFacets = new Facets();
+window.appFacetsView = new FacetsView({collection:appFacets})
+
+appFacets.fetch()
+
 
 window.appConsole = new Console().set({
     // message: "HINT! Press the 'z' key at any time to reveal the full map."

@@ -16,7 +16,7 @@ var RecentsCollection = Backbone.Collection.extend({
     model: RecentItem,
     url: function() {
         // return solrhost+"cbb_carto/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json&sort=updated_at+desc&rows=10"
-        return solrhost + "cbb_bits/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json&sort=_id+desc&rows=10"
+        return solrhost + "cbb_bits/select?json.wrf=cwmccallbackrecent&q=holding:false&wt=json&sort=_id+desc&rows=10"
     },
     initialize: function(options) {
         options || (options = {});
@@ -65,9 +65,9 @@ var Episodes = Backbone.Collection.extend({
         // console.log("locadj:");console.log(locadj);
         // return solrhost+"cbb_bits/select?json.wrf=cwmccallback&q=location_id:"+this.activeloc+"+location_type:"+this.loctype+"&wt=json"
         if(this.loctype!=="_id"){
-                return solrhost + "cbb_bits/select?json.wrf=cwmccallback&q=%2Blocation_id%3A\"" + this.activeloc + "\"+%2Blocation_type%3A\"" + this.loctype + "\"&wt=json"}
+                return solrhost + "cbb_bits/select?json.wrf=cwmccallback&q=holding:false AND %2Blocation_id%3A\"" + this.activeloc + "\"+%2Blocation_type%3A\"" + this.loctype + "\"&wt=json"}
                 else {
-                    return solrhost + "cbb_bits/select?json.wrf=cwmccallback&q=%2B_id%3A\"" + this.activeloc + "\"&wt=json"
+                    return solrhost + "cbb_bits/select?json.wrf=cwmccallback&q=holding:false AND %2B_id%3A\"" + this.activeloc + "\"&wt=json"
                 }
     },
     initialize: function(options) {
@@ -104,6 +104,30 @@ var BaseLayersCollection = Backbone.Collection.extend({
         return this.layers
     }
 }); //recentscollx
+
+/* -------------------------------------------------- FACETS -----------------------  */
+var Facet = Backbone.Model.extend({});
+var Facets = Backbone.Collection.extend({
+    model: Facet,
+    // which: "bits",
+    url: function() {
+        return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("urlstring")+"&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags"
+        // return solrhost + "cbb_bits/select?q=holding%3Afalse&wt=json&indent=true&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags
+    },
+    initialize: function(options) {
+        options || (options = {});
+        return this
+    },
+    sync: function(method, collection, options) {
+        options.dataType = "jsonp";
+        options.jsonpCallback = 'wompitup';
+        return Backbone.sync(method, collection, options);
+    },
+    parse: function(response) {
+        console.log(response.facet_counts.facet_fields);
+        return response.facet_counts.facet_fields.tags
+    }
+}); //facets
 /* -------------------------------------------------- CARTODB -----------------------  */
 var CartoItem = Backbone.Model.extend({});
 var BitItem = Backbone.Model.extend({});
@@ -186,7 +210,7 @@ var BitCollection = Backbone.Collection.extend({
     // host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=" + appCartoQuery.get("urlstring")
+        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("urlstring")
     },
     initialize: function(options) {
         options || (options = {});
