@@ -11,10 +11,11 @@ var QueryView = Backbone.View.extend({
         this.render();
         var q = this.model;
         // q.on("change", q.setstrings);
-        this.listenTo(this.model, "change", this.render)
-            // this.model.bind("change", this.render, this);
+        // this.listenTo(this.model, "change", this.render)
+            this.model.bind("change:urlstring", this.fire, this);
     },
     fire: function(goto) {
+
         appCBB.deactivate()
         $(".episodes-arrow").addClass("hidden")
 
@@ -26,30 +27,25 @@ var QueryView = Backbone.View.extend({
         if (goto.type == "click") {
             goto = true
         }
+        // var ss = $("#query-form-input").val()
         var ss = $("#query-form-input").val()
-        if (ss == '' || ss == null) {
-            this.model.set({
-                urlstring: "*:*",
-                rawstring: "",
-                displaystring: ""
-            })
-        } else {
-            this.model.set({
-                    urlstring: ss,
-                    rawstring: ss,
-                    displaystring: ss
-                })
-                // this.model.set({urlstring:ss})
-                // this.model.set({displaystring:ss})
-        }
-        // if(rawstring == '' || rawstring == null){rawstring = "*:*"}
-        // appCartoQuery.set({
-        //     rawstring: rawstring
-        // })
-        // console.log("qv rawstring:");console.log(rawstring);
-        // console.log("qv goto:");console.log(goto);
+        // if (ss == '' || ss == null) {
+        //     this.model.set({
+        //         urlstring: "",
+        //         rawstring: "",
+        //         displaystring: ""
+        //     })
+        // } else {
+        //     this.model.set({
+        //             urlstring: ss,
+        //             rawstring: ss,
+        //             displaystring: ss
+        //         })
+        // }
+
         if (goto == true) {
-            console.log("let's go to there")
+
+            // goto true, we'll basically run ourselves by visiting #query, which runs this
             appRoute.navigate(urlFactory("#query"), {
                 trigger: true,
                 replace: true
@@ -58,7 +54,7 @@ var QueryView = Backbone.View.extend({
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it
             //
-            
+console.log("appbits.fetch@QV 60")
             appBits.fetch({
                     reset: true,
                     // dataType: "jsonp"
@@ -79,9 +75,12 @@ var QueryView = Backbone.View.extend({
                                 appConsole.set({
                                         message: "query errored out"
                                     })
-                                
+
                             }
                         })
+
+
+
                     }, //success fetch
                     error: function() {
                         appConsole.set({
@@ -90,12 +89,15 @@ var QueryView = Backbone.View.extend({
                             // actually, if it's a true error we wanna be more forthcoming:
                         $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                         $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                        
+
                     }
                 })
                 //
                 //
         }
+
+return this
+.render()
     },
     setstage: function() {
         $("#querylist-carto").html("")

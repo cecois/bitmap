@@ -5,21 +5,37 @@ var FacetsView = Backbone.View.extend({
         // var subdivision = this.collection.facets.episodes
         // this.collection=subdivision
         // this.listenTo(this.collection, 'reset', this.render);
-        this.listenTo(this.collection, 'change', this.render);
+        this.listenTo(appFats,'request', this.speak);
+        this.listenTo(this.collection, 'reset', this.render);
         // this.listenTo(this.collection, 'request', this.throb);
-        return this.render()
+        // return this.render()
+    },
+    speak: function(){
+
+appActivity.set({message:"facetizing for "+appCartoQuery.get("urlstring")+"..."})
+
+return this
+.throb()
+
+    },
+    stfu: function(){
+        // meta stfu
+        appActivityView.stfu()
+        $(this.el).find('.spinner').remove()
+        return this
     },
     throb: function() {
-        // $(".query-subnav-count-bits").html('<div class="spinner"></div>');
+        $(this.el).html('<div class="spinner"></div>');
         return this
     },
     render: function() {
-        
+
         // $(this.el).html(this.template(this.collection.toJSON()))
          $(this.el).html(this.template({
             group: this.group,
             facets: this.collection.toJSON()
         }));
         return this
+        .stfu()
     }
 }); //bitscountview

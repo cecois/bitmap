@@ -167,11 +167,11 @@ templates['episodeViewTpl'] = template({"1":function(depth0,helpers,partials,dat
 },"useData":true});
 templates['facetView'] = template({"1":function(depth0,helpers,partials,data) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "  <li><strong>"
+  return "  <li class=\"pull-left\"><strong>"
     + escapeExpression(lambda((depth0 != null ? depth0['0'] : depth0), depth0))
-    + "</strong> ("
+    + "</strong> <span class=\"bitsanno\">("
     + escapeExpression(lambda((depth0 != null ? depth0['1'] : depth0), depth0))
-    + ")</li>\n";
+    + ")</span></li>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "	<h4>Facet: "
     + escapeExpression(lambda((depth0 != null ? depth0.group : depth0), depth0))

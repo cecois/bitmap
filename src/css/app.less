@@ -343,116 +343,7 @@ left:15px;
     // }
 }
 
-/* --------------------------------------- MAP MENU -------------- */
 
-/* ----------
-BASEMAP MENU
------------- */
-
-#BaseMapConsoleWrapper{
-background-color: black;
-opacity:.75;
-width:auto;
-#BaseMapConsole {
-    color: #000;
-    font-weight: 800;
-    padding-top: 22px;
-    padding-right: 20px;
-}
-#BaseMapConsole.temp {
-    color: @primarycolor;
-}
-} //basemapconsolewrapper
-
-#mnuBaseMap {
-
-bottom:-35px;
-    background-color: transparent;
-    list-style: none;
-    text-align: center;
-    cursor: pointer;
-    li {
-        background-color: transparent;
-        .mnuThumbnail {
-            height: 55px;
-              @media(max-width:992px){
-    height:25px;
-  }
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            border-radius: 50%;
-            img {
-                &:hover {
-                    -webkit-box-shadow: 0px 1px 5px 2px @primarycolor-trans;
-                    box-shadow: 0px 1px 5px 2px @primarycolor-trans;
-               }
-               width: 50px;
-               height: 50px;
-                 @media(max-width:992px){
-    width:20px;
-    height:20px;
-  }
-               -webkit-border-radius: 50%;
-               -moz-border-radius: 50%;
-               border-radius: 50%;
-          }
-     }
-     //.mnuThumbnail
-
-     .mnuThumbnail.true {
-         img {
-             border: solid white 3px;
-             -webkit-box-shadow: 0px 1px 5px 2px @secondarycolor-trans;
-                    box-shadow: 0px 1px 5px 2px @secondarycolor-trans;
-        }
-   }
-   //true
-}
-
-} //mnubasemap
-
-#mnuBaseMap.statie-collapsed{
-  bottom: -50px;
-}
-/*.leaflet-control-zoom.leaflet-bar.leaflet-control{
-  box-shadow:0 0 2px 2px @secondarycolor;
-  a{color:white}
-}*/
-
-/*.leaflet-control {
-    // background-color: transparent;
-    // color:white;
-}
-.leaflet-control-container {
-    left: 150px;
-    position: fixed;
-    top: 10px;
-    transform: rotate(90deg);
-    a {
-        background-color: transparent;
-        margin-top: 6px;
-        padding-left: 2.5px;
-        padding-top: 2px;
-        text-decoration: none;
-        color: black;
-        &:hover {
-            text-decoration: none;
-       }
-       // background-image: url(images/zoom-out.png);
-  }
-}*/
-#fakemap {
-    background-color: brown;
-    width: 100%;
-    // height:999px;
-    height: 1000em;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-}
 /* --------------------------------------- NAV & STRUCTURE -------------- */
 
 #livefooter{
@@ -629,7 +520,7 @@ border-right:none;
 .site-header {
 
 /*background: @secondarycolor repeat scroll 0 0 solid;*/
-    padding-left:25px;
+    /*padding-left:25px;*/
     .off-canvas-contents {
         // this is the wrapper for the menu links, so we nudge it over next to the leaf control
         padding-left: 0px;
@@ -836,7 +727,10 @@ border-right:none;
 ul.facets{
   list-style: none;
   font-size: .8em;
-  color:black;
+  color: @tertiarycolor;
+  li{
+    margin-right:9px;
+  }
 }
 //
 // ------------------------------------- QUERY
@@ -1308,4 +1202,117 @@ text-shadow:
   to {
     transform: rotate(359deg);
   }
+}
+
+/* --------------------------------------- MAP MENU -------------- */
+
+/* ----------
+BASEMAP MENU
+------------ */
+
+#BaseMapConsoleWrapper{
+background-color: black;
+opacity:.75;
+width:auto;
+#BaseMapConsole {
+    color: #000;
+    font-weight: 800;
+    padding-top: 22px;
+    padding-right: 20px;
+}
+#BaseMapConsole.temp {
+    color: @primarycolor;
+}
+} //basemapconsolewrapper
+
+#mnuBaseMap {
+
+position:fixed;
+margin:0;
+bottom:-35px;
+    background-color: transparent;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+    li {
+        background-color: transparent;
+        .mnuThumbnail {
+            height: 55px;
+              @media(max-width:992px){
+    height:25px;
+  }
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            img {
+                &:hover {
+                    -webkit-box-shadow: 0px 1px 5px 2px @primarycolor-trans;
+                    box-shadow: 0px 1px 5px 2px @primarycolor-trans;
+               }
+               width: 50px;
+               height: 50px;
+                 @media(max-width:992px){
+    width:20px;
+    height:20px;
+  }
+               -webkit-border-radius: 50%;
+               -moz-border-radius: 50%;
+               border-radius: 50%;
+          }
+     }
+     //.mnuThumbnail
+
+     .mnuThumbnail.true {
+         img {
+             border: solid white 3px;
+             -webkit-box-shadow: 0px 1px 5px 2px @secondarycolor-trans;
+                    box-shadow: 0px 1px 5px 2px @secondarycolor-trans;
+        }
+   }
+   //true
+}
+
+} //mnubasemap
+
+#mnuBaseMap.statie-collapsed{
+  bottom: -50px;
+}
+/*.leaflet-control-zoom.leaflet-bar.leaflet-control{
+  box-shadow:0 0 2px 2px @secondarycolor;
+  a{color:white}
+}*/
+
+/*.leaflet-control {
+    // background-color: transparent;
+    // color:white;
+}
+.leaflet-control-container {
+    left: 150px;
+    position: fixed;
+    top: 10px;
+    transform: rotate(90deg);
+    a {
+        background-color: transparent;
+        margin-top: 6px;
+        padding-left: 2.5px;
+        padding-top: 2px;
+        text-decoration: none;
+        color: black;
+        &:hover {
+            text-decoration: none;
+       }
+       // background-image: url(images/zoom-out.png);
+  }
+}*/
+#fakemap {
+    background-color: brown;
+    width: 100%;
+    // height:999px;
+    height: 1000em;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
 }

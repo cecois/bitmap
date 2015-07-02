@@ -143,7 +143,6 @@ var MetaFacets = Backbone.Collection.extend({
     },
     facetfields: function(){
 
-console.log(this.model);
 return this
 
     },
@@ -154,9 +153,8 @@ return this
     },
     parse: function(response) {
         // console.log(response.facet_counts.facet_fields);
-        console.log("setting subfats...");
-        appFatTags.set(response.facet_counts.facet_fields.tags)
-        appFatNames.set(response.facet_counts.facet_fields.fat_name)
+        appFatTags.reset(response.facet_counts.facet_fields.tags)
+        appFatNames.reset(response.facet_counts.facet_fields.fat_name)
         return response.facet_counts.facet_fields
     }
 }); //facets
@@ -191,44 +189,55 @@ var CartoQuery = Backbone.Model.extend({
         // rawstring: "+jesse",
         // displaystring: "jesse",
         // urlstring:'+jesse'
-        rawstring: "+location_type:point",
-        displaystring: "location_type:point",
-        urlstring: '+location_type:point'
+        rawstring: "",
+        displaystring: "",
+        urlstring: '',
+        facetarray:[]
+
+    },
+    facetstring: function(){
+
+
+if(this.get("facetarray").length>0){
+
+if(this.get("facetarray").length>1){
+var fa = " AND "+this.get("facetarray").join(" AND ")} else {
+    var fa = " AND "+this.get("facetarray")[0]
+}
+
+} else {
+    var fa="";
+}
+
+return fa
+
     },
     initialize: function(options) {
         options || (options = {});
         // this.listenTo(this.get("rawstring"), "change", this.setstrings)
+        // this.listenTo(this, "change", this.setstrings)
         // this.bind(this, "change", "setstrings")
+
+this.setstrings()
         this.on('change', this.setstrings, this);
         return this
     },
-    //     setstrings: function() {
-    // // console.log("changing displaystring...");
-    // // here because we COULD do some manip at this point
-    // // but right now we just pass it through
-    //         var ss = this.get("rawstring")
-    //         this.set({displaystring:ss})
-    //         this.set({urlstring:ss})
-    //         // if(ss == '' || ss == null){
-    //         //     this.set({urlstring : "*:*"})
-    //         // }
-    //                 return this
-    //     },
     setstrings: function() {
         // console.log("changing urlstring...");
         // here because we COULD do some manip at this point
         // but right now we just pass it through
+
         var ss = this.get("rawstring")
         if (ss == '' || ss == null) {
             this.set({
-                urlstring: "*:*"
+                urlstring: "holding:false"+ this.facetstring()
             })
             this.set({
                 displaystring: ""
             })
         } else {
             this.set({
-                urlstring: ss
+                urlstring: "holding:false"+ss + this.facetstring()
             })
             this.set({
                 displaystring: ss
@@ -242,7 +251,7 @@ var BitCollection = Backbone.Collection.extend({
     // host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("urlstring")
+        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=" + appCartoQuery.get("urlstring")
     },
     initialize: function(options) {
         options || (options = {});

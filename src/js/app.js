@@ -380,7 +380,7 @@ window.aFNV = new FacetsView({collection:appFatNames})
 aFNV.group="Names"
 aFNV.el=$("#facet-names")
 
-appFats.fetch()
+
 
 
 window.appConsole = new Console().set({

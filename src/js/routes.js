@@ -76,43 +76,37 @@ appStatesView.prebaked(h)
                 bboxarr.push(northeast)
                 map.fitBounds(bboxarr);
             }
-            if (h == 'query') {
-                // a live one, this, let's fire off the query
-                // $(".episodes-arrow").addClass('hidden')
+            if (h == 'query' || h == 'explore') {
+
                 this.update("#query")
-                appActivity.set({
-                    message: "querying bits..."
-                })
-                appBits.fetch({
-                    reset: true,
-                    success: function() {
-                                        appActivity.set({message: "pulling out locations..."})
-                        appCBB.fetch({
-                            reset: true,
-                            success: function(collx) {
-                                if (typeof activecouple !== 'undefined' && activecouple !== null) {
-                                    collx.activate();
-                                    appCBBListView.pulleps()
-                                }
-                                appActivityView.stfu()
-                            }
-                        })
-                    }, //success fetch
-                    error: function() {
-                        appConsole.set({
-                                message: "query errored out"
-                            })
-                            // actually, if it's a true error we wanna be more forthcoming:
-                        $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                        $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                        // appActivity.set({
-                        //         message: "",
-                        //         show: false,
-                        //         altel: false
-                        //     })
-                            // console.log("failed fetch");
-                    }
-                })
+                appCartoQueryView.fire(false)
+                // appActivity.set({
+                //     message: "querying bits..."
+                // })
+                // console.log("appbits.fetch@routes 86")
+                // appBits.fetch({
+                //     reset: true,
+                //     success: function() {
+                //                         appActivity.set({message: "pulling out locations..."})
+                //         appCBB.fetch({
+                //             reset: true,
+                //             success: function(collx) {
+                //                 if (typeof activecouple !== 'undefined' && activecouple !== null) {
+                //                     collx.activate();
+                //                     appCBBListView.pulleps()
+                //                 }
+                //                 appActivityView.stfu()
+                //             }
+                //         })
+                //     }, //success fetch
+                //     error: function() {
+                //         appConsole.set({
+                //                 message: "query errored out"
+                //             })
+                //         $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                //         $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                //     }
+                // })
             } //h is query for fetch
             return this
         } // end home
