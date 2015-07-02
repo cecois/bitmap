@@ -365,10 +365,22 @@ window.appCartoQueryView = new QueryView({
     model: appCartoQuery
 });
 
-window.appFacets = new Facets();
-window.appFacetsView = new FacetsView({collection:appFacets})
+window.appFat = new MetaFacet();
 
-appFacets.fetch()
+// window.appFatQuery = new FacetQuery(["tags","fat_name"]);
+
+window.appFats = new MetaFacets();
+window.appFatTags = new FacetsTags();
+window.appFatNames = new FacetsNames();
+// window.appFatTags = new FatTags();
+window.aFTV = new FacetsView({collection:appFatTags})
+aFTV.group="Tags"
+aFTV.el=$("#facet-tags")
+window.aFNV = new FacetsView({collection:appFatNames})
+aFNV.group="Names"
+aFNV.el=$("#facet-names")
+
+appFats.fetch()
 
 
 window.appConsole = new Console().set({

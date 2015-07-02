@@ -24,7 +24,6 @@ var BaseLayersMenuView = Backbone.View.extend({
         return this.rewire()
     },
     rewire: function() {
-        console.log("render of BLMV");
         // $("#BaseMapConsole").html(this.model.get("nom"))
         // #returnto -- use underscore to pull this from the collx
         // $("#mnuBaseMap").attr("title",this.title)

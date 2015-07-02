@@ -19,7 +19,6 @@ var StatesView = Backbone.View.extend({
         _.each(this.collection.models, function(mo, index) {
 
             var elstr = "#" + mo.get("name")
-            console.log("elstr:"+elstr);
             var elpos = mo.get("posish")
             var elviz = mo.get("visible")
             $el = $(elstr);

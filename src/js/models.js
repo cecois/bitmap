@@ -106,17 +106,46 @@ var BaseLayersCollection = Backbone.Collection.extend({
 }); //recentscollx
 
 /* -------------------------------------------------- FACETS -----------------------  */
+var MetaFacet = Backbone.Model.extend({});
 var Facet = Backbone.Model.extend({});
-var Facets = Backbone.Collection.extend({
+
+var FacetsTags = Backbone.Collection.extend({
     model: Facet,
+    url: function() {
+        return null
+    },
+    initialize: function(options) {
+        options || (options = {});
+        return this
+    }
+}); //facetstags
+var FacetsNames = Backbone.Collection.extend({
+    model: Facet,
+    url: function() {
+        return null
+    },
+    initialize: function(options) {
+        options || (options = {});
+        return this
+    }
+}); //facetsnames
+
+var MetaFacets = Backbone.Collection.extend({
+    model: MetaFacet,
     // which: "bits",
     url: function() {
-        return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("urlstring")+"&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr"
+        return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("urlstring")+"&facet.query="+appCartoQuery.get("urlstring")+"&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
         // return solrhost + "cbb_bits/select?q=holding%3Afalse&wt=json&indent=true&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags
     },
     initialize: function(options) {
         options || (options = {});
         return this
+    },
+    facetfields: function(){
+
+console.log(this.model);
+return this
+
     },
     sync: function(method, collection, options) {
         options.dataType = "jsonp";
@@ -124,7 +153,10 @@ var Facets = Backbone.Collection.extend({
         return Backbone.sync(method, collection, options);
     },
     parse: function(response) {
-        console.log(response.facet_counts.facet_fields);
+        // console.log(response.facet_counts.facet_fields);
+        console.log("setting subfats...");
+        appFatTags.set(response.facet_counts.facet_fields.tags)
+        appFatNames.set(response.facet_counts.facet_fields.fat_name)
         return response.facet_counts.facet_fields
     }
 }); //facets

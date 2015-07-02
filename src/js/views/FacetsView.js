@@ -1,25 +1,12 @@
 var FacetsView = Backbone.View.extend({
-    el: ".blocks-explore",
+    // el: ".blocks-explore",
+    template: Handlebars.templates['facetView'],
     initialize: function() {
         // var subdivision = this.collection.facets.episodes
         // this.collection=subdivision
-        this.listenTo(this.collection, 'reset', this.chop);
+        // this.listenTo(this.collection, 'reset', this.render);
+        this.listenTo(this.collection, 'change', this.render);
         // this.listenTo(this.collection, 'request', this.throb);
-        // return this.render()
-    },
-    chop: function() {
-        // this.collection = this.collection.episode
-        console.log("in chop, fat_tags collx");
-                var fattags = _.find(this.collection.models, function(e,i) {
-// console.log("keys:")
-// console.log(e.keys())
-return _.findWhere(e.keys(),function(k){k=="tags"})
-// return e.keys()["tags"]
-            // return _.findWhere(e.keys(),"tags");
-        })
-
-        console.log("fattags:");
-        console.log(fattags);
         return this.render()
     },
     throb: function() {
@@ -27,8 +14,12 @@ return _.findWhere(e.keys(),function(k){k=="tags"})
         return this
     },
     render: function() {
-        var len = this.collection.models.length
-        $(this.el).html(this.collection.models.length);
+        
+        // $(this.el).html(this.template(this.collection.toJSON()))
+         $(this.el).html(this.template({
+            group: this.group,
+            facets: this.collection.toJSON()
+        }));
         return this
     }
 }); //bitscountview
