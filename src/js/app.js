@@ -777,6 +777,8 @@ $(document).ready(function() {
     L.control.zoom({position:'topright'}).addTo(map)
     new L.HistoryControl().addTo(map);
 
+appActivityView.stfu()
+
     //
 }); //ready
 $(document).keydown(function(e) {

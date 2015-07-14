@@ -64,11 +64,11 @@ var Episodes = Backbone.Collection.extend({
         // var locadj = aloc/999;
         // console.log("locadj:");console.log(locadj);
         // return solrhost+"cbb_bits/select?json.wrf=cwmccallback&q=location_id:"+this.activeloc+"+location_type:"+this.loctype+"&wt=json"
-        if(this.loctype!=="_id"){
-                return solrhost + "cbb_bits/select?json.wrf=cwmccallback&q=holding:false AND %2Blocation_id%3A\"" + this.activeloc + "\"+%2Blocation_type%3A\"" + this.loctype + "\"&wt=json"}
-                else {
-                    return solrhost + "cbb_bits/select?json.wrf=cwmccallback&q=holding:false AND %2B_id%3A\"" + this.activeloc + "\"&wt=json"
-                }
+        if (this.loctype !== "_id") {
+            return solrhost + "cbb_bits/select?json.wrf=cwmccallback&q=holding:false AND %2Blocation_id%3A\"" + this.activeloc + "\"+%2Blocation_type%3A\"" + this.loctype + "\"&wt=json"
+        } else {
+            return solrhost + "cbb_bits/select?json.wrf=cwmccallback&q=holding:false AND %2B_id%3A\"" + this.activeloc + "\"&wt=json"
+        }
     },
     initialize: function(options) {
         options || (options = {});
@@ -134,16 +134,16 @@ var MetaFacets = Backbone.Collection.extend({
     model: MetaFacet,
     // which: "bits",
     url: function() {
-        return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("urlstring")+"&facet.query="+appCartoQuery.get("urlstring")+"&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
-        // return solrhost + "cbb_bits/select?q=holding%3Afalse&wt=json&indent=true&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags
+        return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("urlstring") + "&facet.query=" + appCartoQuery.get("urlstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
+            // return solrhost + "cbb_bits/select?q=holding%3Afalse&wt=json&indent=true&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags
     },
     initialize: function(options) {
         options || (options = {});
         return this
     },
-    facetfields: function(){
+    facetfields: function() {
 
-return this
+        return this
 
     },
     sync: function(method, collection, options) {
@@ -192,24 +192,25 @@ var CartoQuery = Backbone.Model.extend({
         rawstring: "",
         displaystring: "",
         urlstring: '',
-        facetarray:[]
+        facetarray: []
 
     },
-    facetstring: function(){
+    facetstring: function() {
 
 
-if(this.get("facetarray").length>0){
+        if (this.get("facetarray").length > 0) {
 
-if(this.get("facetarray").length>1){
-var fa = " AND "+this.get("facetarray").join(" AND ")} else {
-    var fa = " AND "+this.get("facetarray")[0]
-}
+            if (this.get("facetarray").length > 1) {
+                var fa = " AND " + this.get("facetarray").join(" AND ")
+            } else {
+                var fa = " AND " + this.get("facetarray")[0]
+            }
 
-} else {
-    var fa="";
-}
+        } else {
+            var fa = "";
+        }
 
-return fa
+        return fa
 
     },
     initialize: function(options) {
@@ -218,8 +219,8 @@ return fa
         // this.listenTo(this, "change", this.setstrings)
         // this.bind(this, "change", "setstrings")
 
-this.setstrings()
-        this.on('change', this.setstrings, this);
+        this.setstrings()
+        this.on('change:rawstring', this.setstrings, this);
         return this
     },
     setstrings: function() {
@@ -230,17 +231,17 @@ this.setstrings()
         var ss = this.get("rawstring")
         if (ss == '' || ss == null) {
             this.set({
-                urlstring: "holding:false"+ this.facetstring()
+                urlstring: "holding:false" + this.facetstring()
             })
             this.set({
                 displaystring: ""
             })
         } else {
             this.set({
-                urlstring: "holding:false"+ss + this.facetstring()
+                urlstring: "holding:false AND " + ss + this.facetstring()
             })
             this.set({
-                displaystring: ss
+                displaystring: "DISPLAYSTRING->"+ss
             })
         }
         return this

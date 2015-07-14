@@ -1,7 +1,7 @@
 var QueryView = Backbone.View.extend({
     el: $("#query-form"),
     events: {
-        "click #query-form-bt": "fire",
+        "click #query-form-bt": "btfire",
         "click #query-form-randomize": "randomize",
         "click #solrfields .glyphicon": "togglehelp"
             // "change": "render"
@@ -12,23 +12,42 @@ var QueryView = Backbone.View.extend({
         var q = this.model;
         // q.on("change", q.setstrings);
         // this.listenTo(this.model, "change", this.render)
-            this.model.bind("change:urlstring", this.fire, this);
+        this.listenTo(this.model, "change:rawstring", this.test)
+            // this.model.bind("change:urlstring", this.fire, this);
+    },
+    test: function(){
+
+console.log("queryview should fire here? Using:")
+
+        console.log("rawstring:"+this.model.get("rawstring"))
+        console.log("displaystring:"+this.model.get("displaystring"))
+        console.log("urlstring:"+this.model.get("urlstring"))
+        console.log("facetarray:"+this.model.get("facetarray"))
+
+return this
+
+    },
+    btfire: function(){
+
+console.log("btfire")
+
+return this
     },
     fire: function(goto) {
 
         appCBB.deactivate()
         $(".episodes-arrow").addClass("hidden")
 
-        if (typeof goto == 'undefined' || goto==null) {
-            console.log("not sure who fired this, setting goto to false:");
-            console.log(goto);
-            goto = false
-        }
-        if (goto.type == "click") {
-            goto = true
-        }
+        // if (typeof goto == 'undefined' || goto==null) {
+        //     console.log("not sure who fired this, setting goto to false:");
+        //     console.log(goto);
+        //     goto = false
+        // }
+        // if (goto.type == "click") {
+        //     goto = true
+        // }
         // var ss = $("#query-form-input").val()
-        var ss = $("#query-form-input").val()
+        // var ss = $("#query-form-input").val()
         // if (ss == '' || ss == null) {
         //     this.model.set({
         //         urlstring: "",
@@ -43,14 +62,14 @@ var QueryView = Backbone.View.extend({
         //         })
         // }
 
-        if (goto == true) {
+        // if (goto == true) {
 
-            // goto true, we'll basically run ourselves by visiting #query, which runs this
-            appRoute.navigate(urlFactory("#query"), {
-                trigger: true,
-                replace: true
-            })
-        } else {
+        //     // goto true, we'll basically run ourselves by visiting #query, which runs this
+        //     appRoute.navigate(urlFactory("#query"), {
+        //         trigger: true,
+        //         replace: true
+        //     })
+        // } else {
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it
             //
@@ -94,7 +113,7 @@ console.log("appbits.fetch@QV 60")
                 })
                 //
                 //
-        }
+        // }
 
 return this
 .render()

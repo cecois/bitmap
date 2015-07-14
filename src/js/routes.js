@@ -76,10 +76,10 @@ appStatesView.prebaked(h)
                 bboxarr.push(northeast)
                 map.fitBounds(bboxarr);
             }
-            if (h == 'query' || h == 'explore') {
+            if (h == 'query') {
 
-                this.update("#query")
-                appCartoQueryView.fire(false)
+                // this.update("#query")
+                // appCartoQueryView.fire(false)
                 // appActivity.set({
                 //     message: "querying bits..."
                 // })
@@ -108,6 +108,7 @@ appStatesView.prebaked(h)
                 //     }
                 // })
             } //h is query for fetch
+            // appCartoQueryView.fire(false)
             return this
         } // end home
 });
