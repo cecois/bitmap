@@ -1,7 +1,7 @@
 var QueryView = Backbone.View.extend({
     el: $("#query-form"),
     events: {
-        "click #query-form-bt": "btfire",
+        "click #query-form-bt": "fire",
         "click #query-form-randomize": "randomize",
         "click #solrfields .glyphicon": "togglehelp"
             // "change": "render"
@@ -12,7 +12,7 @@ var QueryView = Backbone.View.extend({
         var q = this.model;
         // q.on("change", q.setstrings);
         // this.listenTo(this.model, "change", this.render)
-        this.listenTo(this.model, "change:rawstring", this.test)
+        this.listenTo(this.model, "change:rawstring", this.fire)
             // this.model.bind("change:urlstring", this.fire, this);
     },
     test: function(){
@@ -27,13 +27,16 @@ console.log("queryview should fire here? Using:")
 return this
 
     },
-    btfire: function(){
+    btfire: function(e){
 
-console.log("btfire")
+console.log("btfire's e:")
+console.log(e);
 
 return this
     },
-    fire: function(goto) {
+    fire: function(e) {
+
+
 
         appCBB.deactivate()
         $(".episodes-arrow").addClass("hidden")
@@ -43,37 +46,38 @@ return this
         //     console.log(goto);
         //     goto = false
         // }
-        // if (goto.type == "click") {
-        //     goto = true
-        // }
-        // var ss = $("#query-form-input").val()
-        // var ss = $("#query-form-input").val()
-        // if (ss == '' || ss == null) {
-        //     this.model.set({
-        //         urlstring: "",
-        //         rawstring: "",
-        //         displaystring: ""
-        //     })
-        // } else {
-        //     this.model.set({
-        //             urlstring: ss,
-        //             rawstring: ss,
-        //             displaystring: ss
-        //         })
-        // }
+        if (e.type == "click") {
+            // goto = true
+        var ss = $("#query-form-input").val()
 
+// if (ss == '' || ss == null) {
+//             this.model.set({
+//                 urlstring: "",
+//                 rawstring: "",
+//                 displaystring: ""
+//             })
+        // } else {
+            this.model.set({
+                    rawstring: ss
+                })
+        // }
+        // 
+            appRoute.navigate(urlFactory("#query"), {
+                trigger: true,
+                replace: true
+            })
+
+        }
+        // var ss = $("#query-form-input").val()
+        
         // if (goto == true) {
 
         //     // goto true, we'll basically run ourselves by visiting #query, which runs this
-        //     appRoute.navigate(urlFactory("#query"), {
-        //         trigger: true,
-        //         replace: true
-        //     })
+        
         // } else {
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it
             //
-console.log("appbits.fetch@QV 60")
             appBits.fetch({
                     reset: true,
                     // dataType: "jsonp"

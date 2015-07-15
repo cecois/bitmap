@@ -192,6 +192,7 @@ var CartoQuery = Backbone.Model.extend({
         rawstring: "",
         displaystring: "",
         urlstring: '',
+        solrstring:'',
         facetarray: []
 
     },
@@ -231,17 +232,19 @@ var CartoQuery = Backbone.Model.extend({
         var ss = this.get("rawstring")
         if (ss == '' || ss == null) {
             this.set({
-                urlstring: "holding:false" + this.facetstring()
-            })
-            this.set({
+                urlstring: "*"+this.facetstring(),
+                solrstring: "holding:false" + this.facetstring(),
                 displaystring: ""
             })
+            // this.set({
+            //     displaystring: "".
+            //     solrstring: ""
+            // })
         } else {
             this.set({
-                urlstring: "holding:false AND " + ss + this.facetstring()
-            })
-            this.set({
-                displaystring: "DISPLAYSTRING->"+ss
+                solrstring: "holding:false AND " + ss + this.facetstring(),
+                urlstring: "" + ss + this.facetstring(),
+                displaystring: ss
             })
         }
         return this
@@ -252,7 +255,7 @@ var BitCollection = Backbone.Collection.extend({
     // host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=" + appCartoQuery.get("urlstring")
+        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=" + appCartoQuery.get("solrstring")
     },
     initialize: function(options) {
         options || (options = {});

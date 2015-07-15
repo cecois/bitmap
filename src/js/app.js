@@ -555,7 +555,7 @@ var methodV = new MethodView({
             var goto = true
         }
 
-var solrstring="*:*"
+var qstring="*:*"
 
 if(typeof active !== 'undefined'){
         if(active.indexOf(":")>=0){
@@ -563,25 +563,25 @@ if(typeof active !== 'undefined'){
             // var locid = active.split(":")[1]
 var locid = doctorId(loctype,active.split(":")[1]);
             activeFactory(active)
-        solrstring = "location_type:"+loctype+" AND location_id:"+locid
+        qstring = "location_type:"+loctype+" AND location_id:"+locid
+        appCartoQuery.set({rawstring:qstring})
          } else {
-        solrstring = $(e.currentTarget).attr("data-string")
+        qstring = $(e.currentTarget).attr("data-string")
+        appCartoQuery.set({rawstring:qstring})
          }}
 
-        if (verbose == true) {
-            console.log("in locTrigger");
-        }
+
         // var markerid = solrstring.split(",")[1]
 
-$("#query-form-input").val(solrstring)
+// $("#query-form-input").val(solrstring)
 
         // appCartoQuery.set({
         //     rawstring: solrstring
         // })
-        appCartoQuery.set({
-            rawstring: solrstring
-        })
-        appCartoQueryView.fire(goto)
+// appCartoQuery.set({
+//     rawstring: solrstring
+// })
+// appCartoQueryView.fire(goto)
         // appRoute.navigate(urlFactory("#query"), {
         //     trigger: true,
         //     replace: true

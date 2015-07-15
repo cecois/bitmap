@@ -153,6 +153,8 @@ templates['episodeViewTpl'] = template({"1":function(depth0,helpers,partials,dat
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</a>\n(#"
     + escapeExpression(((helper = (helper = helpers.episode || (depth0 != null ? depth0.episode : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"episode","hash":{},"data":data}) : helper)))
+    + ":"
+    + escapeExpression(((helper = (helper = helpers.tstart || (depth0 != null ? depth0.tstart : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"tstart","hash":{},"data":data}) : helper)))
     + ")\n<!-- <a href=\"http://earwolf.com/episode/"
     + escapeExpression(((helper = (helper = helpers.slug_earwolf || (depth0 != null ? depth0.slug_earwolf : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"slug_earwolf","hash":{},"data":data}) : helper)))
     + "\">\n	<img src=\"images/bt-earwolf.png\" alt=\"\" width=\"15\" height=\"15\" border=\"0\" />\n</a> -->\n<!-- , -->\n<a href=\"http://soundcloud.com/comedybangbang/"
@@ -224,7 +226,7 @@ templates['querySubNavViewTpl'] = template({"compiler":[6,">= 2.0.0-beta.1"],"ma
 templates['queryViewTpl'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
   return "<div class=\"input-group\">\n      <input type=\"text\" class=\"form-control\" id=\"query-form-input\" value=\""
-    + escapeExpression(((helper = (helper = helpers.displaystring || (depth0 != null ? depth0.displaystring : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"displaystring","hash":{},"data":data}) : helper)))
+    + escapeExpression(((helper = (helper = helpers.rawstring || (depth0 != null ? depth0.rawstring : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"rawstring","hash":{},"data":data}) : helper)))
     + "\">\n      <span class=\"input-group-btn\">\n        <button id=\"query-form-bt\" class=\"btn btn-default\" type=\"button\" placeholder=\"search the source for new results\">Search</button>\n      </span>\n    </div><!-- /input-group -->\n\n";
 },"useData":true});
 templates['recentItemViewTpl'] = template({"1":function(depth0,helpers,partials,data) {
