@@ -32,9 +32,15 @@ var QuerySubNavView = Backbone.View.extend({
         if (w == "locations") {
             $("#querylist-carto").removeClass("hidden")
             $("#querylist-bits").addClass("hidden")
-        } else {
-            $("#querylist-carto").addClass("hidden")
+            $("#querylist-facets").addClass("hidden")
+        } else if(w=="bits") {
             $("#querylist-bits").removeClass("hidden")
+            $("#querylist-carto").addClass("hidden")
+            $("#querylist-facets").addClass("hidden")
+        } else if(w=="facets"){
+            $("#querylist-facets").removeClass("hidden")
+            $("#querylist-carto").addClass("hidden")
+            $("#querylist-bits").addClass("hidden")
         }
         return this
     },
@@ -57,10 +63,10 @@ var QuerySubNavView = Backbone.View.extend({
 // console.log("elid:");console.log(elid);
 
         // console.log("btn:");console.log($(this.el).find(".query-subnav-btn"));
-        
+
         // $(this.el).find(".query-subnav-btn").removeClass("active")
         // $(e.target).removeClass("active")
-        
+
         // kill em all we'll sort it out
 $(this.el).find(".query-subnav-btn").removeClass("active")
         // $(".query-subnav-btn:not([data-id='" + elid + "'])").removeClass("active")
@@ -71,9 +77,15 @@ $(this.el).find(".query-subnav-btn").removeClass("active")
         if (elid == "locations") {
             $("#querylist-carto").removeClass("hidden")
             $("#querylist-bits").addClass("hidden")
-        } else {
-            $("#querylist-carto").addClass("hidden")
+            $("#querylist-facets").addClass("hidden")
+        } else if(elid == "bits") {
             $("#querylist-bits").removeClass("hidden")
+            $("#querylist-carto").addClass("hidden")
+            $("#querylist-facets").addClass("hidden")
+        } else if(elid =="facets"){
+            $("#querylist-facets").removeClass("hidden")
+            $("#querylist-carto").addClass("hidden")
+            $("#querylist-bits").addClass("hidden")
         }
         return this
             // .accoutrement()

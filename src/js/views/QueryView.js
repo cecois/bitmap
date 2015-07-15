@@ -13,6 +13,7 @@ var QueryView = Backbone.View.extend({
         // q.on("change", q.setstrings);
         // this.listenTo(this.model, "change", this.render)
         this.listenTo(this.model, "change:rawstring", this.fire)
+        this.listenTo(this.model, "change:facetarray", this.fire)
             // this.model.bind("change:urlstring", this.fire, this);
     },
     test: function(){
@@ -46,7 +47,7 @@ return this
         //     console.log(goto);
         //     goto = false
         // }
-        if (e.type == "click") {
+        if (typeof e !== 'undefined' && e.type == "click") {
             // goto = true
         var ss = $("#query-form-input").val()
 
@@ -61,7 +62,7 @@ return this
                     rawstring: ss
                 })
         // }
-        // 
+        //
             appRoute.navigate(urlFactory("#query"), {
                 trigger: true,
                 replace: true
@@ -69,11 +70,11 @@ return this
 
         }
         // var ss = $("#query-form-input").val()
-        
+
         // if (goto == true) {
 
         //     // goto true, we'll basically run ourselves by visiting #query, which runs this
-        
+
         // } else {
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it
