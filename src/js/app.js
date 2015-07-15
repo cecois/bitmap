@@ -365,23 +365,6 @@ window.appCartoQueryView = new QueryView({
     model: appCartoQuery
 });
 
-window.appFat = new MetaFacet();
-
-// window.appFatQuery = new FacetQuery(["tags","fat_name"]);
-
-window.appFats = new MetaFacets();
-window.appFatTags = new FacetsTags();
-window.appFatNames = new FacetsNames();
-// window.appFatTags = new FatTags();
-window.aFTV = new FacetsView({collection:appFatTags})
-aFTV.group="Tags"
-aFTV.el=$("#facet-tags")
-window.aFNV = new FacetsView({collection:appFatNames})
-aFNV.group="Names"
-aFNV.el=$("#facet-names")
-
-
-
 
 window.appConsole = new Console().set({
     // message: "HINT! Press the 'z' key at any time to reveal the full map."
@@ -396,13 +379,6 @@ window.appQuerySubNavView = new QuerySubNavView({
     model: appQuerySubNav
 });
 
-// window.appHider = new Hider({collapsed:"false"});
-// window.appHiderView = new HiderView({
-//     model: appHider
-// });
-
-
-// momap,collapsed, full (main only)
 
 var states = [{
             "name": "main",
@@ -420,70 +396,19 @@ var states = [{
 
     ]
 
-// appBaseLayers = new BaseLayersCollection(baselayers.layers);
 window.appStates = new States(
 states
     );
 window.appStatesView = new StatesView({
     collection: appStates
 });
-// var mods = (function() {
-//     var json = null;
-//     $.ajax({
-//         'async': false,
-//         'global': false,
-//         'url': 'offline/cbb_point-og.json',
-//         'dataType': "json",
-//         'success': function(data) {
-//             json = data.rows;
-//         },
-//         'error':function(){
-//             json = "[]";
-//         }
-//     });
-//     return json;
-// })();
-// return json;
-// window.appCarto = new CartoCollectionDev(mods);
-// window.appCarto = new CartoCollection(mods);
-// window.appCarto = new CartoCollection();
-// var CartoDB = Backbone.CartoDB({
-//         user: 'pugo' // you should put your account name here
-//                        // YOURUSER.cartobd.com
-//     });
-// var CBBCollx= CartoDB.CartoDBCollection.extend({
-//         table: 'cbb_point', //public table
-//         // format: 'geoJSON',
-//         columns: {
-//             'name': 'name',
-//             'the_geom':'the_geom',
-//             // 'lat':'st_y(the_geom)',
-//             // 'lng': 'st_x(the_geom)'
-//             'anno':'anno'
-//         }
-//         ,
-//         sql: function() {
-//         return "select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point "
-//         +appCartoQuery.get("wherestring");
-//     }
-//     });
+
 /* -------------------------------------------------- INITS -----------------------  */
-// switch (dev) {   
-//     case true:
-//         window.appCBB = new CartoCollectionDev();       
-//         break;   
-//     default:
-// }
+
         window.appBits = new BitCollection();
         window.appCBB = new CartoCollection();
 
-// appCBBCarto.fetch();
-// appCBBCarto.bind('reset', function() {
-//  appCBBCarto.each(function(p) {
-//     console.log(p.get('name'));
-//     console.log(p);
-// });
-// });
+
 window.appCBBListView = new CartoListView({
     collection: appCBB
 })
@@ -500,47 +425,22 @@ window.appCBBCountView = new CartoCollxCountView({
     collection: appCBB
 })
 
+window.appFat = new MetaFacet();
+window.appFats = new MetaFacets();
+window.appFatTags = new FacetsTags();
+window.appFatNames = new FacetsNames();
+window.aFTV = new FacetsView({collection:appFatTags})
+aFTV.group="Tags"
+aFTV.el=$("#facet-tags")
+window.aFNV = new FacetsView({collection:appFatNames})
+aFNV.group="Bits"
+aFNV.el=$("#facet-names")
 
-
-// honestly not sure why i gotta chain the render here, but there it is :-/
-// appCBBCarto.fetch({
-//     success:function(collx,resp,opt){
-//         console.log("success, resp:");console.log(resp);
-//         console.log("success, opt:");console.log(opt);
-//         appCartoPlainView.render();
-//         appCartoView.render();
-//     },
-// error:function(c,r,o){
-// console.log("in error, r:");console.log(r);
-// console.log("in error, o:");console.log(o);
-// }})
-// appCBBCarto.fetch(
-// {success:function(){
-// console.log("in success of appCBBCarto fetch");
-// var appCartoPlainView = new CartoPlainView({collection:appCBBCarto})
-// var appCartoView = new CartoCollxView({collection:appCBBCarto})
-// }
-// });
-// new console model and view
-
-
-// var recentsCollx = new RecentsCollection();
-// var recentsCollxView = new RecentsView({
-//     collection: recentsCollx
-// })
-// recentsCollx.fetch({
-//     success: function() {
-//         recentsCollxView.render()
-//     }
-// })
 var huh = new Huh();
 var huhV = new HuhView({
     model: huh
 })
-// var minutiae = new Minutiae();
-// var minutiaeV = new MinutiaeView({
-//     model:minutiae
-// })
+
 var method = new Method();
 var methodV = new MethodView({
     model: method
@@ -680,12 +580,6 @@ url+=ac.join(":")
                 }
             }
         }) //each
-        // if(typeof stale !== 'undefined'){
-        // stale.setStyle(markerseen)}
-        // hit.set({active:true});
-        // hit.set({
-        //     queued: true
-        // });}
     }
     /* -------------------------------------------------- RUN! -----------------------  */
 cbbItems = L.geoJson().addTo(map);
@@ -741,39 +635,12 @@ window.appSoFozView = new SolrFieldzView({
 // },{reset:true});
 /* -------------------------------------------------- READY -----------------------  */
 $(document).ready(function() {
-    // $('#query-form-bt').click(function(e){
-    //     e.preventDefault()
-    //     var rawstring = $("#query-form-input").val()
-    //     appCartoQuery.set({rawstring:rawstring})
-    //     appCBB.fetch({
-    //         success: function(c) {
-    //                 appCBBListView.render()
-    //                 appCBBMapView.render()
-    //         },
-    //         error: function() {
-    //             appConsole.set({message:"query failed",error:true})
-    //         }
-    //     })
-    // }) //query-form-bt.click
-
-    // $(".leaflet-control a").each(function() {
-    //     $(this).css("transform", "rotate(-90deg)")
-    // });
-    // $(".leaflet-control-container").appendTo("#wrapper").css("z-index", 88)
-    // $("a.leaflet-control-zoom-in")
+    
     $("#bt-solrfields").click(function(e) {
         e.preventDefault()
         $("#solrfields-list").toggleClass('hidden')
     }) //solrfields.click
-    // oh one more thing - let's intercept the query tab button so it doesn't wipe out appcarto each time
-    // $("html body header.site-header.off-canvas-container.js-off-canvas-container div.content-wrap.off-canvas-contents nav.site-nav.pull-left ul li a.link.active").click(function(e){
-    // $("a[href='#query']").click(function(e){
-    //     e.preventDefault();
-    // appCartoQuery
-    // var url = pullURL('#query');
-    // appRoute.navigate(url, {trigger: true, replace: true})
-    // })
-    //
+    
     L.control.zoom({position:'topright'}).addTo(map)
     new L.HistoryControl().addTo(map);
 
@@ -783,9 +650,6 @@ appActivityView.stfu()
 }); //ready
 $(document).keydown(function(e) {
     if (e.keyCode == 17) {
-        // $("#main").toggleClass('hiddenish');
-        // $("#bt-showmain").toggleClass("hidden")
-        // $("#main").fadeToggle('fast');
 
         appStatesView.swap();
 

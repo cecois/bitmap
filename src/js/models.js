@@ -134,11 +134,12 @@ var MetaFacets = Backbone.Collection.extend({
     model: MetaFacet,
     // which: "bits",
     url: function() {
-        return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("urlstring") + "&facet.query=" + appCartoQuery.get("urlstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
+        return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=" + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
             // return solrhost + "cbb_bits/select?q=holding%3Afalse&wt=json&indent=true&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags
     },
     initialize: function(options) {
         options || (options = {});
+                this.listenTo(appBits, "reset", this.fetch)
         return this
     },
     facetfields: function() {

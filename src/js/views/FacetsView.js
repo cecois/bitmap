@@ -5,14 +5,14 @@ var FacetsView = Backbone.View.extend({
         // var subdivision = this.collection.facets.episodes
         // this.collection=subdivision
         // this.listenTo(this.collection, 'reset', this.render);
-        this.listenTo(appFats,'request', this.speak);
+        this.listenTo(this.collection,'request', this.speak);
         this.listenTo(this.collection, 'reset', this.render);
         // this.listenTo(this.collection, 'request', this.throb);
         // return this.render()
     },
     speak: function(){
 
-appActivity.set({message:"facetizing for "+appCartoQuery.get("urlstring")+"..."})
+appActivity.set({message:"facetizing for "+appCartoQuery.get("displaystring")+"..."})
 
 return this
 .throb()
@@ -29,6 +29,8 @@ return this
         return this
     },
     render: function() {
+
+if(verbose==true){console.log("rendering a facetsview")}
 
         // $(this.el).html(this.template(this.collection.toJSON()))
          $(this.el).html(this.template({
