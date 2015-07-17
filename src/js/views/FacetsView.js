@@ -10,15 +10,24 @@ var FacetsView = Backbone.View.extend({
     },
         facetize: function(e) {
         e.preventDefault()
-        
 
 
+      switch (this.group) {
+   case "Tags":
+      var fpre = "tags:"
+      break;
+   case "Bits":
+      var fpre = "name:"
+      break;
+   default:
+      var fpre = "tags:"
+}
 
         var fstr = fpre+ $(e.target).attr("data-id")
         // this is one we want the url to reflect
-        
+
         this.collection.toggle(fstr)
-        
+
 
         return this
     },

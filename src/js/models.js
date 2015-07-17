@@ -109,24 +109,16 @@ var BaseLayersCollection = Backbone.Collection.extend({
 var MetaFacet = Backbone.Model.extend({});
 var Facet = Backbone.Model.extend({});
 
-var FacetsTags = Backbone.Collection.extend({
-    model: Facet,
-    url: function() {
-        return null
-    },
-    initialize: function(options) {
-        options || (options = {});
-        return this
-    },
-    toggle: function(newfat) {
+var MetaFacets = Backbone.Collection.extend({
+        toggle: function(newfat) {
         console.log("in facets activate, checking...");
-        
+
             console.log("we need to activate!");
             var nfstr = newfat.split(":")[1]
             var nfgroup = newfat.split(":")[0]
                 //
             _.each(this.models, function(d, index) {
-                if (d.get("0") == nfstr) {
+                if (d.get("0") == newfat) {
                     console.log("GOT ONE! Checking...");
                     if(d.get("active")==true){
 
@@ -137,20 +129,37 @@ var FacetsTags = Backbone.Collection.extend({
                     if(verbose==true){console.log("popping "+newfat+" from cartoquery...")}
 var acqarr = appCartoQuery.get("facetarray")
 // REMOVE FROM acquarr
-// 
-// 
-                    appCartoQuery
+//
+var b = $.grep(acqarr,function(v){return v != newfat;});
+
+                    appCartoQuery.set({facetarray:b})
                     } else {
                         d.set({active:true})
+var acqarr = appCartoQuery.get("facetarray")
+                    acqarr.push(newfat)
+                    appCartoQuery.set({facetarray:acqarr})
                     }
-                    console.log(d);
                 }
             });
         return this
     },
+})
+
+var FacetsTags = MetaFacets.extend({
+// var FacetsTags = Backbone.Collection.extend({
+    model: Facet,
+    url: function() {
+        return null
+    },
+    initialize: function(options) {
+        options || (options = {});
+        return this
+    },
+
 
 }); //facetstags
-var FacetsNames = Backbone.Collection.extend({
+var FacetsNames = MetaFacets.extend({
+// var FacetsNames = Backbone.Collection.extend({
     model: Facet,
     url: function() {
         return null
