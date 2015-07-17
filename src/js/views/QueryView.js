@@ -40,7 +40,7 @@ return this
 
 
         appCBB.deactivate()
-        $(".episodes-arrow").addClass("hidden")
+        // $(".episodes-arrow").addClass("hidden")
 
         // if (typeof goto == 'undefined' || goto==null) {
         //     console.log("not sure who fired this, setting goto to false:");

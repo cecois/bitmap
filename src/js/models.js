@@ -117,7 +117,38 @@ var FacetsTags = Backbone.Collection.extend({
     initialize: function(options) {
         options || (options = {});
         return this
-    }
+    },
+    toggle: function(newfat) {
+        console.log("in facets activate, checking...");
+        
+            console.log("we need to activate!");
+            var nfstr = newfat.split(":")[1]
+            var nfgroup = newfat.split(":")[0]
+                //
+            _.each(this.models, function(d, index) {
+                if (d.get("0") == nfstr) {
+                    console.log("GOT ONE! Checking...");
+                    if(d.get("active")==true){
+
+                    d.set({
+                        active: false
+                    });
+
+                    if(verbose==true){console.log("popping "+newfat+" from cartoquery...")}
+var acqarr = appCartoQuery.get("facetarray")
+// REMOVE FROM acquarr
+// 
+// 
+                    appCartoQuery
+                    } else {
+                        d.set({active:true})
+                    }
+                    console.log(d);
+                }
+            });
+        return this
+    },
+
 }); //facetstags
 var FacetsNames = Backbone.Collection.extend({
     model: Facet,
@@ -128,6 +159,18 @@ var FacetsNames = Backbone.Collection.extend({
         options || (options = {});
         return this
     }
+    ,deactivate: function() {
+        if (verbose == true) {
+            console.log("deactivating all bit facets...");
+        }
+        // i don't know about this silent thing - could bite later
+        this.invoke('set', {
+            "active": false
+        }, {
+            silent: true
+        });
+        return this
+    },
 }); //facetsnames
 
 var MetaFacets = Backbone.Collection.extend({
@@ -234,7 +277,7 @@ var CartoQuery = Backbone.Model.extend({
         if (ss == '' || ss == null) {
             this.set({
                 urlstring: "*"+this.facetstring(),
-                solrstring: "holding:false" + this.facetstring(),
+                solrstring: this.facetstring(),
                 displaystring: ""
             })
             // this.set({
@@ -243,8 +286,8 @@ var CartoQuery = Backbone.Model.extend({
             // })
         } else {
             this.set({
-                solrstring: "holding:false AND " + ss + this.facetstring(),
-                urlstring: "" + ss + this.facetstring(),
+                solrstring: ss + this.facetstring(),
+                urlstring: ss + this.facetstring(),
                 displaystring: ss
             })
         }

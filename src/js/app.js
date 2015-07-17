@@ -429,12 +429,12 @@ window.appFat = new MetaFacet();
 window.appFats = new MetaFacets();
 window.appFatTags = new FacetsTags();
 window.appFatNames = new FacetsNames();
-window.aFTV = new FacetsView({collection:appFatTags})
+window.aFTV = new FacetsView({collection:appFatTags,el:$("#facet-tags")})
 aFTV.group="Tags"
-aFTV.el=$("#facet-tags")
-window.aFNV = new FacetsView({collection:appFatNames})
+// aFTV.el=$("#facet-tags")
+window.aFNV = new FacetsView({collection:appFatNames,el:$("#facet-names")})
 aFNV.group="Bits"
-aFNV.el=$("#facet-names")
+// aFNV.el=$("#facet-names")
 
 var huh = new Huh();
 var huhV = new HuhView({

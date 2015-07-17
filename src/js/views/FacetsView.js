@@ -1,16 +1,25 @@
 var FacetsView = Backbone.View.extend({
     // el: ".blocks-explore",
     events: {
-        // "click .bt-facet": 'facetize'
+        "click .bt-facet": 'facetize'
     },
     template: Handlebars.templates['facetView'],
     initialize: function() {
         this.listenTo(this.collection, 'request', this.speak);
         this.listenTo(this.collection, 'reset', this.render);
     },
-    facetize: function(e) {
-        console.log("facetize")
-        console.log(e)
+        facetize: function(e) {
+        e.preventDefault()
+        
+
+
+
+        var fstr = fpre+ $(e.target).attr("data-id")
+        // this is one we want the url to reflect
+        
+        this.collection.toggle(fstr)
+        
+
         return this
     },
     speak: function() {
@@ -38,19 +47,30 @@ var FacetsView = Backbone.View.extend({
             group: this.group,
             facets: this.collection.toJSON()
         }));
-        return this.rewire()
+        return this
+        // .rewire()
+        .stfu()
     },
-    rewire: function(){
+//     rewire: function(){
 
-$(this.el).find(".bt-facet").click(function(e){
+// $(this.el).find(".bt-facet").click(function(e){
 
-var fs = e.currentTarget.innerHTML
+// var fs = e.currentTarget.innerHTML
 
-console.log("pushing "+fs+" into cartoquery...")
-appCartoQuery.get("facetarray").push(fs)
+// console.log("this in facetsview click:");console.log(this);
 
-})
+// if(this.group=="Tags"){
+//     fs="tags:"+fs
+// } else if(this.group=="Names"){
+//     fs="name:"+fs
+// }
 
-        return this.stfu()
-    }
+// // console.log("pushing "+fs+" into cartoquery...")
+// // var acqarr = appCartoQuery.get("facetarray")
+// // acqarr.push(fs)
+
+// })
+
+//         return this.stfu()
+//     }
 }); //bitscountview
