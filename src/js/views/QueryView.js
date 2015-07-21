@@ -12,7 +12,7 @@ var QueryView = Backbone.View.extend({
         var q = this.model;
         // q.on("change", q.setstrings);
         // this.listenTo(this.model, "change", this.render)
-        this.listenTo(this.model, "change:urlstring", this.fire)
+        this.listenTo(this.model, "change:solrstring", this.fire)
         // this.listenTo(this.model, "change", this.test)
             // this.model.bind("change:urlstring", this.fire, this);
     },

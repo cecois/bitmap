@@ -59,6 +59,21 @@ color:@secondarycolor;
 7px 7px 0px @primarycolor-trans;
   }
 
+  .badge-homemade {
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  display: inline-block;
+  // font-size: 12px;
+  // font-weight: 700;
+  line-height: 1;
+  min-width: 10px;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
 /* --------------------------------------- NPROGRESS OVERRIDES -------------- */
 
 #nprogress .spinner{
@@ -738,11 +753,14 @@ ul.facets{
   }
 }
 .bt-facet{
+  &:hover{
+    .badge-homemade;
+  }
   cursor:pointer;
-  text-decoration:underline;
+  // text-decoration:underline;
 }
 .bt-facet.true{
-    color:black;
+    .badge-homemade;
   }
 //
 // ------------------------------------- QUERY

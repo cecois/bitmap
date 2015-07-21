@@ -425,7 +425,7 @@ window.appCBBCountView = new CartoCollxCountView({
     collection: appCBB
 })
 
-window.appFat = new MetaFacet();
+// window.appFat = new MetaFacet();
 window.appFats = new MetaFacets();
 window.appFatTags = new FacetsTags();
 window.appFatNames = new FacetsNames();

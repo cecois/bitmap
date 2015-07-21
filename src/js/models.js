@@ -134,7 +134,8 @@ var MetaFacets = Backbone.Collection.extend({
 //                     });
 
 //                     if(verbose==true){console.log("popping "+newfat+" from cartoquery...")}
-var acqarr = appCartoQuery.get("facetarray")
+// var acqarr = appCartoQuery.get("facetarray")
+var acqarr = _.clone(appCartoQuery.get("facetarray"))
 // if clicked item is in facetarray
 
 var izin = _.contains(acqarr, newfat);
@@ -171,7 +172,6 @@ if(verbose==true){console.log("facet wznt there pushing...");}
         subactivate: function(group){
 
 console.log("running subact in metafacets using facetarray:");
-console.log(appCartoQuery.get(""));
 
 appCartoQuery.get("facetarray").forEach(function(f){
 
@@ -250,7 +250,8 @@ var MetaFacets = Backbone.Collection.extend({
     },
     initialize: function(options) {
         options || (options = {});
-                // this.listenTo(appBits, "reset", this.fetch)
+                // this.listenTo(appBits, "reset", this.subactivate)
+                this.on('change', this.subactivate, this);
         return this
     },
     facetfields: function() {
@@ -339,12 +340,12 @@ var CartoQuery = Backbone.Model.extend({
         // this.bind(this, "change", "setstrings")
 
         this.setstrings()
-        this.on('change:rawstring', this.setstrings, this);
-        this.on('change:facetarray', this.setstrings, this);
+        this.on('change:rawstring change:facetarray', this.setstrings, this);
+        // this.on('', this.setstrings, this);
         return this
     },
     setstrings: function() {
-        // console.log("changing urlstring...");
+        console.log("setting stringss...");
         // here because we COULD do some manip at this point
         // but right now we just pass it through
 
@@ -352,8 +353,8 @@ var CartoQuery = Backbone.Model.extend({
         if (ss == '' || ss == null) {
             this.set({
                 urlstring: "*"+this.facetstring(),
-                solrstring: this.facetstring(),
-                displaystring: ""
+                displaystring: "",
+                solrstring: "*"+this.facetstring()
             })
             // this.set({
             //     displaystring: "".
@@ -361,9 +362,9 @@ var CartoQuery = Backbone.Model.extend({
             // })
         } else {
             this.set({
-                solrstring: ss + this.facetstring(),
                 urlstring: ss + this.facetstring(),
-                displaystring: ss
+                displaystring: ss,
+                solrstring: ss + this.facetstring()
             })
         }
         return this
@@ -457,6 +458,8 @@ var BitCollection = Backbone.Collection.extend({
          appFatTags.reset(resp.facet_counts.facet_fields.tags)
         appFatNames.reset(resp.facet_counts.facet_fields.fat_name)
 
+         appFatTags.subactivate()
+        appFatNames.subactivate()
         // var uids=_.unique(lids)
         appCBB.seturl(_.unique(lids))
             // console.log("locsornot0:");console.log(locsornot[0]);
