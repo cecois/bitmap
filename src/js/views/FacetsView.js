@@ -7,6 +7,7 @@ var FacetsView = Backbone.View.extend({
     initialize: function() {
         this.listenTo(this.collection, 'request', this.speak);
         this.listenTo(this.collection, 'reset', this.render);
+        this.listenTo(this.collection, 'change', this.render);
     },
         facetize: function(e) {
         e.preventDefault()
@@ -23,7 +24,8 @@ var FacetsView = Backbone.View.extend({
       var fpre = "tags:"
 }
 
-        var fstr = fpre+ $(e.target).attr("data-id")
+// note the quoting - solr gonna need that
+        var fstr = fpre+ '"'+$(e.target).attr("data-id")+'"'
         // this is one we want the url to reflect
 
         this.collection.toggle(fstr)

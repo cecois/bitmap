@@ -692,6 +692,30 @@ function puFactory(p){
     var pv = new PopupView({model:pm,el: nel})
 
 }
+
+// function subactivateFacets(arr,group){
+
+// console.log("IN SUBactivate of metafacets");
+// console.log("group is:");console.log(group);
+
+// var fakearr = []
+// appCartoQuery.get("facetarray").forEach(function(f){
+
+//     var match = arr.findWhere({0: 'Chip Gardner'})
+
+//     console.log("match:");
+//     console.log(match);
+//     // if(_.contains(aFTV.collection.models, f)){
+
+//     // fakearr.push(f)
+//     // } else {
+//     //     fakearr.push(['NOF'])
+//     // }
+// });
+
+// return arr
+
+// }
 // function puForecloser(p){
 
 //     // first grab the pu's container node

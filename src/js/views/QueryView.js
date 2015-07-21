@@ -12,8 +12,8 @@ var QueryView = Backbone.View.extend({
         var q = this.model;
         // q.on("change", q.setstrings);
         // this.listenTo(this.model, "change", this.render)
-        this.listenTo(this.model, "change:rawstring", this.fire)
-        this.listenTo(this.model, "change:facetarray", this.fire)
+        this.listenTo(this.model, "change:urlstring", this.fire)
+        // this.listenTo(this.model, "change", this.test)
             // this.model.bind("change:urlstring", this.fire, this);
     },
     test: function(){
@@ -37,7 +37,7 @@ return this
     },
     fire: function(e) {
 
-
+if(verbose==true){console.log("acqv.fire")}
 
         appCBB.deactivate()
         // $(".episodes-arrow").addClass("hidden")

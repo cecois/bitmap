@@ -116,33 +116,91 @@ var MetaFacets = Backbone.Collection.extend({
             console.log("we need to activate!");
             var nfstr = newfat.split(":")[1]
             var nfgroup = newfat.split(":")[0]
+
+// for the eventual solr query to work we need to quote this out
+            // newfat = '"'+newfat+'"'
+
+// rework this - doesn't matter if the model is activated here cuzz the new query will reset it all anyway
+// the activation of the facetarray models has to happen between fetch and render - every time
+
                 //
-            _.each(this.models, function(d, index) {
-                if (d.get("0") == newfat) {
-                    console.log("GOT ONE! Checking...");
-                    if(d.get("active")==true){
+//             _.each(this.models, function(d, index) {
+//                 if (d.get("0") == nfstr) {
+//                     console.log("GOT ONE! Checking...");
+//                     if(d.get("active")==true){
+// console.log("got an active one, too");
+//                     d.set({
+//                         active: false
+//                     });
 
-                    d.set({
-                        active: false
-                    });
-
-                    if(verbose==true){console.log("popping "+newfat+" from cartoquery...")}
+//                     if(verbose==true){console.log("popping "+newfat+" from cartoquery...")}
 var acqarr = appCartoQuery.get("facetarray")
-// REMOVE FROM acquarr
-//
-var b = $.grep(acqarr,function(v){return v != newfat;});
+// if clicked item is in facetarray
 
-                    appCartoQuery.set({facetarray:b})
-                    } else {
-                        d.set({active:true})
-var acqarr = appCartoQuery.get("facetarray")
+var izin = _.contains(acqarr, newfat);
+
+switch(izin) {
+    case true:
+// take itout
+if(verbose==true){console.log("facet wz there already, scrubbing");}
+var acqarr = $.grep(acqarr,function(v){return v != newfat;});
+        break;
+    case false:
+// put it in
+if(verbose==true){console.log("facet wznt there pushing...");}
                     acqarr.push(newfat)
-                    appCartoQuery.set({facetarray:acqarr})
-                    }
-                }
-            });
+        break;
+    default:
+        console.log("can't be here, impossible");
+}
+
+// reset the facetarray, hopefully triggering the new fetch/reset
+                    appCartoQuery.set({facetarray:_.uniq(acqarr)})
+
+//                     appCartoQuery.set({facetarray:b})
+//                     } else {
+//                         console.log("nothing active, activating");
+//                         d.set({active:true})
+// var acqarr = appCartoQuery.get("facetarray")
+// console.log("now pushing "+newfat+" into facetarry");
+//                     }
+//                 }
+//             });
         return this
     },
+        subactivate: function(group){
+
+console.log("running subact in metafacets using facetarray:");
+console.log(appCartoQuery.get(""));
+
+appCartoQuery.get("facetarray").forEach(function(f){
+
+var og = f
+// var og2 = og.split(":")[1].split('"')
+var og2 = og.split(":")[1].split('"')[1]
+
+console.log("f is "+f);
+console.log("og2 is "+og2);
+
+    var match = this.findWhere({0: og2})
+
+if(typeof match !== 'undefined'){
+    match.set({active:true})
+
+console.log("match is:");
+console.log(match);
+
+}
+    // if(_.contains(aFTV.collection.models, f)){
+
+    // fakearr.push(f)
+    // } else {
+    //     fakearr.push(['NOF'])
+    // }
+},this);
+
+return this
+    }
 })
 
 var FacetsTags = MetaFacets.extend({
@@ -186,12 +244,13 @@ var MetaFacets = Backbone.Collection.extend({
     model: MetaFacet,
     // which: "bits",
     url: function() {
-        return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=" + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
+        return null
+        // return solrhost + "cbb_bits/select?json.wrf=wompitup&wt=json&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=holding:false AND " + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
             // return solrhost + "cbb_bits/select?q=holding%3Afalse&wt=json&indent=true&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags
     },
     initialize: function(options) {
         options || (options = {});
-                this.listenTo(appBits, "reset", this.fetch)
+                // this.listenTo(appBits, "reset", this.fetch)
         return this
     },
     facetfields: function() {
@@ -205,9 +264,15 @@ var MetaFacets = Backbone.Collection.extend({
         return Backbone.sync(method, collection, options);
     },
     parse: function(response) {
-        // console.log(response.facet_counts.facet_fields);
-        appFatTags.reset(response.facet_counts.facet_fields.tags)
-        appFatNames.reset(response.facet_counts.facet_fields.fat_name)
+        console.log("in custom parse of metafacets");
+        // appFatTags.reset(response.facet_counts.facet_fields.tags)
+        // var fattags_activated = subactivateFacets(,"tags")
+        // appFatTags.reset(response.facet_counts.facet_fields.tags)
+        // appFatNames.reset(response.facet_counts.facet_fields.fat_name)
+
+        appFatTags.subactivate()
+        appFatNames.subactivate()
+
         return response.facet_counts.facet_fields
     }
 }); //facets
@@ -275,6 +340,7 @@ var CartoQuery = Backbone.Model.extend({
 
         this.setstrings()
         this.on('change:rawstring', this.setstrings, this);
+        this.on('change:facetarray', this.setstrings, this);
         return this
     },
     setstrings: function() {
@@ -308,7 +374,8 @@ var BitCollection = Backbone.Collection.extend({
     // host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=" + appCartoQuery.get("solrstring")
+        // return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("solrstring")
+        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=holding:false AND " + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
     },
     initialize: function(options) {
         options || (options = {});
@@ -386,6 +453,10 @@ var BitCollection = Backbone.Collection.extend({
             var cid = doctorId(t, i, "up")
             lids.push(cid)
         });
+
+         appFatTags.reset(resp.facet_counts.facet_fields.tags)
+        appFatNames.reset(resp.facet_counts.facet_fields.fat_name)
+
         // var uids=_.unique(lids)
         appCBB.seturl(_.unique(lids))
             // console.log("locsornot0:");console.log(locsornot[0]);
