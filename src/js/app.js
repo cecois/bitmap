@@ -449,7 +449,8 @@ var methodV = new MethodView({
     function locTrigger(e, goto, active) {
 
 
-        e.preventDefault()
+if(typeof e !== 'undefined' && e !== null){
+        e.preventDefault()}
 
         if (typeof goto == 'undefined') {
             var goto = true
@@ -464,11 +465,12 @@ if(typeof active !== 'undefined'){
 var locid = doctorId(loctype,active.split(":")[1]);
             activeFactory(active)
         qstring = "location_type:"+loctype+" AND location_id:"+locid
-        appCartoQuery.set({rawstring:qstring})
+        // appCartoQuery.set({rawstring:qstring})
          } else {
         qstring = $(e.currentTarget).attr("data-string")
+         }
         appCartoQuery.set({rawstring:qstring})
-         }}
+     }
 
 
         // var markerid = solrstring.split(",")[1]
@@ -635,12 +637,12 @@ window.appSoFozView = new SolrFieldzView({
 // },{reset:true});
 /* -------------------------------------------------- READY -----------------------  */
 $(document).ready(function() {
-    
+
     $("#bt-solrfields").click(function(e) {
         e.preventDefault()
         $("#solrfields-list").toggleClass('hidden')
     }) //solrfields.click
-    
+
     L.control.zoom({position:'topright'}).addTo(map)
     new L.HistoryControl().addTo(map);
 

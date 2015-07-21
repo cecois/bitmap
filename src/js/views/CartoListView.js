@@ -21,7 +21,7 @@ var CartoListView = Backbone.View.extend({
         return this
     },
     singular: function(e) {
-         
+
         e.preventDefault()
          var ds = $(e.currentTarget).attr("data-string")
         locTrigger(e, true, ds)
@@ -308,8 +308,9 @@ return this.rewire(false)
             appConsole.set({
                 message: 'Just fyi - "' + appCartoQuery.get("rawstring") + '" brought zero mappable locations.'
             })
-            $(this.el).html("<span style='font-size:2em;'>Zero. RU a zero?</span>"+'<div data-string="huell" data-toggle="tooltip" class="loc-trigger"><span class="loc-string">Huell has tons</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></div>')
-            appQuerySubNavView.specify("bits")
+            $(this.el).html("<span style='font-size:2em;'>Zero mappable bits.</span>"+'<div data-string="huell" data-toggle="tooltip" class="loc-trigger"><span class="loc-string">Huell has tons</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></div>')
+
+            // appQuerySubNavView.specify("bits")
             appCBBCountView.render()
         }
             return this.rewire()
