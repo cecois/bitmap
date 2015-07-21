@@ -32,13 +32,13 @@ var QuerySubNavView = Backbone.View.extend({
         if (w == "locations") {
             $("#querylist-carto").removeClass("hidden")
             $("#querylist-bits").addClass("hidden")
-            $("#querylist-facets").addClass("hidden")
+            // $("#querylist-facets").addClass("hidden")
         } else if(w=="bits") {
             $("#querylist-bits").removeClass("hidden")
             $("#querylist-carto").addClass("hidden")
-            $("#querylist-facets").addClass("hidden")
+            // $("#querylist-facets").addClass("hidden")
         } else if(w=="facets"){
-            $("#querylist-facets").removeClass("hidden")
+            // $("#querylist-facets").removeClass("hidden")
             $("#querylist-carto").addClass("hidden")
             $("#querylist-bits").addClass("hidden")
         }
@@ -77,13 +77,13 @@ $(this.el).find(".query-subnav-btn").removeClass("active")
         if (elid == "locations") {
             $("#querylist-carto").removeClass("hidden")
             $("#querylist-bits").addClass("hidden")
-            $("#querylist-facets").addClass("hidden")
+            // $("#querylist-facets").addClass("hidden")
         } else if(elid == "bits") {
             $("#querylist-bits").removeClass("hidden")
             $("#querylist-carto").addClass("hidden")
-            $("#querylist-facets").addClass("hidden")
+            // $("#querylist-facets").addClass("hidden")
         } else if(elid =="facets"){
-            $("#querylist-facets").removeClass("hidden")
+            // $("#querylist-facets").removeClass("hidden")
             $("#querylist-carto").addClass("hidden")
             $("#querylist-bits").addClass("hidden")
         }
