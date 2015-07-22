@@ -31,9 +31,14 @@ var MethodView = Backbone.View.extend({
         $(this.el).find('[data-toggle="tooltip"]').tooltip({
             position: "right",
             html: true,
-            trigger:"click",
+            trigger:"hover",
             title: "These links load the results in the background - switch to the query tab to interrogate further."
         })
+        // $(this.el).find('[data-toggle="tooltip"]').on('mouseleave',function(elf){
+        //     console.log(elf)
+        //     $(this.el).tooltip('hide')
+        // });
+
         return this
     }
 });

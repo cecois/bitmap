@@ -376,7 +376,7 @@ var BitCollection = Backbone.Collection.extend({
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
         // return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("solrstring")
-        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=holding:false AND " + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
+        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=1000&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=holding:false AND " + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
     },
     initialize: function(options) {
         options || (options = {});
