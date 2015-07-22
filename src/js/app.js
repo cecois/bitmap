@@ -459,7 +459,7 @@ if(typeof e !== 'undefined' && e !== null){
 var qstring="*:*"
 
 if(typeof active !== 'undefined'){
-        if(active.indexOf(":")>=0){
+        if(active.indexOf("point:")>=0 || active.indexOf("poly:")>=0 || active.indexOf("line:")>=0){
             var loctype = active.split(":")[0]
             // var locid = active.split(":")[1]
 var locid = doctorId(loctype,active.split(":")[1]);
@@ -595,12 +595,12 @@ var fields = {
         "order": 1,
         "name": "anno",
         "nom": "short annotation of the location -- e.g. 'one of Huell Howser's homes'",
-        "scope_and_use": "use it freely, e.g. <span class='copy-trigger' data-string='anno:huell'><span class='loc-string'>anno:huell</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span> or <span class='copy-trigger' data-string='anno:cake+boss'><span class='loc-string'>anno:cake+boss</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span>"
+        "scope_and_use": "use it freely, e.g. <span class='copy-trigger' data-string='anno:huell'><span class='loc-string'>anno:huell</span><i class='glyphicon glyphicon-map-marker cbb-trigger-inline'></i></span> or <span class='copy-trigger' data-string='anno:cake+boss'><span class='loc-string'>anno:cake+boss</span><i class='glyphicon glyphicon-map-marker cbb-trigger-inline'></i></span>"
     }, {
         "order": 5,
         "name": "cartodb_id",
         "nom": "unique id per site",
-        "scope_and_use": "use it to link to a specific instance, e.g. <span class='copy-trigger' data-string='cartodb_id:108'><span class='loc-string'>cartodb_id:108</span><i class='glyphicon glyphicon-map-marker cbb-marker-inline'></i></span> - ~site of Bob Ducca's booth at the Silver Lake Farmers Market"
+        "scope_and_use": "use it to link to a specific instance, e.g. <span class='copy-trigger' data-string='cartodb_id:108'><span class='loc-string'>cartodb_id:108</span><i class='glyphicon glyphicon-map-marker cbb-trigger-inline'></i></span> - ~site of Bob Ducca's booth at the Silver Lake Farmers Market"
     }, {
         "order": 3,
         "name": "created_at",
