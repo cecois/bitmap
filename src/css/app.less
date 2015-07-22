@@ -125,7 +125,7 @@ body{
   text-decoration:none;
   font-weight:100;
     text-shadow: none;
-    color:@tertiarycolor;
+    color:@secondarycolor;
     font-size:.8em;
     margin-left:30px;
 }
@@ -290,6 +290,15 @@ div.leaflet-popup-content .marker.bt{
 .bt-cartoobj{
   cursor: pointer;
   margin-left: 5px;
+  &:hover{
+  color:@quaternarycolor;
+  }
+}
+
+.bt-cartoobj-episodes{
+  cursor: pointer;
+  margin-left: 5px;
+  color:@secondarycolor;
   &:hover{
   color:@quaternarycolor;
   }
@@ -891,12 +900,12 @@ padding-top:15px;
     color:@tertiarycolor;
     font-size:2em;
   }
-  // position:fixed;
-  // font-size: .8em;
-  font-weight:800;
+  /*position:fixed;*/
+  /*font-size: .8em;*/
+  /*font-weight:800;*/
   list-style:none;
   overflow:hidden;
-  // overflow:hidden;
+  /*overflow:hidden;*/
   li{
     margin-bottom:8px;
     cursor:pointer;

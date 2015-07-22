@@ -15,7 +15,7 @@ var MethodView = Backbone.View.extend({
         this.render()
     },
     singular: function(e) {
-         
+
         e.preventDefault()
          var ds = $(e.currentTarget).attr("data-string")
         locTrigger(e, true, ds)
@@ -28,11 +28,12 @@ var MethodView = Backbone.View.extend({
     },
     rewire: function() {
         // class="copy-trigger" data-toggle="tooltip"
-        // $(this.el).find('[data-toggle="tooltip"]').tooltip({
-        //     position: "right",
-        //     html: true,
-        //     title: "These links will load the results in the background - hide the map (<strong>CTRL KEY</strong>) or switch to the query tab to interrogate further."
-        // })
+        $(this.el).find('[data-toggle="tooltip"]').tooltip({
+            position: "right",
+            html: true,
+            trigger:"click",
+            title: "These links load the results in the background - switch to the query tab to interrogate further."
+        })
         return this
     }
 });
