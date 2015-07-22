@@ -61,7 +61,7 @@ color:@secondarycolor;
 
   .badge-homemade {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 8px;
   color: black;
   display: inline-block;
   // font-size: 12px;
@@ -71,7 +71,7 @@ color:@secondarycolor;
   padding: 3px 7px;
   text-align: center;
   vertical-align: baseline;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
 }
 
 /* --------------------------------------- NPROGRESS OVERRIDES -------------- */
@@ -116,9 +116,17 @@ body{
   }
 }
 
-.gnpanel{
+.gnpanel-l{
   padding: 10px 20px;
   border-left:10px solid @secondarycolor;
+}
+.gnpanel-0{
+  padding: 10px 20px;
+  border:none;
+}
+.gnpanel-r{
+  padding: 10px 20px;
+  border-right:10px solid @secondarycolor;
 }
 
 .cbbanno{
@@ -406,7 +414,7 @@ left:15px;
   /*border-top:solid 2px @secondarycolor;*/
   // border-top:none;
   border-bottom:solid 50px @secondarycolor;
-  border-right:solid 50px @secondarycolor;
+  border-right:solid 25px @secondarycolor;
   /*width:100%;*/
   height:70%;
   // top:121px;
@@ -422,7 +430,8 @@ left:15px;
         margin-left: -20px;
        }
        } //block
-  padding:0px 100px;
+  /*padding:0px 100px;*/
+  padding:0px 0px;
 position: relative;
 width:100%;
 
@@ -855,6 +864,8 @@ padding-top:15px;
   font-size:2em;
 }
 #querylist-carto{
+  font-size:.9em;
+  border-right:1px solid white;
   padding-top:40px;
   h1{
     // color:@tertiarycolor-trans;
@@ -862,18 +873,21 @@ padding-top:15px;
     color:@tertiarycolor;
   }
   // position:fixed;
-  // font-size: .8em;
-  font-weight:800;
+  /*font-size: .8em;*/
+  /*font-weight:800;*/
   list-style:none;
   overflow:hidden;
   // overflow:hidden;
   li{
     .bt-cartoobj{
-  color:white;
+  /*color:white;*/
+  &:hover{
+    color:@quaternarycolor;
+  }
 }
     .carto-plain-title{
-      text-decoration: underline;
-      cursor:pointer;
+      /*text-decoration: underline;*/
+      /*cursor:pointer;*/
     }
     margin-bottom:8px;
     // text-shadow: 2px 0px black;
@@ -882,20 +896,22 @@ padding-top:15px;
     // background-color: @quaternarycolor;
     .stroke-active-mock;
     color: @tertiarycolor;
-    font-size:1.4em;
+
     text-decoration: none;
   }
 }
 
 #querylist-facets {
   background-color: rgba(255, 255, 255, 0.25);
-  border-left: 2px solid white;
+  /*border-left: 2px solid white;*/
   height: 100%;
   padding: 20px 0;
 }
 
 #querylist-bits{
+  font-size:.9em;
   padding-top:40px;
+  border-right:1px solid white;
   h1{
     // color:@tertiarycolor-trans;
     color:@tertiarycolor;
@@ -956,7 +972,7 @@ padding-top:15px;
 #query-subnav{
 
   .querysubnavh{
-    border-bottom:1px solid white;
+    /*border-bottom:1px solid white;*/
   font-weight: bold;
   /*margin-right: 20px;*/
   font-size:1.9em;
@@ -980,35 +996,34 @@ text-decoration:none;
 
 .query-subnav-btn{
       color:white;
-      cursor:pointer;
+      /*cursor:pointer;*/
       /*text-decoration: underline;*/
       /*margin-right:50px;*/
       font-size:1.1em;
 
-      .query-subnav-arro{
+/*      .query-subnav-arro{
   transform:rotate(90deg);
   display:none;
-}
+}*/
 
 
-      &:hover{
+      /*&:hover{
 text-decoration:underline;
 text-shadow:
     -1px -1px 0 @secondarycolor,
     1px -1px 0 @secondarycolor,
     -1px 1px 0 @secondarycolor,
     1px 1px 0 @secondarycolor;
-      }
+      }*/
     }
       .query-subnav-btn.active{
 
-border-bottom:5px solid white;
+/*border-bottom:5px solid white;*/
         /*text-decoration:underline;*/
 
-        .query-subnav-arro{
-  // transform:rotate(90deg);
+/*        .query-subnav-arro{
   display:inline-block;
-}
+}*/
 
         /*.stroke;*/
   .stroke-active-mock;

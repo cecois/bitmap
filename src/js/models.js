@@ -65,9 +65,9 @@ var Episodes = Backbone.Collection.extend({
         // console.log("locadj:");console.log(locadj);
         // return solrhost+"cbb_bits/select?json.wrf=cwmccallback&q=location_id:"+this.activeloc+"+location_type:"+this.loctype+"&wt=json"
         if (this.loctype !== "_id") {
-            return solrhost + "cbb_bits/select?json.wrf=cwmccallback&q=holding:false AND %2Blocation_id%3A\"" + this.activeloc + "\"+%2Blocation_type%3A\"" + this.loctype + "\"&wt=json"
+            return solrhost + 'cbb_bits/select?json.wrf=cwmccallback&q=location_id:"' + this.activeloc + '" AND location_type:"' + this.loctype + '"&wt=json'
         } else {
-            return solrhost + "cbb_bits/select?json.wrf=cwmccallback&q=holding:false AND %2B_id%3A\"" + this.activeloc + "\"&wt=json"
+            return solrhost + 'cbb_bits/select?json.wrf=cwmccallback&q=_id:"' + this.activeloc + '"&wt=json'
         }
     },
     initialize: function(options) {
@@ -179,16 +179,16 @@ var og = f
 // var og2 = og.split(":")[1].split('"')
 var og2 = og.split(":")[1].split('"')[1]
 
-console.log("f is "+f);
-console.log("og2 is "+og2);
+// console.log("f is "+f);
+// console.log("og2 is "+og2);
 
     var match = this.findWhere({0: og2})
 
 if(typeof match !== 'undefined'){
     match.set({active:true})
 
-console.log("match is:");
-console.log(match);
+// console.log("match is:");
+// console.log(match);
 
 }
     // if(_.contains(aFTV.collection.models, f)){
@@ -352,7 +352,7 @@ var CartoQuery = Backbone.Model.extend({
         var ss = this.get("rawstring")
         if (ss == '' || ss == null) {
             this.set({
-                urlstring: "*"+this.facetstring(),
+                urlstring: "*",
                 displaystring: "",
                 solrstring: "*"+this.facetstring()
             })
@@ -362,7 +362,7 @@ var CartoQuery = Backbone.Model.extend({
             // })
         } else {
             this.set({
-                urlstring: ss + this.facetstring(),
+                urlstring: ss,
                 displaystring: ss,
                 solrstring: ss + this.facetstring()
             })

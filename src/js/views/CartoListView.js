@@ -5,7 +5,7 @@ var CartoListView = Backbone.View.extend({
         // "click .bt-cartoobj-zoomto": 'zoomtointernal',
         // "click .bt-cartoobj-episodes": 'pulleps',
         "click .bt-cartoobj-episodes": 'triage',
-        "click .carto-plain-title": 'triage',
+        "click .bt-cartoobj": 'triage',
         "click .copy-trigger": "singular",
         // "click .bt-getid": 'echoid'
     },
@@ -83,7 +83,7 @@ var CartoListView = Backbone.View.extend({
 
         $("#episodes-list").html('<div class="spinner-gold"></div>')
 
-        $("#episodes").removeClass("hidden")
+        // $("#episodes").removeClass("hidden")
 
             // we have to find the el to activate
             // var act = appCBB.findWhere({
@@ -308,7 +308,7 @@ return this.rewire(false)
             appConsole.set({
                 message: 'Just fyi - "' + appCartoQuery.get("rawstring") + '" brought zero mappable locations.'
             })
-            $(this.el).html("<span style='font-size:2em;'>Zero mappable bits.</span>"+'<div data-string="huell" data-toggle="tooltip" class="copy-trigger"><span class="loc-string">Huell has tons</span><i class="glyphicon glyphicon-map-marker cbb-trigger-inline"></i></div>')
+            $(this.el).html("<span style='font-size:1.3em;'>Zero mappable bits.</span>"+'<div data-string="huell" data-toggle="tooltip" class="copy-trigger"><span class="loc-string">Huell has tons</span><i class="glyphicon glyphicon-map-marker cbb-trigger-inline"></i></div>')
 
             // appQuerySubNavView.specify("bits")
             appCBBCountView.render()

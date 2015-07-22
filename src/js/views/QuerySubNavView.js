@@ -1,7 +1,7 @@
 var QuerySubNavView = Backbone.View.extend({
     el: $("#query-subnav"),
     events: {
-        "click .query-subnav-btn": "switchto",
+        // "click .query-subnav-btn": "switchto",
         // "click #query-form-randomize": "randomize",
         // "click #solrfields .glyphicon": "togglehelp"
         // "change": "render"
@@ -21,7 +21,8 @@ var QuerySubNavView = Backbone.View.extend({
         }
         $(this.el).html(this.template(this.model.toJSON()))
             // $(this.el).val(this.model.get("solrstring"))
-        return this.switchto()
+        // return this.switchto()
+        return this
     },
     specify: function(w) {
         // just an extra we can use to specify which "tab"

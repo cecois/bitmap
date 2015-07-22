@@ -66,7 +66,7 @@ var BitsView = Backbone.View.extend({
 
         $("#episodes-list").html('<div class="spinner-gold"></div>')
 
-        $("#episodes").removeClass("hidden")
+        // $("#episodes").removeClass("hidden")
 
             // we have to find the el to activate
             // var act = appCBB.findWhere({
@@ -127,7 +127,7 @@ var BitsView = Backbone.View.extend({
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
-                
+
             }
         });
         e.preventDefault()

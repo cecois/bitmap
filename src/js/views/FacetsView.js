@@ -88,7 +88,7 @@ var gstr=''
             } //end if
 
 $(this).tooltip({
-            container: "#main",
+            container: "body",
             placement: 'right',
             trigger: 'hover',
             title: ht
@@ -97,7 +97,7 @@ $(this).tooltip({
         });
 
 // $(this.el).find(".bt-facet").hover(function() {
-//      Stuff to do when the mouse enters the element 
+//      Stuff to do when the mouse enters the element
 // });
 
         return this.stfu()
