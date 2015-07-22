@@ -2,7 +2,7 @@ var RecentsView = Backbone.View.extend({
     // tagName: "li",
     el: ".recents",
     events: {
-        "click .loc-trigger": "singular"
+        "click .copy-trigger": "singular"
     },
     template: Handlebars.templates['recentsViewTpl'],
     initialize: function() {

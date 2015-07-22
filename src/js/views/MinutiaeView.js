@@ -1,7 +1,7 @@
 var MinutiaeView = Backbone.View.extend({
     // tagName: "li",
     events: {
-        // "click .loc-trigger": "singular",
+        // "click .copy-trigger": "singular",
         // "click a":"killtt",
         // "click a":"rewire"
     },

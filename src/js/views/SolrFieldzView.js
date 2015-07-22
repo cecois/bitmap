@@ -2,7 +2,7 @@ var SolrFieldzView = Backbone.View.extend({
     // tagName: "li",
     el: "#solrfields-list",
     events: {
-        "click .loc-trigger": "singular"
+        "click .copy-trigger": "singular"
     },
     template: Handlebars.templates['solrfieldsView'],
     initialize: function() {

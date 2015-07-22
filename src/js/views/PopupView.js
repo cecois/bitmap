@@ -114,7 +114,7 @@ var actv = activeFactory();
         var loctype = actv[0]
         var locid = actv[1]
 
-console.log('<span class="loc-trigger" data-string="location_id:'+locid+ ' AND location_type:'+loctype+'" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-'+loctype+'"></span>')
+console.log('<span class="copy-trigger" data-string="location_id:'+locid+ ' AND location_type:'+loctype+'" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-'+loctype+'"></span>')
 
 if (agent == "desktop") {
             return this.pulleps()

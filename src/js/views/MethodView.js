@@ -1,7 +1,7 @@
 var MethodView = Backbone.View.extend({
     // tagName: "li",
     events: {
-        "click .loc-trigger": "singular",
+        "click .copy-trigger": "singular",
         // "click a":"killtt",
         // "click a":"rewire"
     },
@@ -27,7 +27,7 @@ var MethodView = Backbone.View.extend({
         return this.rewire()
     },
     rewire: function() {
-        // class="loc-trigger" data-toggle="tooltip"
+        // class="copy-trigger" data-toggle="tooltip"
         // $(this.el).find('[data-toggle="tooltip"]').tooltip({
         //     position: "right",
         //     html: true,

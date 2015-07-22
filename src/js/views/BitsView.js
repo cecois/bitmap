@@ -27,7 +27,7 @@ var BitsView = Backbone.View.extend({
     },
     echoid: function(e) {
         var locid = $(e.target).attr("data-id")
-        var str = '<span class="loc-trigger" data-string="cartodb_id:' + locid + '"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
+        var str = '<span class="copy-trigger" data-string="cartodb_id:' + locid + '"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
         console.log(str);
         return this
     },

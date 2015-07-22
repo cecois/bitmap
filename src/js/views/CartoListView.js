@@ -6,7 +6,7 @@ var CartoListView = Backbone.View.extend({
         // "click .bt-cartoobj-episodes": 'pulleps',
         "click .bt-cartoobj-episodes": 'triage',
         "click .carto-plain-title": 'triage',
-        "click .loc-trigger": "singular",
+        "click .copy-trigger": "singular",
         // "click .bt-getid": 'echoid'
     },
     // template: Handlebars.templates['cartoPlainView'],
@@ -32,7 +32,7 @@ var CartoListView = Backbone.View.extend({
         var locid = $(e.currentTarget).attr("data-id")
         var loctyp = $(e.currentTarget).attr("data-type")
         // var loctyp = $(e.target).attr("data-type")
-        var str = '<span class="loc-trigger" data-string="'+loctyp +':' + locid + '" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-' + loctyp + '"></span>'
+        var str = '<span class="copy-trigger" data-string="'+loctyp +':' + locid + '" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-' + loctyp + '"></span>'
         console.log(str);
         return this
     },
@@ -308,7 +308,7 @@ return this.rewire(false)
             appConsole.set({
                 message: 'Just fyi - "' + appCartoQuery.get("rawstring") + '" brought zero mappable locations.'
             })
-            $(this.el).html("<span style='font-size:2em;'>Zero mappable bits.</span>"+'<div data-string="huell" data-toggle="tooltip" class="loc-trigger"><span class="loc-string">Huell has tons</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></div>')
+            $(this.el).html("<span style='font-size:2em;'>Zero mappable bits.</span>"+'<div data-string="huell" data-toggle="tooltip" class="copy-trigger"><span class="loc-string">Huell has tons</span><i class="glyphicon glyphicon-map-marker cbb-marker-inline"></i></div>')
 
             // appQuerySubNavView.specify("bits")
             appCBBCountView.render()
