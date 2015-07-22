@@ -79,6 +79,9 @@ if(verbose==true){console.log("acqv.fire")}
             // ok we didn't wanna disrupt pane state but we still wanna fire off a query
             // gotta do this here rather than rely on a route to do it
             //
+                            appActivity.set({
+                    message: "querying bits..."
+                })
             appBits.fetch({
                     reset: true,
                     // dataType: "jsonp"
@@ -86,6 +89,7 @@ if(verbose==true){console.log("acqv.fire")}
                         // i can't for the life of me get that view to bind to this collection's events - dunno
                         // appBitsView.render()
                         // appBitsCountView.render()
+                         appActivity.set({message: "extracting mappable locations..."})
                         appCBB.fetch({
                             reset: true,
                             // dataType: "jsonp"
@@ -94,11 +98,13 @@ if(verbose==true){console.log("acqv.fire")}
                                 // appCBBListView.render()
                                 // appCBBMapView.render()
                                 // appCBBCountView.render()
+                                appActivityView.stfu()
                             },
                             error: function() {
-                                appConsole.set({
+                                appActivity.set({
                                         message: "query errored out"
                                     })
+                                appActivityView.warn()
 
                             }
                         })

@@ -12,6 +12,9 @@ var FacetsView = Backbone.View.extend({
         facetize: function(e) {
         e.preventDefault()
 
+// we're changing things fast - kill these here so there aren't any stragglers
+// $(this).tooltip('destroy')
+$(this.el).find(".bt-facet").tooltip('destroy')
 
       switch (this.group) {
    case "Tags":
@@ -59,29 +62,44 @@ var FacetsView = Backbone.View.extend({
             facets: this.collection.toJSON()
         }));
         return this
-        // .rewire()
-        .stfu()
+        .rewire()
+        // .stfu()
     },
-//     rewire: function(){
+    rewire: function(){
 
-// $(this.el).find(".bt-facet").click(function(e){
+var group = this.group
 
-// var fs = e.currentTarget.innerHTML
+switch(group) {
+    case "Tags":
+var gstr = "tag:"
+        break;
+    case "Bits":
+        var gstr="bit name:"
+        break;
+    default:
+var gstr=''
+}
 
-// console.log("this in facetsview click:");console.log(this);
+        $(this.el).find(".bt-facet").each(function(index, el) {
+            if($(el).hasClass("true")){
+                var ht = "click to remove this limiter from the current query"
+            } else {
+                var ht = "click to add "+gstr+" '"+$(el).attr("data-id")+"' as a limiter to the current query (which is "+appCartoQuery.get("displaystring")+")"
+            } //end if
 
-// if(this.group=="Tags"){
-//     fs="tags:"+fs
-// } else if(this.group=="Names"){
-//     fs="name:"+fs
-// }
+$(this).tooltip({
+            container: "#main",
+            placement: 'right',
+            trigger: 'hover',
+            title: ht
+        });
 
-// // console.log("pushing "+fs+" into cartoquery...")
-// // var acqarr = appCartoQuery.get("facetarray")
-// // acqarr.push(fs)
+        });
 
-// })
+// $(this.el).find(".bt-facet").hover(function() {
+//      Stuff to do when the mouse enters the element 
+// });
 
-//         return this.stfu()
-//     }
+        return this.stfu()
+    }
 }); //bitscountview

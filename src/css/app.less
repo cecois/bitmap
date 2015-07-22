@@ -104,16 +104,23 @@ color:@secondarycolor;
 /* --------------------------------------- GENERAL -------------- */
 body{
   overflow:hidden;
-  color:@secondarycolor;
-  // font-family: 'Roboto', sans-serif;
+  // color:@secondarycolor;
+  color:@tertiarycolor;
+  font-family: 'Roboto', sans-serif;
   // font-family: 'Mandali', sans-serif;
-  font-family: 'Open Sans', sans-serif;
+  // font-family: 'Open Sans', sans-serif;
   font-weight:400;
   font-size:1.5em;
   small{
     color:inherit;
   }
 }
+
+.gnpanel{
+  padding: 10px 20px;
+  border:10px solid @secondarycolor;
+}
+
 .cbbanno{
   text-decoration:none;
   font-weight:100;
@@ -146,12 +153,15 @@ text-transform: uppercase;
 }
 h2{
   .stroke-h;
+  color:@secondarycolor;
 }
 h3{
   .stroke-h;
+  color:@secondarycolor;
 }
 h4{
   .stroke-h;
+  color:@secondarycolor;
   letter-spacing: 0.12em;
 }
 h5{
@@ -162,7 +172,7 @@ h5{
 .loc-trigger{
   font-weight: 400;
   cursor:pointer;
-  color: @tertiarycolor;
+  color: @secondarycolor;
   &:hover{
     color:#d4d4d4;
   }
@@ -174,7 +184,8 @@ h5{
 a {
     text-decoration: none;
     // color: @primarycolor;
-    color: @tertiarycolor;
+    // color: @tertiarycolor;
+    color: @secondarycolor;
     font-weight:400;
     &:hover{
       text-decoration: none;
@@ -371,6 +382,7 @@ left:15px;
 }
 
 .block{
+  padding:5px 15px;
   margin-top:33px;
   margin-bottom:33px;
 }
@@ -481,7 +493,7 @@ width:100%;
   }
   padding:0;
   cursor:pointer;
-  top:200px;
+  top:210px;
   position:fixed;
   height:50px;
   /*font-size:3em;*/
@@ -627,7 +639,7 @@ border-right:none;
 }
 
 #banner-bang{
-  font-size:27em;top:-220px;left:-120px;position:absolute;
+  font-size:29em;top:-220px;left:-120px;position:absolute;color:@secondarycolor;
 }
 #banner-bang.statie-collapsed{
     /*left:-380px;*/
@@ -1271,7 +1283,6 @@ width:auto;
 } //basemapconsolewrapper
 
 #mnuBaseMap {
-
 position:fixed;
 margin:0;
 bottom:-35px;

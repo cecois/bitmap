@@ -37,7 +37,8 @@ var Route = Backbone.Router.extend({
                 })
             }
             if (typeof h == 'undefined' || h == null) {
-                h = "query";
+                // h = "query";
+                h = "huh";
             }
 
             // now we are sure there's an h there's this universal, what *panelizer*? anyway we can position lotsa window elements at once
@@ -108,7 +109,7 @@ appStatesView.prebaked(h)
                 //     }
                 // })
             } //h is query for fetch
-            // appCartoQueryView.fire(false)
+            appCartoQueryView.fire(false)
             return this
         } // end home
 });
