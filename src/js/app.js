@@ -209,7 +209,7 @@ var baselayersdesk = {
             "definition": {
                 // "subdomains": ["a", "b", "c"],
                 "maxZoom": 18,
-                "url": "file:///Users/ccmiller/Sites/mstroke/src/images/2877247_jkms-25-888-g002.png",
+                "url": "offline/dummy-thumb.png",
                 // "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
                 "noWrap": true
             }
@@ -682,6 +682,9 @@ var cid = null
 }
 return cid
 }
+        function cwmccallback(){
+            console.log("breaker breaker")
+        }
 
 function puFactory(p){
     /* -------

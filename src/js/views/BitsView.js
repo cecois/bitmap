@@ -100,6 +100,7 @@ var BitsView = Backbone.View.extend({
             }
         });
         // return this.activate(a)
+        appQuerySubNavView.episodize("locations")
         return this.render()
     },
     pullepsOG: function(e) {

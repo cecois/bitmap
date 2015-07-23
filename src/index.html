@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)http://blog.themearmada.com/demos/off-canvas-menu/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>BitMap: CBB</title>
@@ -100,7 +99,7 @@
  </div>
 </header>
 
-<div id="main" class="col-lg-9 pull-left">
+<div id="main" class="col-lg-12 pull-left">
 
 <div id="huh" class="mainpanel hidden">
 <div class="panel-wrap">
@@ -208,14 +207,20 @@
 <!-- <input class="offset2 " id="query-cartodb" size="55" type="text" data-provide="typeahead" data-items="4" placeholder="search the source for new results" value=''> -->
 
 
+<div id="episodes" class="hidden">
+     <ul id="episodes-list" class="episodes pull-left col-lg-12 list-unstyled">
+      <li></li>
+    </ul>
+
+</div>  <!-- ./episodes  -->
 
 
-    <ul id="querylist-bits" class="pull-left col-lg-6">
+    <ul id="querylist-bits" class="pull-left col-lg-4">
     </ul>
 
     <ul id="querylist-carto" class="pull-left col-lg-4 ">
     </ul>
-<ul id="querylist-facets" class="pull-right col-lg-2">
+<ul id="querylist-facets" class="pull-right col-lg-3">
 <!-- <span class="col-sm-8">Facets: </span> -->
     <div id="facet-tags" class="col-sm-12"></div>
     <div id="facet-names" class="col-sm-12"></div>
@@ -225,20 +230,7 @@
 </div>
 </div> <!-- ./query -->
 </div>  <!-- ./main  -->
-<div id="episodes" class="col-lg-3 pull-right hidden">
 
-<div class="panel-wrap col-sm-12">
-    <h3 class="col-sm-8">Episodes:</h3>
-    <span class="col-sm-4 pull-right la-cog">
-        <div></div>
-    </span>
-</div>
-
-     <ul id="episodes-list" class="episodes pull-right col-lg-12 list-unstyled">
-      <li></li>
-    </ul>
-
-</div>  <!-- ./main  -->
 
 <div id="livefooter" class="col-sm-12">
 <ul id="mnuBaseMap" class="col-sm-6 list-inline pull-left" ></ul>
@@ -265,7 +257,7 @@
 <script type="text/javascript" language="Javascript" src="lib/Wicket/wicket-leaflet.js"></script>
 <script type="text/javascript" language="Javascript" src="lib/nprogress.js"></script>
 <script src="lib/bootstrap.min.js"></script>
-<script src="lib/xregexp-all.js"></script>
+<!-- <script src="lib/xregexp-all.js"></script> -->
 <script type = "text/javascript" language = "Javascript" src = "lib/underscore-min.js"></script>
 <script type = "text/javascript" language = "Javascript" src = "lib/backbone-min.js"></script>
 <!-- <script type = "text/javascript" language = "Javascript" src = "lib/backbone.cartodb.js"></script> -->

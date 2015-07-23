@@ -83,6 +83,7 @@ var Episodes = Backbone.Collection.extend({
         // After this function is called (by the JSONP response), the script tag
         // is removed and the parse method is called, just as it would be
         // when AJAX was used.
+
         options.dataType = "jsonp";
         options.jsonpCallback = 'cwmccallback';
         return Backbone.sync(method, collection, options);

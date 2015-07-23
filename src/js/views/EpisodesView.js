@@ -36,7 +36,7 @@ return this
         return this
     },
     render: function() {
-        
+
         $(this.el).empty()
             // by the time we get here, plainview will have an active element, go get it to match its position
         var ael = $(".carto-plain-title.true")
@@ -67,18 +67,18 @@ return this
 
 if(activeFactory()[0]=="_id"){
 
-$(this.el).html("<span style='text-align:left;' class='cbbepsanno col-sm-12'>referencing (unmappable) bit: <br/>'" + appBits.findWhere({
+$(this.el).html("<span style='text-align:left;' class='cbbepsanno col-sm-12'>referencing (unmappable) bit: <span style='color:white;'>" + appBits.findWhere({
                 active: true
-            }).get("name") + "'</span>")
+            }).get("name") + "</span></span>")
 
 } else {
 
-    $(this.el).html("<span style='text-align:left;' class='cbbepsanno col-sm-12'>referencing location: <br/>'" + appCBB.findWhere({
+    $(this.el).html("<span style='text-align:left;' class='cbbepsanno col-sm-12'>referencing location: <span style='color:white;'>" + appCBB.findWhere({
                 active: true
-            }).get("name") + "'</span>")
+            }).get("name") + "</span></span>")
 }
 
-        
+
             // we use .episodes cuz we have some stuff outside of the el we wanna unhide, too
         if (this.collection.models.length > 0) {
             $(".episodes").removeClass('hidden')
@@ -116,7 +116,7 @@ $(this.el).html("<span style='text-align:left;' class='cbbepsanno col-sm-12'>ref
             );
         }, this);
 
-        
+
         return this
         .stfu()
     }

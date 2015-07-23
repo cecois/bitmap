@@ -90,21 +90,21 @@ if(co.true > 0){
             this.prebaked(Backbone.history.getHash())
             this.universal = false;
         } else if (this.universal == false) {
-            if(appEpisodes.length==0){
-                        this.collection.invoke('set', {
-                            "posish": "collapsed"
-                        });} else {
-                           // k there are episodes showing, which means we need to be a little pickier
-                           _.each(this.collection.models,function(mo) {
-                               if(mo.get("name")=="episodes"){
-                                mo.set({posish:"momap"})
-                               } else {
-                                mo.set({posish:"collapsed"})
+            // if(appEpisodes.length==0){
+            //             this.collection.invoke('set', {
+            //                 "posish": "collapsed"
+            //             });} else {
+            //                // k there are episodes showing, which means we need to be a little pickier
+            //                _.each(this.collection.models,function(mo) {
+            //                    if(mo.get("name")=="episodes"){
+            //                     mo.set({posish:"momap"})
+            //                    } else {
+            //                     mo.set({posish:"collapsed"})
 
-                               }
-                           });
+            //                    }
+            //                });
 
-                        }
+            //             }
 
             // appStates.set({"name": "main","posish": "collapsed"},{"name": "episodes","posish":"collapsed"},{"name": "banner-bang","posish":"collapsed"})
             this.universal = true;
@@ -148,7 +148,7 @@ if(co.true > 0){
                                                                 "posish": "open"
                                                             }, {
                                                                 "name": "episodes",
-                                                                "visible": true,
+                                                                "visible": false,
                                                                 "posish": "open"
                                                             }, {
                                                                 "name": "banner-bang",
@@ -160,7 +160,7 @@ if(co.true > 0){
                                                                 "posish": "open"
                                                             }, {
                                                                 "name": "episodes",
-                                                                "visible": true,
+                                                                "visible": false,
                                                                 "posish": "momap"
                                                             }, {
                                                                 "name": "banner-bang",
@@ -174,7 +174,7 @@ if(co.true > 0){
                                                     "posish": "open"
                                                 }, {
                                                     "name": "episodes",
-                                                    "visible": true,
+                                                    "visible": false,
                                                     "posish": "open"
                                                 }, {
                                                     "name": "banner-bang",

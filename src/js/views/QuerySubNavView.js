@@ -4,6 +4,7 @@ var QuerySubNavView = Backbone.View.extend({
         // "click .query-subnav-btn": "switchto",
         // "click #query-form-randomize": "randomize",
         // "click #solrfields .glyphicon": "togglehelp"
+        "click .bt-episodes-hide": "reset"
         // "change": "render"
     },
     template: Handlebars.templates['querySubNavViewTpl'],
@@ -11,7 +12,8 @@ var QuerySubNavView = Backbone.View.extend({
         this.render();
         // this.listenTo(appBits,"reset",this.accoutrement)
         // this.listenTo(appCBB,"reset",this.accoutrement)
-        this.listenTo(this.model, "change", this.render)
+        // this.listenTo(this.model, "change", this.render)
+        // this.listenTo(this.model, "change:patsy", this.episodize)
             // this.model.bind("change", this.render, this);
     },
     render: function() {
@@ -23,6 +25,93 @@ var QuerySubNavView = Backbone.View.extend({
             // $(this.el).val(this.model.get("solrstring"))
         // return this.switchto()
         return this
+    },
+    reset: function(){
+
+
+// switch (patsy) {
+//    case "bits":
+//       console.log("bits will be replaced by episodes")
+//       break;
+//    case "locations":
+//       console.log("locations will be replaced by episodes")
+//       break;
+//    default:
+//       console.log("shouldn't happen")
+// }
+
+// // this is NOT bits, so we'll use that space
+// var cssog = $("#querylist-episodes").attr("class").split(" ")
+var patsy = this.patsy
+var cssog = this.cssog
+
+
+// var cssogbt = $('.query-subnav-btn[data-id="episodes"]').attr("class").split(" ")
+var cssogbt = this.cssogbt
+
+_.each(cssog,function(c){
+$("#querylist-"+patsy).addClass(c)
+})
+$("#episodes").addClass('hidden')
+$("#querylist-"+patsy).removeClass('hidden')
+
+$('.query-subnav-btn[data-id="episodes"]').addClass('hidden')
+$('.query-subnav-btn[data-id="'+patsy+'"]').removeClass('hidden')
+
+_.each(cssogbt,function(c){
+    // console.log("adding back ")
+    // console.log(c)
+    if(c!=="query-subnav-btn"){
+    $('.query-subnav-btn[data-id="episodes"]').removeClass(c)}
+$('.query-subnav-btn[data-id="'+patsy+'"]').addClass(c)
+})
+
+      return this
+
+    },
+    episodize: function(patsy){
+
+// var patsy = this.model.get("patsy")
+      switch (patsy) {
+   case "bits":
+      console.log("bits will be replaced by episodes")
+      break;
+   case "locations":
+      console.log("locations will be replaced by episodes")
+      break;
+   default:
+      console.log("shouldn't happen")
+}
+
+// we'll use the patsy's space
+// but first we'll store it so reset can set everything right
+this.patsy=patsy
+// storing its current css array
+/* ------------------------------------ MAIN EL --------------------------------------------*/
+var cssog = $("#querylist-"+patsy).attr("class").split(" ")
+this.cssog=cssog
+
+_.each(cssog,function(c){
+$("#episodes").addClass(c)
+})
+$("#querylist-"+patsy).addClass('hidden')
+$("#episodes").removeClass('hidden')
+
+/* ------------------------------------ BT EL --------------------------------------------*/
+var cssogbt = $('.query-subnav-btn[data-id="'+patsy+'"]').attr("class").split(" ")
+this.cssogbt = cssogbt
+_.each(cssogbt,function(c){
+    console.log("adding back ")
+    console.log(c)
+$('.query-subnav-btn[data-id="episodes"]').addClass(c)
+})
+
+$('.query-subnav-btn[data-id="'+patsy+'"]').addClass('hidden')
+$('.query-subnav-btn[data-id="episodes"]').removeClass('hidden')
+
+      return this
+      // .render()
+
     },
     specify: function(w) {
         // just an extra we can use to specify which "tab"

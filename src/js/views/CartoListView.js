@@ -4,7 +4,7 @@ var CartoListView = Backbone.View.extend({
     events: {
         // "click .bt-cartoobj-zoomto": 'zoomtointernal',
         // "click .bt-cartoobj-episodes": 'pulleps',
-        "click .bt-cartoobj-episodes": 'triage',
+        // "click .bt-cartoobj-episodes": 'triage',
         "click .bt-cartoobj": 'triage',
         "click .copy-trigger": "singular",
         // "click .bt-getid": 'echoid'
@@ -67,6 +67,7 @@ var CartoListView = Backbone.View.extend({
         } else if (agent == "mobile") {
             return this.pulleps_mobile()
         }
+        // return this.prepeps(e)
     },
     sort: function() {
         this.collection.sort()
@@ -78,10 +79,22 @@ var CartoListView = Backbone.View.extend({
             // return this.activate(a)
         return this
     },
+    prepeps: function(e){
+
+// appQuerySubNavView.episodize("bits")
+// appQuerySubNav.set({patsy:"bits"})
+
+ // if (agent == "desktop") {
+ //            return this.pulleps()
+ //        } else if (agent == "mobile") {
+ //            return this.pulleps_mobile()
+ //        }
+
+    },
     pulleps: function() {
 
 
-        $("#episodes-list").html('<div class="spinner-gold"></div>')
+        // $("#episodes-list").html('<div class="spinner-gold"></div>')
 
         // $("#episodes").removeClass("hidden")
 
@@ -117,6 +130,8 @@ var CartoListView = Backbone.View.extend({
             }
         });
         // return this.activate(a)
+        // appQuerySubNav.set({patsy:"bits"})
+        appQuerySubNavView.episodize("bits")
         return this.render()
     },
     zoomtointernal: function(e) {
