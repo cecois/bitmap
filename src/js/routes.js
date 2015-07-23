@@ -109,7 +109,7 @@ appStatesView.prebaked(h)
                 //     }
                 // })
             } //h is query for fetch
-            appCartoQueryView.fire(false)
+            // appCartoQueryView.fire(false)
             return this
         } // end home
 });

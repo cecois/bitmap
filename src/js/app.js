@@ -445,6 +445,9 @@ var method = new Method();
 var methodV = new MethodView({
     model: method
 })
+
+appCartoQueryView.fire(false)
+
 /* -------------------------------------------------- Free Funcs -----------------------  */
     function locTrigger(e, goto, active) {
 
