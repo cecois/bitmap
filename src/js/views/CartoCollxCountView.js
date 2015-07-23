@@ -8,7 +8,7 @@ var CartoCollxCountView = Backbone.View.extend({
     },
     throb: function(){
 
-$(".query-subnav-count-locations").html('<div class="spinner"></div>');
+$(".query-subnav-count-locations").html('<div class="spinner" style="margin:0;"></div>');
 
 return this
 

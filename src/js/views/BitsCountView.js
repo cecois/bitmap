@@ -7,7 +7,7 @@ var BitsCountView = Backbone.View.extend({
     },
         throb: function(){
 
-$(".query-subnav-count-bits").html('<div class="spinner"></div>');
+$(".query-subnav-count-bits").html('<div class="spinner" style="margin:0;"></div>');
 
 return this
 
