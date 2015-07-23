@@ -1,2 +1,3 @@
 .DS_Store
-src/js/octo.js
+lib/js/octo.js
+src/.DS_Store
