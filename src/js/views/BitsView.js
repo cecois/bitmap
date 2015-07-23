@@ -76,7 +76,7 @@ var BitsView = Backbone.View.extend({
             // var loctype = act.get("geom_type")
 
         var actv = activeFactory();
-        // var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
+        // var a = $("#querylist-locations").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
         // if (source == "self") {
         //     // force the scroll to the top jic we left it at the bottom
             // $("#main").scrollTo(".querysubnavh");

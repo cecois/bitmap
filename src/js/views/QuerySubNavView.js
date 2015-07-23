@@ -25,6 +25,15 @@ var QuerySubNavView = Backbone.View.extend({
             // $(this.el).val(this.model.get("solrstring"))
         // return this.switchto()
         return this
+        .rewire()
+    },
+    rewire: function(){
+this.$(".bt-episodes-hide").tooltip({
+container: "body",
+placement: 'top',
+trigger: 'hover'
+});
+
     },
     reset: function(){
 
@@ -52,8 +61,8 @@ var cssogbt = this.cssogbt
 _.each(cssog,function(c){
 $("#querylist-"+patsy).addClass(c)
 })
-$("#episodes").addClass('hidden')
 $("#querylist-"+patsy).removeClass('hidden')
+$("#episodes").addClass('hidden')
 
 $('.query-subnav-btn[data-id="episodes"]').addClass('hidden')
 $('.query-subnav-btn[data-id="'+patsy+'"]').removeClass('hidden')
@@ -120,16 +129,16 @@ $('.query-subnav-btn[data-id="episodes"]').removeClass('hidden')
         appEpisodesView.reset()
             // blah - too lazy to fix this sitewide
         if (w == "locations") {
-            $("#querylist-carto").removeClass("hidden")
+            $("#querylist-locations").removeClass("hidden")
             $("#querylist-bits").addClass("hidden")
             // $("#querylist-facets").addClass("hidden")
         } else if(w=="bits") {
             $("#querylist-bits").removeClass("hidden")
-            $("#querylist-carto").addClass("hidden")
+            $("#querylist-locations").addClass("hidden")
             // $("#querylist-facets").addClass("hidden")
         } else if(w=="facets"){
             // $("#querylist-facets").removeClass("hidden")
-            $("#querylist-carto").addClass("hidden")
+            $("#querylist-locations").addClass("hidden")
             $("#querylist-bits").addClass("hidden")
         }
         return this
@@ -165,16 +174,16 @@ $(this.el).find(".query-subnav-btn").removeClass("active")
         appEpisodesView.reset()
             // blah - too lazy to fix this sitewide
         if (elid == "locations") {
-            $("#querylist-carto").removeClass("hidden")
+            $("#querylist-locations").removeClass("hidden")
             $("#querylist-bits").addClass("hidden")
             // $("#querylist-facets").addClass("hidden")
         } else if(elid == "bits") {
             $("#querylist-bits").removeClass("hidden")
-            $("#querylist-carto").addClass("hidden")
+            $("#querylist-locations").addClass("hidden")
             // $("#querylist-facets").addClass("hidden")
         } else if(elid =="facets"){
             // $("#querylist-facets").removeClass("hidden")
-            $("#querylist-carto").addClass("hidden")
+            $("#querylist-locations").addClass("hidden")
             $("#querylist-bits").addClass("hidden")
         }
         return this

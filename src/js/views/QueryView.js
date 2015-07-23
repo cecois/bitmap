@@ -117,7 +117,7 @@ if(verbose==true){console.log("acqv.fire")}
                                 message: "query errored out"
                             })
                             // actually, if it's a true error we wanna be more forthcoming:
-                        $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                        $("#querylist-locations").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                         $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
 
                     }
@@ -130,7 +130,7 @@ return this
 .render()
     },
     setstage: function() {
-        $("#querylist-carto").html("")
+        $("#querylist-locations").html("")
     },
     render: function() {
         // appRoute.update()

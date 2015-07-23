@@ -104,7 +104,7 @@ appStatesView.prebaked(h)
                 //         appConsole.set({
                 //                 message: "query errored out"
                 //             })
-                //         $("#querylist-carto").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                //         $("#querylist-locations").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                 //         $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                 //     }
                 // })

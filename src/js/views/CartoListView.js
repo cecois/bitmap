@@ -1,6 +1,6 @@
 var CartoListView = Backbone.View.extend({
     // tagName: "li",
-    el: "#querylist-carto",
+    el: "#querylist-locations",
     events: {
         // "click .bt-cartoobj-zoomto": 'zoomtointernal',
         // "click .bt-cartoobj-episodes": 'pulleps',
@@ -106,7 +106,7 @@ var CartoListView = Backbone.View.extend({
             // var loctype = act.get("geom_type")
 
         var actv = activeFactory();
-        // var a = $("#querylist-carto").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
+        // var a = $("#querylist-locations").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
         // if (source == "self") {
         //     // force the scroll to the top jic we left it at the bottom
             // $("#main").scrollTo(".querysubnavh");
@@ -152,7 +152,7 @@ var CartoListView = Backbone.View.extend({
 if(typeof zoomto == 'undefined'){
     var zoomto = true
 }
-        $('#querylist-carto').liveFilter("#query-livefilter", 'li', {
+        $('#querylist-locations').liveFilter("#query-livefilter", 'li', {
             filterChildSelector: 'div'
         });
         $('.bt-cartoobj').tooltip({
