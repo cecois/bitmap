@@ -441,6 +441,11 @@ var huhV = new HuhView({
     model: huh
 })
 
+var help = new Help();
+var helpV = new HelpView({
+    model: help
+})
+
 var method = new Method();
 var methodV = new MethodView({
     model: method

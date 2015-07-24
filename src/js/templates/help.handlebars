@@ -1,0 +1,59 @@
+<div class="gnpanel gnpanel-r pull-left col-lg-6"><div class="block"><h1>Help</h1>
+You need help? With this dumb, free thing? Fine, here:
+
+<p><ul>
+<li>
+As of this writing there are 1884 bits records and 880 location records in our db. Doing a query for everything (e.g. <span class="copy-trigger" data-toggle="tooltip" data-string='*:*'><span class="loc-string">"*"</span></span>) will lag a little, almost entirely because it takes a while to actually render the locations on the map (e.g. the search is fast, the blue dots and lines and stuff takes a while).
+</li>
+
+<li>Oh, that reminds me: you can search by word, phrase, etc., but to just grab everything you can hit the Search button with nothing in the form or type "*" or type "*:*".
+	</li>
+
+<li>
+	If you fancy, use <a href="https://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser">Lucene query syntax</a> (this thing runs at least in part on <a href="http://lucene.apache.org/solr/">Apache Solr</a>). If you a tl;dr type, just know you can do Googley stuff, like "dimello +wompler" or "ducca -list" or whatev.
+</li>
+
+<li>Every query is run against the bits index first and <em>from that result set</em> we extract the locations. The implication is that if you wanted to search for, say, "Boston" to see if any references exist in or around that fine city, you'll only get results if the name or description of the bit has the word "Boston" in it. We didn't expect anybody would want to initiate spatial processing just to find out if we have bits mapped to Oklahoma or Chilé or wherever (you can just check the map, after all). If you do want spatial query, though, tell Disqus about it -----></li>
+
+<li>
+	Oh, right: if you have a legit question or comment, there is a Disqus instance for this project. Over there ----->
+</li>
+
+<li>
+	Finally, a little about the organization of these data may or may not help make sense of all of this garbage: 
+	<p>
+		We technically have two databases, bits and locations. The bits are stored in MongoDB and look something like this:
+		<code>
+			{
+  "_id": ObjectId("55930ad5ab4a6112ecad33bb"),
+  "show": "cbb",
+  "episode": 304,
+  "slug_earwolf": "marissa-womplers-six-flags-birthday-womptacular",
+  "id_wikia": 4811,
+  "url_soundcloud": "304-jessica-st-clairlennon-parhamlauren-lapkusjason-mantzoukasbrian-huskeyandy-dalymelissa-r",
+  "created_at": "2015-04-03T10:51:29Z",
+  "updated_at": "2015-06-03T10:51:29Z",
+  "soclo_link": "http://soundcloud.com/comedybangbang/304-jessica-st-clairlennon-parhamlauren-lapkusjason-mantzoukasbrian-huskeyandy-dalymelissa-r/#t=45:37",
+  "name": "where are you from?",
+  "desc": "Nobody can place Dabney's accent",
+  "elucidation": "a character detail is challenged or prompted",
+  "tags": "Marissa Wompler,Miss Listler, Eric Gutterman, Danielle Bartiromo, Dr. Seth Wompler, Dabney Coleperson, Traci Reardon, Katie Wong",
+  "tstart": "45:37",
+  "tend": "46:07",
+  "holding": "false",
+  "scope": "",
+  "location_type": "",
+  "location_id": ""
+}
+		</code>
+	</p>
+</li>
+
+<li>
+	Each bit has a name, description, and an elucidation. 
+</li>
+	</ul></p>
+
+ </div>
+ </div>
+

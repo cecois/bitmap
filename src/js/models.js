@@ -9,6 +9,7 @@ var URL = Backbone.Model.extend({
     }
 });
 var Huh = Backbone.Model.extend({});
+var Help = Backbone.Model.extend({});
 var Method = Backbone.Model.extend({});
 var Minutiae = Backbone.Model.extend({});
 var RecentItem = Backbone.Model.extend({});
@@ -474,7 +475,7 @@ var CartoCollection = Backbone.Collection.extend({
     // host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return solrhost + "cbb_carto/select?json.wrf=cwmccallback&wt=json&rows=100&q=" + this.cartostring
+        return solrhost + "cbb_carto/select?json.wrf=cwmccallback&wt=json&rows=1000&q=" + this.cartostring
             // + this.cartostring
     },
     initialize: function(options) {
