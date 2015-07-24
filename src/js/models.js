@@ -310,7 +310,7 @@ var CartoQuery = Backbone.Model.extend({
         // rawstring: "+jesse",
         // displaystring: "jesse",
         // urlstring:'+jesse'
-        rawstring: "",
+        rawstring: "jesse",
         displaystring: "",
         urlstring: '',
         solrstring:'',

@@ -10,20 +10,20 @@ As of this writing there are 1884 bits records and 880 location records in our d
 	</li>
 
 <li>
-	If you fancy, use <a href="https://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser">Lucene query syntax</a> (this thing runs at least in part on <a href="http://lucene.apache.org/solr/">Apache Solr</a>). If you a tl;dr type, just know you can do Googley stuff, like "dimello +wompler" or "ducca -list" or whatev.
+	If ur fancy, use <a href="https://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser">Lucene query syntax</a> (this thing runs at least in part on <a href="http://lucene.apache.org/solr/">Apache Solr</a>). If ur a tl;dr type, just know you can do Googley stuff, like <span class="copy-trigger" data-toggle="tooltip" data-string='dimello +wompler'><span class="loc-string">"dimello +wompler"</span></span> or <span class="copy-trigger" data-toggle="tooltip" data-string='ducca -list'><span class="loc-string">"ducca -list"</span></span> or whatev.
 </li>
 
-<li>Every query is run against the bits index first and <em>from that result set</em> we extract the locations. The implication is that if you wanted to search for, say, "Boston" to see if any references exist in or around that fine city, you'll only get results if the name or description of the bit has the word "Boston" in it. We didn't expect anybody would want to initiate spatial processing just to find out if we have bits mapped to Oklahoma or Chilé or wherever (you can just check the map, after all). If you do want spatial query, though, tell Disqus about it -----></li>
+<li>Every query is run against the bits index first and <em>from that result set</em> we extract the locations (and also <em>from that result set</em> the facets are extracted). The implication is that if you wanted to search for, say, "Boston" to see if any references exist in or around that fine city, you'll only get results if the name or description of the bit has the word "Boston" in it. We didn't expect anybody would want to initiate spatial processing just to find out if we have bits mapped to Oklahoma or Chilé or wherever (you can just check the map, after all). If you do want spatial query, though, tell Disqus about it -----></li>
 
 <li>
 	Oh, right: if you have a legit question or comment, there is a Disqus instance for this project. Over there ----->
 </li>
 
 <li>
-	Finally, a little about the organization of these data may or may not help make sense of all of this garbage: 
+	Finally, a little about the organization of these data may or may not help make sense of all of this garbage:
 	<p>
 		We technically have two databases, bits and locations. The bits are stored in MongoDB and look something like this:
-		<code>
+		<pre>
 			{
   "_id": ObjectId("55930ad5ab4a6112ecad33bb"),
   "show": "cbb",
@@ -45,12 +45,15 @@ As of this writing there are 1884 bits records and 880 location records in our d
   "location_type": "",
   "location_id": ""
 }
-		</code>
+		</pre>
+    But some of them look like this:
+    <pre>INSERT A name: "location" EXAMPLE HERE</pre>
+    These are the things you're searching against when you query and these are the things to which all the facets apply. But did you see the difference between those two examples? The one with <code>"name":"Location"</code> has a field (<code>location_id</code>) that links out to the other database we are keeping -- it's a <a href="cartodb.com">CartoDB</a> instance in which we are storing all of the spatial objects referred <em>to</em> by those Location bits. So when you query, we first look into all of the bits we have and then if there are any with <code>"name":"Location"</code> we grab those <code>location_id</code> values and shop those against a separate index of our <a href="cartodb.com">CartoDB</a> content.
 	</p>
 </li>
 
 <li>
-	Each bit has a name, description, and an elucidation. 
+	Each bit has a name, description, and an elucidation.
 </li>
 	</ul></p>
 
