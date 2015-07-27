@@ -2,7 +2,7 @@ var HelpView = Backbone.View.extend({
     // tagName: "li",
     el: "#help-copy",
     events: {
-        // "click #bt-showmain":"reset"
+        "click .copy-trigger": "singular"
     },
     template: Handlebars.templates['help'],
     initialize: function() {
@@ -11,6 +11,13 @@ var HelpView = Backbone.View.extend({
         }
         this.model.bind('change active', this.render, this);
         this.render()
+    },
+    singular: function(e) {
+
+        e.preventDefault()
+         var ds = $(e.currentTarget).attr("data-string")
+        locTrigger(e, true, ds)
+        return this
     },
     render: function() {
         $(this.el).html(this.template(this.model.toJSON()))
