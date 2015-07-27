@@ -69,10 +69,12 @@ if(co.true > 0){
 
         switch (plusm) {
             case true:
-                $("#btn-statie").html('<div class="triangle-trigger-true" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus hider-copy"></span></div>')
+                // $("#btn-statie").html('<div class="triangle-trigger-true" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus hider-copy"></span></div>')
+                $("#btn-statie").html('<div class="circle-trigger-true icom-bang" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus pull-right hider-copy"></span></div>')
                 break;
             case false:
-                $("#btn-statie").html('<div class="triangle-trigger-false" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="glyphicon glyphicon-minus hider-copy"></span></div>')
+                // $("#btn-statie").html('<div class="triangle-trigger-false" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="glyphicon glyphicon-minus hider-copy"></span></div>')
+                $("#btn-statie").html('<div class="circle-trigger-false icom-bang" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="glyphicon glyphicon-minus pull-right hider-copy"></span></div>')
                 break;
             default:
         }
@@ -81,37 +83,39 @@ if(co.true > 0){
     swap: function() {
         if (this.universal == true) {
             // unfortunately this is going to have to be router-savvy
-            // appStates.set({"name": "main","posish": "open"},{"name": "episodes","posish":"open"},{"name": "banner-bang","posish":"open"})
-            // this.collection.invoke('set', {
-            //     "posish": "open"
-            // });
+            appStates.set({"name": "main","posish": "open"},{"name": "episodes","posish":"open"},{"name": "banner-bang","posish":"open"})
+            this.collection.invoke('set', {
+                "posish": "open"
+            });
             //
             // just set it back to the default for this route
             this.prebaked(Backbone.history.getHash())
             this.universal = false;
         } else if (this.universal == false) {
-            // if(appEpisodes.length==0){
-            //             this.collection.invoke('set', {
-            //                 "posish": "collapsed"
-            //             });} else {
-            //                // k there are episodes showing, which means we need to be a little pickier
-            //                _.each(this.collection.models,function(mo) {
-            //                    if(mo.get("name")=="episodes"){
-            //                     mo.set({posish:"momap"})
-            //                    } else {
-            //                     mo.set({posish:"collapsed"})
+            if(appEpisodes.length==0){
+                        this.collection.invoke('set', {
+                            "posish": "collapsed"
+                        });} else {
+                           // k there are episodes showing, which means we need to be a little pickier
+                           _.each(this.collection.models,function(mo) {
+                               if(mo.get("name")=="episodes"){
+                                mo.set({posish:"momap"})
+                               } else {
+                                mo.set({posish:"collapsed"})
 
-            //                    }
-            //                });
+                               }
+                           });
 
-            //             }
+                        }
 
-            // appStates.set({"name": "main","posish": "collapsed"},{"name": "episodes","posish":"collapsed"},{"name": "banner-bang","posish":"collapsed"})
+            appStates.set({"name": "main","posish": "collapsed"},{"name": "episodes","posish":"collapsed"},{"name": "banner-bang","posish":"collapsed"})
             this.universal = true;
         }
         return this
     },
     prebaked: function(set) {
+        console.log("prebaked set:");
+        console.log(set);
         // switch (set) {
             // case "huh":
                 // appStates.set([{

@@ -84,7 +84,7 @@ var gstr=''
             if($(el).hasClass("true")){
                 var ht = "click to remove this limiter from the current query"
             } else {
-                var ht = "click to add "+gstr+" '"+$(el).attr("data-id")+"' as a limiter to the current query (which is "+appCartoQuery.get("displaystring")+")"
+                var ht = "click to add "+gstr+" '"+$(el).attr("data-id")+"' as a limiter TO THE CURRENT QUERY (which is '"+appCartoQuery.get("displaystring")+"')"
             } //end if
 
 $(this).tooltip({
