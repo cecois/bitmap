@@ -23,6 +23,9 @@ $(this.el).find(".bt-facet").tooltip('destroy')
    case "Bits":
       var fpre = "name:"
       break;
+         case "Episodes":
+      var fpre = "slug_earwolf:"
+      break;
    default:
       var fpre = "tags:"
 }

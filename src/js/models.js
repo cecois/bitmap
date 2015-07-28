@@ -218,6 +218,19 @@ var FacetsTags = MetaFacets.extend({
 
 
 }); //facetstags
+var FacetsSlugs = MetaFacets.extend({
+// var FacetsSlugs = Backbone.Collection.extend({
+    model: Facet,
+    url: function() {
+        return null
+    },
+    initialize: function(options) {
+        options || (options = {});
+        return this
+    },
+
+
+}); //facetstags
 var FacetsNames = MetaFacets.extend({
 // var FacetsNames = Backbone.Collection.extend({
     model: Facet,
@@ -275,6 +288,7 @@ var MetaFacets = Backbone.Collection.extend({
 
         appFatTags.subactivate()
         appFatNames.subactivate()
+        appFatSlugs.subactivate()
 
         return response.facet_counts.facet_fields
     }
@@ -378,7 +392,7 @@ var BitCollection = Backbone.Collection.extend({
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
         // return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("solrstring")
-        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=1000&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=holding:false AND " + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&json.nl=arrarr&facet.mincount=1"
+        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=1000&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=holding:false AND " + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&facet.field=slug_earwolf&json.nl=arrarr&facet.mincount=1"
     },
     initialize: function(options) {
         options || (options = {});
@@ -458,10 +472,12 @@ var BitCollection = Backbone.Collection.extend({
         });
 
          appFatTags.reset(resp.facet_counts.facet_fields.tags)
+         appFatSlugs.reset(resp.facet_counts.facet_fields.slug_earwolf)
         appFatNames.reset(resp.facet_counts.facet_fields.fat_name)
 
          appFatTags.subactivate()
         appFatNames.subactivate()
+        appFatSlugs.subactivate()
         // var uids=_.unique(lids)
         appCBB.seturl(_.unique(lids))
             // console.log("locsornot0:");console.log(locsornot[0]);

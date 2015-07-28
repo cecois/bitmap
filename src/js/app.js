@@ -428,6 +428,7 @@ window.appCBBCountView = new CartoCollxCountView({
 // window.appFat = new MetaFacet();
 window.appFats = new MetaFacets();
 window.appFatTags = new FacetsTags();
+window.appFatSlugs = new FacetsSlugs();
 window.appFatNames = new FacetsNames();
 window.aFTV = new FacetsView({collection:appFatTags,el:$("#facet-tags")})
 aFTV.group="Tags"
@@ -435,6 +436,8 @@ aFTV.group="Tags"
 window.aFNV = new FacetsView({collection:appFatNames,el:$("#facet-names")})
 aFNV.group="Bits"
 // aFNV.el=$("#facet-names")
+window.aFSV = new FacetsView({collection:appFatSlugs,el:$("#facet-slugs")})
+aFSV.group="Episodes"
 
 var huh = new Huh();
 var huhV = new HuhView({
