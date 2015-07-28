@@ -238,7 +238,7 @@ templates['queryViewTpl'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":fu
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
   return "<div class=\"input-group\">\n      <input type=\"text\" class=\"form-control\" id=\"query-form-input\" value=\""
     + escapeExpression(((helper = (helper = helpers.rawstring || (depth0 != null ? depth0.rawstring : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"rawstring","hash":{},"data":data}) : helper)))
-    + "\">\n      <span class=\"input-group-btn\">\n        <button id=\"query-form-bt\" class=\"btn btn-default\" type=\"button\" placeholder=\"search the source for new results\">Search</button>\n      </span>\n    </div><!-- /input-group -->\n\n";
+    + "\">\n      <span class=\"input-group-btn\">\n        <button id=\"query-form-bt\" class=\"btn btn-default\" type=\"button\" placeholder=\"search the source for new results\">Search</button>\n        <button id=\"query-form-heynongmantzoukas\" class=\"btn btn-default\" type=\"button\"><span class=\"glyphicon glyphicon-refresh\"></span></button>\n      </span>\n    </div><!-- /input-group -->\n\n";
 },"useData":true});
 templates['recentItemViewTpl'] = template({"1":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;

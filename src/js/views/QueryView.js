@@ -2,6 +2,7 @@ var QueryView = Backbone.View.extend({
     el: $("#query-form"),
     events: {
         "click #query-form-bt": "fire",
+        "click #query-form-heynongmantzoukas": "heynong",
         "click #query-form-randomize": "randomize",
         "click #solrfields .glyphicon": "togglehelp"
             // "change": "render"
@@ -15,6 +16,13 @@ var QueryView = Backbone.View.extend({
         this.listenTo(this.model, "change:solrstring", this.fire)
         // this.listenTo(this.model, "change", this.test)
             // this.model.bind("change:urlstring", this.fire, this);
+    },
+    heynong: function(){
+
+appCartoQuery.set({rawstring:"*"});
+
+return this
+
     },
     test: function(){
 
@@ -36,7 +44,7 @@ console.log(e);
 return this
     },
     fire: function(e) {
-
+$(this.el).tooltip('destroy')
 if(verbose==true){console.log("acqv.fire")}
 
         appCBB.deactivate()
@@ -132,6 +140,25 @@ return this
     setstage: function() {
         $("#querylist-locations").html("")
     },
+    rewire: function(){
+        console.log("rewiring queryview...")
+        $(this.el).tooltip('destroy')
+var heynongcopy = "Heynong the current query ( reset query to show everything "
+
+    if(appCartoQuery.get("facetarray").length>0){
+        heynongcopy += "[still limited to current facets:"
+        heynongcopy += appCartoQuery.get("facetarray").join(",")
+        heynongcopy += "])"
+    } else {
+        heynongcopy += ")"
+
+    }
+
+$("#query-form-heynongmantzoukas").tooltip({placement: 'bottom',trigger: 'hover',container: 'body',delay: 0,title:heynongcopy});
+
+return this
+
+    },
     render: function() {
         // appRoute.update()
         if (this.model.get("error") == true) {
@@ -140,5 +167,6 @@ return this
         $(this.el).html(this.template(this.model.toJSON()))
             // $(this.el).val(this.model.get("solrstring"))
         return this
+        .rewire()
     }
 });

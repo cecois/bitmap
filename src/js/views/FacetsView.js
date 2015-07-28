@@ -92,7 +92,7 @@ var gstr=''
 
 $(this).tooltip({
             container: "body",
-            placement: 'right',
+            placement: 'left',
             trigger: 'hover',
             title: ht
         });
