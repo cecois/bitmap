@@ -17,7 +17,7 @@ var RecentsCollection = Backbone.Collection.extend({
     model: RecentItem,
     url: function() {
         // return solrhost+"cbb_carto/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json&sort=updated_at+desc&rows=10"
-        return solrhost + "cbb_bits/select?json.wrf=cwmccallbackrecent&q=holding:false&wt=json&sort=_id+desc&rows=10"
+        return solrhost + "cbb_bits/select?json.wrf=cwmccallbackrecent&q=holding:false&wt=json&sort=_id+desc&rows=6"
     },
     initialize: function(options) {
         options || (options = {});

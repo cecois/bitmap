@@ -1,18 +1,14 @@
 <div class="block"><h1>Most Recent 6:</h1>
 {{#each recents}}
-<li data-id="{{this._id}}" class="col-sm-2 pull-left">
+<li data-id="{{this._id}}" class="col-sm-2 pull-left gnpanel-r">
 
 {{#if this.desc}}
 <span class="copy-trigger" data-toggle="tooltip" data-string='desc:"{{this.desc}}"'><span class="loc-string">{{this.desc}}</span></span>
-<!-- {{this.desc}} -->
-{{#if this.name}}
+<!-- <span class="cbbanno">({{#timeize}}{{this.updated_at}}{{/timeize}})</span> -->
+<small>({{#timeize}}{{this.updated_at}}{{/timeize}})</small>
+<!-- {{#if this.name}}
 &nbsp;<span class="copy-trigger" data-toggle="tooltip" data-string='name:"{{this.name}}"'><span class="loc-string">({{this.name}})</span></span>
-<!-- <span>({{this.name}})</span> -->
+{{/if}} -->
 {{/if}}
-{{else}}
-(no description provided)
-{{/if}}
-
-<div class="cbbanno">{{#timeize}}{{this.updated_at}}{{/timeize}}</div> <!-- ./  -->
 </li>
 {{/each}}

@@ -10,7 +10,7 @@ var RecentsView = Backbone.View.extend({
             // console.log("initting recentsview")
         }
         this.collection.bind('reset', this.render, this);
-        return this.render()
+        return this
     },
     singular: function(e) {
         e.preventDefault()
@@ -33,7 +33,8 @@ var RecentsView = Backbone.View.extend({
         return this
     },
     render: function() {
-        console.log("in recentsview render, collx:");console.log(this.collection);
+        console.log("in recentsview render");
+        // console.log(this.collection);
         // if (verbose == true) {
             // console.log("rendering recentsview")
             // console.log(this.collection)

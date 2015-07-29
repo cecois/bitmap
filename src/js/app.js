@@ -408,6 +408,7 @@ window.appStatesView = new StatesView({
 
         window.appBits = new BitCollection();
         window.appCBB = new CartoCollection();
+        window.appRecents = new RecentsCollection();
 
 
 window.appCBBListView = new CartoListView({
@@ -420,7 +421,7 @@ window.appBitsCountView = new BitsCountView({
     collection: appBits
 })
 window.appBitsRecentsView = new RecentsView({
-    collection: appBits
+    collection: appRecents
 })
 window.appCBBMapView = new CartoCollxView({
     collection: appCBB
@@ -610,6 +611,7 @@ url+=ac.join(":")
 cbbItems = L.geoJson().addTo(map);
 window.appWikiaz = new Wikiaz()
 appWikiaz.fetch();
+appRecents.fetch({reset:true});
 // var solrfz = $.getJSON(solrhost+"cbb_carto/admin/luke?numTerms=0&wt=json&callback=?", {}, function(json, textStatus) {
 //         console.log("json:");console.log(json);
 //
