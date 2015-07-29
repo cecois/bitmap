@@ -14,7 +14,22 @@ var RecentsView = Backbone.View.extend({
     },
     singular: function(e) {
         e.preventDefault()
-        locTrigger(e)
+         var ds = $(e.currentTarget).attr("data-string")
+        locTrigger(e, true, ds)
+        return this
+    },
+    rewire: function() {
+        $(this.el).find('[data-toggle="tooltip"]').tooltip({
+            position: "right",
+            html: true,
+            trigger:"hover",
+            title: "These links load the results in the background - switch to the query tab to interrogate further."
+        })
+        // $(this.el).find('[data-toggle="tooltip"]').on('mouseleave',function(elf){
+        //     console.log(elf)
+        //     $(this.el).tooltip('hide')
+        // });
+
         return this
     },
     render: function() {
@@ -41,10 +56,13 @@ var RecentsView = Backbone.View.extend({
             // "recent item will go here"
             // );
             // this.collection = _.first(this.collection,10)
+            var rec = _.first(this.collection.toJSON(),6)
             $(this.el).html(this.template({
-                    recents: this.collection.toJSON()
+                    // recents: rec.toJSON()
+                    recents: rec
                 }));
         // }, this);
         return this
+        .rewire()
     }
 });

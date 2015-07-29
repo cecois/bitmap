@@ -306,31 +306,47 @@ templates['recentsViewTpl-OG'] = template({"1":function(depth0,helpers,partials,
   return buffer + " <!-- </dl> -->\n </table></div>\n";
 },"useData":true});
 templates['recentsViewTpl'] = template({"1":function(depth0,helpers,partials,data) {
-  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<li data-id=\""
+  var stack1, helper, options, lambda=this.lambda, escapeExpression=this.escapeExpression, functionType="function", helperMissing=helpers.helperMissing, blockHelperMissing=helpers.blockHelperMissing, buffer = "<li data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0._id : depth0), depth0))
-    + "\" class=\"\">\n\n<div class=\"\">\n";
-  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.name : depth0), {"name":"if","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
+    + "\" class=\"col-sm-2 pull-left\">\n\n";
+  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.desc : depth0), {"name":"if","hash":{},"fn":this.program(2, data),"inverse":this.program(5, data),"data":data});
   if (stack1 != null) { buffer += stack1; }
-  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.desc : depth0), {"name":"if","hash":{},"fn":this.program(4, data),"inverse":this.program(6, data),"data":data});
+  buffer += "\n<div class=\"cbbanno\">";
+  stack1 = ((helper = (helper = helpers.timeize || (depth0 != null ? depth0.timeize : depth0)) != null ? helper : helperMissing),(options={"name":"timeize","hash":{},"fn":this.program(7, data),"inverse":this.noop,"data":data}),(typeof helper === functionType ? helper.call(depth0, options) : helper));
+  if (!helpers.timeize) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "\n</div>\n</li>\n";
+  return buffer + "</div> <!-- ./  -->\n</li>\n";
 },"2":function(depth0,helpers,partials,data) {
-  var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return escapeExpression(lambda((depth0 != null ? depth0.name : depth0), depth0))
-    + "\n";
-},"4":function(depth0,helpers,partials,data) {
-  var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "("
+  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<span class=\"copy-trigger\" data-toggle=\"tooltip\" data-string='desc:\""
     + escapeExpression(lambda((depth0 != null ? depth0.desc : depth0), depth0))
-    + ")\n";
-},"6":function(depth0,helpers,partials,data) {
+    + "\"'><span class=\"loc-string\">"
+    + escapeExpression(lambda((depth0 != null ? depth0.desc : depth0), depth0))
+    + "</span></span>\n<!-- "
+    + escapeExpression(lambda((depth0 != null ? depth0.desc : depth0), depth0))
+    + " -->\n";
+  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.name : depth0), {"name":"if","hash":{},"fn":this.program(3, data),"inverse":this.noop,"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"3":function(depth0,helpers,partials,data) {
+  var lambda=this.lambda, escapeExpression=this.escapeExpression;
+  return "&nbsp;<span class=\"copy-trigger\" data-toggle=\"tooltip\" data-string='name:\""
+    + escapeExpression(lambda((depth0 != null ? depth0.name : depth0), depth0))
+    + "\"'><span class=\"loc-string\">("
+    + escapeExpression(lambda((depth0 != null ? depth0.name : depth0), depth0))
+    + ")</span></span>\n<!-- <span>("
+    + escapeExpression(lambda((depth0 != null ? depth0.name : depth0), depth0))
+    + ")</span> -->\n";
+},"5":function(depth0,helpers,partials,data) {
   return "(no description provided)\n";
+  },"7":function(depth0,helpers,partials,data) {
+  var lambda=this.lambda, escapeExpression=this.escapeExpression;
+  return escapeExpression(lambda((depth0 != null ? depth0.updated_at : depth0), depth0));
   },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1;
+  var stack1, buffer = "<div class=\"block\"><h1>Most Recent 6:</h1>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.recents : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
-  if (stack1 != null) { return stack1; }
-  else { return ''; }
-  },"useData":true});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"useData":true});
 templates['solrfieldsView'] = template({"1":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "  <dt>"
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))

@@ -14,7 +14,8 @@ NProgress.configure({
 
 /* -------------------------------------------------- HANDLEBARS START -----------------------  */
 Handlebars.registerHelper('timeize', function(options) {
-    return new Handlebars.SafeString(moment(options.fn(this)).format('D.MMM.YYYY'));
+    // return new Handlebars.SafeString(moment(options.fn(this)).format('D.MMM.YYYY'));
+    return new Handlebars.SafeString(moment(options.fn(this)).format('YYYY.MMM.D'));
 });
 
 Handlebars.registerHelper('indev', function(id,type, options) {
@@ -461,7 +462,15 @@ appCartoQueryView.fire(false)
 
 /* -------------------------------------------------- Free Funcs -----------------------  */
     function locTrigger(e, goto, active) {
-
+if(verbose==true){
+    console.log("loctriggered!")
+    console.log("e:");
+    console.log(e)
+    console.log("goto:");
+    console.log(goto)
+    console.log("active:");
+    console.log(active)
+}
 
 if(typeof e !== 'undefined' && e !== null){
         e.preventDefault()}
