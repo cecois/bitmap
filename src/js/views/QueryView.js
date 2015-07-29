@@ -143,7 +143,7 @@ return this
     rewire: function(){
         console.log("rewiring queryview...")
         $(this.el).tooltip('destroy')
-var heynongcopy = "Heynong the current query ( reset query to show everything "
+var heynongcopy = "Heynong the current query ( reset it to show everything "
 
     if(appCartoQuery.get("facetarray").length>0){
         heynongcopy += "[still limited to current facets:"

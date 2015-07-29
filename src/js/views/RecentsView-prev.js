@@ -1,6 +1,6 @@
 var RecentsView = Backbone.View.extend({
     // tagName: "li",
-    el: "#huh-recent",
+    el: ".recents",
     events: {
         "click .copy-trigger": "singular"
     },
@@ -9,7 +9,7 @@ var RecentsView = Backbone.View.extend({
         if (verbose == true) {
             // console.log("initting recentsview")
         }
-        this.collection.bind('reset', this.render, this);
+        this.collection.bind('change active', this.render, this);
         return this.render()
     },
     singular: function(e) {
@@ -18,33 +18,29 @@ var RecentsView = Backbone.View.extend({
         return this
     },
     render: function() {
-        console.log("in recentsview render, collx:");console.log(this.collection);
-        // if (verbose == true) {
+        if (verbose == true) {
             // console.log("rendering recentsview")
             // console.log(this.collection)
-        // }
-        // this.collection.sortBy('location_id')
+        }
+        this.collection.sortBy('location_id')
             // this.collection.sortBy(function(m) {
             // console.log("803 sortby:");console.log(m);
             //     return -m.get('updated_at') });
             // sorted.each(function(recentitem) {
-        // this.collection.each(function(recentitem) {
-        //     if (verbose == true) {
-        //         // console.log("gonna render the recentitemview")
-        //     }
-            // var riv = new RecentItemView({
-            //     model: recentitem
-            // });
+        this.collection.each(function(recentitem) {
+            if (verbose == true) {
+                // console.log("gonna render the recentitemview")
+            }
+            var thisRecentItemView = new RecentItemView({
+                model: recentitem
+            });
             // console.log((thisRecentItemView));
             // console.log("$(this.el):");console.log($(this.el));
             // $(this.el).append(thisRecentItemView.render().el
             // "recent item will go here"
             // );
-            // this.collection = _.first(this.collection,10)
-            $(this.el).html(this.template({
-                    recents: this.collection.toJSON()
-                }));
-        // }, this);
+            $(this.el).html(this.template(this.collection.toJSON()));
+        }, this);
         return this
     }
 });

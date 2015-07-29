@@ -1,24 +1,16 @@
-<!-- <dl class="col-md-12 col-md-offset-1">
-{{#each []}}
-  <dt>{{name}}</dt>
-  <dd>{{nom}}</dd>
-{{/each}}
-</dl>
- -->
+{{#each recents}}
+<li data-id="{{this._id}}" class="col-sm-2">
 
- <div class="container col-md-6"><table class="table">
- <thead>
-           <tr>
-             <th>Location Name</th>
-             <th>Date Created</th>
-             <th>Date Updated</th>
-           </tr>
-         </thead>
- {{#each []}}
- <tr><td>
- <span class="copy-trigger" data-string="cartodb_id:{{cartodb_id}}"><span class="loc-string">{{name}}</span><i class="glyphicon glyphicon-map-marker"></i></span></td><td>{{#timeize}}{{created_at}}{{/timeize}}</td><td>{{#timeize}}{{updated_at}}{{/timeize}}</td></tr>
- <!--   <dt>{{name}}</dt>
-   <dd>{{nom}}: {{{scope_and_use}}}</dd> -->
- {{/each}}
- <!-- </dl> -->
- </table></div>
+<div class="">
+{{#if this.name}}
+{{this.name}}
+{{/if}}
+{{#if this.desc}}
+({{this.desc}})
+{{else}}
+(no description provided)
+{{/if}}
+
+</div>
+</li>
+{{/each}}

@@ -444,9 +444,21 @@ left:15px;
 }
 #main{
   padding-right:0;
-  #huh{
+  #huh-copy{
     font-size:1.1em;
     h1{font-weight:800;}
+  }
+  #huh-recent{
+    padding:15px;
+    margin-top:20px;
+    // background-color: @tertiarycolor-trans;
+    // 
+    li{
+      list-style: none;
+      background-color: @secondarycolor-trans;
+      padding:5px;
+    }
+
   }
   background-color: @primarycolor;
   border-top:solid 50px @secondarycolor;
@@ -781,7 +793,7 @@ border-right:none;
        @media(min-width:992px){
          .stroke;
        } //media
-
+&:active{color:white;}
                 &:hover {
                     text-decoration: none;
                     .text-shadow-general

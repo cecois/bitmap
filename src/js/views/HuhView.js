@@ -1,6 +1,6 @@
 var HuhView = Backbone.View.extend({
     // tagName: "li",
-    el: "#huh",
+    el: "#huh-copy",
     events: {
         // "click #bt-showmain":"reset"
     },

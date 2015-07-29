@@ -418,6 +418,9 @@ window.appBitsView = new BitsView({
 window.appBitsCountView = new BitsCountView({
     collection: appBits
 })
+window.appBitsRecentsView = new RecentsView({
+    collection: appBits
+})
 window.appCBBMapView = new CartoCollxView({
     collection: appCBB
 })
