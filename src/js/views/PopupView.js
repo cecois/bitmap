@@ -55,8 +55,8 @@ return this
     },
     issue_submit: function(e) {
         var it = $(this.el).find("[data-class='pu-issue-title']").attr("placeholder")
-        var ib = $(this.el).find("[data-class='pu-issue-body']").val()
         var ic = $(this.el).find("[data-class='pu-issue-contact']").val()
+        var ib = $(this.el).find("[data-class='pu-issue-body']").val()+" -- "+ic;
         if (typeof ib == 'undefined' || ib == null || ib == '') {
             $(this.el).find("[data-class='pu-issue-body']").attr("placeholder", "please provide some sort of clue to what's wrong")
             $(e.currentTarget).html("<span class='glyphicon glyphicon-warning-sign'></span> Submit")
@@ -66,6 +66,9 @@ return this
             console.log(it);
             console.log(ib);
             console.log(ic);
+
+            octo.repos('cecois','bitmap').issues.create({"title":it,"body":ib})
+
             // success will put a checkmark in submit button or something - github (octokat) doesn't return much
 
             $(e.currentTarget).html("<span class='glyphicon glyphicon-thumbs-up' disabled></span> Thanks")
