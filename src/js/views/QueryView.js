@@ -19,7 +19,10 @@ var QueryView = Backbone.View.extend({
     },
     heynong: function(){
 
-appCartoQuery.set({rawstring:"*"});
+// $(this.el).tooltip('destroy')
+$("#query-form-heynongmantzoukas").tooltip('destroy')
+// appCartoQuery.set({});
+appCartoQuery.set({facetarray:[],rawstring:"*"});
 
 return this
 
