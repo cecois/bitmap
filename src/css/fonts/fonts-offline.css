@@ -9,7 +9,7 @@
   font-family: 'Offside';
   font-style: normal;
   font-weight: 400;
-  src: local('Offside'), local('Offside'), url('Offside.ttf') format('truetype');
+  src: local('Offside-Regular'), local('Offside-Regular'), url('Offside-Regular.ttf') format('truetype');
 }
 
 @font-face {
@@ -31,4 +31,11 @@
   font-style: normal;
   font-weight: 400;
   src: local('marifont'), local('marifont'), url('marifont.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Oswald-Regular'), local('Oswald-Regular'), url('Oswald-Regular.ttf') format('truetype');
 }
