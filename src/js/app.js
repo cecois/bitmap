@@ -40,7 +40,8 @@ Handlebars.registerHelper('urler', function(str,options) {
 // });
 markernew = {
     radius: 6,
-    fillColor: "#1288b9",
+    // fillColor: "#1288b9",
+    fillColor: "rgba(126, 223, 216, 100)",
     color: "#000",
     weight: 1,
     opacity: 1,
@@ -66,8 +67,10 @@ markerseen = {
     // cartodb_id: hit.get("cartodb_id").toString()
 };
 linenew = {
-    fillColor: "#1288b9",
-    color: "#1288b9",
+    // fillColor: "#1288b9",
+    fillColor: "rgba(126, 223, 216, 100)",
+    // color: "#1288b9",
+    color: "rgba(126, 223, 216, 100)",
     weight: 6,
     opacity: .8,
     // fillOpacity: 0.6,

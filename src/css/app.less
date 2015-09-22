@@ -7,7 +7,7 @@
 /*yellow*/
 // @secondarycolor: rgba(254, 205, 11, 1.0000);
 // @secondarycolor-trans: rgba(254, 205, 11, .4000);
-// 
+//
 
 /*brn*/
 // https://coolors.co/app/7edfd8-d9702c-d0d5a7-ffffff-5c6f68
@@ -38,8 +38,8 @@
 /*yellow*/
 // @tertiarycolor: rgba(254, 205, 11, 1.0000);
 // @tertiarycolor-trans: rgba(254, 205, 11, .4000);
-// 
-// 
+//
+//
 @badge-color: rgba(217, 112, 44, 100);
 
 @menutext: @primarycolor;
@@ -84,12 +84,12 @@
 // -12px 12px 0px @quaternarycolor-trans,
 // 12px 12px 0px @quaternarycolor-trans;
 //   }
-//   
+//
 .stroke-active{
   color:@linkcolor;
   text-shadow: 2px 2px 2px @primarycolor-trans;
 }
-//   
+//
 //   cuckoo offset text version
 //   .stroke-active-mock {
 // color:@secondarycolor;
@@ -212,7 +212,7 @@ body{
 }
 h1{
   // .stroke-active;
-  // 
+  //
   // .stroke;
   font-weight:bold;
   color:white;
@@ -312,20 +312,24 @@ font-size: .8em;
 }
 
 #fullstory{
-
+h1{
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-align:center;
+}
 .slide{
   .block{
     padding:45px 220px 60px 220px;
   }
 }
 
-  p{font-size:.8em;
+  p{
+    /*font-size:.8em;*/
 
 margin-bottom: 25px;
   }
 
   .slide2,.slide4{
-    
+
   background: url("../images/home_bg-alt.jpg");
   }
 
@@ -537,6 +541,15 @@ left:15px;
   padding-right:0px;
   padding-left:0px;
 
+#help{
+  #help-copy{
+    h1{
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      text-align:center;
+    }
+  }
+}
+
 #huh{
 
 }
@@ -551,7 +564,7 @@ left:15px;
 }
 
   .slide2,.slide4{
-    
+
   background: url("../images/home_bg-alt.jpg");
   }
 
@@ -565,17 +578,19 @@ left:15px;
     padding:0;
   }
   #huh-recent{
+    padding:0;
     h1{
       -webkit-text-stroke: 1px rgba(0,0,0,.75);
     }
-
+.slide{
+  .block{
+    padding:10px 420px 50px 420px;
+  }
+}
   .slide4{
-    
+
   background: url("../images/home_bg-alt.jpg");
   }
-
-    // padding:15px;
-    // margin-top:20px;
 
     li{
       // font-size:.8em;
@@ -594,7 +609,7 @@ left:15px;
     }
 
   }
-  
+
 // position:absolute;
   .mainpanel{
     .block{
@@ -1183,7 +1198,8 @@ padding-top:15px;
     .bt-cartoobj{
   /*color:white;*/
   &:hover{
-    color:@quaternarycolor;
+    /*color:@quaternarycolor;*/
+    color:@tertiarycolor;
   }
 }
     .carto-plain-title{
@@ -1569,10 +1585,12 @@ text-shadow:
   -moz-animation: rotation .6s infinite linear;
   -o-animation: rotation .6s infinite linear;
   animation: rotation .6s infinite linear;
-  border-left: 2px solid rgba(0, 174, 239, .15);
-  border-right: 2px solid rgba(0, 174, 239, .15);
-  border-bottom: 2px solid rgba(0, 174, 239, .15);
-  border-top: 2px solid rgba(0, 174, 239, .8);
+
+  border-left: 2px solid rgba(92, 111, 104, .15);
+  border-right: 2px solid rgba(92, 111, 104, .15);
+  border-bottom: 2px solid rgba(92, 111, 104, .15);
+  border-top: 2px solid rgba(92, 111, 104, .8);
+
   border-radius: 100%;
 }
 
