@@ -1,14 +1,20 @@
-<div class="block"><h1>Most Recent 6:</h1>
-{{#each recents}}
-<li data-id="{{this._id}}" class="col-sm-2 pull-left gnpanel-r">
-
-{{#if this.desc}}
-<span class="copy-trigger" data-toggle="tooltip" data-string='desc:"{{this.desc}}"'><span class="loc-string">{{this.desc}}</span></span>
-<!-- <span class="cbbanno">({{#timeize}}{{this.updated_at}}{{/timeize}})</span> -->
-<small>({{#timeize}}{{this.updated_at}}{{/timeize}})</small>
-<!-- {{#if this.name}}
-&nbsp;<span class="copy-trigger" data-toggle="tooltip" data-string='name:"{{this.name}}"'><span class="loc-string">({{this.name}})</span></span>
-{{/if}} -->
-{{/if}}
-</li>
-{{/each}}
+<div class="slide"><div id="" class="slide4 gnpanel col-lg-12">
+    <div class="block" style="padding: 0 220px 150px;">
+        <h1 style="text-align:center;">Most Recent 6:
+        <span class="icom-bang" style="font-size:2em;"></span>
+        </h1>
+        {{#each recents}}
+        <!-- <li data-id="{{this._id}}" class="col-sm-2 pull-left gnpanel-r"> -->
+        <li data-id="{{this._id}}" class="">
+            {{#if this.desc}}
+            <span class="copy-trigger" data-toggle="tooltip" data-string='desc:"{{this.desc}}"'><span class="loc-string">{{this.desc}}</span></span>
+            <!-- <span class="cbbanno">({{#timeize}}{{this.updated_at}}{{/timeize}})</span> -->
+            <small>({{#timeize}}{{this.updated_at}}{{/timeize}})</small>
+            <!-- {{#if this.name}}
+                    &nbsp;<span class="copy-trigger" data-toggle="tooltip" data-string='name:"{{this.name}}"'><span class="loc-string">({{this.name}})</span></span>
+            {{/if}} -->
+            {{/if}}
+        </li>
+        {{/each}}
+    </div>
+</div></div>

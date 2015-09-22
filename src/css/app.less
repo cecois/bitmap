@@ -9,10 +9,14 @@
 // @secondarycolor-trans: rgba(254, 205, 11, .4000);
 // 
 
-/*pewter*/
+/*brn*/
 // https://coolors.co/app/7edfd8-d9702c-d0d5a7-ffffff-5c6f68
-// @secondarycolor: rgba(92, 111, 104, 100);
-// @secondarycolor-trans:rgba(92, 111, 104, 40);
+@linkcolor: rgba(92, 111, 104, 100);
+@linkcolor-trans: rgba(92, 111, 104, 40);
+
+// brown
+// @linkcolor: #896A56;
+// @linkcolor-trans:rgba(92, 111, 104, 40);
 
 /*canay*/
 // @secondarycolor: rgba(208, 219, 151, 100);
@@ -57,44 +61,57 @@
 .stroke-h{
   font-weight:800;
   text-shadow:
-    -1px -1px 0 white,
-    1px -1px 0 white,
-    -1px 1px 0 white,
-    1px 1px 0 white;
+    -1px -1px 0 @linkcolor,
+    1px -1px 0 @linkcolor,
+    -1px 1px 0 @linkcolor,
+    1px 1px 0 @linkcolor;
   }
 
-.stroke-active {
-color:@secondarycolor;
-  text-shadow:
-    -1px -1px 0 @primarycolor-trans,
-    1px -1px 0 @primarycolor-trans,
-    -1px 1px 0 @primarycolor-trans,
-    1px 1px 0 @primarycolor-trans,
-    -10px -10px 0px @secondarycolor-trans,
-    10px -10px 0px @secondarycolor-trans,
-    -10px 10px 0px @secondarycolor-trans,
-    10px 10px 0px @secondarycolor-trans,
-    -12px -12px 0px @primarycolor-trans,
-12px -12px 0px @quaternarycolor-trans,
--12px 12px 0px @quaternarycolor-trans,
-12px 12px 0px @quaternarycolor-trans;
-  }
-  .stroke-active-mock {
-color:@secondarycolor;
-  text-shadow:
-    -1px -1px 0 @primarycolor-trans,
-    1px -1px 0 @primarycolor-trans,
-    -1px 1px 0 @primarycolor-trans,
-    1px 1px 0 @primarycolor-trans,
-    -5px -5px 0px @secondarycolor-trans,
-    5px -5px 0px @secondarycolor-trans,
-    -5px 5px 0px @secondarycolor-trans,
-    5px 5px 0px @secondarycolor-trans,
-    -7px -7px 0px @primarycolor-trans,
-7px -7px 0px @primarycolor-trans,
--7px 7px 0px @primarycolor-trans,
-7px 7px 0px @primarycolor-trans;
-  }
+// cuckoo offset text version
+// .stroke-active {
+// color:@secondarycolor;
+//   text-shadow:
+//     -1px -1px 0 @primarycolor-trans,
+//     1px -1px 0 @primarycolor-trans,
+//     -1px 1px 0 @primarycolor-trans,
+//     1px 1px 0 @primarycolor-trans,
+//     -10px -10px 0px @secondarycolor-trans,
+//     10px -10px 0px @secondarycolor-trans,
+//     -10px 10px 0px @secondarycolor-trans,
+//     10px 10px 0px @secondarycolor-trans,
+//     -12px -12px 0px @primarycolor-trans,
+// 12px -12px 0px @quaternarycolor-trans,
+// -12px 12px 0px @quaternarycolor-trans,
+// 12px 12px 0px @quaternarycolor-trans;
+//   }
+//   
+.stroke-active{
+  color:@linkcolor;
+  text-shadow: 2px 2px 2px @primarycolor-trans;
+}
+//   
+//   cuckoo offset text version
+//   .stroke-active-mock {
+// color:@secondarycolor;
+//   text-shadow:
+//     -1px -1px 0 @primarycolor-trans,
+//     1px -1px 0 @primarycolor-trans,
+//     -1px 1px 0 @primarycolor-trans,
+//     1px 1px 0 @primarycolor-trans,
+//     -5px -5px 0px @secondarycolor-trans,
+//     5px -5px 0px @secondarycolor-trans,
+//     -5px 5px 0px @secondarycolor-trans,
+//     5px 5px 0px @secondarycolor-trans,
+//     -7px -7px 0px @primarycolor-trans,
+// 7px -7px 0px @primarycolor-trans,
+// -7px 7px 0px @primarycolor-trans,
+// 7px 7px 0px @primarycolor-trans;
+//   }
+
+.stroke-active-mock{
+  color:@linkcolor;
+  text-shadow: 2px 2px 2px @primarycolor-trans;
+}
 
   .badge-homemade {
   background-color: white;
@@ -190,7 +207,7 @@ body{
   text-decoration:none;
   font-weight:100;
     text-shadow: none;
-    color:@tertiarycolor-trans;
+    color:@linkcolor-trans;
     font-size:.8em;
 }
 h1{
@@ -238,7 +255,8 @@ h5{
 .copy-trigger{
   font-weight: 400;
   cursor:pointer;
-  color: @secondarycolor;
+  // color: @secondarycolor;
+  color:@linkcolor-trans;
   &:hover{
     color:#d4d4d4;
   }
@@ -251,7 +269,8 @@ a {
     text-decoration: none;
     // color: @primarycolor;
     // color: @tertiarycolor;
-    color: @secondarycolor;
+    // color: @secondarycolor;
+    color: @linkcolor;
     font-weight:400;
     &:hover{
       text-decoration: none;
@@ -285,13 +304,31 @@ pre {
 }
 
 .caption{
-color:@quaternarycolor;
+color:@secondarycolor;
+// color:@quaternarycolor;
 text-align:right;
 font-style: italic;
 font-size: .8em;
 }
 
 #fullstory{
+
+.slide{
+  .block{
+    padding:45px 220px 60px 220px;
+  }
+}
+
+  p{font-size:.8em;
+
+margin-bottom: 25px;
+  }
+
+  .slide2,.slide4{
+    
+  background: url("../images/home_bg-alt.jpg");
+  }
+
   padding:0px;
   li{
     // margin-bottom:25px;
@@ -377,17 +414,20 @@ div.leaflet-popup-content .marker.bt{
 .bt-cartoobj{
   cursor: pointer;
   margin-left: 5px;
+  color:@linkcolor;
   &:hover{
-  color:@quaternarycolor;
+  // color:@quaternarycolor;
+  // color:@primarycolor;
   }
 }
 
 .bt-cartoobj-episodes{
   cursor: pointer;
   margin-left: 5px;
-  color:@secondarycolor;
+  // color:@secondarycolor;
   &:hover{
-  color:@quaternarycolor;
+  // color:@quaternarycolor;
+  color:@primarycolor;
   }
 }
 
@@ -484,40 +524,67 @@ left:15px;
 }
 #main{
 
+
   background-color: @primarycolor;
   border-top:solid 50px @secondarycolor;
-  // background: url("../images/home_bg.jpg");
+  background: url("../images/home_bg.jpg");
   height:70%;
   top:142px;
     opacity:.9;
   overflow-x:hidden;
   overflow-y:auto;
 
-  padding-right:0;
+  padding-right:0px;
+  padding-left:0px;
+
+#huh{
+
+}
 
   #huh-copy{
+
+    .slide{
+  font-size:1.5em;
+  .block{
+    padding:10px 420px 50px 420px;
+  }
+}
+
+  .slide2,.slide4{
+    
+  background: url("../images/home_bg-alt.jpg");
+  }
+
     h1{
       // -webkit-text-stroke: 1px rgba(0,0,0,.75); //black
       // -webkit-text-stroke: 1px @quaternarycolor;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
     font-size:1.1em;
     h1{font-weight:800;}
+    padding:0;
   }
   #huh-recent{
     h1{
       -webkit-text-stroke: 1px rgba(0,0,0,.75);
     }
-    padding:15px;
-    margin-top:20px;
+
+  .slide4{
+    
+  background: url("../images/home_bg-alt.jpg");
+  }
+
+    // padding:15px;
+    // margin-top:20px;
 
     li{
-      font-size:.8em;
-      height:100px;
-          background-color: rgba(0,0,0,.1);
+      // font-size:.8em;
+      // height:100px;
+          // background-color: rgba(0,0,0,.1);
       list-style: none;
       color:white;
       /*background-color: @secondarycolor-trans;*/
-      padding:15px;
+      // padding:15px;
       /*h5{
         text-decoration:none;
         font-weight:800;}*/
@@ -915,13 +982,13 @@ border-right:none;
     color: white;
     font-family: "KiloGram";
     font-size: 40px;
-    left: 129px;
+    left: 115px;
     letter-spacing: -1px;
     line-height: 32px;
     position: absolute;
     text-align: center;
-    text-shadow: 2px 2px 0 @secondarycolor, 5px 5px 0 @quaternarycolor, 7px 7px 0 @quaternarycolor, 9px 9px 0 @quaternarycolor, 11px 11px 0 @quaternarycolor, 13px 13px 0 @secondarycolor-trans;
-    top: 240px;
+    text-shadow: 2px 2px 0 @secondarycolor, 5px 5px 0 @linkcolor, 7px 7px 0 @linkcolor, 9px 9px 0 @linkcolor, 11px 11px 0 @linkcolor, 13px 13px 0 @secondarycolor-trans;
+    top: 230px;
     transform: rotate(-40deg);
 }
 
@@ -1175,7 +1242,8 @@ padding-top:15px;
   padding:20px;
   width:80%;
   background-color:rgba(255,255,255,.3);
-  border:solid 15px @secondarycolor;
+  // border:solid 15px @secondarycolor;
+  border:solid 1px @secondarycolor;
   font-size: 0.9em;
   h3{
     .stroke-active-mock;
@@ -1196,7 +1264,7 @@ padding-top:15px;
   text-decoration:none;
   // font-weight:100;
     text-shadow: none;
-    color:@secondarycolor;
+    // color:@secondarycolor;
     font-size:.9em;
     position: relative;
     margin-bottom:12px;
@@ -1242,7 +1310,7 @@ text-shadow:none;
       // .stroke;
   .bt-episodes-hide{
   cursor:pointer;
-    font-size: .8em;
+    font-size: .6em;
     text-shadow: none;
     vertical-align: top;
     position: relative;
@@ -1282,7 +1350,7 @@ text-shadow:
   display:inline-block;
 }*/
 
-        .stroke;
+        .stroke-h;
   // .stroke-active-mock;
 color:white;
 
@@ -1655,3 +1723,41 @@ bottom:-35px;
     left: 0;
     z-index: -1;
 }
+
+
+/*
+--------------  Slide Nav
+*/
+.mainpanel{
+
+  //   background-attachment: fixed;
+  // width: 100%;
+  // height: 100%;
+  // position: relative;
+  // overflow: hidden;
+
+
+ul.navigation {
+  float: right;
+  position: fixed;
+  padding: 25px;
+  margin-top: 19%;
+  right: 0;
+  z-index: 9999; }
+  /* line 138, ../sass/main.scss */
+  ul.navigation li {
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    border: 2px solid white;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    display: block;
+    margin-bottom: 8px; }
+    /* line 148, ../sass/main.scss */
+    ul.navigation li:hover {
+      background: white; }
+  /* line 152, ../sass/main.scss */
+  ul.navigation li.active {
+    background: white; }}
