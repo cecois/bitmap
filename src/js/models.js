@@ -113,9 +113,7 @@ var Facet = Backbone.Model.extend({});
 
 var MetaFacets = Backbone.Collection.extend({
         toggle: function(newfat) {
-        console.log("in facets activate, checking...");
 
-            console.log("we need to activate!");
             var nfstr = newfat.split(":")[1]
             var nfgroup = newfat.split(":")[0]
 
@@ -158,6 +156,9 @@ if(verbose==true){console.log("facet wznt there pushing...");}
 }
 
 // reset the facetarray, hopefully triggering the new fetch/reset
+
+console.log("acqarr:");
+console.log(acqarr);
                     appCartoQuery.set({facetarray:_.uniq(acqarr)})
 
 //                     appCartoQuery.set({facetarray:b})

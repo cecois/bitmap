@@ -4,7 +4,7 @@ var Route = Backbone.Router.extend({
         // ":hash": "default",
         // docs/:section(/:subsection)
         // ":hash(/:q)(/:bbox)": "default",
-        "(:hash)(/:q)(/:bbox)(/:basemap)(/:activecouple)(/)": "default"
+        "(:hash)(/:q)(/:bbox)(/:basemap)(/:activecouple)(/:facetsin)(/)": "default"
             // ":hash": "routepractice"
             // "home": "home",
             // "about": "about",
@@ -15,7 +15,7 @@ var Route = Backbone.Router.extend({
     update: function(el) {
         var url = urlFactory(el)
     },
-    default: function(h, q, bbox, basemap, activecouple) {
+    default: function(h, q, bbox, basemap, activecouple, facetsin) {
             /*
             Tried to not do this, but it does kinda make sense to make the active mod a global. Otherwise we have to pass it to BitCollection first, and then *further* on to CartoCollx since Carto gets filled *after* the custom parse of bits.
              */
@@ -29,13 +29,8 @@ var Route = Backbone.Router.extend({
                     active: true
                 })
             }
-            if (typeof q !== 'undefined' && q !== null) {
-                console.log("q existed, setting appcartoquery to q, which is");
-                console.log(q);
-                appCartoQuery.set({
-                    rawstring: q
-                })
-            }
+
+
             if (typeof h == 'undefined' || h == null) {
                 // h = "query";
                 h = "huh";
@@ -109,6 +104,24 @@ appStatesView.prebaked(h)
                 //     }
                 // })
             } //h is query for fetch
+
+
+            if (typeof q !== 'undefined' && q !== null) {
+                // if(q!=="null"){
+                                console.log("q existed, setting appcartoquery to q, which is");
+                                console.log(q);
+                                // appCartoQuery.set({
+                                //     rawstring: q
+                                // })
+                                
+                                facetsinscrubbed=['tags:"Golly"','tags:"Chip Gardner"']
+
+                            appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:q});
+                            
+                            // }
+            }
+
+// #returnto - this shouldn't be necessary but seems to be
             // appCartoQueryView.fire(false)
             return this
         } // end home
