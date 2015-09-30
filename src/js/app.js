@@ -564,19 +564,54 @@ var activeid = activecouple.split(":")[1]
         var bl = appBaseLayers.findWhere({
             active: true
         }).get("name")
-        var url = h + "/" + qs + "/" + bbx + "/" + bl + "/"
+        var fa = appCartoQuery.get("facetarray").join(",");
+
+        var url = h + "/" + qs + "/" + bbx + "/" + bl 
 
 if(typeof activecouple !== 'undefined' && activecouple !== null){
 var ac = activeFactory();
 
 // url+=activetype + ":" + activeid
-url+=ac.join(":")
+url+="/"+ac.join(":")
+
+// now that the activecoupe is set (or nulled) let's finish it off w facets
+
 
 }
+// url+="/"+fa
         // if(typeof activeid !== 'undefined' && typeof activeid !== null && typeof activetype !== 'undefined' && typeof activetype !== null){
             // }
 
         return url
+    }
+
+    function captureState(){
+
+            // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
+            var hel = $(".mainpanel:not('.hidden')")
+            var h = '#' + $(hel).attr("id")
+        var bbx = map.getBounds().toBBoxString();
+        var qs = appCartoQuery.get("urlstring")
+        var bl = appBaseLayers.findWhere({
+            active: true
+        }).get("name")
+        var fa = appCartoQuery.get("facetarray").join(",");
+
+
+if(typeof activecouple !== 'undefined' && activecouple !== null){
+var ac = activeFactory();
+
+acv=ac.join(":")
+
+} else {
+    acv="noactive"
+}
+        var url = h + "/" + qs + "/" + bbx + "/" + bl +"/"+acv+"/"+fa
+        // if(typeof activeid !== 'undefined' && typeof activeid !== null && typeof activetype !== 'undefined' && typeof activetype !== null){
+            // }
+
+        return url
+
     }
 
     function processLeaf(mid, pop, geom) {

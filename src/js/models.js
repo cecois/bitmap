@@ -358,6 +358,7 @@ var CartoQuery = Backbone.Model.extend({
 
         this.setstrings()
         this.on('change:rawstring change:facetarray', this.setstrings, this);
+        // this.on('change:facetarray', this.setstrings, this);
         // this.on('', this.setstrings, this);
         return this
     },

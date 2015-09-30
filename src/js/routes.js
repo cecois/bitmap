@@ -113,8 +113,12 @@ appStatesView.prebaked(h)
                                 // appCartoQuery.set({
                                 //     rawstring: q
                                 // })
-                                
-                                facetsinscrubbed=['tags:"Golly"','tags:"Chip Gardner"']
+                                // facetsin.split(",")
+                                // facetsinscrubbed=['tags:"Golly"','tags:"Chip Gardner"']
+                                if(facetsin !== null && typeof facetsin !== 'undefined'){
+                                                                facetsinscrubbed=facetsin.split(",")} else {
+                                                                    facetsinscrubbed=[]
+                                                                }
 
                             appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:q});
                             
