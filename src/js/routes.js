@@ -106,6 +106,11 @@ appStatesView.prebaked(h)
             } //h is query for fetch
 
 
+if(facetsin !== null && typeof facetsin !== 'undefined'){
+                                                                facetsinscrubbed=facetsin.split(",")} else {
+                                                                    facetsinscrubbed=[]
+                                                                }
+
             if (typeof q !== 'undefined' && q !== null) {
                 // if(q!=="null"){
                                 console.log("q existed, setting appcartoquery to q, which is");
@@ -115,14 +120,13 @@ appStatesView.prebaked(h)
                                 // })
                                 // facetsin.split(",")
                                 // facetsinscrubbed=['tags:"Golly"','tags:"Chip Gardner"']
-                                if(facetsin !== null && typeof facetsin !== 'undefined'){
-                                                                facetsinscrubbed=facetsin.split(",")} else {
-                                                                    facetsinscrubbed=[]
-                                                                }
+
 
                             appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:q});
                             
                             // }
+            } else {
+                 appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:'huell'});
             }
 
 // #returnto - this shouldn't be necessary but seems to be
