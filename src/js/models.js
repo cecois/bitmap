@@ -308,6 +308,17 @@ var QuerySubNav = Backbone.Model.extend({
         return this
     }
 }); //querysubnav
+
+var Share = Backbone.Model.extend({});
+var Shares = Backbone.Collection.extend({
+    model: Share,
+    url: null,
+    initialize: function(options) {
+        options || (options = {});
+        return this
+    }
+}); //shares
+
 var State = Backbone.Model.extend({});
 var States = Backbone.Collection.extend({
     // i dunno, maybe the dumbest model ever?

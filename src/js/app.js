@@ -400,11 +400,54 @@ var states = [{
 
     ]
 
+    var shares = [
+
+{"id":"social-twitter",
+"href":"http://some.url.com",
+"page.title":null,
+"page.url":null,
+"tip":"share on foo",
+"hashtags":null
+},
+{"id":"social-facebook",
+"href":"http://some.url.com",
+"page.title":null,
+"page.url":null,
+"tip":"share on foo"
+},
+{"id":"social-google",
+"href":"http://some.url.com",
+"page.title":null,
+"page.url":null,
+"tip":"share on foo"
+},
+{"id":"social-linkedin",
+"href":"http://some.url.com",
+"page.title":null,
+"page.url":null,
+"tip":"share on foo"
+},
+{"id":"social-weibo",
+"href":"http://some.url.com",
+"page.title":null,
+"page.url":null,
+"tip":"share on foo"
+}
+
+    ]
+
 window.appStates = new States(
 states
     );
 window.appStatesView = new StatesView({
     collection: appStates
+});
+
+window.appShares = new Shares(
+shares
+    );
+window.appSharesView = new SharesView({
+    collection: appShares
 });
 
 /* -------------------------------------------------- INITS -----------------------  */
