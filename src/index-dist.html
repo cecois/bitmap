@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)http://blog.themearmada.com/demos/off-canvas-menu/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>BitMap: CBB</title>
@@ -41,13 +40,14 @@
         <div id="map"></div>
 
     <div id="btn-statie" class="">
-    <div data-toggle="tooltip" title="toggle page elements" class="triangle-trigger-false">
-<span class="glyphicon glyphicon-minus hider-copy"></span>
+    <!-- <div data-toggle="tooltip" title="toggle page elements" class="triangle-trigger-false"> -->
+    <div data-toggle="tooltip" title="toggle page elements" class="circle-trigger-false icom-bang">
+<span class="glyphicon glyphicon-minus pull-right hider-copy"></span>
 </div>
 </div>
 
         <!-- <script src="http://libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.js"></script> -->
-        <script src="offline/cartodb.js"></script>
+        <!-- <script src="offline/cartodb.js"></script> -->
         <!-- <script src="cartodb-example.js"></script> -->
 
         <!-- <div id="wrapper"> -->
@@ -57,17 +57,18 @@
                 <div id="banner-bang" class="content-wrap col-sm-1">
                 <span class="icom-bang"><span id="banner-copy">CBB<br/>Bit<br/>Tracker</span></span>
                 </div>
-                <div id="banner-nav" class="content-wrap col-sm-5 col-sm-offset-3">
+                <div id="banner-nav" class="content-wrap col-sm-5">
 
                     <nav class="site-nav" role="navigation">
                         <ul class="col-sm-12">
                             <!-- <li><a href="#about" class="link">About</a></li> -->
-                            <li class="col-sm-4"><a href="#huh" class="link">Huh?</a></li>
-                            <li class="col-sm-4"><a href="#fullstory" class="link">Full Story</a></li>
+                            <li class="col-sm-3"><a href="#huh" class="link">Huh?</a></li>
+                            <li class="col-sm-3"><a href="#query" class="link">Query</a></li>
+                            <li class="col-sm-3"><a href="#fullstory" class="link">Full Story</a></li>
                             <!-- <li><a href="#feedback" class="link">Feedback</a></li> -->
                             <!-- <li><a href="#recent" class="link">Recent</a></li> -->
                             <!-- <li><a href="#explore" class="link">Explore</a></li> -->
-                            <li class="col-sm-4"><a href="#query" class="link">Query</a></li>
+                            <li class="col-sm-3"><a href="#help" class="link">Help</a></li>
                             <!-- <li><a href="#minutiae" class="link">Minutiae</a></li> -->
                             <!-- <li><a href="#map" class="link">Map</a></li> -->
 
@@ -104,9 +105,11 @@
 <div id="main" class="col-lg-12 pull-left">
 
 <div id="huh" class="mainpanel hidden">
-<div class="panel-wrap">
+<div id="huh-copy" class="col-lg-12"></div>
+<div id="huh-recent" class="col-lg-12"></div>
+<!-- <div class="panel-wrap">
     <h1>What?!</h1>
-</div>
+</div> -->
 </div> <!-- ./huh -->
 
 <!--
@@ -142,6 +145,29 @@
 
 </div>
 </div> <!-- ./minutiae-->
+
+<div id="help" class="mainpanel hidden">
+<div class="panel-wrap">
+
+    <div id="help-copy"></div>
+     <div class="gnpanel-0 pull-left col-lg-4"><div class="block">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'cbbmap';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    // (function() {
+    //     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    //     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    //     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    // })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div></div>
+
+</div>
+</div> <!-- ./help-->
 
 
 
@@ -191,50 +217,74 @@
 
 
 
-    <ul id="querylist-bits" class="pull-left col-lg-6">
+
+    <ul id="querylist-bits" class="pull-left col-lg-4">
     </ul>
+
+<div id="episodes" class="hidden">
+     <ul id="episodes-list" class="episodes pull-left col-lg-12 list-unstyled">
+      <li></li>
+    </ul>
+
+</div>  <!-- ./episodes  -->
 
     <ul id="querylist-locations" class="pull-left col-lg-4 ">
     </ul>
-<ul id="querylist-facets" class="pull-right col-lg-2">
+<ul id="querylist-facets" class="pull-right col-lg-3">
 <!-- <span class="col-sm-8">Facets: </span> -->
     <div id="facet-tags" class="col-sm-12"></div>
     <div id="facet-names" class="col-sm-12"></div>
+    <div id="facet-slugs" class="col-sm-12"></div>
 
     </ul>
 
 </div>
 </div> <!-- ./query -->
 </div>  <!-- ./main  -->
-<div id="episodes" class="col-lg-12 pull-left hidden">
 
-<div class="panel-wrap col-sm-12">
-    <h3 class="col-sm-8">Episodes:</h3>
-    <span class="col-sm-4 pull-right la-cog">
-        <div></div>
-    </span>
-</div>
-
-     <ul id="episodes-list" class="episodes pull-right col-lg-12 list-unstyled">
-      <li></li>
-    </ul>
-
-</div>  <!-- ./main  -->
 
 <div id="livefooter" class="col-sm-12">
+
 <ul id="mnuBaseMap" class="col-sm-6 list-inline pull-left" ></ul>
 
+<div id="btn-sharie" class="pull-right">
+    <!-- <div data-toggle="tooltip" title="toggle page elements" class="triangle-trigger-false"> -->
+    <div data-toggle="tooltip" title="share current page/state" class="icom-bang">
+<span class="glyphicon glyphicon-share-alt share-copy"></span>
+</div>
+</div>
  <!-- <div id="consoleContainer" class="col-sm-4 pull-right"></div> -->
 
 </div> <!-- livefooter -->
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Share This</h4>
+      </div>
+      <div class="modal-body">
+        <div id="share-container-modal"></div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
+<!-- /share-container-modal -->
 <script src="js/globals.js"></script>
 <script src="lib/octo.js"></script>
 <script src="lib/leaflet/leaflet.js"></script>
 <script type="text/javascript" src="lib/tile.stamen.js?v1.2.0"></script>
 <script src="js/h-templates-compiled.js"></script>
 <script src="lib/components/jquery/jquery.min.js"></script>
-<script src="lib/jquery-ui.min.js"></script>
+<!-- <script src="lib/jquery-ui.min.js"></script> -->
 <!-- <script type="text/javascript" language="Javascript" src="lib/jquery.visible.min.js"></script> -->
 <!-- <script type="text/javascript" language="Javascript" src="lib/jquery.scrollIntoView.min.js"></script> -->
 <!-- <script type="text/javascript" language="Javascript" src="lib/jquery.scrollTo.min.js"></script> -->
@@ -246,10 +296,10 @@
 <script type="text/javascript" language="Javascript" src="lib/Wicket/wicket-leaflet.js"></script>
 <script type="text/javascript" language="Javascript" src="lib/nprogress.js"></script>
 <script src="lib/bootstrap.min.js"></script>
-<script src="lib/xregexp-all.js"></script>
+<!-- <script src="lib/xregexp-all.js"></script> -->
 <script type = "text/javascript" language = "Javascript" src = "lib/underscore-min.js"></script>
 <script type = "text/javascript" language = "Javascript" src = "lib/backbone-min.js"></script>
-<script type = "text/javascript" language = "Javascript" src = "lib/backbone.cartodb.js"></script>
+<!-- <script type = "text/javascript" language = "Javascript" src = "lib/backbone.cartodb.js"></script> -->
 <!-- <script type = "text/javascript" language = "Javascript" src = "lib/jquery.scrollintoview.min.js"></script> -->
 <!--         <script type="text/javascript" language="Javascript" src="models.js"></script>
 <script type="text/javascript" language="Javascript" src="views.js"></script> -->
