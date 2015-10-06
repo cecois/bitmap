@@ -347,19 +347,29 @@ templates['recentsViewTpl'] = template({"1":function(depth0,helpers,partials,dat
   if (stack1 != null) { buffer += stack1; }
   return buffer + "    </div>\n</div></div>";
 },"useData":true});
-templates['sharesViewTpl'] = template({"1":function(depth0,helpers,partials,data) {
+templates['sharesViewTpl'] = template({"1":function(depth0,helpers,partials,data,depths) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "        <!-- <li data-id=\""
     + escapeExpression(lambda((depth0 != null ? depth0._id : depth0), depth0))
     + "\" class=\"col-sm-2 pull-left gnpanel-r\"> -->\n        <li >\n";
-  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.id : depth0), {"name":"if","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
+  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.id : depth0), {"name":"if","hash":{},"fn":this.program(2, data, depths),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer + "        </li>\n";
-},"2":function(depth0,helpers,partials,data) {
+},"2":function(depth0,helpers,partials,data,depths) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "            "
+  return "\n            <a class=\"social-share-element\" id=\""
     + escapeExpression(lambda((depth0 != null ? depth0.id : depth0), depth0))
-    + "\n";
-},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    + "\" href=\""
+    + escapeExpression(lambda((depth0 != null ? depth0.href : depth0), depth0))
+    + "?text=&url="
+    + escapeExpression(lambda((depths[2] != null ? depths[2].purl : depths[2]), depth0))
+    + "&via=CBBBitTracker&hashtags="
+    + escapeExpression(lambda((depths[2] != null ? depths[2].tags : depths[2]), depth0))
+    + "\" target=\"_blank\" title=\""
+    + escapeExpression(lambda((depth0 != null ? depth0.tip : depth0), depth0))
+    + "\">\n            	<span class=\"icom-"
+    + escapeExpression(lambda((depth0 != null ? depth0.id : depth0), depth0))
+    + "\"></span>\n            </a>\n\n";
+},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data,depths) {
   var stack1, helper, lambda=this.lambda, escapeExpression=this.escapeExpression, functionType="function", helperMissing=helpers.helperMissing, buffer = "<!-- <div id=\"social-share\">\n    <a class=\"social-share-element\" id=\"social-twitter\" href=\"https://twitter.com/intent/tweet?text="
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.page : depth0)) != null ? stack1.title : stack1), depth0))
     + "&url="
@@ -381,11 +391,17 @@ templates['sharesViewTpl'] = template({"1":function(depth0,helpers,partials,data
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.page : depth0)) != null ? stack1.title : stack1), depth0))
     + "&url="
     + escapeExpression(((helper = (helper = helpers.url || (depth0 != null ? depth0.url : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"url","hash":{},"data":data}) : helper)))
-    + "\" target=\"_blank\" title=\"Share this post on Sina Weibo\"></a>\n</div> -->\n<ul>\n";
-  stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.shares : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
+    + "\" target=\"_blank\" title=\"Share this post on Sina Weibo\"></a>\n</div> -->\n<p>\nYour current query is: </p>\n<p><div class=\"social-share-value\">"
+    + escapeExpression(((helper = (helper = helpers.query || (depth0 != null ? depth0.query : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"query","hash":{},"data":data}) : helper)))
+    + "</div>\n	</p>\n	<p>On platforms that support them, your hashtag(s) will be:</p><p> <div class=\"social-share-value\">"
+    + escapeExpression(((helper = (helper = helpers.tags || (depth0 != null ? depth0.tags : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"tags","hash":{},"data":data}) : helper)))
+    + "</div></p>\n\n	<p>The shortened url is:</p>\n	<p>"
+    + escapeExpression(((helper = (helper = helpers.purl || (depth0 != null ? depth0.purl : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"purl","hash":{},"data":data}) : helper)))
+    + "</p>\n\n	\n\n<ul class=\"list-inline\" style=\"margin-top:25px;\">\n";
+  stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.shares : depth0), {"name":"each","hash":{},"fn":this.program(1, data, depths),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer + "    </ul>";
-},"useData":true});
+},"useData":true,"useDepths":true});
 templates['solrfieldsView'] = template({"1":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "  <dt>"
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))

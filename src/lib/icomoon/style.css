@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?-enyhzl');
-	src:url('fonts/icomoon.eot?#iefix-enyhzl') format('embedded-opentype'),
-		url('fonts/icomoon.ttf?-enyhzl') format('truetype'),
-		url('fonts/icomoon.woff?-enyhzl') format('woff'),
-		url('fonts/icomoon.svg?-enyhzl#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?-omhwny');
+	src:url('fonts/icomoon.eot?-omhwny#iefix') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?-omhwny') format('truetype'),
+		url('fonts/icomoon.woff?-omhwny') format('woff'),
+		url('fonts/icomoon.svg?-omhwny#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -23,18 +23,46 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+/*.icom-arclight:before {
+	content: "\e602";
+}*/
 .icom-poly:before {
 	content: "\e602";
 }
 .icom-bang:before {
 	content: "\e601";
 }
+/*.icom-line-graph:before {
+	content: "\e603";
+}*/
 .icom-line:before {
 	content: "\e603";
 }
 .icom-info:before {
 	content: "\e600";
 }
+/*.icom-location:before {
+	content: "\e947";
+}*/
 .icom-point:before {
 	content: "\e947";
 }
+.icom-link:before {
+	content: "\e9cb";
+}
+.icom-social-google:before {
+	content: "\ea89";
+}
+.icom-social-facebook:before {
+	content: "\ea8d";
+}
+.icom-social-instagram:before {
+	content: "\ea90";
+}
+.icom-social-twitter:before {
+	content: "\ea92";
+}
+.icom-soundcloud:before {
+	content: "\eac4";
+}
+

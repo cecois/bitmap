@@ -128,6 +128,19 @@
   /*white-space: nowrap;*/
 }
 
+/* --------------------------------------- SHARE STUFF -------------- */
+
+#share-container-modal{
+ color: black;
+ text-align:center;
+.social-share-element{
+  font-size: 4em;
+}
+}
+.social-share-value{
+  color:@primarycolor;
+  font-size:1.2em;
+ }
 /* --------------------------------------- NPROGRESS OVERRIDES -------------- */
 
 #nprogress .spinner{
@@ -715,6 +728,12 @@ width:100%;*/
     // right: -30px;
     left:95%;
     z-index: 88;
+&:hover{
+    text-shadow:2px 2px 2px @primarycolor;
+  }
+    &:active{
+      color:white;
+    }
 
     .share-copy{
             color: white;
@@ -723,9 +742,7 @@ width:100%;*/
     position: absolute;
     right: 40px;
     top: 40px;
-    &:hover{
-    text-shadow:2px 2px 2px @primarycolor;
-  }
+    
     }
 }
 
@@ -745,6 +762,9 @@ width:100%;*/
   &:hover{
     text-shadow:2px 2px 2px @primarycolor;
   };
+      &:active{
+      color:white;
+    }
   height: 80px;
   // left: -40px;
   position: relative;
@@ -991,9 +1011,14 @@ border-right:none;
       -webkit-text-stroke: 1px #ff8000;
       z-index: 9;
     font-size: 31em;
-    left: -150px;
+    // left: -150px;
     position: absolute;
-    top: -220px;
+    // right: 150px;
+    // top: -220px;
+
+    right: 170px;
+    top: -200px;
+
 }
 #banner-bang.statie-collapsed{
     /*left:-380px;*/
@@ -1024,14 +1049,17 @@ border-right:none;
     color: white;
     font-family: "KiloGram";
     font-size: 40px;
-    left: 115px;
+    // left: 115px; LEFT
+    left: 135px;
     letter-spacing: -1px;
     line-height: 32px;
     position: absolute;
     text-align: center;
     text-shadow: 2px 2px 0 @secondarycolor, 5px 5px 0 @linkcolor, 7px 7px 0 @linkcolor, 9px 9px 0 @linkcolor, 11px 11px 0 @linkcolor, 13px 13px 0 @secondarycolor-trans;
-    top: 230px;
-    transform: rotate(-40deg);
+    // top: 230px; LEFT
+    top: 210px;
+    // transform: rotate(-40deg);
+    transform: rotate(40deg);
 }
 
 /*#banner-copy {

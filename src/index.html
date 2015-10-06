@@ -56,7 +56,7 @@
                 <div id="banner-bang" class="content-wrap col-sm-1">
                 <span class="icom-bang"><span id="banner-copy">CBB<br/>Bit<br/>Tracker</span></span>
                 </div>
-                <div id="banner-nav" class="content-wrap col-sm-5 col-sm-offset-3">
+                <div id="banner-nav" class="content-wrap col-sm-5">
 
                     <nav class="site-nav" role="navigation">
                         <ul class="col-sm-12">
@@ -243,6 +243,7 @@
 
 
 <div id="livefooter" class="col-sm-12">
+
 <ul id="mnuBaseMap" class="col-sm-6 list-inline pull-left" ></ul>
 
 <div id="btn-sharie" class="pull-right">
@@ -254,7 +255,27 @@
  <!-- <div id="consoleContainer" class="col-sm-4 pull-right"></div> -->
 
 </div> <!-- livefooter -->
-<div id="share-container-modal" class="hidden"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Share This</h4>
+      </div>
+      <div class="modal-body">
+        <div id="share-container-modal"></div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
 <!-- /share-container-modal -->
 <script src="js/globals.js"></script>
 <script src="lib/octo.js"></script>

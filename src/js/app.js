@@ -6,6 +6,8 @@ window.agent = "mobile";
 window.agent = "desktop";
 }
 
+window.thedomain="zapstraighttoit.com"
+
 // agent="mobile"
 
 NProgress.configure({
@@ -406,39 +408,27 @@ var states = [{
 "href":"http://some.url.com",
 "page.title":null,
 "page.url":null,
-"tip":"share on foo",
+"tip":"share on Twitter",
 "hashtags":null
 },
 {"id":"social-facebook",
 "href":"http://some.url.com",
 "page.title":null,
 "page.url":null,
-"tip":"share on foo"
+"tip":"share on FaceBook"
 },
 {"id":"social-google",
 "href":"http://some.url.com",
 "page.title":null,
 "page.url":null,
-"tip":"share on foo"
-},
-{"id":"social-linkedin",
-"href":"http://some.url.com",
-"page.title":null,
-"page.url":null,
-"tip":"share on foo"
-},
-{"id":"social-weibo",
-"href":"http://some.url.com",
-"page.title":null,
-"page.url":null,
-"tip":"share on foo"
+"tip":"share on Google+"
 }
 
     ]
 
 window.appStates = new States(
 states
-    );
+  );
 window.appStatesView = new StatesView({
     collection: appStates
 });
@@ -649,7 +639,7 @@ acv=ac.join(":")
 } else {
     acv="noactive"
 }
-        var url = h + "/" + qs + "/" + bbx + "/" + bl +"/"+acv+"/"+fa
+        var url = "http://" + thedomain+ "/"+ h + "/" + qs + "/" + bbx + "/" + bl +"/"+acv+"/"+fa
         // if(typeof activeid !== 'undefined' && typeof activeid !== null && typeof activetype !== 'undefined' && typeof activetype !== null){
             // }
 

@@ -5,12 +5,27 @@
     <a class="social-share-element" id="social-linkedin" href="http://www.linkedin.com/shareArticle?mini=true&title={{ page.title }}&url={{ url }}&source=http%3a%2f%2fzhangwenli.com" target="_blank" title="Share this post on LinkedIn"></a>
     <a class="social-share-element" id="social-weibo" href="http://v.t.sina.com.cn/share/share.php?title=来看看+%40Ovilia允执厥中+的博文吧：{{ page.title }}&url={{ url }}" target="_blank" title="Share this post on Sina Weibo"></a>
 </div> -->
-<ul>
+<p>
+Your current query is: </p>
+<p><div class="social-share-value">{{query}}</div>
+	</p>
+	<p>On platforms that support them, your hashtag(s) will be:</p><p> <div class="social-share-value">{{tags}}</div></p>
+
+	<p>The shortened url is:</p>
+	<p class="social-share-value"><a href="{{purl}}">{{purl}}</a></p>
+
+	
+
+<ul class="list-inline" style="margin-top:25px;">
 {{#each shares}}
         <!-- <li data-id="{{this._id}}" class="col-sm-2 pull-left gnpanel-r"> -->
         <li >
             {{#if this.id}}
-            {{this.id}}
+
+            <a class="social-share-element" id="{{this.id}}" href="{{this.href}}?text=&url={{ ../../purl }}&via=CBBBitTracker&hashtags={{../../tags}}" target="_blank" title="{{this.tip}}">
+            	<span class="icom-{{this.id}}"></span>
+            </a>
+
             {{/if}}
         </li>
         {{/each}}
