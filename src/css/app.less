@@ -4,6 +4,7 @@
 
 // @mobile: ~"only screen and (min-device-pixel-ratio: 1.1)";
 @mobile: ~"only screen and (max-width: 1400px)";
+@desktop: ~"only screen and (min-width: 1401px)";
 
 /*blue*/
 // @primarycolor: rgba(18, 136, 185, 1.0000);
@@ -477,11 +478,6 @@ div.leaflet-popup-content .marker.bt{
     border-left-width: 0;
     margin-bottom: 0;
 
-    @media(max-width:992px){
-      padding:0 0;
-      font-size:.5em;
-    }
-
 }
 
 /* --------------------------------------- ACTIVITY -------------- */
@@ -646,24 +642,9 @@ left:15px;
 position: relative;
 width:100%;
 
-@media(max-width:992px){
-.block{
-      h1{margin-bottom:5px;
-        margin-left: 0px;
-       }
-       } //block
-  padding:5px 10px;
-}
 
   } //mainpanel
 
-@media(max-width:992px){
-   border-top:solid 2px @secondarycolor;
-  border-bottom:solid 2px @secondarycolor;
-  height:70%;
-  top:65px;
-  font-size:.8em;
-}
 } //main
 
 .popover-episodes{
@@ -706,24 +687,10 @@ opacity:.9;
 position: relative;
 width:100%;*/
 
-@media(max-width:992px){
-.block{
-      h1{margin-bottom:5px;
-        margin-left: 0px;
-       }
-       } //block
-  padding:5px 10px;
-}
+
 
   } //episodespanel
 
-@media(max-width:992px){
-   border-top:solid 2px @secondarycolor;
-  border-bottom:solid 2px @secondarycolor;
-  height:70%;
-  top:65px;
-  font-size:.8em;
-}
 } //episodes
 
 #btn-sharie {
@@ -766,6 +733,10 @@ width:100%;*/
   position: fixed;
   top: 178px;
   z-index: 88;
+
+  @media @mobile{
+left:-60px;
+    } //media
 
 .circle-trigger-false {
   &:hover{
@@ -942,11 +913,11 @@ border-right:none;
     padding-bottom: 0px;
     // margin-left:-100px;
     margin-left:-50px;
-    @media(max-width:992px){
+    @media @mobile{
       margin-left:0px;
       padding-top:0px;
       font-size:.8em;
-      width:100px;
+      // width:100px;
       .link{
         padding:0 0;
       }
@@ -967,15 +938,21 @@ border-right:none;
             margin-left:60px;*/
             text-align: center;
 
-    @media(max-width:992px){
+    @media @mobile{
             // font-size:1.5em;
-            display: table-row;
-            font-size:.8em;
+            display: grid;
+            font-size:1.3em;
             padding: 0 0em;
-            margin-right:0px;
+            margin-right:10px;
     height:10px;
       text-shadow:
         1px 1px 0 black;
+
+        a.link.active {
+              // color: @primarycolor;
+              color:@primarycolor;
+    
+         } //./active
     }
 
 
@@ -983,42 +960,27 @@ border-right:none;
               // color:@primarycolor;
               // color:@quaternarycolor;
 
-       @media(min-width:992px){
-         .stroke;
-       } //media
 &:active{color:white;}
                 &:hover {
                     text-decoration: none;
                     .text-shadow-general
                }
-               // padding squeezes it down to the same level as the rotated leaflet control
-               @media(min-width:1200px){
-                          padding-top: 8px;
-                          padding-bottom: 8px;}
+               
 
           }
           a.active {
               // color: @primarycolor;
               color:@quaternarycolor;
-    @media(max-width:992px){
-      color:white;
-    }
-    @media(min-width:992px){
-              .stroke-active;
-              &:hover {
-                .stroke-active;
-               } //hover
-    } //media
-
+    
          } //./active
     } //li
     } //ul
 }
 
 #banner-bang{
-     
+
       color: @secondarycolor;
-      -webkit-text-stroke: 1px #ff8000;
+      // -webkit-text-stroke: 1px #ff8000;
       z-index: 9;
     font-size: 31em;
     // left: -150px;
@@ -1029,33 +991,42 @@ border-right:none;
     right: 170px;
     top: -200px;
 
+@media @mobile {
+      font-size:10em;
+      right: -65px;
+    top: -70px;
+    
+    }
 }
 #banner-bang.statie-collapsed{
-    /*left:-380px;*/
-       font-size: 7em;
-    left: -20px;
-    position: absolute;
-    top: -20px;
-    #banner-copy {
-      // -webkit-text-stroke: 1px rgba(0,0,0,.75); //black
-      -webkit-text-stroke: 1px #ff8000; //orange
-    color: white;
-    font-family: "KiloGram";
-    font-size: 10px;
-    left: 40px;
-    letter-spacing: -1px;
-    line-height: 10px;
-    position: absolute;
-    text-align: center;
-    text-shadow: 1px 1px 0 @secondarycolor, 2px 2px 0 @quaternarycolor, 3px 3px 0 @quaternarycolor, 4px 4px 0 @quaternarycolor, 5px 5px 0 @quaternarycolor, 6px 6px 0 @secondarycolor-trans;
-    top: 38px;
-    transform: rotate(-40deg);
-}
+
+  // only do the banner trick on desktop
+  @media @desktop{
+      /*left:-380px;*/
+         font-size: 7em;
+      left: -20px;
+      position: absolute;
+      top: -20px;
+      #banner-copy {
+        // -webkit-text-stroke: 1px rgba(0,0,0,.75); //black
+        -webkit-text-stroke: 1px #ff8000; //orange
+      color: white;
+      font-family: "KiloGram";
+      font-size: 10px;
+      left: 40px;
+      letter-spacing: -1px;
+      line-height: 10px;
+      position: absolute;
+      text-align: center;
+      text-shadow: 1px 1px 0 @secondarycolor, 2px 2px 0 @quaternarycolor, 3px 3px 0 @quaternarycolor, 4px 4px 0 @quaternarycolor, 5px 5px 0 @quaternarycolor, 6px 6px 0 @secondarycolor-trans;
+      top: 38px;
+      transform: rotate(-40deg);
+  }}
   }
 
 #banner-copy {
   // -webkit-text-stroke: 1px rgba(0,0,0,.75); //blaci
-      -webkit-text-stroke: 1px #ff8000; //orange
+      // -webkit-text-stroke: 1px #ff8000; //orange
     color: white;
     font-family: "KiloGram";
     font-size: 40px;
@@ -1070,6 +1041,14 @@ border-right:none;
     top: 210px;
     // transform: rotate(-40deg);
     transform: rotate(40deg);
+
+    @media @mobile {
+      font-size:14px;
+      text-shadow: 1px 1px 0 @secondarycolor, 2px 2px 0 @linkcolor;
+      line-height: 9px;
+      left:50px;
+      top:78px;
+    }
 }
 
 /*#banner-copy {
@@ -1208,6 +1187,11 @@ text-shadow: 0px 0px 1px black;
 
 #query-form{
 padding-top:15px;
+@media @mobile{
+padding-top:25px;
+  z-index: 9;
+  } //media
+
 // margin-bottom:33px;
 #query-form-input{
   border:solid 1px @secondarycolor;
@@ -1458,6 +1442,9 @@ text-decoration:none;
 // ------------------------------------- LEAFLET/PLUGIN OVERRIDES
 
 .leaflet-control-container {
+  @media @mobile {
+    display:none;
+    }
     right: 10px;
     position: fixed;
     top: 90px;
@@ -1491,6 +1478,10 @@ a {
             background-color:transparent;
        }
   }
+
+@media @mobile {
+    display:none;
+    }
 
   } /* history-control */
 
@@ -1728,7 +1719,7 @@ bottom:-35px;
         background-color: transparent;
         .mnuThumbnail {
             height: 55px;
-              @media(max-width:992px){
+              @media @mobile{
     height:25px;
   }
             -webkit-border-radius: 50%;
@@ -1741,7 +1732,7 @@ bottom:-35px;
                }
                width: 50px;
                height: 50px;
-                 @media(max-width:992px){
+                 @media @mobile{
     width:20px;
     height:20px;
   }
