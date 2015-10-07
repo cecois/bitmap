@@ -1,3 +1,10 @@
+/*
+--------------  MOBILE
+*/
+
+// @mobile: ~"only screen and (min-device-pixel-ratio: 1.1)";
+@mobile: ~"only screen and (max-width: 1400px)";
+
 /*blue*/
 // @primarycolor: rgba(18, 136, 185, 1.0000);
 // @primarycolor-trans: rgba(18, 136, 185, .4000);
@@ -172,6 +179,7 @@
 body{
   overflow:hidden;
   // color:@secondarycolor;
+
   color:@tertiarycolor;
   -webkit-font-smoothing: antialiased;
   font-family: 'Roboto', sans-serif;
@@ -331,6 +339,7 @@ h1{
   font-size:1.5em;
 }
 .slide{
+  font-size:1.2em;
   .block{
     padding:45px 220px 60px 220px;
   }
@@ -1007,6 +1016,7 @@ border-right:none;
 }
 
 #banner-bang{
+     
       color: @secondarycolor;
       -webkit-text-stroke: 1px #ff8000;
       z-index: 9;
