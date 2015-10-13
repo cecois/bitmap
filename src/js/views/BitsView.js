@@ -19,6 +19,11 @@ var BitsView = Backbone.View.extend({
         // this.listenTo(this.model, "change", this.render);
         // this.listenTo(this.collection, "reset", this.render);
         // this.collection.bind('change', this.render, this);
+        if (agent == "desktop") {
+            this.template = Handlebars.templates['bitsView'];
+        } else if (agent == "mobile") {
+            this.template = Handlebars.templates['bitsView-Mobile'];
+        }
         return this
             // .render()
     },
@@ -58,7 +63,8 @@ var BitsView = Backbone.View.extend({
         if (agent == "desktop") {
             return this.pulleps()
         } else if (agent == "mobile") {
-            return this.pulleps_mobile()
+            // return this.pulleps_mobile()
+            return this.pulleps()
         }
     },
    pulleps: function() {

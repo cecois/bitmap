@@ -16,7 +16,7 @@ return this
     render: function() {
         var len = this.collection.models.length
         
-        $(this.el).html(this.collection.models.length);
+        $(this.el).html("("+this.collection.models.length+")");
         return this
     }
 }); //bitscountview

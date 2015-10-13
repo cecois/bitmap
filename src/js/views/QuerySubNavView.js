@@ -4,10 +4,12 @@ var QuerySubNavView = Backbone.View.extend({
         // "click .query-subnav-btn": "switchto",
         // "click #query-form-randomize": "randomize",
         // "click #solrfields .glyphicon": "togglehelp"
-        "click .bt-episodes-hide": "reset"
+        "click .bt-episodes-hide": "reset",
+        "click .mobile-slide-nav li": "wiremobile"
         // "change": "render"
     },
     template: Handlebars.templates['querySubNavViewTpl'],
+    template_mobile: Handlebars.templates['querySubNavViewTpl-mobile'],
     initialize: function() {
         this.render();
         // this.listenTo(appBits,"reset",this.accoutrement)
@@ -21,11 +23,31 @@ var QuerySubNavView = Backbone.View.extend({
         if (this.model.get("error") == true) {
             $(this.el).addClass("error")
         }
-        $(this.el).html(this.template(this.model.toJSON()))
+        if(agent=="mobile"){
+
+        $(this.el).html(this.template_mobile(this.model.toJSON()))
+        return this.initmobile()
+        } else {
+                // $(this.el).html(this.template(this.model.toJSON()))
+        $(this.el).html(this.template_mobile(this.model.toJSON()))
+        return this.initmobile()
+    }
             // $(this.el).val(this.model.get("solrstring"))
         // return this.switchto()
-        return this
-        .rewire()
+        // return this
+        // .rewire()
+    },
+    initmobile: function(){
+
+// find all the mobile-wrappers, hide em
+$(this.el).find(".mobile-wrapper").addClass("hidden")
+
+// there should at least be a 1 (usually at least a 1-2), show it
+$(this.el).find(".mobile-wrapper-1").removeClass("hidden")
+
+return this
+
+
     },
     rewire: function(){
 this.$(".bt-episodes-hide").tooltip({
@@ -33,6 +55,24 @@ container: "body",
 placement: 'top',
 trigger: 'hover'
 });
+
+    },
+    wiremobile: function(e){
+
+console.log("in wiremobile");
+e.preventDefault()
+var dtarg = $(e.currentTarget).attr("data-target")
+
+$(".mobile-slide-nav ul li").removeClass('active');
+$(e.currentTarget).addClass('active');
+
+$(".mobile-wrapper").addClass("hidden");
+console.log("target id:");console.log("#"+dtarg);
+$("#"+dtarg).removeClass('hidden');
+// $(this.el).find(ds).removeClass("hidden")
+// $(this.el).find(ds).scrollTop()
+
+return this
 
     },
     reset: function(){
