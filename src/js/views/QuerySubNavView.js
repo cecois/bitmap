@@ -28,8 +28,8 @@ var QuerySubNavView = Backbone.View.extend({
         $(this.el).html(this.template_mobile(this.model.toJSON()))
         return this.initmobile()
         } else {
-                // $(this.el).html(this.template(this.model.toJSON()))
-        $(this.el).html(this.template_mobile(this.model.toJSON()))
+                $(this.el).html(this.template(this.model.toJSON()))
+        // $(this.el).html(this.template_mobile(this.model.toJSON()))
         return this.initmobile()
     }
             // $(this.el).val(this.model.get("solrstring"))

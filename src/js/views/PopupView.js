@@ -122,7 +122,8 @@ console.log('<span class="copy-trigger" data-string="location_id:'+locid+ ' AND 
 if (agent == "desktop") {
             return this.pulleps()
         } else if (agent == "mobile") {
-            return this.pulleps_mobile()
+            // return this.pulleps_mobile()
+            return this.pulleps()
         }
 
 },

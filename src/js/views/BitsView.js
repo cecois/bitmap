@@ -70,7 +70,7 @@ var BitsView = Backbone.View.extend({
    pulleps: function() {
 
 
-        $("#episodes-list").html('<div class="spinner-gold"></div>')
+        $("#episodes-list").html('<span class="spinner-gold pull-right"></span>').removeClass("hidden")
 
         // $("#episodes").removeClass("hidden")
 

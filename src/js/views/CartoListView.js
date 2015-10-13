@@ -65,7 +65,8 @@ var CartoListView = Backbone.View.extend({
         if (agent == "desktop") {
             return this.pulleps()
         } else if (agent == "mobile") {
-            return this.pulleps_mobile()
+            // return this.pulleps_mobile()
+            return this.pulleps()
         }
         // return this.prepeps(e)
     },
@@ -95,6 +96,7 @@ var CartoListView = Backbone.View.extend({
 
 
         // $("#episodes-list").html('<div class="spinner-gold"></div>')
+$("#episodes-list").html('<span class="spinner-gold pull-right"></span>').removeClass("hidden")
 
         // $("#episodes").removeClass("hidden")
 

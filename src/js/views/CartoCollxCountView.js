@@ -8,14 +8,15 @@ var CartoCollxCountView = Backbone.View.extend({
     },
     throb: function(){
 
-$(".query-subnav-count-locations").html('<div class="spinner" style="margin:0;"></div>');
+// $(".query-subnav-count-locations").html('<div class="spinner" style="margin:0;"></div>');
+$(".query-subnav-count-location").html('<div class="spinner pull-right" style="margin:0;"></div>');
 
 return this
 
     },
     render: function() {
         var len = this.collection.models.length
-        
+
         $(this.el).html("("+this.collection.models.length+")");
         return this
     }
