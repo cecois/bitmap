@@ -67,15 +67,15 @@ return this
 
 if(activeFactory()[0]=="_id"){
 
-$(this.el).html("<span style='text-align:left;' class='cbbepsanno col-sm-12'>referencing (unmappable) bit: <span style='color:white;'>" + appBits.findWhere({
+$(this.el).html("<div style='text-align:left;' class='cbbepsanno col-sm-12'>referencing (unmappable) bit: <p style='color:white;'>" + appBits.findWhere({
                 active: true
-            }).get("name") + "</span></span>")
+            }).get("name") + "</p></div>")
 
 } else {
 
-    $(this.el).html("<span style='text-align:left;' class='cbbepsanno col-sm-12'>referencing location: <span style='color:white;'>" + appCBB.findWhere({
+    $(this.el).html("<div style='text-align:left;' class='cbbepsanno col-sm-12'>referencing location: <p style='color:white;'>" + appCBB.findWhere({
                 active: true
-            }).get("name") + "</span></span>")
+            }).get("name") + "</p></div>")
 }
 
 

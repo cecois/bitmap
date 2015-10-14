@@ -67,7 +67,9 @@ return this
             console.log(ib);
             console.log(ic);
 
-            octo.repos('cecois','bitmap').issues.create({"title":it,"body":ib})
+            octo.repos('cecois','bitmap').issues.create({"title":it,"body":ib}) //daOG
+            
+            
 
             // success will put a checkmark in submit button or something - github (octokat) doesn't return much
 
