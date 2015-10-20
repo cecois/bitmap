@@ -16,12 +16,15 @@ var FacetsView = Backbone.View.extend({
 // $(this).tooltip('destroy')
 $(this.el).find(".bt-facet").tooltip('destroy')
 
+// also kill an episodes pane if it's up
+appQuerySubNavView.reset()
+
       switch (this.group) {
    case "Tags":
       var fpre = "tags:"
       break;
    case "Bits":
-      var fpre = "name:"
+      var fpre = "bit:"
       break;
          case "Episodes":
       var fpre = "slug_earwolf:"

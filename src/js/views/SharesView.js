@@ -13,13 +13,13 @@ var SharesView = Backbone.View.extend({
 
 var longurl = captureState()
 
-console.log(longurl);return 0;
+console.log(longurl);
+// return 0;
 
 appActivity.set({
                     message: "shortening url for sharing..."
                 })
 // shorten it w goo.gl
-// 
 
 var self = this;
 
@@ -31,7 +31,6 @@ $.ajax({
         dataType: 'json',
         success: function(data) {
             shawty = data.id;
-            
             appActivityView.stfu()
 
             return self.render(shawty)
@@ -59,7 +58,8 @@ return self.errorout(data)
     },
     errorout: function(data){
 
-console.log("data in errorout:");console.log(data);
+// console.log("data in errorout:");
+// console.log(data);
     $("#share-container-modal").html("couldn't shortern the url with goo.gl - you can try if you want:<pre class='social-share-value'>"+captureState()+"</pre>")
 return this
 .show()
@@ -76,7 +76,7 @@ var shawty = shaw
 
         // kill stragglers
         $(this.el).find('[data-toggle="tooltip"]').tooltip('destroy');
-        
+
         // $("#share-container-modal").html(this.template(this.collection.toJSON()))
 
 var tagstring = "comedybangbang,"+appCartoQuery.get("facetarray").join(",")
@@ -93,7 +93,6 @@ $("#share-container-modal").html(this.template({
         .show()
     },
     show: function() {
-        
         // $("#share-container-modal").removeClass('hidden')
         $('#myModal').modal()
         // $('#share-container-modal').modal()

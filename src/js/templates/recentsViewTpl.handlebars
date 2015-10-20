@@ -6,13 +6,13 @@
         {{#each recents}}
         <!-- <li data-id="{{this._id}}" class="col-sm-2 pull-left gnpanel-r"> -->
         <li data-id="{{this._id}}" class="">
-            {{#if this.desc}}
-            <span class="copy-trigger" data-toggle="tooltip" data-string='desc:"{{this.desc}}"'><span class="loc-string">{{this.desc}}</span></span>
+            {{#if this.instance}}
+            <span class="copy-trigger" data-toggle="tooltip" data-string='instance:"{{this.instance}}"'><span class="loc-string">{{this.instance}}</span></span>
             <!-- <span class="cbbanno">({{#timeize}}{{this.updated_at}}{{/timeize}})</span> -->
             <small>({{#timeize}}{{this.updated_at}}{{/timeize}})</small>
-            <!-- {{#if this.name}}
-                    &nbsp;<span class="copy-trigger" data-toggle="tooltip" data-string='name:"{{this.name}}"'><span class="loc-string">({{this.name}})</span></span>
-            {{/if}} -->
+            {{#if this.bit}}
+                    &nbsp;<span style="font-size:.8em;" class="copy-trigger" data-toggle="tooltip" data-string='bit:"{{this.bit}}"'><span class="loc-string">({{this.bit}})</span></span>
+             {{/if}} 
             {{/if}}
         </li>
         {{/each}}

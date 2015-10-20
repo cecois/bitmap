@@ -16,8 +16,9 @@ var RecentItem = Backbone.Model.extend({});
 var RecentsCollection = Backbone.Collection.extend({
     model: RecentItem,
     url: function() {
-        // return solrhost+"cbb_carto/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json&sort=updated_at+desc&rows=10"
-        return solrhost + "cbb_bits/select?json.wrf=cwmccallbackrecent&q=holding:false&wt=json&sort=_id+desc&rows=6"
+        // return solrhost+"cbb_carto/select?json.wrf=cwmccallbackrecent&q=*:*&wt=json&sort=updated_at+instance&rows=10"
+        // return solrhost + "cbb_bits/select?json.wrf=cwmccallbackrecent&q=holding:false&wt=json&sort=_id+instance&rows=6"
+        return solrhost + "cbb_bits/select?json.wrf=cwmccallbackrecent&q=holding:false&wt=json&sort=updated_at desc&rows=6"
     },
     initialize: function(options) {
         options || (options = {});
@@ -98,7 +99,7 @@ var BaseLayer = Backbone.Model.extend({});
 var BaseLayersCollection = Backbone.Collection.extend({
     model: BaseLayer,
     url: function() {
-        return null
+        // return null
         return "js/models/layers.json"
     },
     initialize: function(options) {
@@ -231,7 +232,7 @@ var FacetsSlugs = MetaFacets.extend({
     },
 
 
-}); //facetstags
+}); //facetsslugs
 var FacetsNames = MetaFacets.extend({
 // var FacetsNames = Backbone.Collection.extend({
     model: Facet,
@@ -336,7 +337,7 @@ var CartoQuery = Backbone.Model.extend({
         // rawstring: "+jesse",
         // displaystring: "jesse",
         // urlstring:'+jesse'
-        rawstring: "jesse",
+        rawstring: "",
         displaystring: "",
         urlstring: '',
         solrstring:'',
@@ -380,6 +381,7 @@ var CartoQuery = Backbone.Model.extend({
 
         var ss = this.get("rawstring")
         if (ss == '' || ss == null) {
+            console.log("empty, setting to wildcard...");
             this.set({
                 urlstring: "*",
                 displaystring: "",
@@ -390,6 +392,8 @@ var CartoQuery = Backbone.Model.extend({
             //     solrstring: ""
             // })
         } else {
+            console.log("populated, grabbing the current value, which is:");
+            console.log(ss);
             this.set({
                 urlstring: ss,
                 displaystring: ss,
@@ -404,8 +408,9 @@ var BitCollection = Backbone.Collection.extend({
     // host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        // return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("solrstring")
-        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=1000&sort=_id+desc&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=holding:false AND " + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&facet.field=slug_earwolf&json.nl=arrarr&facet.mincount=1"
+        // return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=100uell_id+instance&q=holding:false AND " + appCartoQuery.get("solrstring")
+        // return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=9000&sort=_id+instance&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=holding:false AND " + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&facet.field=slug_earwolf&json.nl=arrarr&facet.mincount=1"
+        return solrhost + "cbb_bits/select?json.wrf=cwmccallback&wt=json&rows=9000&sort=updated_at desc&q=holding:false AND " + appCartoQuery.get("solrstring") + "&facet.query=holding:false AND " + appCartoQuery.get("solrstring") + "&wt=json&facet=true&facet.field=episode&facet.field=fat_name&facet.field=tags&facet.field=slug_earwolf&json.nl=arrarr&facet.mincount=1"
     },
     initialize: function(options) {
         options || (options = {});
@@ -465,24 +470,28 @@ var BitCollection = Backbone.Collection.extend({
         }
         window.respp = resp.response.docs
         var locsornot = _.partition(resp.response.docs, function(e) {
-            return e.name == "Location";
+            return e.bit == "Location";
         })
         var locsyes = locsornot[0];
         var locsno = locsornot[1];
+
         // bad design - i'm tightly coupling these two collections pull out location refs here
         //
         // var arr = [2,5,7]
         // // give it to CartoCollection
         // appCBB.seturl(arr)
         // appCBB.set(locsyes)
+
         var lids = [];
         // ok so there's prolly a nifty underscore thing to pull these ids out, but because we need to doctor them we might as well just loop
         _.each(locsyes, function(l, i) {
             var i = l.location_id
             var t = l.location_type
+
             var cid = doctorId(t, i, "up")
             lids.push(cid)
         });
+
 
          appFatTags.reset(resp.facet_counts.facet_fields.tags)
          appFatSlugs.reset(resp.facet_counts.facet_fields.slug_earwolf)
@@ -504,7 +513,7 @@ var CartoCollection = Backbone.Collection.extend({
     // host:window.host,
     url: function() {
         // return "https://pugo.cartodb.com/api/v1/sql?q=select cartodb_id,name,anno,ST_AsGeoJSON(the_geom) as the_geom_gj,created_at,updated_at from cbb_point " + appCartoQuery.ready()
-        return solrhost + "cbb_carto/select?json.wrf=cwmccallback&wt=json&rows=1000&q=" + this.cartostring
+        return solrhost + "cbb_carto/select?json.wrf=cwmccallback&wt=json&rows=9000&q=" + this.cartostring
             // + this.cartostring
     },
     initialize: function(options) {

@@ -15,6 +15,13 @@ NProgress.configure({
 });
 
 /* -------------------------------------------------- HANDLEBARS START -----------------------  */
+Handlebars.registerHelper('debug', function(options) {
+    
+    console.log("debug hb:");
+    console.log(this);
+    return new Handlebars.SafeString("check console");
+});
+
 Handlebars.registerHelper('timeize', function(options) {
     // return new Handlebars.SafeString(moment(options.fn(this)).format('D.MMM.YYYY'));
     return new Handlebars.SafeString(moment(options.fn(this)).format('YYYY.MMM.D'));

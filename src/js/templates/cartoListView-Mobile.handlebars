@@ -3,10 +3,10 @@
 <!-- <span class="episodes hidden" style="margin-left:12px;">\-\-\-\-\-\-\-\-></span>  -->
 <!-- </h1> -->
 {{#each rows}}
-<li data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="">
+<li data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="pick">
     <div class="">
 
-        <span data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="carto-plain-title {{this.active}}">{{this.name}}</span>
+        <span data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="carto-plain-title {{this.active}}">{{this.bit}}</span>
         <span data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="carto-plain-geomtype icom-{{this.geom_type}} bt-cartoobj"></span>
         <!-- <span class="glyphicon glyphicon-share-alt bt-cartoobj bt-cartoobj-zoomto" title="zoom to this"></span> -->
         <!-- <span data-id="{{this.cartodb_id}}" data-type="{{this.geom_type}}" class="glyphicon glyphicon-headphones bt-cartoobj bt-cartoobj-episodes" title="pull a list of associated episodes"></span> -->

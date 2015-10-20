@@ -27,8 +27,6 @@ return this
         $cuta.addClass("active")
             // var tel = e.currentTarget.getAttribute("data-target")
         var tel = $cuta.attr("data-target")
-        console.log("this.ogwidth:");
-        console.log(this.ogwidth);
         $(".leaflet-popup-content").css("width", this.ogwidth + "px")
         $(this.el).find(".pu-copy").addClass("hidden")
         $(this.el).find(".pu-copy-" + tel).removeClass("hidden")
@@ -172,6 +170,7 @@ if (agent == "desktop") {
     //     },
     render: function() {
         // bc we'll be messing with this width once in a while, we sock away the original
+        console.log("in popup render, name:");console.log(this.model.get("name"));
         this.ogwidth = $(".leaflet-popup-content").width()
         $(this.el).html(this.template(this.model.toJSON()))
         return this

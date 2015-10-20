@@ -125,9 +125,10 @@ if(facetsin !== null && typeof facetsin !== 'undefined'){
                             appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:q});
                             
                             // }
-            } else {
-                 appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:'huell'});
-            }
+            } 
+            // else {
+            //      appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:'huell'});
+            // }
 
 // #returnto - this shouldn't be necessary but seems to be
             // appCartoQueryView.fire(false)

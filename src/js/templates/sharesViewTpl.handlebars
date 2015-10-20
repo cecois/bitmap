@@ -1,32 +1,40 @@
 <!-- <div id="social-share">
-    <a class="social-share-element" id="social-twitter" href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ url }}&via=OviliaZhang&hashtags={{ tagStr }}" target="_blank" title="Share this post on Twitter"></a>
-    <a class="social-share-element" id="social-facebook" href="https://www.facebook.com/sharer/sharer.php?t={{ page.title }}&u={{ url }}" target="_blank" title="Share this post on Facebook"></a>
-    <a class="social-share-element" id="social-google" href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" target="_blank" title="Share this post on Google Plus"></a>
-    <a class="social-share-element" id="social-linkedin" href="http://www.linkedin.com/shareArticle?mini=true&title={{ page.title }}&url={{ url }}&source=http%3a%2f%2fzhangwenli.com" target="_blank" title="Share this post on LinkedIn"></a>
-    <a class="social-share-element" id="social-weibo" href="http://v.t.sina.com.cn/share/share.php?title=来看看+%40Ovilia允执厥中+的博文吧：{{ page.title }}&url={{ url }}" target="_blank" title="Share this post on Sina Weibo"></a>
+        <a class="social-share-element" id="social-twitter" href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ url }}&via=OviliaZhang&hashtags={{ tagStr }}" target="_blank" title="Share this post on Twitter"></a>
+        <a class="social-share-element" id="social-facebook" href="https://www.facebook.com/sharer/sharer.php?t={{ page.title }}&u={{ url }}" target="_blank" title="Share this post on Facebook"></a>
+        <a class="social-share-element" id="social-google" href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" target="_blank" title="Share this post on Google Plus"></a>
+        <a class="social-share-element" id="social-linkedin" href="http://www.linkedin.com/shareArticle?mini=true&title={{ page.title }}&url={{ url }}&source=http%3a%2f%2fzhangwenli.com" target="_blank" title="Share this post on LinkedIn"></a>
+        <a class="social-share-element" id="social-weibo" href="http://v.t.sina.com.cn/share/share.php?title=来看看+%40Ovilia允执厥中+的博文吧：{{ page.title }}&url={{ url }}" target="_blank" title="Share this post on Sina Weibo"></a>
 </div> -->
-<p>
-Your current query is: </p>
-<p><div class="social-share-value">{{query}}</div>
-	</p>
-	<p>On platforms that support them, your hashtag(s) will be:</p><p> <div class="social-share-value">{{tags}}</div></p>
+<div>
+Your current query is: <div class="social-share-value">
+{{#if query}}
+{{query}}
+{{else}}
+(no query)
+{{/if}}
+</div>
+    </div>
 
-	<p>The shortened url is:</p>
-	<p class="social-share-value"><a href="{{purl}}">{{purl}}</a></p>
+    <div>On platforms that support them, your hashtag(s) will be: <div class="social-share-value">{{tags}}</div></div>
 
-	
+<div>The shortened url is:
+<div class="social-share-value"><a href="{{purl}}">{{purl}}</a>
+    </div>
+    </div>
 
 <ul class="list-inline" style="margin-top:25px;">
-{{#each shares}}
-        <!-- <li data-id="{{this._id}}" class="col-sm-2 pull-left gnpanel-r"> -->
-        <li >
-            {{#if this.id}}
-
-            <a class="social-share-element" id="{{this.id}}" href="{{this.href}}?text=&url={{ ../../purl }}&via=CBBBitTracker&hashtags={{../../tags}}" target="_blank" title="{{this.tip}}">
-            	<span class="icom-{{this.id}}"></span>
-            </a>
-
-            {{/if}}
-        </li>
-        {{/each}}
-    </ul>
+    {{#each shares}}
+    <!-- <li data-id="{{this._id}}" class="col-sm-2 pull-left gnpanel-r"> -->
+    <li >
+        {{#if this.id}}
+        <a class="social-share-element" id="{{this.id}}" href="{{this.href}}?text=&url={{ ../../purl }}&via=CBBBitTracker&hashtags={{../../tags}}" target="_blank" title="{{this.tip}}">
+        <span class="icom-{{this.id}}"></span>
+        </a>
+        {{/if}}
+    </li>
+    {{/each}}
+</ul>
+<div class="row">
+    <div class="pull-right" style="color:black; padding-right:22px;">
+        this project on Twitter: <a target="blank" style="color:black;" class="" id="" href="http://twitter.com/jokemap" target="_blank" title="this thing's Twitter account"><span style="font-size:2em;" class="icom-social-twitter"></span></a>
+    </div></div>

@@ -8,11 +8,11 @@
 <!-- </h1> -->
 
 {{#each rows}}
-<li data-id="{{this._id}}" class="">
+<li data-id="{{this._id}}" class="pick">
 
 <div class="">
-{{#if this.desc}}
-{{this.desc}}
+{{#if this.instance}}
+{{this.instance}}
 {{else}}
 (no description provided)
 {{/if}}

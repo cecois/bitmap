@@ -69,7 +69,7 @@ if(activeFactory()[0]=="_id"){
 
 $(this.el).html("<div style='text-align:left;' class='cbbepsanno col-sm-12'>referencing (unmappable) bit: <p style='color:white;'>" + appBits.findWhere({
                 active: true
-            }).get("name") + "</p></div>")
+            }).get("bit") + "</p></div>")
 
 } else {
 
