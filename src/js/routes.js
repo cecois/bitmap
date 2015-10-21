@@ -113,8 +113,9 @@ if(facetsin !== null && typeof facetsin !== 'undefined'){
 
             if (typeof q !== 'undefined' && q !== null) {
                 // if(q!=="null"){
-                                console.log("q existed, setting appcartoquery to q, which is");
-                                console.log(q);
+                if(verbose==true){
+                                                console.log("q existed, setting appcartoquery to q, which is");
+                                                console.log(q);}
                                 // appCartoQuery.set({
                                 //     rawstring: q
                                 // })

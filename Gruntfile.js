@@ -52,6 +52,7 @@ module.exports = function(grunt) {
         // {expand: true, cwd: 'src/js',src: ['templates/**'], dest: '/Users/ccmiller/git/bitmap/js'},
         {expand: true, cwd: 'src/lib',src: ['**'], dest: '/Users/ccmiller/git/bitmap/lib'},
         // {expand: true, cwd: 'src/css/',src: ['app.less'], dest: '/Users/ccmiller/git/bitmap/css/', filter: 'isFile'},
+        {expand: true, cwd: '/Users/ccmiller/Desktop/',src: ['octo.js'], dest: '/Users/ccmiller/git/bitmap/js/'},
         {expand: true, cwd: 'src/js/',src: ['globals-dist.js'], dest: '/Users/ccmiller/git/bitmap/js/',
       rename: function(dest, src) {
         return dest + src.replace('-dist','');

@@ -14,14 +14,11 @@ var RecentItemView = Backbone.View.extend({
     } //events
     ,
     initialize: function() {
-        // console.log("rim:");
-        // console.log(this.model);
         return this.render()
     },
     // ,className:"general foundicon-plus"
     render: function() {
         if (verbose == true) {
-            // console.log("rendering recentitemview")
         }
         $(this.el).html(this.template(this.model.toJSON()));
         return this

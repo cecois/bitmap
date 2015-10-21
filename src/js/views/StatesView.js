@@ -114,8 +114,9 @@ if(co.true > 0){
         return this
     },
     prebaked: function(set) {
-        console.log("prebaked set:");
-        console.log(set);
+        if(verbose==true){
+                console.log("prebaked set:");
+                console.log(set);}
         // switch (set) {
             // case "huh":
                 // appStates.set([{
@@ -257,8 +258,9 @@ if(co.true > 0){
             }
             // first we clear out any current state
             // $("#main").attr("class","")
-            console.log("forclass right b4 apply:");
-            console.log(forclass);
+            if(verbose==true){
+                        console.log("forclass right b4 apply:");
+                        console.log(forclass);}
             $("#main").addClass(forclass, 100);
             $("#episodes").addClass(forclass, 50);
             $("#episodes-list").addClass(forclass);

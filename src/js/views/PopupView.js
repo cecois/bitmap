@@ -61,9 +61,10 @@ return this
         } else {
 
                 // do the submit
-            console.log(it);
-            console.log(ib);
-            console.log(ic);
+                if(verbose==true){
+                            console.log(it);
+                            console.log(ib);
+                            console.log(ic);}
 
             octo.repos('cecois','bitmap').issues.create({"title":it,"body":ib}) //daOG
             
@@ -75,49 +76,14 @@ return this
         }
         return this
     },
-    //     reset: function(e){
-    // $guts = $(this.el)
-    // $guts.parent().find('div').first().html('');
-    // $guts.parent().removeClass("newspaceready")
-    // var lid = this.model.get("leafletid")
-    // map._layers[lid].closePopup()
-    // return this
-    //     },
-//     triage: function(e) {
-//         e.preventDefault()
-
-//         console.log("in triage of puview");
-
-//         var locid = $(e.target).find("span").attr("data-id")
-//         var loctype = $(e.target).find("span").attr("data-type");
-
-// console.log("locid:");console.log(locid);
-// console.log("loctype:");console.log(loctype);
-
-//         // appCBB.activate(locid, loctype);
-//         // activecouple = loctype+":"+locid
-//         activecouple = activeFactory(loctype + ":" + locid)
-//         appCBB.activate();
-//         // this is one we want the url to reflect
-//         appRoute.navigate(urlFactory("#query"), {
-//             trigger: false,
-//             replace: false
-//         })
-//         if (agent == "desktop") {
-//             // return this.pulleps()
-//             return this
-//         } else if (agent == "mobile") {
-//             // return this.pulleps_mobile()
-//             return this
-//         }
-//     },
 triage: function(){
 
 var actv = activeFactory();
         var loctype = actv[0]
         var locid = actv[1]
 
-console.log('<span class="copy-trigger" data-string="location_id:'+locid+ ' AND location_type:'+loctype+'" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-'+loctype+'"></span>')
+if(verbose==true){
+console.log('<span class="copy-trigger" data-string="location_id:'+locid+ ' AND location_type:'+loctype+'" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-'+loctype+'"></span>')}
 
 if (agent == "desktop") {
             return this.pulleps()
@@ -170,7 +136,8 @@ if (agent == "desktop") {
     //     },
     render: function() {
         // bc we'll be messing with this width once in a while, we sock away the original
-        console.log("in popup render, name:");console.log(this.model.get("name"));
+    if(verbose==true){
+            console.log("in popup render, name:");console.log(this.model.get("name"));}
         this.ogwidth = $(".leaflet-popup-content").width()
         $(this.el).html(this.template(this.model.toJSON()))
         return this

@@ -13,8 +13,6 @@ var SharesView = Backbone.View.extend({
 
 var longurl = captureState()
 
-console.log(longurl);
-// return 0;
 
 appActivity.set({
                     message: "shortening url for sharing..."
@@ -58,19 +56,12 @@ return self.errorout(data)
     },
     errorout: function(data){
 
-// console.log("data in errorout:");
-// console.log(data);
     $("#share-container-modal").html("couldn't shortern the url with goo.gl - you can try if you want:<pre class='social-share-value'>"+captureState()+"</pre>")
 return this
 .show()
     },
     render: function(shaw) {
 
-        // console.log("resp in render:");console.log(resp);
-// var shaw = $.parseJSON(resp)
-// console.log("shaw:");console.log(shaw);
-
-// var shawty = shaw.id
 var shawty = shaw
 
 

@@ -2,7 +2,7 @@ var Contact = Backbone.Model.extend({
 
 	initialize:function(){
 
-console.log("initting a contact mod");
+if(verbose==true){console.log("initting a contact mod");}
 
 	},
 

@@ -543,6 +543,24 @@ left:15px;
     // }
 }
 
+#activityContainer {
+    -webkit-animation: pusate 1s infinite alternate;
+    -moz-animation: pusate 1s infinite alternate;
+    -animation: pusate 1s infinite alternate;
+    text-shadow: 0 0 8px #ccc;
+}
+@-webkit-keyframes pusate {
+    from { box-shadow: 0 0 10px @secondarycolor-trans; }
+    to { box-shadow: 0 0 20px @primarycolor-trans; }
+}
+@-moz-keyframes pusate {
+    from { box-shadow: 0 0 10px @secondarycolor-trans; }
+    to { box-shadow: 0 0 20px @primarycolor-trans; }
+}
+@keyframes pusate {
+    from { box-shadow: 0 0 10px @secondarycolor-trans; }
+    to { box-shadow: 0 0 20px @primarycolor-trans; }
+}
 
 /* --------------------------------------- NAV & STRUCTURE -------------- */
 

@@ -37,8 +37,9 @@ var QueryView = Backbone.View.extend({
         return this
     },
     btfire: function(e) {
-        console.log("btfire's e:")
-        console.log(e);
+        if(verbose==true){
+                console.log("btfire's e:")
+                console.log(e);}
         return this
     },
     fire: function(e) {
@@ -98,7 +99,6 @@ var QueryView = Backbone.View.extend({
                         reset: true,
                         // dataType: "jsonp"
                         success: function() {
-                            // console.log("successful fetch of appcbb at 76");
                             // appCBBListView.render()
                             // appCBBMapView.render()
                             // appCBBCountView.render()
@@ -130,7 +130,8 @@ var QueryView = Backbone.View.extend({
         $("#querylist-locations").html("")
     },
     rewire: function() {
-        console.log("rewiring queryview...")
+        if(verbose==true){
+                console.log("rewiring queryview...")}
         $(this.el).tooltip('destroy')
         var heynongcopy = "Heynong the current query ( reset it to show everything "
         if (appCartoQuery.get("facetarray").length > 0) {

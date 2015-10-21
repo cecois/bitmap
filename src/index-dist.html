@@ -2,6 +2,9 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>BitMap: CBB</title>
+    <link rel="icon" 
+      type="image/png" 
+      href="images/ico.cbb.png">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
@@ -21,7 +24,7 @@
     <link href="lib/components/off-canvas-menu/header.css" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="lib/components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="lib/components/fontello/css/menu.css">
+    <!-- <link rel="stylesheet" href="lib/components/fontello/css/menu.css"> -->
 
 
     <!-- <link rel="stylesheet" href="lib/zoomslider/L.Control.Zoomslider.css"> -->
@@ -39,13 +42,6 @@
     <body ontouchstart="">
         <div id="map"></div>
 
-    <div id="btn-statie" class="">
-    <!-- <div data-toggle="tooltip" title="toggle page elements" class="triangle-trigger-false"> -->
-    <div data-toggle="tooltip" title="toggle page elements" class="circle-trigger-false icom-bang">
-<span class="glyphicon glyphicon-minus pull-right hider-copy"></span>
-</div>
-</div>
-
         <!-- <script src="http://libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.js"></script> -->
         <!-- <script src="offline/cartodb.js"></script> -->
         <!-- <script src="cartodb-example.js"></script> -->
@@ -59,12 +55,12 @@
                 </div>
                 <div id="banner-nav" class="content-wrap col-sm-5">
 
-                    <nav class="site-nav" role="navigation">
+                    <nav class="site-nav col-sm-12" role="navigation">
                         <ul class="col-sm-12">
                             <!-- <li><a href="#about" class="link">About</a></li> -->
-                            <li class="col-sm-3"><a href="#huh" class="link">Huh?</a></li>
+                            <li class="col-sm-2"><a href="#huh" class="link">Huh?</a></li>
                             <li class="col-sm-3"><a href="#query" class="link">Query</a></li>
-                            <li class="col-sm-3"><a href="#fullstory" class="link">Full Story</a></li>
+                            <li class="col-sm-4"><a href="#fullstory" class="link">Full Story</a></li>
                             <!-- <li><a href="#feedback" class="link">Feedback</a></li> -->
                             <!-- <li><a href="#recent" class="link">Recent</a></li> -->
                             <!-- <li><a href="#explore" class="link">Explore</a></li> -->
@@ -74,10 +70,10 @@
 
 
     </ul>
-</nav>
-</div> <!-- col-sm-6 -->
+</nav> <!-- site-nav -->
+</div> <!-- banner-nav -->
 
-<div class="content-wrap pull-left col-sm-4">
+<div id="query-wrapper" class="content-wrap pull-left col-sm-4">
 
 <div class="pull-right col-sm-12" id="activityContainer"><span class="activity-message pull-left">loading...</span></div>
 
@@ -102,7 +98,17 @@
  </div>
 </header>
 
+
+<div id="btn-statie" class="">
+    <!-- <div data-toggle="tooltip" title="toggle page elements" class="triangle-trigger-false"> -->
+    <div data-toggle="tooltip" title="toggle page elements" class="circle-trigger-false icom-bang">
+<span class="glyphicon glyphicon-minus pull-right hider-copy"></span>
+</div>
+</div> <!-- btn-statie -->
+
 <div id="main" class="col-lg-12 pull-left">
+
+
 
 <div id="huh" class="mainpanel hidden">
 <div id="huh-copy" class="col-lg-12"></div>
@@ -150,18 +156,18 @@
 <div class="panel-wrap">
 
     <div id="help-copy"></div>
-     <div class="gnpanel-0 pull-left col-lg-4"><div class="block">
-    <div id="disqus_thread"></div>
+     <div class="gnpanel-0 pull-left col-lg-4 mobile-wrapper mobile-wrapper-2"><div class="block">
+    <div id="disqus_thread" class=""></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = 'cbbmap';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
-    // (function() {
-    //     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    //     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    //     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    // })();
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
     </div></div>
@@ -218,23 +224,23 @@
 
 
 
-    <ul id="querylist-bits" class="pull-left col-lg-4">
+    <ul id="querylist-bits" class="pull-left col-lg-4 mobile-wrapper mobile-wrapper-1">
     </ul>
 
-<div id="episodes" class="hidden">
-     <ul id="episodes-list" class="episodes pull-left col-lg-12 list-unstyled">
-      <li></li>
+<div id="episodes" class="hidden col-lg-12">
+     <ul id="episodes-list" class="episodes pull-left col-lg-12 list-unstyled hidden">
+      <li>None selected.</li>
     </ul>
 
 </div>  <!-- ./episodes  -->
 
-    <ul id="querylist-locations" class="pull-left col-lg-4 ">
+    <ul id="querylist-locations" class="pull-left col-lg-4 mobile-wrapper mobile-wrapper-2">
     </ul>
-<ul id="querylist-facets" class="pull-right col-lg-3">
+<ul id="querylist-facets" class="pull-right col-lg-3 mobile-wrapper mobile-wrapper-3">
 <!-- <span class="col-sm-8">Facets: </span> -->
-    <div id="facet-tags" class="col-sm-12"></div>
-    <div id="facet-names" class="col-sm-12"></div>
-    <div id="facet-slugs" class="col-sm-12"></div>
+    <div id="facet-tags" class="col-sm-12 pull-left"></div>
+    <div id="facet-names" class="col-sm-12 pull-left"></div>
+    <div id="facet-slugs" class="col-sm-12 pull-left"></div>
 
     </ul>
 
@@ -279,7 +285,7 @@
 
 <!-- /share-container-modal -->
 <script src="js/globals.js"></script>
-<script src="lib/octo.js"></script>
+<script src="js/octo.js"></script>
 <script src="lib/leaflet/leaflet.js"></script>
 <script type="text/javascript" src="lib/tile.stamen.js?v1.2.0"></script>
 <script src="js/h-templates-compiled.js"></script>

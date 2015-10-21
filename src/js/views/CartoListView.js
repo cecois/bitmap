@@ -33,7 +33,6 @@ var CartoListView = Backbone.View.extend({
         var loctyp = $(e.currentTarget).attr("data-type")
         // var loctyp = $(e.target).attr("data-type")
         var str = '<span class="copy-trigger" data-string="'+loctyp +':' + locid + '" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-' + loctyp + '"></span>'
-        console.log(str);
         return this
     },
     fromzoom: function(cm) {

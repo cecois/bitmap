@@ -17,8 +17,8 @@ NProgress.configure({
 /* -------------------------------------------------- HANDLEBARS START -----------------------  */
 Handlebars.registerHelper('debug', function(options) {
     
-    console.log("debug hb:");
-    console.log(this);
+    if(verbose==true){console.log("debug hb:");
+        console.log(this);}
     return new Handlebars.SafeString("check console");
 });
 
@@ -797,7 +797,7 @@ var cid = null
 return cid
 }
         function cwmccallback(){
-            console.log("breaker breaker")
+            if(verbose==true){console.log("breaker breaker")}
         }
 
 function puFactory(p){

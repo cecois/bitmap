@@ -53,8 +53,8 @@ return this
 
     },
     wiremobile: function(e){
-
-console.log("in wiremobile");
+if(verbose==true){
+console.log("in wiremobile");}
 e.preventDefault()
 var ds = $(e.currentTarget).attr("data-target")
 

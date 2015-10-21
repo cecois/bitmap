@@ -33,7 +33,7 @@ var BitsView = Backbone.View.extend({
     echoid: function(e) {
         var locid = $(e.target).attr("data-id")
         var str = '<span class="copy-trigger" data-string="cartodb_id:' + locid + '"><span class="loc-string">SOME STRING</span><i class="glyphicon glyphicon-map-marker"></i></span>';
-        console.log(str);
+        if(verbose==true){console.log(str);}
         return this
     },
     unwire: function() {
@@ -110,7 +110,7 @@ var BitsView = Backbone.View.extend({
         return this.render()
     },
     pullepsOG: function(e) {
-        console.log(e);
+        if(verbose==true){console.log(e);}
         // appActivity.set({
         //     message: "fetching episodes...",
         //     show: true,

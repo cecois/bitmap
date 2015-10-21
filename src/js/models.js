@@ -157,9 +157,9 @@ if(verbose==true){console.log("facet wznt there pushing...");}
 }
 
 // reset the facetarray, hopefully triggering the new fetch/reset
-
+if(verbose==true){
 console.log("acqarr:");
-console.log(acqarr);
+console.log(acqarr);}
                     appCartoQuery.set({facetarray:_.uniq(acqarr)})
 
 //                     appCartoQuery.set({facetarray:b})
@@ -175,7 +175,7 @@ console.log(acqarr);
     },
         subactivate: function(group){
 
-console.log("running subact in metafacets using facetarray:");
+if(verbose==true){console.log("running subact in metafacets using facetarray:");}
 
 appCartoQuery.get("facetarray").forEach(function(f){
 
@@ -282,7 +282,7 @@ var MetaFacets = Backbone.Collection.extend({
         return Backbone.sync(method, collection, options);
     },
     parse: function(response) {
-        console.log("in custom parse of metafacets");
+        if(verbose==true){console.log("in custom parse of metafacets");}
         // appFatTags.reset(response.facet_counts.facet_fields.tags)
         // var fattags_activated = subactivateFacets(,"tags")
         // appFatTags.reset(response.facet_counts.facet_fields.tags)
@@ -375,13 +375,15 @@ var CartoQuery = Backbone.Model.extend({
         return this
     },
     setstrings: function() {
-        console.log("setting stringss...");
+        if(verbose == true){
+                console.log("setting stringss...");}
         // here because we COULD do some manip at this point
         // but right now we just pass it through
 
         var ss = this.get("rawstring")
         if (ss == '' || ss == null) {
-            console.log("empty, setting to wildcard...");
+            if(verbose==true){
+                        console.log("empty, setting to wildcard...");}
             this.set({
                 urlstring: "*",
                 displaystring: "",
@@ -392,8 +394,9 @@ var CartoQuery = Backbone.Model.extend({
             //     solrstring: ""
             // })
         } else {
-            console.log("populated, grabbing the current value, which is:");
-            console.log(ss);
+            if(verbose==true){
+                        console.log("populated, grabbing the current value, which is:");
+                        console.log(ss);}
             this.set({
                 urlstring: ss,
                 displaystring: ss,
@@ -430,21 +433,22 @@ var BitCollection = Backbone.Collection.extend({
     },
     activate: function() {
         this.deactivate()
-        console.log("in bits activate, checking...");
-        console.log("active global is:");
-        console.log(activecouple);
+        if(verbose==true){
+                console.log("in bits activate, checking...");
+                console.log("active global is:");
+                console.log(activecouple);}
         if (typeof activecouple !== 'undefined' && activecouple !== null) {
-            console.log("we need to activate!");
+            if(verbose==true){console.log("we need to activate!");}
             var activeid = activecouple.split(":")[1]
             var activetype = activecouple.split(":")[0]
                 //
             _.each(this.models, function(d, index) {
                 if (d.get("_id") == activeid) {
-                    console.log("GOT ONE! Setting to true...");
+                    if(verbose==true){console.log("GOT ONE! Setting to true...");}
                     d.set({
                         active: true
                     });
-                    console.log(d);
+                    if(verbose==true){console.log(d);}
                 }
             });
         } //if global actives
@@ -565,21 +569,21 @@ var CartoCollection = Backbone.Collection.extend({
     },
     activate: function() {
         this.deactivate()
-        console.log("in cartocollx activate, checking...");
-        console.log("active global is:");
-        console.log(activecouple);
+        if(verbose==true){console.log("in cartocollx activate, checking...");
+                console.log("active global is:");
+                console.log(activecouple);}
         if (typeof activecouple !== 'undefined' && activecouple !== null) {
-            console.log("we need to activate!");
+            if(verbose==true){console.log("we need to activate!");}
             var activeid = activecouple.split(":")[1]
             var activetype = activecouple.split(":")[0]
                 //
             _.each(this.models, function(d, index) {
                 if (d.get("cartodb_id") == activeid && d.get("geom_type") == activetype) {
-                    console.log("GOT ONE! Setting to true...");
+                    if(verbose==true){console.log("GOT ONE! Setting to true...");}
                     d.set({
                         active: true
                     });
-                    console.log(d);
+                    if(verbose==true){console.log(d);}
                 }
             });
         } //if global actives

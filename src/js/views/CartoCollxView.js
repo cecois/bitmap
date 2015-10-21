@@ -36,7 +36,7 @@ var CartoCollxView = Backbone.View.extend({
             // wkt.read(hit.get("the_geom"));
             // var geomtype = wkt.type
             var geomtype = hit.get("geom_type")
-            console.log("hit at 39:");console.log(hit);
+            if(verbose==true){console.log("hit at 39:");console.log(hit);}
             var hitm = {
                 "type": "Feature",
                 "properties": {
@@ -108,9 +108,9 @@ ok what dafuk is going on here? Well in order to use native Backbone stuff *with
             }
 
             if (hit.get("active" == "true")) {
-
+if(verbose==true){
                 console.log("active hit! we'll pop its popup...");
-                console.log(foot);
+                console.log(foot);}
                     foot.openPopup()
                 }
             // if (this.collection.length == 1) {

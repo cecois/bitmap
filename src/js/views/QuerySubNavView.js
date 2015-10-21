@@ -59,7 +59,6 @@ trigger: 'hover'
     },
     wiremobile: function(e){
 
-console.log("in wiremobile");
 e.preventDefault()
 var dtarg = $(e.currentTarget).attr("data-target")
 
@@ -67,7 +66,8 @@ $(".mobile-slide-nav ul li").removeClass('active');
 $(e.currentTarget).addClass('active');
 
 $(".mobile-wrapper").addClass("hidden");
-console.log("target id:");console.log("#"+dtarg);
+if(verbose==true){
+console.log("target id:");console.log("#"+dtarg);}
 $("#"+dtarg).removeClass('hidden');
 // $(this.el).find(ds).removeClass("hidden")
 // $(this.el).find(ds).scrollTop()
@@ -76,18 +76,6 @@ return this
 
     },
     reset: function(){
-
-
-// switch (patsy) {
-//    case "bits":
-//       console.log("bits will be replaced by episodes")
-//       break;
-//    case "locations":
-//       console.log("locations will be replaced by episodes")
-//       break;
-//    default:
-//       console.log("shouldn't happen")
-// }
 
 // // this is NOT bits, so we'll use that space
 // var cssog = $("#querylist-episodes").attr("class").split(" ")
@@ -123,13 +111,13 @@ $('.query-subnav-btn[data-id="'+patsy+'"]').addClass(c)
 // var patsy = this.model.get("patsy")
       switch (patsy) {
    case "bits":
-      console.log("bits will be replaced by episodes")
+      if(verbose==true){console.log("bits will be replaced by episodes")}
       break;
    case "locations":
-      console.log("locations will be replaced by episodes")
+      if(verbose==true){console.log("locations will be replaced by episodes")}
       break;
    default:
-      console.log("shouldn't happen")
+      if(verbose==true){console.log("shouldn't happen")}
 }
 
 // we'll use the patsy's space
@@ -150,8 +138,9 @@ $("#episodes").removeClass('hidden')
 var cssogbt = $('.query-subnav-btn[data-id="'+patsy+'"]').attr("class").split(" ")
 this.cssogbt = cssogbt
 _.each(cssogbt,function(c){
-    console.log("adding back ")
-    console.log(c)
+    if(verbose==true){
+        console.log("adding back ")
+        console.log(c)}
 $('.query-subnav-btn[data-id="episodes"]').addClass(c)
 })
 
