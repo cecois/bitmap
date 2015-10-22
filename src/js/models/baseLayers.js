@@ -1,7 +1,7 @@
 var BaseLayersCollection = Backbone.Collection.extend({
 	model: BaseLayer,
 	url:function(){
-		return "js/models/layers.min.json"
+		return "js/models/layers.json"
 	},
 	initialize: function(options) {
             options || (options = {});

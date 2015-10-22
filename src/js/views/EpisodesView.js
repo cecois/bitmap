@@ -37,6 +37,8 @@ return this
     },
     render: function() {
 
+if(verbose==true){console.info("in EV.render, about to empty the el");}
+
         $(this.el).empty()
             // by the time we get here, plainview will have an active element, go get it to match its position
         var ael = $(".carto-plain-title.true")
@@ -85,10 +87,10 @@ $(this.el).html("<div style='text-align:left;' class='cbbepsanno col-sm-12'>refe
         } else {
             $(this.el).html("None found (or <em>maybe</em> an error occurred. Who's to know?)")
         }
-        if (verbose == true) {
-            // console.log("rendering recentsview")
-            // console.log(this.collection)
-        }
+        
+
+        if(verbose==true){console.info("in EV.render, about to iter thru collx for wikia ids and titles");}
+
         this.collection.each(function(episode) {
             if (verbose == true) {
                 // console.log("gonna render the recentitemview")

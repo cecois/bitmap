@@ -29,7 +29,7 @@ var RecentsView = Backbone.View.extend({
         return this
     },
     render: function() {
-        console.log("in recentsview render");
+        if(verbose==true){console.log("in recentsview render");}
         
             var rec = _.first(this.collection.toJSON(),6)
             $(this.el).html(this.template({

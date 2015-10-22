@@ -117,8 +117,8 @@ var QueryView = Backbone.View.extend({
                             message: "query errored out"
                         })
                         // actually, if it's a true error we wanna be more forthcoming:
-                    $("#querylist-locations").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
-                    $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
+                    $("#querylist-locations").append("<li style='margin-top:50px;font-size:2em;'></li>")
+                    $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'></li>")
                 }
             })
             //

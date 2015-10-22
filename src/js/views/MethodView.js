@@ -18,6 +18,12 @@ var MethodView = Backbone.View.extend({
 
         e.preventDefault()
          var ds = $(e.currentTarget).attr("data-string")
+         if(verbose==true){
+            console.log("e");
+            console.log(e);
+            console.log("ds");
+            console.log(ds);
+         }
         locTrigger(e, true, ds)
         return this
     },

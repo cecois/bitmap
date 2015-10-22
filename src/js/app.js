@@ -6,7 +6,7 @@ window.agent = "mobile";
 window.agent = "desktop";
 }
 
-window.thedomain="zapstraighttoit.com"
+window.thedomain="trainertothestarsseekingstars.org"
 
 // agent="mobile"
 
@@ -17,8 +17,10 @@ NProgress.configure({
 /* -------------------------------------------------- HANDLEBARS START -----------------------  */
 Handlebars.registerHelper('debug', function(options) {
     
-    if(verbose==true){console.log("debug hb:");
-        console.log(this);}
+    if(verbose==true){
+        // console.log("debug hb:");
+        // console.log(this);
+    }
     return new Handlebars.SafeString("check console");
 });
 
@@ -537,7 +539,7 @@ if(typeof e !== 'undefined' && e !== null){
             var goto = true
         }
 
-var qstring="*:*"
+// var qstring="*:*"
 
 if(typeof active !== 'undefined'){
         if(active.indexOf("point:")>=0 || active.indexOf("poly:")>=0 || active.indexOf("line:")>=0){
@@ -851,3 +853,6 @@ function puFactory(p){
 //     var pm = new Popup(p.model);
 //     var pv = new PopupView({model:pm,el: nel})
 // }
+// 
+appCartoQuery.set({rawstring:"chupa*"})
+appCartoQueryView.fire()

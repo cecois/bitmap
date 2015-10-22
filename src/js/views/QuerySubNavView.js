@@ -108,6 +108,10 @@ $('.query-subnav-btn[data-id="'+patsy+'"]').addClass(c)
     },
     episodize: function(patsy){
 
+if(verbose == true){
+    console.log("in episodize with patsy:"+patsy);
+}
+
 // var patsy = this.model.get("patsy")
       switch (patsy) {
    case "bits":

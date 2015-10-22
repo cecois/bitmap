@@ -36,7 +36,7 @@ var CartoCollxView = Backbone.View.extend({
             // wkt.read(hit.get("the_geom"));
             // var geomtype = wkt.type
             var geomtype = hit.get("geom_type")
-            if(verbose==true){console.log("hit at 39:");console.log(hit);}
+            // if(verbose==true){console.log("hit at 39:");console.log(hit);}
             var hitm = {
                 "type": "Feature",
                 "properties": {

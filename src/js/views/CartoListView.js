@@ -130,9 +130,10 @@ $("#episodes-list").html('<span class="spinner-gold pull-right"></span>').remove
             success: function(c, r, o) {
             }
         });
-        // return this.activate(a)
-        // appQuerySubNav.set({patsy:"bits"})
-        appQuerySubNavView.episodize("bits")
+        
+        
+        // appQuerySubNavView.episodize("bits")
+        
         return this.render()
     },
     zoomtointernal: function(e) {
