@@ -76,11 +76,14 @@ return this
 
     },
     reset: function(){
-
+if(verbose == true){console.log(" -------> QuerySubNavView --> running reset")}
 // // this is NOT bits, so we'll use that space
 // var cssog = $("#querylist-episodes").attr("class").split(" ")
 var patsy = this.patsy
 var cssog = this.cssog
+
+console.info("patsy:" +this.patsy);
+console.info("cssog:" +this.cssog);
 
 
 // var cssogbt = $('.query-subnav-btn[data-id="episodes"]').attr("class").split(" ")
@@ -107,6 +110,8 @@ $('.query-subnav-btn[data-id="'+patsy+'"]').addClass(c)
 
     },
     episodize: function(patsy){
+
+        this.reset()
 
 if(verbose == true){
     console.log("in episodize with patsy:"+patsy);

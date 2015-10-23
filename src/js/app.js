@@ -800,6 +800,7 @@ return cid
 }
         function cwmccallback(){
             if(verbose==true){console.log("breaker breaker")}
+                if(verbose==true){console.log("------> (generic) cwmccallback")}
         }
 
 function puFactory(p){

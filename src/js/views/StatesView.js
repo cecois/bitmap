@@ -2,8 +2,11 @@ var StatesView = Backbone.View.extend({
     el: $("#btn-statie"),
     template: Handlebars.templates['statesViewTpl'],
     initialize: function() {
+        if (verbose == true) {
+            console.info("------> StatesVIew --> initialize")
+        }
         this.universal = false;
-        this.render();
+        // this.render();
         this.collection.bind("change", this.render, this);
         // this.collection.bind("reset", this.render, this);
     },
@@ -11,13 +14,15 @@ var StatesView = Backbone.View.extend({
         "click": "swap"
     },
     render: function() {
+        if (verbose == true) {
+            console.info("------> StatesVIew --> render")
+        }
         // kill stragglers
         $(this.el).find('[data-toggle="tooltip"]').tooltip('destroy');
         // assume for now the btn-statie is in default state (showing a '-', upright vs showing a '+' and turned)
         var plus = false;
         // options are: hidden,momap,collapsed
         _.each(this.collection.models, function(mo, index) {
-
             var elstr = "#" + mo.get("name")
             var elpos = mo.get("posish")
             var elviz = mo.get("visible")
@@ -58,15 +63,17 @@ var StatesView = Backbone.View.extend({
         return this.buttonize(plus)
     },
     buttonize: function(plus) {
-
-var co = _.countBy(appStates.models, function(s) {return (s.get("posish")=="hidden"||s.get("posish")=="collapsed")});
-
-if(co.true > 0){
-    var plusm=true
-} else {
-    plusm = false
-}
-
+        if (verbose == true) {
+            console.info("------> StatesVIew --> buttonize")
+        }
+        var co = _.countBy(appStates.models, function(s) {
+            return (s.get("posish") == "hidden" || s.get("posish") == "collapsed")
+        });
+        if (co.true > 0) {
+            var plusm = true
+        } else {
+            plusm = false
+        }
         switch (plusm) {
             case true:
                 // $("#btn-statie").html('<div class="triangle-trigger-true" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus hider-copy"></span></div>')
@@ -81,9 +88,21 @@ if(co.true > 0){
         return this.rewire()
     },
     swap: function() {
+        if (verbose == true) {
+            console.info("------> StatesVIew --> swap")
+        }
         if (this.universal == true) {
             // unfortunately this is going to have to be router-savvy
-            appStates.set({"name": "main","posish": "open"},{"name": "episodes","posish":"open"},{"name": "banner-bang","posish":"open"})
+            appStates.set({
+                "name": "main",
+                "posish": "open"
+            }, {
+                "name": "episodes",
+                "posish": "open"
+            }, {
+                "name": "banner-bang",
+                "posish": "open"
+            })
             this.collection.invoke('set', {
                 "posish": "open"
             });
@@ -92,116 +111,107 @@ if(co.true > 0){
             this.prebaked(Backbone.history.getHash())
             this.universal = false;
         } else if (this.universal == false) {
-            if(appEpisodes.length==0){
-                        this.collection.invoke('set', {
-                            "posish": "collapsed"
-                        });} else {
-                           // k there are episodes showing, which means we need to be a little pickier
-                           _.each(this.collection.models,function(mo) {
-                               if(mo.get("name")=="episodes"){
-                                mo.set({posish:"momap"})
-                               } else {
-                                mo.set({posish:"collapsed"})
-
-                               }
-                           });
-
-                        }
-
-            appStates.set({"name": "main","posish": "collapsed"},{"name": "episodes","posish":"collapsed"},{"name": "banner-bang","posish":"collapsed"})
+            if (appEpisodes.length == 0) {
+                if (verbose == true) {
+                    "appEpisodes.length:" + appEpisodes.length;
+                }
+                this.collection.invoke('set', {
+                    "posish": "collapsed"
+                });
+            } else {
+                // k there are episodes showing, which means we need to be a little pickier
+                _.each(this.collection.models, function(mo) {
+                    if (mo.get("name") == "episodes") {
+                        mo.set({
+                            posish: "momap"
+                        })
+                    } else {
+                        mo.set({
+                            posish: "collapsed"
+                        })
+                    }
+                });
+            }
+            appStates.set({
+                "name": "main",
+                "posish": "collapsed"
+            }, {
+                "name": "episodes",
+                "posish": "collapsed"
+            }, {
+                "name": "banner-bang",
+                "posish": "collapsed"
+            })
             this.universal = true;
         }
         return this
     },
     prebaked: function(set) {
-        if(verbose==true){
-                console.log("prebaked set:");
-                console.log(set);}
-        // switch (set) {
-            // case "huh":
-                // appStates.set([{
-                //                     "name": "main",
-                //                     "posish": "full"
-                //                 }, {
-                //                     "name": "episodes",
-                //                     "visible": false
-                //                 }, {
-                //                     "name": "banner-bang",
-                //                     "posish": "open"
-                //                 }])
-            //     break;
-            // case "fullstory":
-                // appStates.set([{
-                //                     "name": "main",
-                //                     "posish": "full"
-                //                 }, {
-                //                     "name": "episodes",
-                //                     "visible": false
-                //                 }, {
-                //                     "name": "banner-bang",
-                //                     "posish": "open"
-                //                 }])
-                // break;
-                // case "browse":
-
-                // break;
-            // case "query":
-            if (set.indexOf("query")>=0){
-                if(appEpisodes.length==0){
-                                            appStates.set([{
-                                                                "name": "main",
-                                                                "posish": "open"
-                                                            }, {
-                                                                "name": "episodes",
-                                                                "visible": false,
-                                                                "posish": "open"
-                                                            }, {
-                                                                "name": "banner-bang",
-                                                                "posish": "open"
-                                                            }])} else {
-
-                                                appStates.set([{
-                                                                "name": "main",
-                                                                "posish": "open"
-                                                            }, {
-                                                                "name": "episodes",
-                                                                "visible": false,
-                                                                "posish": "momap"
-                                                            }, {
-                                                                "name": "banner-bang",
-                                                                "posish": "open"
-                                                            }])
-                                            } //episodes.length test
-                                        }
-                else if(set== ""){
-                                appStates.set([{
-                                                    "name": "main",
-                                                    "posish": "open"
-                                                }, {
-                                                    "name": "episodes",
-                                                    "visible": false,
-                                                    "posish": "open"
-                                                }, {
-                                                    "name": "banner-bang",
-                                                    "posish": "open"
-                                                }])}
-                else {
-
-                            appStates.set([{
-                                                    "name": "main",
-                                                    "posish": "full"
-                                                }, {
-                                                    "name": "episodes",
-                                                    "visible": false
-                                                }, {
-                                                    "name": "banner-bang",
-                                                    "posish": "open"
-                                                }])}
-            // break;
+        if (verbose == true) {
+            console.info("------> StatesVIew --> prebaked")
+        }
+        if (verbose == true) {
+            console.log("prebaked set:");
+            console.log(set);
+        }
+        if (set.indexOf("query") >= 0) {
+            if (appEpisodes.length == 0) {
+                appStates.set([{
+                    "name": "main",
+                    "posish": "open"
+                }, {
+                    "name": "episodes",
+                    "visible": false,
+                    "posish": "open"
+                }, {
+                    "name": "banner-bang",
+                    "posish": "open"
+                }])
+            } else {
+                appStates.set([{
+                    "name": "main",
+                    "posish": "open"
+                }, {
+                    "name": "episodes",
+                    "visible": false,
+                    "posish": "momap"
+                }, {
+                    "name": "banner-bang",
+                    "posish": "open"
+                }])
+            } //episodes.length test
+        } else if (set == "") {
+            appStates.set([{
+                "name": "main",
+                "posish": "open"
+            }, {
+                "name": "episodes",
+                "visible": false,
+                "posish": "open"
+            }, {
+                "name": "banner-bang",
+                "posish": "open"
+            }])
+        } else {
+            appStates.set([{
+                "name": "main",
+                "posish": "full"
+            }, {
+                "name": "episodes",
+                "visible": false
+            }, {
+                "name": "banner-bang",
+                "posish": "open"
+            }])
+        }
+        // break;
         // }
         return this.render()
     },
     setpos: function(newforwhom, collaps) {
+        if (verbose == true) {
+            console.info("------> StatesVIew --> setpos")
+        }
         if (typeof newforwhom == 'undefined' || newforwhom == null) {
             var newforwhom = "main"
         }
@@ -234,15 +244,10 @@ if(co.true > 0){
         //     }
         return this
     },
-    //     position: function(much){
-    // if(typeof much == 'undefined' || much == null){
-    //     var much = '99.5%';
-    // }
-    // this.model.set({collapsed:"true",operation:"plus",instructions:"expand main pane",distance:much});
-    // return this
-    // .render()
-    //     },
     renderOG: function() {
+        if (verbose == true) {
+            console.info("------> StatesVIew --> renderOG")
+        }
         var forwhom = this.model.get("forwhom")
         $(this.el).html(this.template(this.model.toJSON()))
         if (this.model.get("collapsed") == "true") {
@@ -258,9 +263,10 @@ if(co.true > 0){
             }
             // first we clear out any current state
             // $("#main").attr("class","")
-            if(verbose==true){
-                        console.log("forclass right b4 apply:");
-                        console.log(forclass);}
+            if (verbose == true) {
+                console.log("forclass right b4 apply:");
+                console.log(forclass);
+            }
             $("#main").addClass(forclass, 100);
             $("#episodes").addClass(forclass, 50);
             $("#episodes-list").addClass(forclass);
@@ -284,6 +290,9 @@ if(co.true > 0){
         return this.rewire()
     },
     rewire: function() {
+        if (verbose == true) {
+            console.info("------> StatesVIew --> rewire")
+        }
         $(this.el).find('[data-toggle="tooltip"]').tooltip({
             position: "right",
             container: 'body'
@@ -291,6 +300,9 @@ if(co.true > 0){
         return this
     },
     reset: function() {
+        if (verbose == true) {
+            console.info("------> StatesVIew --> reset")
+        }
         return this.render()
     }
 });

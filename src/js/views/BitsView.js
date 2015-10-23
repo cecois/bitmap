@@ -103,10 +103,12 @@ var BitsView = Backbone.View.extend({
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
+                
+
+        appQuerySubNavView.episodize("locations")
             }
         });
         // return this.activate(a)
-        appQuerySubNavView.episodize("locations")
         return this.render()
     },
     pullepsOG: function(e) {

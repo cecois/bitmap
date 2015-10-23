@@ -11,6 +11,8 @@ var CartoListView = Backbone.View.extend({
     },
     // template: Handlebars.templates['cartoPlainView'],
     initialize: function() {
+        if (verbose == true) {
+        }
         this.listenTo(this.collection, 'reset', this.render);
         this.listenTo(this.collection, 'change:active', this.rendermin);
         if (agent == "desktop") {
@@ -21,31 +23,40 @@ var CartoListView = Backbone.View.extend({
         return this
     },
     singular: function(e) {
-
+        if (verbose == true) {
+        }
         e.preventDefault()
-         var ds = $(e.currentTarget).attr("data-string")
+        var ds = $(e.currentTarget).attr("data-string")
         locTrigger(e, true, ds)
         return this
     },
     echoid: function(e) {
+        if (verbose == true) {
+        }
         // var locid = $(e.target).attr("data-id")
         var locid = $(e.currentTarget).attr("data-id")
         var loctyp = $(e.currentTarget).attr("data-type")
-        // var loctyp = $(e.target).attr("data-type")
-        var str = '<span class="copy-trigger" data-string="'+loctyp +':' + locid + '" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-' + loctyp + '"></span>'
+            // var loctyp = $(e.target).attr("data-type")
+        var str = '<span class="copy-trigger" data-string="' + loctyp + ':' + locid + '" data-toggle="tooltip" data-original-title="" title=""><span class="loc-string">SOME STRING</span><span class="carto-plain-geomtype icom-' + loctyp + '"></span>'
         return this
     },
     fromzoom: function(cm) {
+        if (verbose == true) {
+        }
         var czid = cm.get("cartodb_id")
         var a = $(this.el).find("li[data-id='" + czid + "']")
             // return this.activate(a)
         return this
     },
     unwire: function() {
+        if (verbose == true) {
+        }
         $('.bt-cartoobj').tooltip('destroy')
         return this
     },
     triage: function(e) {
+        if (verbose == true) {
+        }
         e.preventDefault()
         if (dev == true) {
             this.echoid(e)
@@ -70,47 +81,46 @@ var CartoListView = Backbone.View.extend({
         // return this.prepeps(e)
     },
     sort: function() {
+        if (verbose == true) {
+        }
         this.collection.sort()
         return this
     },
     pulleps_mobile: function() {
+        if (verbose == true) {
+        }
         e.preventDefault()
         var a = $(e.currentTarget).parents('li')
             // return this.activate(a)
         return this
     },
-    prepeps: function(e){
-
-// appQuerySubNavView.episodize("bits")
-// appQuerySubNav.set({patsy:"bits"})
-
- // if (agent == "desktop") {
- //            return this.pulleps()
- //        } else if (agent == "mobile") {
- //            return this.pulleps_mobile()
- //        }
-
+    prepeps: function(e) {
+        if (verbose == true) {
+        }
+        // appQuerySubNavView.episodize("bits")
+        // appQuerySubNav.set({patsy:"bits"})
+        // if (agent == "desktop") {
+        //            return this.pulleps()
+        //        } else if (agent == "mobile") {
+        //            return this.pulleps_mobile()
+        //        }
     },
     pulleps: function() {
-
-
-        // $("#episodes-list").html('<div class="spinner-gold"></div>')
-$("#episodes-list").html('<span class="spinner-gold pull-right"></span>').removeClass("hidden")
-
-        // $("#episodes").removeClass("hidden")
-
+        
+            // $("#episodes-list").html('<div class="spinner-gold"></div>')
+        $("#episodes-list").html('<span class="spinner-gold pull-right"></span>').removeClass("hidden")
+            // $("#episodes").removeClass("hidden")
             // we have to find the el to activate
             // var act = appCBB.findWhere({
             //     active: true
             // })
             // var locid = act.get("cartodb_id")
             // var loctype = act.get("geom_type")
-
         var actv = activeFactory();
         // var a = $("#querylist-locations").find("span[data-id='" + locid + "'][data-type='" + loctype + "']").parents("li")
         // if (source == "self") {
         //     // force the scroll to the top jic we left it at the bottom
-            // $("#main").scrollTo(".querysubnavh");
+        // $("#main").scrollTo(".querysubnavh");
         // } else {
         //     // it means we're coming from somewhere else (prolly a popup or the router), which means in turn we might need to nudge the now-active gui elements into view
         //     $("#main").scrollTo($(a), 200, {
@@ -128,32 +138,35 @@ $("#episodes-list").html('<span class="spinner-gold pull-right"></span>').remove
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
+                appQuerySubNavView.episodize("bits")
             }
         });
-        
-        
-        // appQuerySubNavView.episodize("bits")
-        
-        return this.render()
+        return this
+        // .render()
     },
     zoomtointernal: function(e) {
+        if (verbose == true) {
+        }
         e.preventDefault()
         var a = $(e.currentTarget).parents('li')
             // return this.activate(a)
         return this
     },
     zoomfromexternal: function(czid) {
+        if (verbose == true) {
+        }
         var a = $(this.el).find("li[data-id='" + czid + "']")
             // return this.activate(a)
         return this
     },
     rewire: function(zoomto) {
+        if (verbose == true) {
+        }
         // reactivating some pieces that get wiped in the render
         // actually -- first, since we're here for the same reason -- let's wipe the episodes list, too
-
-if(typeof zoomto == 'undefined'){
-    var zoomto = true
-}
+        if (typeof zoomto == 'undefined') {
+            var zoomto = true
+        }
         $('#querylist-locations').liveFilter("#query-livefilter", 'li', {
             filterChildSelector: 'div'
         });
@@ -162,56 +175,52 @@ if(typeof zoomto == 'undefined'){
                 placement: 'right',
                 trigger: 'hover'
             })
-
             // a little non-backbone stuff
         $("#stats-hits").html("total hits: " + this.collection.length)
-
-        if(zoomto == true){
-
-        return this.zoomto()
+        if (zoomto == true) {
+            return this.zoomto()
         } else {
             return this
         }
     },
     zoomto: function() {
-
+        if (verbose == true) {
+        }
         var actv = activeFactory();
-
-        if(actv !==null && actv.length==2){
-
-        var amtyp = actv[0]
-        var amid = actv[1]
-
-
-        _.each(cbbItems._layers, function(i) {
-                if (i.options.cartodb_id == amid) {
-                    var ib = i.getBounds();
-                    if (verbose == true) {
-                        console.log("ib:");
-                        console.log(ib);
+        if (actv !== null && actv.length == 2) {
+            var amtyp = actv[0]
+            var amid = actv[1]
+            _.each(cbbItems._layers, function(i) {
+                    if (i.options.cartodb_id == amid) {
+                        var ib = i.getBounds();
+                        if (verbose == true) {
+                            console.log("ib:");
+                            console.log(ib);
+                        }
+                        // var typ = i.get("geom_type")
+                        switch (amtyp) {
+                            case 'point':
+                                // map.setView(i.getBounds(),7)
+                                map.fitBounds(ib)
+                                break;
+                            case 'poly':
+                                // map.setView(i.getBounds(),7)
+                                map.fitBounds(ib)
+                                break;
+                            default:
+                                // i.e. line
+                                map.fitBounds(ib)
+                                    // locid = locid;
+                        }
                     }
-                    // var typ = i.get("geom_type")
-                    switch (amtyp) {
-                        case 'point':
-                            // map.setView(i.getBounds(),7)
-                            map.fitBounds(ib)
-                            break;
-                        case 'poly':
-                            // map.setView(i.getBounds(),7)
-                            map.fitBounds(ib)
-                            break;
-                        default:
-                            // i.e. line
-                            map.fitBounds(ib)
-                                // locid = locid;
-                    }
-                }
-            }) //each
-        processLeaf(amid, true, amtyp)
-       } //actv length test
+                }) //each
+            processLeaf(amid, true, amtyp)
+        } //actv length test
         return this
     },
     activateold: function(a) {
+        if (verbose == true) {
+        }
         // first wipe the list of any true classes (see ~184 for explanation)
         $(this.el).find(".carto-plain-title").removeClass("true")
         var amid = $(a).data("id").toString();
@@ -292,23 +301,20 @@ if(typeof zoomto == 'undefined'){
             // cuz doing it with a proper backbone re-render took forever (.8 seconds)
         return this
     },
-    rendermin: function(){
-
-$(this.el).html(this.template({
-                count: this.collection.models.length,
-                rows: this.collection.toJSON()
-            }));
-
-return this.rewire(false)
-
+    rendermin: function() {
+        if (verbose == true) {
+        }
+        $(this.el).html(this.template({
+            count: this.collection.models.length,
+            rows: this.collection.toJSON()
+        }));
+        return this.rewire(false)
     },
     render: function() {
+        if (verbose == true) {
+        }
         // this.activate4all()
         this.unwire()
-
-        if (verbose == true) {
-            console.log("rendering cartoplain")
-        }
         if (this.collection.models.length > 0) {
             _.sortBy(this.collection.models, function(mod) {
                 return mod.get("active") == 'true';
@@ -325,11 +331,10 @@ return this.rewire(false)
             appConsole.set({
                 message: 'Just fyi - "' + appCartoQuery.get("rawstring") + '" brought zero mappable locations.'
             })
-            $(this.el).html("<span style='font-size:1.3em;'>Zero mappable bits.</span>"+'<div data-string="huell" data-toggle="tooltip" class="copy-trigger"><span class="loc-string">Huell has tons</span><i class="glyphicon glyphicon-map-marker cbb-trigger-inline"></i></div>')
-
-            // appQuerySubNavView.specify("bits")
+            $(this.el).html("<span style='font-size:1.3em;'>Zero mappable bits.</span>" + '<div data-string="huell" data-toggle="tooltip" class="copy-trigger"><span class="loc-string">Huell has tons</span><i class="glyphicon glyphicon-map-marker cbb-trigger-inline"></i></div>')
+                // appQuerySubNavView.specify("bits")
             appCBBCountView.render()
         }
-            return this.rewire()
+        return this.rewire()
     }
 });

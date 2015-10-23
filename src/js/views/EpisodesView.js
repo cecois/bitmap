@@ -2,6 +2,7 @@ var EpisodesView = Backbone.View.extend({
     // tagName: "li",
     el: "#episodes-list",
     initialize: function() {
+        if(verbose == true){console.log(" -------> EpisodesView --> running initialize")}
         if (verbose == true) {
             // console.log("initting recentsview")
         }
@@ -12,6 +13,7 @@ var EpisodesView = Backbone.View.extend({
         // return this.render()
     },
     speak: function(){
+        if(verbose == true){console.log(" -------> EpisodesView --> running speak")}
 
 appActivity.set({message:"pulling episodes for "+activeFactory()+"..."})
 
@@ -19,53 +21,35 @@ return this
 
     },
     stfu: function(){
+        if(verbose == true){console.log(" -------> EpisodesView --> running stfu")}
         // meta stfu
         appActivityView.stfu()
         return this
     },
     debug: function() {
+        if(verbose == true){console.log(" -------> EpisodesView --> running debug")}
         console.log("RESET trigger");
     },
     wipe: function() {
+        if(verbose == true){console.log(" -------> EpisodesView --> running wipe")}
         $(this.el).empty();
         return this
     },
     reset: function() {
+        if(verbose == true){console.log(" -------> EpisodesView --> running reset")}
         $(this.el).addClass("hidden")
         $(".episodes-arrow").addClass("hidden")
         return this
     },
     render: function() {
+        if(verbose == true){console.log(" -------> EpisodesView --> running render")}
 
-if(verbose==true){console.info("in EV.render, about to empty the el");}
+if(verbose==true){console.log("in EV.render, about to empty the el");}
 
         $(this.el).empty()
             // by the time we get here, plainview will have an active element, go get it to match its position
         var ael = $(".carto-plain-title.true")
-        // $(this.el).css("top", $(ael).position().top-30);
-
-// $("#episodes-list").css("top", $("#episodes-list").position().top-130);
-
-// $(this.el).scrollintoview(
-// {
-//     // duration: 2500,
-//     direction: "vertical",
-//     complete: function() {
-//         // highlight the element so user's focus gets where it needs to be
-//         // $("#episodes-list").css("top", $("#episodes-list").position().top-130);
-//     }
-// }
-// );
-
-// ael.scrollintoview()
-
-        // and that stupid arrow
-        // $(".episodes-arrow").removeClass("hidden").css("top", $(ael).position().top);
-
-        // $(".episodes-arrow").removeClass("hidden");
-
-        // $(this.el).css("top", this.collection.verticaloffset - 20)
-        // $('.episodes-arrow').removeClass('hidden').css("position", "relative").css("top", this.collection.verticaloffset - 10)
+     
 
 if(activeFactory()[0]=="_id"){
 
@@ -89,7 +73,7 @@ $(this.el).html("<div style='text-align:left;' class='cbbepsanno col-sm-12'>refe
         }
         
 
-        if(verbose==true){console.info("in EV.render, about to iter thru collx for wikia ids and titles");}
+        if(verbose==true){console.log("in EV.render, about to iter thru collx for wikia ids and titles");}
 
         this.collection.each(function(episode) {
             if (verbose == true) {
