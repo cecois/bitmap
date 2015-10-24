@@ -7,13 +7,20 @@ var StatesView = Backbone.View.extend({
         }
         this.universal = false;
         // this.render();
-        this.collection.bind("change", this.render, this);
+        // this.collection.bind("change:posish", this.render, this);
         // this.collection.bind("reset", this.render, this);
     },
     events: {
         "click": "swap"
     },
-    render: function() {
+    render: function(){
+
+$("#main").toggleClass("statie-collapsed")
+
+return this
+
+    },
+    renderOG1: function() {
         if (verbose == true) {
             console.info("------> StatesVIew --> render")
         }
@@ -87,7 +94,11 @@ var StatesView = Backbone.View.extend({
         }
         return this.rewire()
     },
-    swap: function() {
+    swap: function(){
+        return this.render()
+    },
+    swapOG: function() {
+        // this.universal = true;
         if (verbose == true) {
             console.info("------> StatesVIew --> swap")
         }
@@ -133,28 +144,33 @@ var StatesView = Backbone.View.extend({
                 });
             }
             appStates.set({
-                "name": "main",
-                "posish": "collapsed"
-            }, {
-                "name": "episodes",
-                "posish": "collapsed"
-            }, {
-                "name": "banner-bang",
-                "posish": "collapsed"
-            })
-            this.universal = true;
+                    "name": "main",
+                    "posish": "collapsed"
+                }, {
+                    "name": "episodes",
+                    "posish": "collapsed"
+                }, {
+                    "name": "banner-bang",
+                    "posish": "collapsed"
+                })
+                // this.universal = true;
         }
         return this
     },
     prebaked: function(set) {
         if (verbose == true) {
-            console.info("------> StatesVIew --> prebaked")
+            console.info("------> StatesVIew --> prebakedOG")
         }
         if (verbose == true) {
             console.log("prebaked set:");
             console.log(set);
         }
+        console.log("set:");
+        console.log(set);
         if (set.indexOf("query") >= 0) {
+            if (verbose == true) {
+                console.log("indexof query >= 0")
+            }
             if (appEpisodes.length == 0) {
                 appStates.set([{
                     "name": "main",
@@ -168,19 +184,26 @@ var StatesView = Backbone.View.extend({
                     "posish": "open"
                 }])
             } else {
+                if (verbose == true) {
+                    console.log("indexof query musta been 0")
+                }
                 appStates.set([{
                     "name": "main",
                     "posish": "open"
                 }, {
                     "name": "episodes",
                     "visible": false,
-                    "posish": "momap"
+                    // "posish": "momap"
+                    "posish": "open"
                 }, {
                     "name": "banner-bang",
                     "posish": "open"
                 }])
             } //episodes.length test
         } else if (set == "") {
+            if (verbose == true) {
+                console.log("set == 0")
+            }
             appStates.set([{
                 "name": "main",
                 "posish": "open"
@@ -244,7 +267,7 @@ var StatesView = Backbone.View.extend({
         //     }
         return this
     },
-    renderOG: function() {
+    renderOG0: function() {
         if (verbose == true) {
             console.info("------> StatesVIew --> renderOG")
         }

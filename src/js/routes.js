@@ -37,7 +37,7 @@ var Route = Backbone.Router.extend({
             }
 
             // now we are sure there's an h there's this universal, what *panelizer*? anyway we can position lotsa window elements at once
-appStatesView.prebaked(h)
+// appStatesView.prebaked(h)
 
             var hmod = "#" + h;
             _.each($("#main > .mainpanel"), function(p) {
