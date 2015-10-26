@@ -113,9 +113,9 @@ if(verbose==true){
                 console.log(foot);}
                     foot.openPopup()
                 }
-            // if (this.collection.length == 1) {
-            //     cbbItems.openPopup()
-            // }
+            if (this.collection.length == 1) {
+                cbbItems.openPopup()
+            }
 
             foot.on("popupopen",function(p){
 

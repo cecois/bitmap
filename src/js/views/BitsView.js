@@ -217,7 +217,7 @@ $('.bt-cartoobj-episodes').tooltip({
                     count: this.collection.models.length,
                     rows: this.collection.toJSON()
                 }));} else {
-                    $(this.el).html("None. <br/>Either they were all mappable or none came in from the query.")
+                    $(this.el).html("<div style='font-size:1.2em;padding:44px;text-align:center;'><p>None.</p> <p>Either they were all mappable (look over there --->) or none came in from the query.</p></div>")
                 }
         return this.rewire()
     }

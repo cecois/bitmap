@@ -16,6 +16,8 @@ var StatesView = Backbone.View.extend({
     render: function(){
 
 $("#main").toggleClass("statie-collapsed")
+$("#banner-bang").toggleClass("statie-collapsed")
+
 
 return this
 
