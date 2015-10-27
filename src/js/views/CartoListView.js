@@ -14,7 +14,7 @@ var CartoListView = Backbone.View.extend({
         if (verbose == true) {
         }
         this.listenTo(this.collection, 'reset', this.render);
-        this.listenTo(this.collection, 'change:active', this.rendermin);
+        // this.listenTo(this.collection, 'change:active', this.rendermin);
         if (agent == "desktop") {
             this.template = Handlebars.templates['cartoListView'];
         } else if (agent == "mobile") {
@@ -55,8 +55,6 @@ var CartoListView = Backbone.View.extend({
         return this
     },
     triage: function(e) {
-        if (verbose == true) {
-        }
         e.preventDefault()
         if (dev == true) {
             this.echoid(e)
@@ -72,6 +70,7 @@ var CartoListView = Backbone.View.extend({
             trigger: false,
             replace: false
         })
+        
         if (agent == "desktop") {
             return this.pulleps()
         } else if (agent == "mobile") {
@@ -144,21 +143,21 @@ var CartoListView = Backbone.View.extend({
         return this
         // .render()
     },
-    zoomtointernal: function(e) {
-        if (verbose == true) {
-        }
-        e.preventDefault()
-        var a = $(e.currentTarget).parents('li')
-            // return this.activate(a)
-        return this
-    },
-    zoomfromexternal: function(czid) {
-        if (verbose == true) {
-        }
-        var a = $(this.el).find("li[data-id='" + czid + "']")
-            // return this.activate(a)
-        return this
-    },
+    // zoomtointernal: function(e) {
+    //     if (verbose == true) {
+    //     }
+    //     e.preventDefault()
+    //     var a = $(e.currentTarget).parents('li')
+    //         // return this.activate(a)
+    //     return this
+    // },
+    // zoomfromexternal: function(czid) {
+    //     if (verbose == true) {
+    //     }
+    //     var a = $(this.el).find("li[data-id='" + czid + "']")
+    //         // return this.activate(a)
+    //     return this
+    // },
     rewire: function(zoomto) {
         if (verbose == true) {
         }
@@ -180,17 +179,17 @@ var CartoListView = Backbone.View.extend({
         if (zoomto == true) {
             return this.zoomto()
         } else {
-            return this
+            return this.zoomto()
         }
     },
     zoomto: function() {
-        if (verbose == true) {
-        }
+
         var actv = activeFactory();
         if (actv !== null && actv.length == 2) {
             var amtyp = actv[0]
             var amid = actv[1]
             _.each(cbbItems._layers, function(i) {
+                console.info("inside the cbbitems loop")
                     if (i.options.cartodb_id == amid) {
                         var ib = i.getBounds();
                         if (verbose == true) {

@@ -122,6 +122,33 @@ window.appEpisodesView = new EpisodesView({
 //     // .on('click', function() { alert('Clicked on a group!'); })
 //     .addTo(map);
 /* -------------------------------------------------- BASEMAPS -----------------------  */
+var baselayersdummified = {
+    "layers": [{
+            "name": "dummy",
+            "active": true,
+            "source": "localhost",
+            "nom": "A Real Dummy",
+            "thumb": "offline/dummy-thumb.png",
+            "mapis": "dark",
+            "definition": {
+                "maxZoom": 18,
+                "url": "offline/dummy-thumb.png",
+                "noWrap": true
+            }
+        },{
+            "name": "dummy",
+            "active": false,
+            "source": "localhost",
+            "nom": "A Real Dummy",
+            "thumb": "offline/dummy-thumb.png",
+            "mapis": "dark",
+            "definition": {
+                "maxZoom": 18,
+                "url": "offline/dummy-thumb.png",
+                "noWrap": true
+            }
+        }]
+}
 var baselayersdesk = {
     "layers": [{
             "name": "mapquest",
@@ -199,7 +226,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-pencil.png",
@@ -215,65 +242,17 @@ var baselayersdesk = {
         }
         , {
             "name": "dummy",
-            "active": false,
+            "active": true,
             "source": "localhost",
             "nom": "A Real Dummy",
             "thumb": "offline/dummy-thumb.png",
-            // "thumb": "file:///Users/ccmiller/Sites/mstroke/src/images/2877247_jkms-25-888-g002.png",
             "mapis": "dark",
             "definition": {
-                // "subdomains": ["a", "b", "c"],
                 "maxZoom": 18,
                 "url": "offline/dummy-thumb.png",
-                // "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
                 "noWrap": true
             }
         }
-        // , {
-        //     "name": "cloudmade",
-        //     "active": false,
-        //     "source": "cloudmade",
-        //     "nom": "CloudMade Grey",
-            // "thumb":null,
-            // "thumb": "http://c.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/22677/256/3/4/2.png",
-        // "mapis":"dark",//
-        // "definition": {
-        //         "maxZoom": 18,
-        //         "subdomains": ["a", "b", "c"],
-        //         "noWrap": true,
-        //         "url": "http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/22677/256/{z}/{x}/{y}.png"
-        //     }
-        // }, {
-        //     "name": "cloudmade_redalert",
-        //     "active": false,
-        //     "source": "cloudmade",
-        //     "nom": "Red Alert",
-            // "thumb":null,
-            // "thumb": "http://c.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/19996/256/3/4/2.png",
-        // "mapis":"dark",//
-        // "definition": {
-        //         "maxZoom": 18,
-        //         "subdomains": ["a", "b", "c"],
-        //         "noWrap": true,
-        //         "url": "http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/19996/256/{z}/{x}/{y}.png"
-        //     }
-        // }
-        // , {
-        //     "name": "opencycle_cycle",
-        //     "active": false,
-        //     "source": "opencycle",
-        //     "nom": "OpenCycle",
-            // "thumb":null,
-            // "thumb": "http://a.tile.opencyclemap.org/cycle/4/8/4.png",
-        //     "thumb": "offline/opencyclemap.png",
-        //     "mapis": "light",
-        //     "definition": {
-        //         "maxZoom": 18,
-        //         "subdomains": ["a", "b", "c"],
-        //         "noWrap": true,
-        //         "url": "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png"
-        //     }
-        // }
         , {
             "name": "opencycle_landscape",
             "active": false,
@@ -366,9 +345,14 @@ var baselayersmobile = {
     ]
 }
 
+if(dev==true){
+    baselayers=baselayersdummified
+    // baselayers=baselayersmobile
+} else {
+
 if(agent=='mobile'){
     baselayers=baselayersmobile
-}else{baselayers=baselayersdesk}
+}else{baselayers=baselayersdesk}}
 
 appBaseLayers = new BaseLayersCollection(baselayers.layers);
 // ...for which we need a menu

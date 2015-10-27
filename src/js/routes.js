@@ -72,6 +72,8 @@ var Route = Backbone.Router.extend({
                 bboxarr.push(northeast)
                 map.fitBounds(bboxarr);
             }
+
+                //                 
             if (h == 'query') {
 
                 // this.update("#query")
