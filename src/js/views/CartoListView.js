@@ -14,7 +14,7 @@ var CartoListView = Backbone.View.extend({
         if (verbose == true) {
         }
         this.listenTo(this.collection, 'reset', this.render);
-        // this.listenTo(this.collection, 'change:active', this.rendermin);
+        this.listenTo(this.collection, 'change:active', this.rendermin);
         if (agent == "desktop") {
             this.template = Handlebars.templates['cartoListView'];
         } else if (agent == "mobile") {
@@ -163,9 +163,9 @@ var CartoListView = Backbone.View.extend({
         }
         // reactivating some pieces that get wiped in the render
         // actually -- first, since we're here for the same reason -- let's wipe the episodes list, too
-        if (typeof zoomto == 'undefined') {
-            var zoomto = true
-        }
+        // if (typeof zoomto == 'undefined') {
+        //     var zoomto = true
+        // }
         $('#querylist-locations').liveFilter("#query-livefilter", 'li', {
             filterChildSelector: 'div'
         });
@@ -177,42 +177,56 @@ var CartoListView = Backbone.View.extend({
             // a little non-backbone stuff
         $("#stats-hits").html("total hits: " + this.collection.length)
         if (zoomto == true) {
-            return this.zoomto()
+            return this
+            // .zoomto()
         } else {
-            return this.zoomto()
+            return this
+            // .zoomto()
         }
     },
     zoomto: function() {
-
+console.log("--------> CLV.zoomto");
         var actv = activeFactory();
+console.log("--------> CLV.zoomto, actv:");
+console.log(actv);
         if (actv !== null && actv.length == 2) {
             var amtyp = actv[0]
             var amid = actv[1]
-            _.each(cbbItems._layers, function(i) {
-                console.info("inside the cbbitems loop")
-                    if (i.options.cartodb_id == amid) {
-                        var ib = i.getBounds();
-                        if (verbose == true) {
-                            console.log("ib:");
-                            console.log(ib);
-                        }
-                        // var typ = i.get("geom_type")
-                        switch (amtyp) {
-                            case 'point':
-                                // map.setView(i.getBounds(),7)
-                                map.fitBounds(ib)
-                                break;
-                            case 'poly':
-                                // map.setView(i.getBounds(),7)
-                                map.fitBounds(ib)
-                                break;
-                            default:
-                                // i.e. line
-                                map.fitBounds(ib)
-                                    // locid = locid;
-                        }
-                    }
-                }) //each
+
+            console.info("amtyp:")
+            console.log(amtyp)
+            console.info("amid:")
+            console.log(amid)
+
+            // _.each(cbbItems._layers, function(i) {
+            //     console.info("inside the cbbitems loop")
+            //         if (i.options.cartodb_id == amid) {
+
+            //             var ib = i.getBounds();
+
+            //             i.openPopup()
+                        
+            //             if (verbose == true) {
+            //                 console.log("ib:");
+            //                 console.log(ib);
+            //             }
+            //             // var typ = i.get("geom_type")
+            //             switch (amtyp) {
+            //                 case 'point':
+            //                     // map.setView(i.getBounds(),7)
+            //                     map.fitBounds(ib)
+            //                     break;
+            //                 case 'poly':
+            //                     // map.setView(i.getBounds(),7)
+            //                     map.fitBounds(ib)
+            //                     break;
+            //                 default:
+            //                     // i.e. line
+            //                     map.fitBounds(ib)
+            //                         // locid = locid;
+            //             }
+            //         }
+            //     }) //each
             processLeaf(amid, true, amtyp)
         } //actv length test
         return this
@@ -300,14 +314,58 @@ var CartoListView = Backbone.View.extend({
             // cuz doing it with a proper backbone re-render took forever (.8 seconds)
         return this
     },
-    rendermin: function() {
+    rendermin: function(e) {
         if (verbose == true) {
+            console.info("rendermin - here's the e")
+            console.log(e);
         }
         $(this.el).html(this.template({
             count: this.collection.models.length,
             rows: this.collection.toJSON()
         }));
-        return this.rewire(false)
+        
+//         var amid = e.get("cartodb_id")
+//         var typ = e.get("geom_type")
+
+
+
+//                 _.each(cbbItems._layers, function(i) {
+//                 // we can shop the now-active id to the leaflet layers bc we stored that id when we added them to the map
+//                 // if (verbose == true) {console.log("ex:");console.log(ex);}
+
+//                 if (i.options.cartodb_id == amid) {
+
+
+// console.info("...based on this i:")
+// console.log(i);
+//                     var ib = i.getBounds();
+// console.info("AN OPTIONS MATCH, LEMME ZOOM to this ib:")
+// console.log(ib);
+//                             // map.fitBounds(ib)
+//                             map.fitBounds(i.getBounds())
+
+//                     // var typ = i.get("geom_type")
+//                     switch (typ) {
+//                         case 'point':
+//                         console.info("ITS a POINT!")
+//                             // map.setView(i.getBounds(),9)
+//                             map.fitBounds(i.getBounds())
+//                             break;
+//                         case 'poly':
+//                             map.setView(i.getBounds(),7)
+//                             // map.fitBounds(ib)
+//                             break;
+//                         default:
+//                             // i.e. line
+//                             map.fitBounds(ib)
+//                                 // locid = locid;
+//                     }
+                    
+//                 }
+//             }) //each
+        // 
+        return this
+        // .rewire(true)
     },
     render: function() {
         if (verbose == true) {
@@ -327,9 +385,9 @@ var CartoListView = Backbone.View.extend({
             }));
         } else {
             // if there are no locations we wanna be cute and snide but also not make anybody see it
-            appConsole.set({
-                message: 'Just fyi - "' + appCartoQuery.get("rawstring") + '" brought zero mappable locations.'
-            })
+            // appConsole.set({
+            //     message: 'Just fyi - "' + appCartoQuery.get("rawstring") + '" brought zero mappable locations.'
+            // })
             $(this.el).html("<span style='font-size:1.3em;'>Zero mappable bits.</span>" + '<div data-string="huell" data-toggle="tooltip" class="copy-trigger"><span class="loc-string">Huell has tons</span><i class="glyphicon glyphicon-map-marker cbb-trigger-inline"></i></div>')
                 // appQuerySubNavView.specify("bits")
             appCBBCountView.render()

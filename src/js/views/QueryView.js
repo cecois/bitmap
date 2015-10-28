@@ -9,11 +9,11 @@ var QueryView = Backbone.View.extend({
     },
     template: Handlebars.templates['queryViewTpl'],
     initialize: function() {
-        this.render();
+        // this.render();
         var q = this.model;
         // q.on("change", q.setstrings);
         // this.listenTo(this.model, "change", this.render)
-        this.listenTo(this.model, "change:solrstring", this.fire)
+// this.listenTo(this.model, "change:solrstring", this.fire)
             // this.listenTo(this.model, "change", this.test)
             // this.model.bind("change:urlstring", this.fire, this);
     },
@@ -98,10 +98,15 @@ var QueryView = Backbone.View.extend({
                     appCBB.fetch({
                         reset: true,
                         // dataType: "jsonp"
-                        success: function() {
+                        success: function(collx) {
                             // appCBBListView.render()
                             // appCBBMapView.render()
                             // appCBBCountView.render()
+                            // if (typeof activecouple !== 'undefined' && activecouple !== null) {
+                            //     console.info("WOA - ONE OF THESE IS ACTIVE")
+                            //         collx.activate(false);
+                            //     }
+                            // 
                             appActivityView.stfu()
                         },
                         error: function() {

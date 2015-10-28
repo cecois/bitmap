@@ -34,15 +34,24 @@ templates['bitsView-Mobile'] = template({"1":function(depth0,helpers,partials,da
   return buffer + "</div>\n</li>\n";
 },"2":function(depth0,helpers,partials,data) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return escapeExpression(lambda((depth0 != null ? depth0.instance : depth0), depth0))
-    + "\n";
+  return "<span class=\"instance\">"
+    + escapeExpression(lambda((depth0 != null ? depth0.instance : depth0), depth0))
+    + "</span>\n";
 },"4":function(depth0,helpers,partials,data) {
   return "(no description provided)\n";
   },"6":function(depth0,helpers,partials,data) {
   var lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "<div class=\"cbbanno\">("
+  return "	<div class=\"cbbanno\"><span class=\"copy-trigger\" data-toggle=\"tooltip\" data-string='bit:\""
+    + escapeExpression(lambda((depth0 != null ? depth0.bit : depth0), depth0))
+    + "\"'><span class=\"loc-string\">bit: "
+    + escapeExpression(lambda((depth0 != null ? depth0.bit : depth0), depth0))
+    + "</span></span> ("
     + escapeExpression(lambda((depth0 != null ? depth0.elucidation : depth0), depth0))
-    + ")</div>\n";
+    + ")</div>\n<!-- <div class=\"cbbanno\">"
+    + escapeExpression(lambda((depth0 != null ? depth0.bit : depth0), depth0))
+    + " ("
+    + escapeExpression(lambda((depth0 != null ? depth0.elucidation : depth0), depth0))
+    + ")</div> -->\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<!-- <h1 class=\"stroke\" style=\"margin-bottom:43px;\">Unmappable Bits<span class=\"cbbanno\">("
     + escapeExpression(((helper = (helper = helpers.count || (depth0 != null ? depth0.count : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"count","hash":{},"data":data}) : helper)))

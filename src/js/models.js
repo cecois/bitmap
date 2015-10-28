@@ -368,7 +368,7 @@ var CartoQuery = Backbone.Model.extend({
         // this.listenTo(this, "change", this.setstrings)
         // this.bind(this, "change", "setstrings")
 
-        this.setstrings()
+        // this.setstrings()
         this.on('change:rawstring change:facetarray', this.setstrings, this);
         // this.on('change:facetarray', this.setstrings, this);
         // this.on('', this.setstrings, this);
@@ -567,7 +567,7 @@ var CartoCollection = Backbone.Collection.extend({
         });
         return this
     },
-    activate: function() {
+    activate: function(silent) {
         this.deactivate()
         if(verbose==true){console.log("in cartocollx activate, checking...");
                 console.log("active global is:");
@@ -580,10 +580,13 @@ var CartoCollection = Backbone.Collection.extend({
             _.each(this.models, function(d, index) {
                 if (d.get("cartodb_id") == activeid && d.get("geom_type") == activetype) {
                     if(verbose==true){console.log("GOT ONE! Setting to true...");}
-                    d.set({
-                        active: true
-                    });
-                    if(verbose==true){console.log(d);}
+                    if(silent == true){
+                                        d.set({active: true}, {silent: true});
+                            } else {
+                                        d.set({active: true}, {silent: false});
+                            }
+
+                    // if(verbose==true){console.log(d);}
                 }
             });
         } //if global actives
