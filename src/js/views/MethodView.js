@@ -24,6 +24,7 @@ var MethodView = Backbone.View.extend({
             console.log("ds");
             console.log(ds);
          }
+         appCartoQuery.set({rawstring:ds})
         locTrigger(e, true, ds)
         return this
     },

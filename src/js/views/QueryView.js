@@ -13,7 +13,7 @@ var QueryView = Backbone.View.extend({
         var q = this.model;
         // q.on("change", q.setstrings);
         // this.listenTo(this.model, "change", this.render)
-// this.listenTo(this.model, "change:solrstring", this.fire)
+this.listenTo(this.model, "change:solrstring", this.fire)
             // this.listenTo(this.model, "change", this.test)
             // this.model.bind("change:urlstring", this.fire, this);
     },
@@ -106,7 +106,7 @@ var QueryView = Backbone.View.extend({
                             //     console.info("WOA - ONE OF THESE IS ACTIVE")
                             //         collx.activate(false);
                             //     }
-                            // 
+                            //
                             appActivityView.stfu()
                         },
                         error: function() {
