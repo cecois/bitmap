@@ -39,10 +39,10 @@ var CartoCollxView = Backbone.View.extend({
         //     map.setView(foot.getLatLng(), 9);
         // }
         // foot.openPopup()
-        
+
         // _.each(this.collection.models,function(m){console.log("in each:");console.log(m.get("active"))});
 
-        // 
+        //
         var amo = this.collection.findWhere({
             "active": true
         })
@@ -50,8 +50,6 @@ var CartoCollxView = Backbone.View.extend({
 if(typeof amo !== 'undefined'){
         processLeaf(amo.get("cartodb_id").toString(), true, amo.get("geomtype"));}
 
-        console.log("amo:");
-        console.log(amo);
             // foot.zoomTo().openPopup()
         // map.fitBounds(foot.getBounds())
         return this

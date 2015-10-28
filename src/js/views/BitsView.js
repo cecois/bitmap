@@ -4,6 +4,7 @@ var BitsView = Backbone.View.extend({
     events: {
         // "click .bt-cartoobj-zoomto": 'zoomtointernal',
         "click .bt-cartoobj-episodes": 'triage',
+        "click .copy-trigger": "singular"
         // "click": 'triage',
         // "click .bt-getid": 'echoid'
     },
@@ -37,7 +38,9 @@ var BitsView = Backbone.View.extend({
         return this
     },
     unwire: function() {
+
         $('.bt-cartoobj').tooltip('destroy')
+        $('.copy-trigger').tooltip('destroy')
         return this
     },
     stageeps: function(e) {
@@ -45,6 +48,20 @@ var BitsView = Backbone.View.extend({
     },
     sort: function() {
         this.collection.sort()
+        return this
+    },
+    singular: function(e) {
+
+this.unwire()
+        e.preventDefault()
+         var ds = $(e.currentTarget).attr("data-string")
+         if(verbose==true){
+            console.log("e");
+            console.log(e);
+            console.log("ds");
+            console.log(ds);
+         }
+        locTrigger(e, true, ds)
         return this
     },
     triage: function(e) {
@@ -103,7 +120,7 @@ var BitsView = Backbone.View.extend({
         appEpisodes.fetch({
             reset: true,
             success: function(c, r, o) {
-                
+
 
         appQuerySubNavView.episodize("locations")
             }
@@ -153,9 +170,9 @@ var BitsView = Backbone.View.extend({
         // reactivating some pieces that get wiped in the render
         // actually -- first, since we're here for the same reason -- let's wipe the episodes list, too
         appEpisodesView.wipe();
-        $('#querylist-bits').liveFilter("#query-livefilter", 'li', {
-            filterChildSelector: 'div'
-        });
+        // $('#querylist-bits').liveFilter("#query-livefilter", 'li', {
+        //     filterChildSelector: 'div'
+        // });
         // $('.bt-cartoobj').tooltip({
         //     container: 'body',
         //     placement: 'right',
@@ -165,6 +182,18 @@ $('.bt-cartoobj-episodes').tooltip({
             container: 'body',
             placement: 'right',
             trigger: 'hover'
+        })
+
+$('.copy-trigger').tooltip({
+            container: 'body',
+            placement: 'top',
+            trigger: 'hover',
+            html:true,
+            title: function(){
+console.log("this:");
+console.log(this);
+return "query for "+$(this).attr("data-string")
+            }
         })
         // a little non-backbone stuff
         // $("#stats-hits").html("total hits: " + this.collection.length)
