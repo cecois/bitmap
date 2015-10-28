@@ -70,12 +70,14 @@ var CartoListView = Backbone.View.extend({
             trigger: false,
             replace: false
         })
-        
+
         if (agent == "desktop") {
-            return this.pulleps()
+            return this
+            .zoomto().pulleps()
         } else if (agent == "mobile") {
             // return this.pulleps_mobile()
-            return this.pulleps()
+            return this
+            .zoomto().pulleps()
         }
         // return this.prepeps(e)
     },
@@ -105,7 +107,7 @@ var CartoListView = Backbone.View.extend({
         //        }
     },
     pulleps: function() {
-        
+
             // $("#episodes-list").html('<div class="spinner-gold"></div>')
         $("#episodes-list").html('<span class="spinner-gold pull-right"></span>').removeClass("hidden")
             // $("#episodes").removeClass("hidden")
@@ -205,7 +207,7 @@ console.log(actv);
             //             var ib = i.getBounds();
 
             //             i.openPopup()
-                        
+
             //             if (verbose == true) {
             //                 console.log("ib:");
             //                 console.log(ib);
@@ -323,7 +325,7 @@ console.log(actv);
             count: this.collection.models.length,
             rows: this.collection.toJSON()
         }));
-        
+
 //         var amid = e.get("cartodb_id")
 //         var typ = e.get("geom_type")
 
@@ -360,10 +362,10 @@ console.log(actv);
 //                             map.fitBounds(ib)
 //                                 // locid = locid;
 //                     }
-                    
+
 //                 }
 //             }) //each
-        // 
+        //
         return this
         // .rewire(true)
     },
