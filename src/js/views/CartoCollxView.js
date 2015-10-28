@@ -47,7 +47,8 @@ var CartoCollxView = Backbone.View.extend({
             "active": true
         })
 
-        processLeaf(amo.get("cartodb_id").toString(), true, amo.get("geomtype"));
+if(typeof amo !== 'undefined'){
+        processLeaf(amo.get("cartodb_id").toString(), true, amo.get("geomtype"));}
 
         console.log("amo:");
         console.log(amo);
