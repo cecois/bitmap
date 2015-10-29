@@ -409,27 +409,33 @@ var states = [{
 
     ]
 
+// https://twitter.com/intent/tweet?url=<url to tweet>&text=<text to tweet>&hashtags=<comma separated list of hashtags, with no # on them>
+// http://some.url.com/?text=&url=http://data.gov&via=ZapStraightToIt&hashtags=comedybangbang
+// https://twitter.com/intent/tweet?url=http://data.gov&text=&hashtags=deleteme
+
     var shares = [
 
 {"id":"social-twitter",
-"href":"http://some.url.com",
+"href":"https://twitter.com/share",
 "page.title":null,
 "page.url":null,
 "tip":"share on Twitter",
-"hashtags":null
-},
-{"id":"social-facebook",
-"href":"http://some.url.com",
-"page.title":null,
-"page.url":null,
-"tip":"share on FaceBook"
-},
-{"id":"social-google",
-"href":"http://some.url.com",
-"page.title":null,
-"page.url":null,
-"tip":"share on Google+"
+"hashtags":null,
+"copy":null
 }
+// ,
+// {"id":"social-facebook",
+// "href":"http://some.url.com",
+// "page.title":null,
+// "page.url":null,
+// "tip":"share on FaceBook"
+// },
+// {"id":"social-google",
+// "href":"http://some.url.com",
+// "page.title":null,
+// "page.url":null,
+// "tip":"share on Google+"
+// }
 
     ]
 

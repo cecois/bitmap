@@ -8,6 +8,23 @@ var SharesView = Backbone.View.extend({
     events: {
         // "click": "render"
         "click": "shorten"
+        // "click": "shortenDEBUG"
+    },
+    shortenDEBUG: function(){
+
+var longurl = captureState()
+
+
+appActivity.set({
+                    message: "FAKE shortening url for sharing..."
+                })
+var self = this;
+
+var shawty = "fake.as.hell.url"
+appActivityView.stfu()
+
+return self.render(shawty)
+
     },
     shorten: function(){
 
@@ -77,7 +94,8 @@ $("#share-container-modal").html(this.template({
                     shares: this.collection.toJSON(),
                     purl: shawty,
                     query: appCartoQuery.get("displaystring"),
-                    tags: tagstringfinal
+                    tags: tagstringfinal,
+                    copy: "Look! Look! It's a map of @comedybangbang."
                 }));
 
         return this
