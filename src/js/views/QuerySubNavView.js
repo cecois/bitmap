@@ -14,6 +14,7 @@ var QuerySubNavView = Backbone.View.extend({
         this.render();
         // this.listenTo(appBits,"reset",this.accoutrement)
         // this.listenTo(appCBB,"reset",this.accoutrement)
+        // this.listenTo(appCBB,appBits,"change",this.throbtab)
         // this.listenTo(this.model, "change", this.render)
         // this.listenTo(this.model, "change:patsy", this.episodize)
             // this.model.bind("change", this.render, this);

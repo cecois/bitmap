@@ -107,6 +107,8 @@ var Route = Backbone.Router.extend({
                 // })
             } //h is query for fetch
 
+// ok, well here's a funny thing - yes, we're manually calling the little badge thing here cuzzi i simply didn't wanna rearrange and diagnose a bunch of inter-model/view calls and I didn't wanna create a view just for this. What!? Ok, #returnto
+appCBBCountView.throbtab()
 
 if(facetsin !== null && typeof facetsin !== 'undefined'){
                                                                 facetsinscrubbed=facetsin.split(",")} else {

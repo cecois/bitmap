@@ -14,10 +14,34 @@ $(".query-subnav-count-locations").html('<div class="spinner" style="margin:0;">
 return this
 
     },
+    throbtab: function(){
+
+// i don't know about this, guys - point is to be able to highlight when there are new query results but the query tab isn't active. good idea?
+
+if($("#query.mainpanel").hasClass("hidden")==true){
+
+console.info("query tab has a hidden class, we should badge it up so ppl know about deez resultz")
+var newz = appBits.length+appCBB.length
+console.log(newz);
+$("#query-new-throb").html(newz)
+$("#query-new-throb").removeClass("hidden")
+
+
+} else {
+
+if($("#query-new-throb").hasClass("hidden")==false){
+
+    $("#query-new-throb").addClass("hidden")
+}
+}
+
+return this
+
+    },
     render: function() {
         var len = this.collection.models.length
 
         $(this.el).html("("+this.collection.models.length+")");
-        return this
+        return this.throbtab()
     }
 }); //bitscountview
