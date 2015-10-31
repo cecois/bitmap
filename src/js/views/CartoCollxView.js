@@ -57,7 +57,6 @@ if(typeof amo !== 'undefined'){
             // }, this);
     },
     render: function() {
-        console.log("--------> CCXV.render");
         appActivity.set({
             message: "preparing map objects..."
         })

@@ -226,7 +226,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": false,
+            "active": true,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-pencil.png",
@@ -240,19 +240,19 @@ var baselayersdesk = {
                 "noWrap": true
             }
         }
-        , {
-            "name": "dummy",
-            "active": true,
-            "source": "localhost",
-            "nom": "A Real Dummy",
-            "thumb": "offline/dummy-thumb.png",
-            "mapis": "dark",
-            "definition": {
-                "maxZoom": 18,
-                "url": "offline/dummy-thumb.png",
-                "noWrap": true
-            }
-        }
+        // , {
+        //     "name": "dummy",
+        //     "active": true,
+        //     "source": "localhost",
+        //     "nom": "A Real Dummy",
+        //     "thumb": "offline/dummy-thumb.png",
+        //     "mapis": "dark",
+        //     "definition": {
+        //         "maxZoom": 18,
+        //         "url": "offline/dummy-thumb.png",
+        //         "noWrap": true
+        //     }
+        // }
         , {
             "name": "opencycle_landscape",
             "active": false,
@@ -347,7 +347,7 @@ var baselayersmobile = {
 
 if(dev==true){
     baselayers=baselayersdummified
-    baselayers=baselayersmobile
+    // baselayers=baselayersmobile
 } else {
 
 if(agent=='mobile'){

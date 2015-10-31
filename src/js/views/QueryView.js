@@ -138,7 +138,7 @@ this.listenTo(this.model, "change:solrstring", this.fire)
         if(verbose==true){
                 console.log("rewiring queryview...")}
         $(this.el).tooltip('destroy')
-        var heynongcopy = "Heynong the current query ( reset it to show everything "
+        var heynongcopy = "Heynong the current query ( reset it to show everything [cept it'll take a while]"
         if (appCartoQuery.get("facetarray").length > 0) {
             heynongcopy += "[still limited to current facets:"
             heynongcopy += appCartoQuery.get("facetarray").join(",")

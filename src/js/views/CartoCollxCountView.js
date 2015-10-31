@@ -20,9 +20,7 @@ return this
 
 if($("#query.mainpanel").hasClass("hidden")==true){
 
-console.info("query tab has a hidden class, we should badge it up so ppl know about deez resultz")
 var newz = appBits.length+appCBB.length
-console.log(newz);
 $("#query-new-throb").html(newz)
 $("#query-new-throb").removeClass("hidden")
 

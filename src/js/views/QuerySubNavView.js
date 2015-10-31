@@ -83,10 +83,6 @@ if(verbose == true){console.log(" -------> QuerySubNavView --> running reset")}
 var patsy = this.patsy
 var cssog = this.cssog
 
-console.info("patsy:" +this.patsy);
-console.info("cssog:" +this.cssog);
-
-
 // var cssogbt = $('.query-subnav-btn[data-id="episodes"]').attr("class").split(" ")
 var cssogbt = this.cssogbt
 
