@@ -16,6 +16,8 @@ var StatesView = Backbone.View.extend({
     },
     render: function(){
 
+// $(this.el).find(".bt-facet").tooltip('destroy')
+
 $("#main").toggleClass("statie-collapsed")
 $("#banner-bang").toggleClass("statie-collapsed")
 
@@ -35,6 +37,7 @@ switch (plusm) {
 
 
 return this
+.rewire()
 // .buttonize()
 
     },
@@ -113,6 +116,7 @@ return this
         return this.rewire()
     },
     swap: function(){
+        $(this.el).find('[data-toggle="tooltip"]').tooltip('destroy')
         return this.render()
     },
     // swapOG: function() {
@@ -334,6 +338,7 @@ return this
         if (verbose == true) {
             console.info("------> StatesVIew --> rewire")
         }
+        $(this.el).find('[data-toggle="tooltip"]').tooltip('destroy')
         $(this.el).find('[data-toggle="tooltip"]').tooltip({
             position: "right",
             container: 'body'
