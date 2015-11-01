@@ -267,32 +267,33 @@ var baselayersdesk = {
                 "noWrap": true,
                 "url": "http://{s}.tile3.opencyclemap.org/landscape/{z}/{x}/{y}.png"
             }
-        }, {
-            "name": "stamen_toner",
-            "active": false,
-            "nom": "Stamen Toner",
-            "source": "stamen",
-            "thumb": "offline/stamen-toner.png",
-            // "thumb": "http://c.tile.stamen.com/toner/10/163/395.png",
-            "mapis": "dark",
-            "definition": {
-                "id": "toner",
-                "url": null
-            }
         }
-        , {
-            "name": "stamen_watercolor",
-            "active": false,
-            "nom": "Stamen Watercolor",
-            "source": "stamen",
-            "thumb": "offline/stamen-watercolor.jpg",
-            // "thumb": "http://tile.stamen.com/watercolor/12/655/1583.jpg",
-            "mapis": "light",
-            "definition": {
-                "id": "watercolor",
-                "url": null
-            }
-        }
+        // , {
+        //     "name": "stamen_toner",
+        //     "active": false,
+        //     "nom": "Stamen Toner",
+        //     "source": "stamen",
+        //     "thumb": "offline/stamen-toner.png",
+        //     // "thumb": "http://c.tile.stamen.com/toner/10/163/395.png",
+        //     "mapis": "dark",
+        //     "definition": {
+        //         "id": "toner",
+        //         "url": null
+        //     }
+        // }
+        // , {
+        //     "name": "stamen_watercolor",
+        //     "active": false,
+        //     "nom": "Stamen Watercolor",
+        //     "source": "stamen",
+        //     "thumb": "offline/stamen-watercolor.jpg",
+        //     // "thumb": "http://tile.stamen.com/watercolor/12/655/1583.jpg",
+        //     "mapis": "light",
+        //     "definition": {
+        //         "id": "watercolor",
+        //         "url": null
+        //     }
+        // }
     ]
 }
 
@@ -346,8 +347,9 @@ var baselayersmobile = {
 }
 
 if(dev==true){
-    baselayers=baselayersdummified
+    // baselayers=baselayersdummified
     // baselayers=baselayersmobile
+    baselayers=baselayersdesk
 } else {
 
 if(agent=='mobile'){

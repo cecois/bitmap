@@ -27,7 +27,8 @@ var BaseLayersMenuView = Backbone.View.extend({
         // $("#BaseMapConsole").html(this.model.get("nom"))
         // #returnto -- use underscore to pull this from the collx
         // $("#mnuBaseMap").attr("title",this.title)
-        $("#mnuBaseMap").tooltip()
+        // $("#mnuBaseMap").tooltip()
+        $(".mnuThumbnail").tooltip()
         $("#BaseMapConsole").html($(".mnuThumbnail.true").attr("title"))
             //
         this.$(".mnuThumbnail").hover(function() {

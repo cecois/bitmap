@@ -10,7 +10,7 @@ var SharesView = Backbone.View.extend({
         "click": "shorten"
         // "click": "shortenDEBUG"
     },
-    shortenDEBUG: function(){
+    shortenDEBUG0: function(){
 
 var longurl = captureState()
 
@@ -37,6 +37,55 @@ appActivity.set({
 // shorten it w goo.gl
 
 var self = this;
+
+$.ajax({
+        url: 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyDpaSYbhk8jM56yn1J_Z4XeTHxIIncD_zw',
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        data: '{ longUrl: "' + longurl +'"}',
+        dataType: 'json',
+        success: function(data) {
+            shawty = data.id;
+            appActivityView.stfu()
+
+            return self.render(shawty)
+// return shawty.id
+
+        },
+        error: function(data){
+
+appActivity.set({
+                    message: "shortening FAILED!"
+                })
+appActivityView.stfu()
+
+return self.errorout(data)
+
+        }
+     });
+
+// return this.render($.parseJSON(shawted))
+// return this.render(shawted)
+// if(shawty.error !== 'undefined'){
+// return this.render(shawty)} else {
+//     return this.errorout(shawty)}
+
+    },
+        shortenDEBUG: function(){
+
+var longurl = captureState()
+
+
+appActivity.set({
+                    message: "shortening url for sharing..."
+                })
+// shorten it w goo.gl
+
+var self = this;
+
+console.info(longurl)
+
+return 0
 
 $.ajax({
         url: 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyDpaSYbhk8jM56yn1J_Z4XeTHxIIncD_zw',
