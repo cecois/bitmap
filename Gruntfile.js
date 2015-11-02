@@ -32,7 +32,8 @@ module.exports = function(grunt) {
         // 'dist/js/leo.min.js': ['<config:concat.app.dest>']
         '/Users/ccmiller/git/bitmap/js/models.min.js':'src/js/models.js',
         // '/Users/ccmiller/git/bitmap/js/views.min.js':['src/js/views/ActivityView.js','src/js/views/BaseLayerMenuItemView.js','src/js/views/BaseLayersMenuView.js','src/js/views/BaseLayersView.js','src/js/views/BaseMapView.js','src/js/views/CartoCollxCountView.js','src/js/views/BitsView.js','src/js/views/BitsCountView.js','src/js/views/CartoCollxView.js','src/js/views/CartoListView.js','src/js/views/ConsoleView.js','src/js/views/EpisodesView.js','src/js/views/EpisodeView.js','src/js/views/FacetsView.js','src/js/views/StatesView.js','src/js/views/HuhView.js','src/js/views/MethodView.js','src/js/views/PopupView.js','src/js/views/QuerySubNavView.js','src/js/views/QueryView.js','src/js/views/SolrFieldzView.js'],
-        '/Users/ccmiller/git/bitmap/js/views.min.js':'src/js/views/*',
+        // '/Users/ccmiller/git/bitmap/js/views.min.js':'src/js/views/*',
+        '/Users/ccmiller/git/bitmap/js/views.min.js':['src/js/views/*'],
       }
     }
   },
