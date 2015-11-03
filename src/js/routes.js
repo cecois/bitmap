@@ -123,6 +123,8 @@ var Route = Backbone.Router.extend({
                     rawstring: q
                 });
                 // }
+            } else {
+                appCartoQuery.set({rawstring:"chupa*"})
             }
             // else {
             //      appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:'huell'});
