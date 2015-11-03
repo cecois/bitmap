@@ -1,7 +1,8 @@
 var QueryView = Backbone.View.extend({
     el: $("#query-form"),
     events: {
-        "click #query-form-bt": "fire",
+        // "click #query-form-bt": "fire",
+        "click #query-form-bt": "btfire",
         "click #query-form-heynongmantzoukas": "heynong",
         "click #query-form-randomize": "randomize",
         "click #solrfields .glyphicon": "togglehelp"
@@ -40,9 +41,16 @@ this.listenTo(this.model, "change:solrstring", this.fire)
         if(verbose==true){
                 console.log("btfire's e:")
                 console.log(e);}
+
+
+// this.model.set({"facetarray":[]},{silent:true})
+this.model.set({facetarray:[],rawstring:"dimello"});
+                
         return this
+        // .fire()
     },
     fire: function(e) {
+
         $(this.el).tooltip('destroy')
         appQuerySubNavView.reset()
         if (verbose == true) {

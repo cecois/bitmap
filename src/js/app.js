@@ -347,9 +347,9 @@ var baselayersmobile = {
 }
 
 if(dev==true){
-    // baselayers=baselayersdummified
+    baselayers=baselayersdummified
     // baselayers=baselayersmobile
-    baselayers=baselayersdesk
+    // baselayers=baselayersdesk
 } else {
 
 if(agent=='mobile'){
@@ -663,7 +663,7 @@ acv=ac.join(":")
     }
 
     function processLeaf(mid, pop, geom) {
-        console.info("-----> processleaf")
+        
         if(typeof pop == 'undefined'){
             var pop = true
         }
