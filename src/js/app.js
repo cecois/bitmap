@@ -848,5 +848,8 @@ function puFactory(p){
 //     var pv = new PopupView({model:pm,el: nel})
 // }
 // 
-appCartoQuery.set({rawstring:"chupa*"})
+$(document).ready(function() {
 appCartoQueryView.fire()
+    
+});
+// appCartoQuery.set({rawstring:"chupa*"})

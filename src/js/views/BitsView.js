@@ -190,8 +190,7 @@ $('.copy-trigger').tooltip({
             trigger: 'hover',
             html:true,
             title: function(){
-console.log("this:");
-console.log(this);
+
 return "query for "+$(this).attr("data-string")
             }
         })

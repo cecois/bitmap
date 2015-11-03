@@ -20,25 +20,21 @@ var Route = Backbone.Router.extend({
             Tried to not do this, but it does kinda make sense to make the active mod a global. Otherwise we have to pass it to BitCollection first, and then *further* on to CartoCollx since Carto gets filled *after* the custom parse of bits.
              */
             window.activecouple = activecouple
-
             if (typeof basemap !== 'undefined' && basemap !== null) {
                 var inbl = appBaseLayers.findWhere({
                     "name": basemap
                 })
-                inbl.set({
-                    active: true
-                })
+                if(typeof inbl !== 'undefined'){
+                                inbl.set({
+                                    active: true
+                                })}
             }
-
-
             if (typeof h == 'undefined' || h == null) {
                 // h = "query";
                 h = "huh";
             }
-
             // now we are sure there's an h there's this universal, what *panelizer*? anyway we can position lotsa window elements at once
-// appStatesView.prebaked(h)
-
+            // appStatesView.prebaked(h)
             var hmod = "#" + h;
             _.each($("#main > .mainpanel"), function(p) {
                 if (p.id == h) {
@@ -72,10 +68,8 @@ var Route = Backbone.Router.extend({
                 bboxarr.push(northeast)
                 map.fitBounds(bboxarr);
             }
-
-                //                 
-            if (h == 'query') {
-
+            //                 
+            // if (h == 'query') {
                 // this.update("#query")
                 // appCartoQueryView.fire(false)
                 // appActivity.set({
@@ -105,37 +99,35 @@ var Route = Backbone.Router.extend({
                 //         $("#querylist-bits").append("<li style='margin-top:50px;font-size:2em;'>QUERY ERRORED OUT, SRY</li>")
                 //     }
                 // })
-            } //h is query for fetch
-
-// ok, well here's a funny thing - yes, we're manually calling the little badge thing here cuzzi i simply didn't wanna rearrange and diagnose a bunch of inter-model/view calls and I didn't wanna create a view just for this. What!? Ok, #returnto
-appCBBCountView.throbtab()
-
-if(facetsin !== null && typeof facetsin !== 'undefined'){
-                                                                facetsinscrubbed=facetsin.split(",")} else {
-                                                                    facetsinscrubbed=[]
-                                                                }
-
+            // } //h is query for fetch
+            // ok, well here's a funny thing - yes, we're manually calling the little badge thing here cuzzi i simply didn't wanna rearrange and diagnose a bunch of inter-model/view calls and I didn't wanna create a view just for this. What!? Ok, #returnto
+            appCBBCountView.throbtab()
+            if (facetsin !== null && typeof facetsin !== 'undefined') {
+                facetsinscrubbed = facetsin.split(",")
+            } else {
+                facetsinscrubbed = []
+            }
             if (typeof q !== 'undefined' && q !== null) {
                 // if(q!=="null"){
-                if(verbose==true){
-                                                console.log("q existed, setting appcartoquery to q, which is");
-                                                console.log(q);}
-                                // appCartoQuery.set({
-                                //     rawstring: q
-                                // })
-                                // facetsin.split(",")
-                                // facetsinscrubbed=['tags:"Golly"','tags:"Chip Gardner"']
-
-
-                            appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:q});
-                            
-                            // }
-            } 
+                if (verbose == true) {
+                    console.log("q existed, setting appcartoquery to q, which is");
+                    console.log(q);
+                }
+                // appCartoQuery.set({
+                //     rawstring: q
+                // })
+                // facetsin.split(",")
+                // facetsinscrubbed=['tags:"Golly"','tags:"Chip Gardner"']
+                appCartoQuery.set({
+                    facetarray: facetsinscrubbed,
+                    rawstring: q
+                });
+                // }
+            }
             // else {
             //      appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:'huell'});
             // }
-
-// #returnto - this shouldn't be necessary but seems to be
+            // #returnto - this shouldn't be necessary but seems to be
             // appCartoQueryView.fire(false)
             return this
         } // end home
