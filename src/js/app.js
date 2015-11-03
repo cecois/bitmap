@@ -849,7 +849,7 @@ function puFactory(p){
 // }
 // 
 $(document).ready(function() {
+appCartoQuery.set({rawstring:"chupa*"})
 appCartoQueryView.fire()
     
 });
-// appCartoQuery.set({rawstring:"chupa*"})

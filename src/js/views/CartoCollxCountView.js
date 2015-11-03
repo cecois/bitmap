@@ -21,8 +21,18 @@ return this
 if($("#query.mainpanel").hasClass("hidden")==true){
 
 var newz = appBits.length+appCBB.length
-$("#query-new-throb").html(newz)
+
+// oof #returnto
+if(agent=="mobile"){
+$("#query-new-throb").addClass("nonbadge")
+$("#query-new-throb").removeClass("badge-homemade")
+$("#query-new-throb").html("("+newz+")")
+} else {
+
+$("#query-new-throb").html(newz)}
+
 $("#query-new-throb").removeClass("hidden")
+
 
 
 } else {
