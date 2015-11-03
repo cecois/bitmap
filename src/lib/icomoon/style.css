@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?-omhwny');
-	src:url('fonts/icomoon.eot?-omhwny#iefix') format('embedded-opentype'),
-		url('fonts/icomoon.ttf?-omhwny') format('truetype'),
-		url('fonts/icomoon.woff?-omhwny') format('woff'),
-		url('fonts/icomoon.svg?-omhwny#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?yzo1qx');
+	src:url('fonts/icomoon.eot?yzo1qx#iefix') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?yzo1qx') format('truetype'),
+		url('fonts/icomoon.woff?yzo1qx') format('woff'),
+		url('fonts/icomoon.svg?yzo1qx#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -23,27 +23,21 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-/*.icom-arclight:before {
-	content: "\e602";
-}*/
+.icom-social-disqus:before {
+	content: "\e900";
+}
 .icom-poly:before {
 	content: "\e602";
 }
 .icom-bang:before {
 	content: "\e601";
 }
-/*.icom-line-graph:before {
-	content: "\e603";
-}*/
 .icom-line:before {
 	content: "\e603";
 }
 .icom-info:before {
 	content: "\e600";
 }
-/*.icom-location:before {
-	content: "\e947";
-}*/
 .icom-point:before {
 	content: "\e947";
 }
@@ -65,4 +59,3 @@
 .icom-soundcloud:before {
 	content: "\eac4";
 }
-
