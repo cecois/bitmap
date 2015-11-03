@@ -44,7 +44,8 @@ this.listenTo(this.model, "change:solrstring", this.fire)
 
 
 // this.model.set({"facetarray":[]},{silent:true})
-this.model.set({facetarray:[],rawstring:"dimello"});
+var ss = $("#query-form-input").val()
+this.model.set({facetarray:[],rawstring:ss});
                 
         return this
         // .fire()
