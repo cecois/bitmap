@@ -107,7 +107,7 @@ var Route = Backbone.Router.extend({
             } else {
                 facetsinscrubbed = []
             }
-            if (typeof q !== 'undefined' && q !== null) {
+            if (typeof q !== 'undefined' && q !== null ) {
                 // if(q!=="null"){
                 if (verbose == true) {
                     console.log("q existed, setting appcartoquery to q, which is");
@@ -123,8 +123,12 @@ var Route = Backbone.Router.extend({
                     rawstring: q
                 });
                 // }
+            } else if(appCartoQuery.get("rawstring") !== queryinit && appCartoQuery.get("rawstring") !== "") {
+                if(verbose==true){
+                    console.log("a fresh rawstring has been set, routing should leave it alone");
+                }
             } else {
-                appCartoQuery.set({rawstring:"chupa*"})
+                appCartoQuery.set({rawstring:queryinit})
             }
             // else {
             //      appCartoQuery.set({facetarray:facetsinscrubbed,rawstring:'huell'});
