@@ -28,7 +28,8 @@ return self.render(shawty)
     },
     shorten: function(){
 
-var longurl = encodeURIComponent(captureState())
+var longurl = captureState()
+// var longurl = encodeURIComponent(captureState())
 
 
 appActivity.set({

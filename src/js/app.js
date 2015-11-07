@@ -643,7 +643,9 @@ url+="/"+ac.join(":")
         var bl = appBaseLayers.findWhere({
             active: true
         }).get("name")
-        var fa = appCartoQuery.get("facetarray").join(",");
+        
+        // var fa = appCartoQuery.get("facetarray").join(","); //da OG
+        var fa = encodeURIComponent(appCartoQuery.get("facetarray").join(","));
 
 
 if(typeof activecouple !== 'undefined' && activecouple !== null){
