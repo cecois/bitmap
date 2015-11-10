@@ -6,7 +6,8 @@ window.agent = "mobile";
 window.agent = "desktop";
 }
 
-window.thedomain="trainertothestarsseekingstars.org"
+// window.thedomain="trainertothestarsseekingstars.org"
+window.thedomain="bitmap-lbones.rhcloud.com"
 
 // agent="mobile"
 
