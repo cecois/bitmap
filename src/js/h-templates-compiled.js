@@ -226,7 +226,7 @@ templates['episodeViewTpl'] = template({"1":function(depth0,helpers,partials,dat
     + escapeExpression(((helper = (helper = helpers.tstart || (depth0 != null ? depth0.tstart : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"tstart","hash":{},"data":data}) : helper)))
     + ")\n<!-- <a href=\"http://earwolf.com/episode/"
     + escapeExpression(((helper = (helper = helpers.slug_earwolf || (depth0 != null ? depth0.slug_earwolf : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"slug_earwolf","hash":{},"data":data}) : helper)))
-    + "\">\n	<img src=\"images/bt-earwolf.png\" alt=\"\" width=\"15\" height=\"15\" border=\"0\" />\n</a> -->\n<!-- , -->\n<a target=\"blank\" href=\"http://soundcloud.com/comedybangbang/"
+    + "\">\n	<img src=\"images/bt-earwolf.png\" alt=\"\" width=\"15\" height=\"15\" border=\"0\" />\n</a> -->\n<!-- , -->\n<a target=\"blank\" href=\""
     + escapeExpression(((helper = (helper = helpers.slug_soundcloud || (depth0 != null ? depth0.slug_soundcloud : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"slug_soundcloud","hash":{},"data":data}) : helper)))
     + "/#t="
     + escapeExpression(((helper = (helper = helpers.tstart || (depth0 != null ? depth0.tstart : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"tstart","hash":{},"data":data}) : helper)))
