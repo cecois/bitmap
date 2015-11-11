@@ -640,7 +640,7 @@ url+="/"+ac.join(":")
             var hel = $(".mainpanel:not('.hidden')")
             var h = '#' + $(hel).attr("id")
         var bbx = map.getBounds().toBBoxString();
-        var qs = appCartoQuery.get("urlstring")
+        var qs = encodeURIComponent(appCartoQuery.get("urlstring"))
         var bl = appBaseLayers.findWhere({
             active: true
         }).get("name")
