@@ -229,7 +229,7 @@ console.log(actv);
             //             }
             //         }
             //     }) //each
-            processLeaf(amid, true, amtyp)
+            processLeaf(amid, true, amtyp,true)
         } //actv length test
         return this
     },

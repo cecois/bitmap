@@ -48,7 +48,14 @@ var CartoCollxView = Backbone.View.extend({
         })
 
 if(typeof amo !== 'undefined'){
-        processLeaf(amo.get("cartodb_id").toString(), true, amo.get("geomtype"));}
+
+if(this.collection.length<2){
+    var zoomto=true
+} else {
+    var zoomto=false
+}
+
+        processLeaf(amo.get("cartodb_id").toString(), true, amo.get("geomtype"),zoomto);}
 
             // foot.zoomTo().openPopup()
         // map.fitBounds(foot.getBounds())

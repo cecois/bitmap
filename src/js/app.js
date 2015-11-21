@@ -665,7 +665,7 @@ acv=ac.join(":")
 
     }
 
-    function processLeaf(mid, pop, geom) {
+    function processLeaf(mid, pop, geom, zoomto) {
         
         if(typeof pop == 'undefined'){
             var pop = true
@@ -694,6 +694,11 @@ acv=ac.join(":")
                 if (pop == true) {
                     i.openPopup()
                 }
+
+if(zoomto==true){
+    map.fitBounds(i.getBounds())
+}
+
             }
         }) //each
     }
