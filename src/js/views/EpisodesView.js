@@ -79,19 +79,19 @@ $(this.el).html("<div style='text-align:left;' class='cbbepsanno col-sm-12'>refe
             if (verbose == true) {
                 // console.log("gonna render the recentitemview")
             }
-            var wikiaid = Number(episode.get("id_wikia"))
-            var wikia = appWikiaz.findWhere({
-                "id": wikiaid
-            })
-            if (typeof wikia !== 'undefined') {
-                episode.set({
-                    title: wikia.get("title")
-                })
-            } else {
-                episode.set({
-                    title: "[title not found at comedybangbang.wikia.com]"
-                })
-            }
+            // var wikiaid = Number(episode.get("id_wikia"))
+            // var wikia = appWikiaz.findWhere({
+            //     "id": wikiaid
+            // })
+            // if (typeof wikia !== 'undefined') {
+            //     episode.set({
+            //         title: wikia.get("title")
+            //     })
+            // } else {
+            //     episode.set({
+            //         title: "[title not found at comedybangbang.wikia.com]"
+            //     })
+            // }
             var thisEpView = new EpisodeView({
                 model: episode
             });
