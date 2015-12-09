@@ -25,11 +25,11 @@ var plusm=$("#main").hasClass("statie-collapsed")
 switch (plusm) {
             case true:
                 // $("#btn-statie").html('<div class="triangle-trigger-true" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus hider-copy"></span></div>')
-                $("#btn-statie").html('<div class="circle-trigger-true icom-bang" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus pull-right hider-copy"></span></div>')
+                $("#btn-statie").html('<div class="circle-trigger-true icom-bang" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="pull-right hider-copy">toggle the map</span></div>')
                 break;
             case false:
                 // $("#btn-statie").html('<div class="triangle-trigger-false" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="glyphicon glyphicon-minus hider-copy"></span></div>')
-                $("#btn-statie").html('<div class="circle-trigger-false icom-bang" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="glyphicon glyphicon-minus pull-right hider-copy"></span></div>')
+                $("#btn-statie").html('<div class="circle-trigger-false icom-bang" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="pull-right hider-copy">toggle the map</span></div>')
                 break;
             default:
         }
@@ -105,11 +105,11 @@ return this
         switch (plusm) {
             case true:
                 // $("#btn-statie").html('<div class="triangle-trigger-true" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus hider-copy"></span></div>')
-                $("#btn-statie").html('<div class="circle-trigger-true icom-bang" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="glyphicon glyphicon-plus pull-right hider-copy"></span></div>')
+                $("#btn-statie").html('<div class="circle-trigger-true icom-bang" title="click or press ctrl key to re-show" data-toggle="tooltip"><span class="pull-right hider-copy">toggle the ma8</span></div>')
                 break;
             case false:
                 // $("#btn-statie").html('<div class="triangle-trigger-false" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="glyphicon glyphicon-minus hider-copy"></span></div>')
-                $("#btn-statie").html('<div class="circle-trigger-false icom-bang" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="glyphicon glyphicon-minus pull-right hider-copy"></span></div>')
+                $("#btn-statie").html('<div class="circle-trigger-false icom-bang" title="click or press ctrl key to see more of the map" data-toggle="tooltip"><span class="pull-right hider-copy">toggle the ma9</span></div>')
                 break;
             default:
         }
