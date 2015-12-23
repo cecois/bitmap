@@ -177,6 +177,11 @@ if(this.collection.length<2){
                 //     message: null,
                 //     show: false
         })
+
+// if(this.collection.length == 1){
+map.fitBounds(cbbItems.getBounds());
+// }
+
         appActivityView.stfu()
         return this
         .fit()
