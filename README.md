@@ -1,3 +1,3 @@
 ### A Comedy Bang! Bang! geospatial visualization web app -- i'm serious.
 
-It's coming. My guess is mid/late August 2015.
+This is the work of a mad man. For many, many months I re-listened to every Comedy Bang! Bang! podcast episode ever released into the show's main feed (e.g. I'm only now going through the subscription-only Howl episodes) and I logged pretty much every recurring bit on the show. I also logged (and captured the spatial representations of) all identifiable locations. The result of this work is at [WompUpTheJams.com](http://wompupthejams.com/) (or, alternatively, [TrainerToTheStarsSeekingStars.org](http://trainertothestarsseekingstars.org/)). Both addresses resolve to the [OpenShift instance that actually houses the web app](http://bitmap-lbones.rhcloud.com/).

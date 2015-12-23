@@ -4,7 +4,7 @@ var QueryView = Backbone.View.extend({
         // "click #query-form-bt": "fire",
         "click #query-form-bt": "btfire",
         "click #query-form-heynongmantzoukas": "heynong",
-        "click #query-form-randomize": "randomize",
+        "click #query-form-randomizer": "randomize",
         "click #solrfields .glyphicon": "togglehelp"
             // "change": "render"
     },
@@ -37,6 +37,25 @@ this.listenTo(this.model, "change:solrstring", this.fire)
         console.log("facetarray:                        " + this.model.get("facetarray"))
         return this
     },
+    reset: function(){
+
+appCartoQuery.set({offset:"0",rows:"9999"});
+return this
+
+    },
+    randomize: function(){
+
+$("#query-form-randomizer").tooltip('destroy')
+var top = Math.floor((Math.random() * 1040) + 1);
+var ss = "bit:Location"
+
+appCartoQuery.set({rawstring:ss,offset:top,rows:1});
+
+
+return this
+.reset()
+
+    },
     btfire: function(e) {
         if(verbose==true){
                 console.log("btfire's e:")
@@ -46,7 +65,7 @@ this.listenTo(this.model, "change:solrstring", this.fire)
 // this.model.set({"facetarray":[]},{silent:true})
 var ss = $("#query-form-input").val()
 this.model.set({facetarray:[],rawstring:ss});
-                
+
         return this
         // .fire()
     },
@@ -161,6 +180,14 @@ this.model.set({facetarray:[],rawstring:ss});
             container: 'body',
             delay: 0,
             title: heynongcopy
+        });
+
+        $("#query-form-randomizer").tooltip({
+            placement: 'bottom',
+            trigger: 'hover',
+            container: 'body',
+            delay: 0,
+            title: "pull one random location"
         });
         return this
     },

@@ -73,7 +73,7 @@ var ydifAboveSouth = (ydif/2)+this.get("bbox_south")
 
 		var querystringRaw = this.get("querystring");
 		var op = querystringRaw.indexOf("[")
-		
+
 
 		if(op >= 0){
 			var querystring = this.get("querystring")+"+*:*";
@@ -81,7 +81,7 @@ var ydifAboveSouth = (ydif/2)+this.get("bbox_south")
 			var querystring = this.get("querystring");
 		}
 
-		var query = '{!lucene q.op=AND df=text}' + querystring + '~' 
+		var query = '{!lucene q.op=AND df=text}' + querystring + '~'
 		+ this.get("spatialSolr")
 		 + this.getFilterQuery()
 		 + "&start=" + this.get("recordOffset")+ this.getSorters()
@@ -95,7 +95,7 @@ var ydifAboveSouth = (ydif/2)+this.get("bbox_south")
 	setSpatialString: function() {
 
 		// fake area value of current map view - we'll compare it to the fake area of the record
-		// we want one vector that boosts based on 
+		// we want one vector that boosts based on
 		var fakeArea = this.getEarthfactor();
 
 // some spatial-relavance boosters adjusted from OpenGeoPortal's solr query
