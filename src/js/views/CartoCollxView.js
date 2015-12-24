@@ -178,9 +178,9 @@ if(this.collection.length<2){
                 //     show: false
         })
 
-// if(this.collection.length == 1){
+if(this.collection.length > 0){
 map.fitBounds(cbbItems.getBounds());
-// }
+}
 
         appActivityView.stfu()
         return this
