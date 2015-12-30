@@ -1,6 +1,7 @@
 var EpisodeView = Backbone.View.extend({
     tagName: "li",
     template: Handlebars.templates['episodeViewTpl'],
+    template_howl:Handlebars.templates['HowlEpisodeViewTpl'],
     // className: "fi-social-instagram",
     // className: function(){return this.model.get("icon")},
     events: {
@@ -31,7 +32,13 @@ var EpisodeView = Backbone.View.extend({
         if (verbose == true) {
             // console.log("rendering recentitemview")
         }
+        if(this.model.get("episode").indexOf("howl.fm")>0){
+        $(this.el).html(this.template_howl(this.model.toJSON()));
+        } else {
+
+// non-Howl
         $(this.el).html(this.template(this.model.toJSON()));
+        }
         return this.rewire()
     }
 });
