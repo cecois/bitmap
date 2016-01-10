@@ -27,7 +27,8 @@ appQuerySubNavView.reset()
       var fpre = "bit:"
       break;
          case "Episodes":
-      var fpre = "slug_earwolf:"
+      // var fpre = "slug_earwolf:" // OG
+      var fpre = "episode:"
       break;
    default:
       var fpre = "tags:"

@@ -9,6 +9,7 @@ var URL = Backbone.Model.extend({
     }
 });
 var Huh = Backbone.Model.extend({});
+var Update = Backbone.Model.extend({});
 var Help = Backbone.Model.extend({});
 var Method = Backbone.Model.extend({});
 var Minutiae = Backbone.Model.extend({});
@@ -500,7 +501,8 @@ var BitCollection = Backbone.Collection.extend({
 
 
          appFatTags.reset(resp.facet_counts.facet_fields.tags)
-         appFatSlugs.reset(resp.facet_counts.facet_fields.slug_earwolf)
+         // appFatSlugs.reset(resp.facet_counts.facet_fields.slug_earwolf) // OG
+         appFatSlugs.reset(resp.facet_counts.facet_fields.episode) //changed from slugs to episode field cuzza holw
         appFatNames.reset(resp.facet_counts.facet_fields.fat_name)
 
          appFatTags.subactivate()

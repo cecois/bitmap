@@ -19,8 +19,8 @@ NProgress.configure({
 Handlebars.registerHelper('debug', function(options) {
     
     if(verbose==true){
-        // console.log("debug hb:");
-        // console.log(this);
+        console.log("debug hb:");
+        console.log(this);
     }
     return new Handlebars.SafeString("check console");
 });
@@ -499,6 +499,11 @@ aFSV.group="Episodes"
 var huh = new Huh();
 var huhV = new HuhView({
     model: huh
+})
+
+var ups = new Update();
+var upsV = new UpdateView({
+    model: ups
 })
 
 var help = new Help();
