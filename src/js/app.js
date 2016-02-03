@@ -153,7 +153,7 @@ var baselayersdummified = {
 var baselayersdesk = {
     "layers": [{
             "name": "mapquest",
-            "active": false,
+            "active": true,
             "source": "mapquest",
             "nom": "MapQuest OSM",
             // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/osm/3/4/2.png",
@@ -227,7 +227,7 @@ var baselayersdesk = {
             }
         }, {
             "name": "pencil",
-            "active": true,
+            "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-pencil.png",
