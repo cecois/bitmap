@@ -210,37 +210,39 @@ var baselayersdesk = {
                 "url": "https://{s}.tiles.mapbox.com/v4/katiekowalsky.236692c1/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1Ijoia2F0aWVrb3dhbHNreSIsImEiOiJHR2hfdlBNIn0.GUMLsSnT-SYx4ew7b77kqw",
                 "noWrap": true
             }
-        }, {
-            "name": "space_station_earth",
-            "active": false,
-            "source": "mapbox",
-            "nom": "Eleanor Lutz' Space Station Earth",
-            "thumb": "offline/mapbox-spacestation.png",
-            // "thumb": "https://b.tiles.mapbox.com/v4/examples.3hqcl3di/4/4/6@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
-            "mapis": "dark",
-            "definition": {
-                "subdomains": ["a", "b", "c"],
-                "maxZoom": 18,
-                "url": "https://{s}.tiles.mapbox.com/v4/examples.3hqcl3di/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
-                // "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
-                "noWrap": true
-            }
-        }, {
-            "name": "pencil",
-            "active": false,
-            "source": "mapbox",
-            "nom": "Aj Ashton's Pencil Map",
-            "thumb": "offline/mapbox-pencil.png",
-            // "thumb": "https://a.tiles.mapbox.com/v4/examples.a4c252ab/6/18/26@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
-            "mapis": "dark",
-            "definition": {
-                "subdomains": ["a", "b", "c"],
-                "maxZoom": 18,
-                "url": "https://{s}.tiles.mapbox.com/v4/examples.a4c252ab/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
-                // "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
-                "noWrap": true
-            }
         }
+        // , {
+        //     "name": "space_station_earth",
+        //     "active": false,
+        //     "source": "mapbox",
+        //     "nom": "Eleanor Lutz' Space Station Earth",
+        //     "thumb": "offline/mapbox-spacestation.png",
+        //     // "thumb": "https://b.tiles.mapbox.com/v4/examples.3hqcl3di/4/4/6@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
+        //     "mapis": "dark",
+        //     "definition": {
+        //         "subdomains": ["a", "b", "c"],
+        //         "maxZoom": 18,
+        //         "url": "https://{s}.tiles.mapbox.com/v4/examples.3hqcl3di/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
+        //         // "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
+        //         "noWrap": true
+        //     }
+        // }
+        // , {
+        //     "name": "pencil",
+        //     "active": false,
+        //     "source": "mapbox",
+        //     "nom": "Aj Ashton's Pencil Map",
+        //     "thumb": "offline/mapbox-pencil.png",
+        //     // "thumb": "https://a.tiles.mapbox.com/v4/examples.a4c252ab/6/18/26@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
+        //     "mapis": "dark",
+        //     "definition": {
+        //         "subdomains": ["a", "b", "c"],
+        //         "maxZoom": 18,
+        //         "url": "https://{s}.tiles.mapbox.com/v4/examples.a4c252ab/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
+        //         // "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
+        //         "noWrap": true
+        //     }
+        // }
         // , {
         //     "name": "dummy",
         //     "active": true,
