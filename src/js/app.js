@@ -153,7 +153,7 @@ var baselayersdummified = {
 var baselayersdesk = {
     "layers": [{
             "name": "mapquest",
-            "active": true,
+            "active": false,
             "source": "mapquest",
             "nom": "MapQuest OSM",
             // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/osm/3/4/2.png",
@@ -208,6 +208,20 @@ var baselayersdesk = {
                 // "url": "http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png",
             // https://b.tiles.mapbox.com/v4/katiekowalsky.236692c1/10/292/391@2x.png?access_token=pk.eyJ1Ijoia2F0aWVrb3dhbHNreSIsImEiOiJHR2hfdlBNIn0.GUMLsSnT-SYx4ew7b77kqw
                 "url": "https://{s}.tiles.mapbox.com/v4/katiekowalsky.236692c1/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1Ijoia2F0aWVrb3dhbHNreSIsImEiOiJHR2hfdlBNIn0.GUMLsSnT-SYx4ew7b77kqw",
+                "noWrap": true
+            }
+        },
+        {
+            "name": "pencil",
+            "active": true,
+            "source": "mapbox",
+            "nom": "Aj Ashton's Pencil Map",
+            "thumb": "offline/mapbox-mario.png",
+            "mapis": "dark",
+            "definition": {
+                "subdomains": ["a", "b", "c"],
+                "maxZoom": 18,
+                "url": "https://{s}.tiles.mapbox.com/v4/aj.03e9e12d/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiYWoiLCJhIjoiY2lrZW1pczJzMDA1d3VybTJha216azVtdSJ9.vJBkGAq6CvN9vt0IwakQ-A",
                 "noWrap": true
             }
         }
