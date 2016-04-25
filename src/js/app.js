@@ -1,9 +1,9 @@
 /* -------------------------------------------------- GLOBALS -----------------------  */
 
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-window.agent = "mobile";
+    window.agent = "mobile";
 } else {
-window.agent = "desktop";
+    window.agent = "desktop";
 }
 
 // window.thedomain="trainertothestarsseekingstars.org"
@@ -17,7 +17,7 @@ NProgress.configure({
 
 /* -------------------------------------------------- HANDLEBARS START -----------------------  */
 Handlebars.registerHelper('debug', function(options) {
-    
+
     if(verbose==true){
         console.log("debug hb:");
         console.log(this);
@@ -36,7 +36,7 @@ Handlebars.registerHelper('indev', function(id,type, options) {
         cid=doctorId(type,id)
 
         return '<span data-id="'+cid+'" class="glyphicon glyphicon-asterisk bt-getid" title="echo model id (dev only)"></span>'} else{return '';}
-        });
+    });
 
 Handlebars.registerHelper('urler', function(str,options) {
 
@@ -125,37 +125,37 @@ window.appEpisodesView = new EpisodesView({
 /* -------------------------------------------------- BASEMAPS -----------------------  */
 var baselayersdummified = {
     "layers": [{
-            "name": "dummy",
-            "active": true,
-            "source": "localhost",
-            "nom": "A Real Dummy",
-            "thumb": "offline/dummy-thumb.png",
-            "mapis": "dark",
-            "definition": {
-                "maxZoom": 18,
-                "url": "offline/dummy-thumb.png",
-                "noWrap": true
-            }
-        },{
-            "name": "dummy",
-            "active": false,
-            "source": "localhost",
-            "nom": "A Real Dummy",
-            "thumb": "offline/dummy-thumb.png",
-            "mapis": "dark",
-            "definition": {
-                "maxZoom": 18,
-                "url": "offline/dummy-thumb.png",
-                "noWrap": true
-            }
-        }]
+        "name": "dummy",
+        "active": true,
+        "source": "localhost",
+        "nom": "A Real Dummy",
+        "thumb": "offline/dummy-thumb.png",
+        "mapis": "dark",
+        "definition": {
+            "maxZoom": 18,
+            "url": "offline/dummy-thumb.png",
+            "noWrap": true
+        }
+    },{
+        "name": "dummy",
+        "active": false,
+        "source": "localhost",
+        "nom": "A Real Dummy",
+        "thumb": "offline/dummy-thumb.png",
+        "mapis": "dark",
+        "definition": {
+            "maxZoom": 18,
+            "url": "offline/dummy-thumb.png",
+            "noWrap": true
+        }
+    }]
 }
 var baselayersdesk = {
     "layers": [{
-            "name": "mapquest",
-            "active": false,
-            "source": "mapquest",
-            "nom": "MapQuest OSM",
+        "name": "mapquest",
+        "active": false,
+        "source": "mapquest",
+        "nom": "MapQuest OSM",
             // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/osm/3/4/2.png",
             "thumb": "offline/mapquest.jpg",
             "mapis": "light",
@@ -207,24 +207,24 @@ var baselayersdesk = {
                 "maxZoom": 18,
                 // "url": "http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png",
             // https://b.tiles.mapbox.com/v4/katiekowalsky.236692c1/10/292/391@2x.png?access_token=pk.eyJ1Ijoia2F0aWVrb3dhbHNreSIsImEiOiJHR2hfdlBNIn0.GUMLsSnT-SYx4ew7b77kqw
-                "url": "https://{s}.tiles.mapbox.com/v4/katiekowalsky.236692c1/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1Ijoia2F0aWVrb3dhbHNreSIsImEiOiJHR2hfdlBNIn0.GUMLsSnT-SYx4ew7b77kqw",
-                "noWrap": true
-            }
-        },
-        {
-            "name": "pencil",
-            "active": true,
-            "source": "mapbox",
-            "nom": "Aj Ashton's Pencil Map",
-            "thumb": "offline/mapbox-mario.png",
-            "mapis": "dark",
-            "definition": {
-                "subdomains": ["a", "b", "c"],
-                "maxZoom": 18,
-                "url": "https://{s}.tiles.mapbox.com/v4/aj.03e9e12d/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiYWoiLCJhIjoiY2lrZW1pczJzMDA1d3VybTJha216azVtdSJ9.vJBkGAq6CvN9vt0IwakQ-A",
-                "noWrap": true
-            }
+            "url": "https://{s}.tiles.mapbox.com/v4/katiekowalsky.236692c1/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1Ijoia2F0aWVrb3dhbHNreSIsImEiOiJHR2hfdlBNIn0.GUMLsSnT-SYx4ew7b77kqw",
+            "noWrap": true
         }
+    },
+    {
+        "name": "pencil",
+        "active": true,
+        "source": "mapbox",
+        "nom": "Aj Ashton's Pencil Map",
+        "thumb": "offline/mapbox-pencil.png",
+        "mapis": "dark",
+        "definition": {
+            "subdomains": ["a", "b", "c"],
+            "maxZoom": 18,
+            "url": "https://{s}.tiles.mapbox.com/v4/aj.03e9e12d/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiYWoiLCJhIjoiY2lrZW1pczJzMDA1d3VybTJha216azVtdSJ9.vJBkGAq6CvN9vt0IwakQ-A",
+            "noWrap": true
+        }
+    }
         // , {
         //     "name": "space_station_earth",
         //     "active": false,
@@ -311,11 +311,11 @@ var baselayersdesk = {
         //         "url": null
         //     }
         // }
-    ]
-}
+        ]
+    }
 
-var baselayersmobile = {
-    "layers": [{
+    var baselayersmobile = {
+        "layers": [{
             "name": "mapquest",
             "active": false,
             "source": "mapquest",
@@ -334,7 +334,7 @@ var baselayersmobile = {
             "active": false,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
-            "thumb": "offline/mapbox-mario.png",
+            "thumb": "offline/mapbox-pencil.png",
             // "thumb": "https://a.tiles.mapbox.com/v4/examples.a4c252ab/6/18/26@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
             "mapis": "dark",
             "definition": {
@@ -359,21 +359,21 @@ var baselayersmobile = {
                 // "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
                 "noWrap": true
             }
-}
-    ]
-}
+        }
+        ]
+    }
 
-if(dev==true){
-    baselayers=baselayersdummified
+    if(dev==true){
+        baselayers=baselayersdummified
     // baselayers=baselayersmobile
     // baselayers=baselayersdesk
 } else {
 
-if(agent=='mobile'){
-    baselayers=baselayersmobile
-}else{baselayers=baselayersdesk}}
+    if(agent=='mobile'){
+        baselayers=baselayersmobile
+    }else{baselayers=baselayersdesk}}
 
-appBaseLayers = new BaseLayersCollection(baselayers.layers);
+    appBaseLayers = new BaseLayersCollection(baselayers.layers);
 // ...for which we need a menu
 appBaseLayersMenuView = new BaseLayersMenuView({
     collection: appBaseLayers
@@ -413,26 +413,26 @@ window.appQuerySubNavView = new QuerySubNavView({
 
 
 var states = [{
-            "name": "main",
-            "posish": "open",
-            "visible":true
-        }, {
-            "name": "episodes",
-            "posish": "open",
-            "visible":true
-        }, {
-            "name": "banner-bang",
-            "posish": "open",
-            "visible":true
-        }
+    "name": "main",
+    "posish": "open",
+    "visible":true
+}, {
+    "name": "episodes",
+    "posish": "open",
+    "visible":true
+}, {
+    "name": "banner-bang",
+    "posish": "open",
+    "visible":true
+}
 
-    ]
+]
 
 // https://twitter.com/intent/tweet?url=<url to tweet>&text=<text to tweet>&hashtags=<comma separated list of hashtags, with no # on them>
 // http://some.url.com/?text=&url=http://data.gov&via=ZapStraightToIt&hashtags=comedybangbang
 // https://twitter.com/intent/tweet?url=http://data.gov&text=&hashtags=deleteme
 
-    var shares = [
+var shares = [
 
 {"id":"social-twitter",
 "href":"https://twitter.com/share",
@@ -456,17 +456,17 @@ var states = [{
 // "tip":"share on Google+"
 // }
 
-    ]
+]
 
 window.appStates = new States(
-states
-  );
+    states
+    );
 window.appStatesView = new StatesView({
     collection: appStates
 });
 
 window.appShares = new Shares(
-shares
+    shares
     );
 window.appSharesView = new SharesView({
     collection: appShares
@@ -474,9 +474,9 @@ window.appSharesView = new SharesView({
 
 /* -------------------------------------------------- INITS -----------------------  */
 
-        window.appBits = new BitCollection();
-        window.appCBB = new CartoCollection();
-        window.appRecents = new RecentsCollection();
+window.appBits = new BitCollection();
+window.appCBB = new CartoCollection();
+window.appRecents = new RecentsCollection();
 
 
 window.appCBBListView = new CartoListView({
@@ -535,18 +535,18 @@ var methodV = new MethodView({
 // appCartoQueryView.fire(false)
 
 /* -------------------------------------------------- Free Funcs -----------------------  */
-    function locTrigger(e, goto, active) {
-if(verbose==true){
-    console.log("loctriggered!")
-    console.log("e:");
-    console.log(e)
-    console.log("goto:");
-    console.log(goto)
-    console.log("active:");
-    console.log(active)
-}
+function locTrigger(e, goto, active) {
+    if(verbose==true){
+        console.log("loctriggered!")
+        console.log("e:");
+        console.log(e)
+        console.log("goto:");
+        console.log(goto)
+        console.log("active:");
+        console.log(active)
+    }
 
-if(typeof e !== 'undefined' && e !== null){
+    if(typeof e !== 'undefined' && e !== null){
         e.preventDefault()}
 
         if (typeof goto == 'undefined') {
@@ -556,18 +556,18 @@ if(typeof e !== 'undefined' && e !== null){
 // var qstring="*:*"
 
 if(typeof active !== 'undefined'){
-        if(active.indexOf("point:")>=0 || active.indexOf("poly:")>=0 || active.indexOf("line:")>=0){
-            var loctype = active.split(":")[0]
+    if(active.indexOf("point:")>=0 || active.indexOf("poly:")>=0 || active.indexOf("line:")>=0){
+        var loctype = active.split(":")[0]
             // var locid = active.split(":")[1]
-var locid = doctorId(loctype,active.split(":")[1]);
+            var locid = doctorId(loctype,active.split(":")[1]);
             activeFactory(active)
-        qstring = "location_type:"+loctype+" AND location_id:"+locid
+            qstring = "location_type:"+loctype+" AND location_id:"+locid
         // appCartoQuery.set({rawstring:qstring})
-         } else {
+    } else {
         qstring = $(e.currentTarget).attr("data-string")
-         }
-        appCartoQuery.set({rawstring:qstring})
-     }
+    }
+    appCartoQuery.set({rawstring:qstring})
+}
 
 
         // var markerid = solrstring.split(",")[1]
@@ -597,27 +597,27 @@ var locid = doctorId(loctype,active.split(":")[1]);
         // })
     }
 
-function activeFactory(a){
+    function activeFactory(a){
 
-if(typeof a == 'undefined' || a == null){
+        if(typeof a == 'undefined' || a == null){
 
-if(typeof activecouple !== 'undefined' && activecouple !== null){
-var activeid = activecouple.split(":")[1]
-    var activetype = activecouple.split(":")[0]
+            if(typeof activecouple !== 'undefined' && activecouple !== null){
+                var activeid = activecouple.split(":")[1]
+                var activetype = activecouple.split(":")[0]
 
-    return [activetype,activeid]}
-    else {
-        return null
-    }
-} else {
-    activecouple=a
-    return a
-}
+                return [activetype,activeid]}
+                else {
+                    return null
+                }
+            } else {
+                activecouple=a
+                return a
+            }
 
-}
+        }
 
-    function urlFactory(goto,qs) {
-        if (typeof goto == 'undefined') {
+        function urlFactory(goto,qs) {
+            if (typeof goto == 'undefined') {
             // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
             var hel = $(".mainpanel:not('.hidden')")
             var h = '#' + $(hel).attr("id")
@@ -638,8 +638,8 @@ var activeid = activecouple.split(":")[1]
 
         var url = h + "/" + qs + "/" + bbx + "/" + bl 
 
-if(typeof activecouple !== 'undefined' && activecouple !== null){
-var ac = activeFactory();
+        if(typeof activecouple !== 'undefined' && activecouple !== null){
+            var ac = activeFactory();
 
 // url+=activetype + ":" + activeid
 url+="/"+ac.join(":")
@@ -652,46 +652,46 @@ url+="/"+ac.join(":")
         // if(typeof activeid !== 'undefined' && typeof activeid !== null && typeof activetype !== 'undefined' && typeof activetype !== null){
             // }
 
-        return url
-    }
+            return url
+        }
 
-    function captureState(){
+        function captureState(){
 
             // eh not great - we just troll the gui for the mainpanel that's currently showing - hope it's right!
             var hel = $(".mainpanel:not('.hidden')")
             var h = '#' + $(hel).attr("id")
-        var bbx = map.getBounds().toBBoxString();
-        var qs = encodeURIComponent(appCartoQuery.get("urlstring"))
-        var bl = appBaseLayers.findWhere({
-            active: true
-        }).get("name")
-        
+            var bbx = map.getBounds().toBBoxString();
+            var qs = encodeURIComponent(appCartoQuery.get("urlstring"))
+            var bl = appBaseLayers.findWhere({
+                active: true
+            }).get("name")
+
         // var fa = appCartoQuery.get("facetarray").join(","); //da OG
         var fa = encodeURIComponent(appCartoQuery.get("facetarray").join(","));
 
 
-if(typeof activecouple !== 'undefined' && activecouple !== null){
-var ac = activeFactory();
+        if(typeof activecouple !== 'undefined' && activecouple !== null){
+            var ac = activeFactory();
 
-acv=ac.join(":")
+            acv=ac.join(":")
 
-} else {
-    acv="noactive"
-}
+        } else {
+            acv="noactive"
+        }
         var url = "http://" + thedomain+ "/"+ h + "/" + qs + "/" + bbx + "/" + bl +"/"+acv+"/"+fa
         // if(typeof activeid !== 'undefined' && typeof activeid !== null && typeof activetype !== 'undefined' && typeof activetype !== null){
             // }
 
-        return url
+            return url
 
-    }
-
-    function processLeaf(mid, pop, geom, zoomto) {
-        
-        if(typeof pop == 'undefined'){
-            var pop = true
         }
-        if (geom == "point") {
+
+        function processLeaf(mid, pop, geom, zoomto) {
+
+            if(typeof pop == 'undefined'){
+                var pop = true
+            }
+            if (geom == "point") {
             // points get their own style
             var activeStyle = markeractive
         } else {
@@ -716,18 +716,18 @@ acv=ac.join(":")
                     i.openPopup()
                 }
 
-if(zoomto==true){
-    map.fitBounds(i.getBounds())
-}
+                if(zoomto==true){
+                    map.fitBounds(i.getBounds())
+                }
 
             }
         }) //each
     }
     /* -------------------------------------------------- RUN! -----------------------  */
-cbbItems = L.geoJson().addTo(map);
-window.appWikiaz = new Wikiaz()
-appWikiaz.fetch();
-appRecents.fetch({reset:true});
+    cbbItems = L.geoJson().addTo(map);
+    window.appWikiaz = new Wikiaz()
+    appWikiaz.fetch();
+    appRecents.fetch({reset:true});
 // var solrfz = $.getJSON(solrhost+"cbb_carto/admin/luke?numTerms=0&wt=json&callback=?", {}, function(json, textStatus) {
 //         console.log("json:");console.log(json);
 //
@@ -787,7 +787,7 @@ $(document).ready(function() {
     L.control.zoom({position:'topright'}).addTo(map)
     new L.HistoryControl().addTo(map);
 
-appActivityView.stfu()
+    appActivityView.stfu()
 
     //
 }); //ready
@@ -807,23 +807,23 @@ function doctorId(type,id,updown){
     if(typeof updown =='undefined' || updown==null)
         {var updown="down"}
 
-var cid = null
-        switch(type) {
-    case 'line':
-    if(updown=="down"){cid=Number(id)/plierline} else {cid=Number(id)*plierline}
-        break;
-    case 'poly':
-    if(updown=="down"){cid=Number(id)/plierpoly} else {cid=Number(id)*plierpoly}
-        break;
-    default:
+    var cid = null
+    switch(type) {
+        case 'line':
+        if(updown=="down"){cid=Number(id)/plierline} else {cid=Number(id)*plierline}
+            break;
+        case 'poly':
+        if(updown=="down"){cid=Number(id)/plierpoly} else {cid=Number(id)*plierpoly}
+            break;
+        default:
         cid = Number(id);
+    }
+    return cid
 }
-return cid
-}
-        function cwmccallback(){
-            if(verbose==true){console.log("breaker breaker")}
-                if(verbose==true){console.log("------> (generic) cwmccallback")}
-        }
+function cwmccallback(){
+    if(verbose==true){console.log("breaker breaker")}
+        if(verbose==true){console.log("------> (generic) cwmccallback")}
+    }
 
 function puFactory(p){
     /* -------
@@ -835,8 +835,8 @@ function puFactory(p){
 
     // and since the p obj has been affixed with the original leaflet object's model ("model") we just pass it along like so
 // but also we affix the leaflet id of the feature so we can close this mofo later (among other ops maybe)
-    var pm = new Popup(p.model).set({leafletid:p.layer._leaflet_id});
-    var pv = new PopupView({model:pm,el: nel})
+var pm = new Popup(p.model).set({leafletid:p.layer._leaflet_id});
+var pv = new PopupView({model:pm,el: nel})
 
 }
 
@@ -880,5 +880,5 @@ function puFactory(p){
 $(document).ready(function() {
 // appCartoQuery.set({rawstring:"chupa*"})
 // appCartoQueryView.fire()
-    
+
 });
