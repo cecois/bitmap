@@ -5,5 +5,4 @@ window.plierline=999;
 window.verbose = false;
 window.dev = false;
 window.solrhost = "http://solr-lbones.rhcloud.com/";
-window.queryinit = "chupacabr*";
-// window.solrhost = "http://localhost:8983/solr/";
+window.queryinit = "episode:426";
