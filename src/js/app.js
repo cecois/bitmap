@@ -152,39 +152,11 @@ var baselayersdummified = {
 }
 var baselayersdesk = {
     "layers": [{
-        "name": "mapquest",
+        "name": "super_mario",
         "active": false,
-        "source": "mapquest",
-        "nom": "MapQuest OSM",
-            // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/osm/3/4/2.png",
-            "thumb": "offline/mapquest.jpg",
-            "mapis": "light",
-            "definition": {
-                "subdomains": ["otile1", "otile2", "otile3", "otile4"],
-                "maxZoom": 18,
-                "url": "http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png",
-                "noWrap": true
-            }
-        }, {
-            "name": "mapquest_aerial",
-            "active": false,
-            "source": "mapquest",
-            "nom": "MapQuest Open Aerial",
-            "thumb": "offline/mapquest-aerial.jpg",
-            // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/sat/3/4/2.png",
-            "mapis": "dark",
-            "definition": {
-                "subdomains": ["otile1", "otile2", "otile3", "otile4"],
-                "maxZoom": 18,
-                "url": "http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png",
-                "noWrap": true
-            }
-        }, {
-            "name": "super_mario",
-            "active": false,
-            "source": "mapbox",
-            "nom": "Duncan Graham's Super Mario",
-            "thumb": "offline/mapbox-mario.png",
+        "source": "mapbox",
+        "nom": "Duncan Graham's Super Mario",
+        "thumb": "offline/mapbox-mario.png",
             // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/sat/3/4/2.png",
             "mapis": "light",
             "definition": {
@@ -316,37 +288,21 @@ var baselayersdesk = {
 
     var baselayersmobile = {
         "layers": [{
-            "name": "mapquest",
-            "active": false,
-            "source": "mapquest",
-            "nom": "MapQuest OSM",
-            // "thumb": "http://otile1.mqcdn.com/tiles/1.0.0/osm/3/4/2.png",
-            "thumb": "offline/mapquest.jpg",
-            "mapis": "light",
-            "definition": {
-                "subdomains": ["otile1", "otile2", "otile3", "otile4"],
-                "maxZoom": 18,
-                "url": "http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png",
-                "noWrap": true
-            }
-        }, {
             "name": "pencil",
-            "active": false,
+            "active": true,
             "source": "mapbox",
             "nom": "Aj Ashton's Pencil Map",
             "thumb": "offline/mapbox-pencil.png",
-            // "thumb": "https://a.tiles.mapbox.com/v4/examples.a4c252ab/6/18/26@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
             "mapis": "dark",
             "definition": {
                 "subdomains": ["a", "b", "c"],
                 "maxZoom": 18,
-                "url": "https://{s}.tiles.mapbox.com/v4/examples.a4c252ab/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q",
-                // "url": "https://{s}.tiles.mapbox.com/v4/duncangraham.552f58b0/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ",
+                "url": "https://{s}.tiles.mapbox.com/v4/aj.03e9e12d/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiYWoiLCJhIjoiY2lrZW1pczJzMDA1d3VybTJha216azVtdSJ9.vJBkGAq6CvN9vt0IwakQ-A",
                 "noWrap": true
             }
         }, {
             "name": "dummy",
-            "active": true,
+            "active": false,
             "source": "localhost",
             "nom": "A Real Dummy",
             "thumb": "offline/dummy-thumb.png",
